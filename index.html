@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIOR — Mobile Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;500&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --text-on-light:#323744;
+    --bg-input:#ffffff;
+    --text-default:#0d0e13;
+    --text-placeholder:#9ba3af;
+    --accent-primary:#005F6E;
+    --accent-pressed:#024B57;
+    --text-muted:#6b7280;
+    --border-default:#eaeaea;
+    --bg-chip:#ddd8d4;
+    --text-inverted:#fffaf2;
+    --bg-surface-light:#fafafa;
+    --border-surface:#e5e7eb;
+    --bg-page:#d2d8db;
+    --border-module:rgba(107,114,128,.4);
+    --radius-sm:6px;
+    --radius-lg:8px;
+    --radius-pill:100px;
+    --space-xs:4px;
+    --space-sm:8px;
+    --space-md:12px;
+    --space-lg:16px;
+    --space-xl:24px;
+    --space-2xl:32px;
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Outfit', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#7c7c7c;
+    font-family:var(--font-body);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px 16px 64px;
+    min-height:100vh;
+  }
+  .meta-caption{
+    color:#e7e7e7;
+    font-size:13px;
+    margin-bottom:18px;
+    text-align:center;
+    max-width:375px;
+    line-height:1.5;
+  }
+  .meta-caption b{color:#fff;}
+
+  .phone{
+    width:390px;
+    height:844px;
+    max-width:100%;
+    background:var(--bg-page);
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    height:68px;
+    background:var(--bg-page);
+    border-bottom:1px solid var(--border-default);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 var(--space-xl);
+  }
+  .logo{ display:flex; align-items:center; }
+  .header-actions{display:flex;align-items:center;gap:var(--space-md);}
+  .lang{font-family:var(--font-mono);font-weight:700;font-size:13px;color:var(--text-muted);}
+  .icon-btn{color:var(--text-on-light);display:flex;cursor:default;}
+  .icon-btn svg{width:22px;height:22px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:var(--space-2xl) var(--space-xl) 0;
+    text-align:right;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.4px;
+    line-height:1.45;
+    color:var(--accent-primary);
+    text-transform:uppercase;
+  }
+  .hero .muted-line{color:var(--text-placeholder);font-weight:700;}
+
+  /* ---------- TAB ---------- */
+  .tabs{
+    display:flex;
+    justify-content:center;
+    padding:var(--space-2xl) var(--space-xl) 0;
+  }
+  .tab-pill{
+    display:flex;
+    align-items:center;
+    gap:var(--space-sm);
+    padding:9px 18px;
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-lg);
+    color:var(--text-default);
+    font-size:15px;
+    font-weight:500;
+    cursor:default;
+  }
+  .tab-pill svg{width:18px;height:18px;}
+
+  /* ---------- CARD ---------- */
+  .card{
+    margin:var(--space-lg) var(--space-xl) var(--space-2xl);
+    background:var(--bg-surface-light);
+    border:none;
+    border-radius:var(--radius-lg);
+    padding:var(--space-xl);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
+  }
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  .size-row{display:flex;align-items:center;gap:var(--space-md);}
+  .size-row .field{flex:0 0 131px;}
+  .add-size{
+    appearance:none;
+    background:none;
+    border:none;
+    font-family:var(--font-body);
+    font-size:14px;
+    color:var(--text-muted);
+    white-space:nowrap;
+    cursor:pointer;
+    padding:0;
+  }
+  .add-size:hover{color:var(--text-on-light);text-decoration:underline;}
+
+  .field{
+    background:var(--bg-input);
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-sm);
+    padding:12px var(--space-md);
+    cursor:pointer;
+    min-width:0;
+  }
+  .field-label-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-xs);
+  }
+  .field-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:13px;
+    color:var(--text-on-light);
+    text-transform:uppercase;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  .field-label svg{width:14px;height:14px;flex:none;color:var(--text-muted);}
+  .field-label .eu-icons{display:flex;gap:4px;flex:none;}
+  .field-chevron{width:14px;height:14px;flex:none;color:var(--text-muted);}
+
+  /* ---------- CHIPS ---------- */
+  .chips-row{display:flex;flex-wrap:wrap;gap:var(--space-sm);}
+  /* Chip — стейти з Figma 5329:11743 */
+  .chip{
+    appearance:none;
+    border:1px solid #bec5c8;
+    background:#eaeaea;
+    color:#323744;
+    font-family:var(--font-body);
+    font-size:14px;
+    line-height:18px;
+    padding:8px 8px;
+    border-radius:var(--radius-sm);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    transition:background-color 140ms ease, border-color 140ms ease, border-width 140ms ease;
+  }
+  .chip svg{width:16px;height:16px;}
+  /* hover */
+  .chip:hover{
+    background:rgba(107,114,128,0.4);
+    border:1px solid #bec5c8;
+    color:#323744;
+  }
+  /* selected */
+  .chip.is-selected{
+    background:rgba(107,114,128,0.4);
+    border:1px solid #005f6e;
+    color:#0d0e13;
+  }
+  /* hover selected */
+  .chip.is-selected:hover{
+    background:rgba(107,114,128,0.4);
+    border:1.5px solid #024b57;
+    color:#0d0e13;
+  }
+  .chip:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
+
+  /* ---------- CTA BUTTON ---------- */
+  .cta{
+    appearance:none;
+    width:100%;
+    height:36px;
+    border:none;
+    border-radius:var(--radius-lg);
+    background:var(--accent-primary);
+    color:var(--text-inverted);
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:18px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    cursor:pointer;
+    transition:background-color 140ms ease, box-shadow 140ms ease, transform 100ms ease;
+  }
+  .cta:hover{box-shadow:0 6px 16px rgba(0,95,110,.3);filter:brightness(1.04);}
+  .cta:active{background:var(--accent-pressed);transform:scale(.985);box-shadow:none;}
+  .cta:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
+
+  /* ---------- ACCORDION ---------- */
+  .accordion-trigger{
+    appearance:none;
+    background:none;
+    border:none;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 0 var(--space-sm) 0;
+    border-bottom:1px solid var(--border-default);
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.3px;
+    color:var(--text-placeholder);
+    cursor:pointer;
+  }
+  .accordion-trigger svg{width:14px;height:14px;transition:transform 280ms ease;color:inherit;}
+  .card.is-expanded .accordion-trigger{color:var(--text-muted);}
+  .card.is-expanded .accordion-trigger svg{transform:rotate(180deg);}
+
+  .advanced-wrap{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 320ms ease;
+  }
+  .card.is-expanded .advanced-wrap{grid-template-rows:1fr;}
+  .advanced-inner{
+    min-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:opacity 200ms ease 60ms;
+  }
+  .card.is-expanded .advanced-inner{opacity:1;}
+  .advanced-inner-pad{padding-top:var(--space-lg);display:flex;flex-direction:column;gap:var(--space-lg);}
+
+  .cta-slot[hidden]{display:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .advanced-wrap, .advanced-inner, .accordion-trigger svg, .chip, .cta{transition:none !important;}
+  }
+
+  /* ---------- MULTI-SCREEN SWITCHING ---------- */
+
+  .screen{ display:none; height:100%; overflow-y:auto; }
+  .screen.is-active{ display:block; }
+  .logo{ cursor:default; }
+  #logoResults{ cursor:pointer; }
+
+  /* ---------- RESULTS SCREEN ---------- */
+  .results-content{ padding: var(--space-2xl) var(--space-xl) var(--space-2xl); }
+  .results-title{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:700;
+    font-size:20px;
+    color: var(--text-on-light);
+    margin:0 0 var(--space-md);
+  }
+  .results-filters-card{
+    background: var(--bg-surface-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    display:flex;
+    flex-direction:column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+  .search-input{
+    position:relative;
+    height:36px;
+    border:1px solid var(--border-module);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface-light);
+    display:flex;
+    align-items:center;
+    gap: var(--space-sm);
+    padding: 0 var(--space-md) 0 36px;
+    font-size:16px;
+    color: var(--text-placeholder);
+    cursor:default;
+  }
+  .search-input svg{ position:absolute; left:10px; width:18px; height:18px; color: var(--text-muted); }
+  .btn-outline{
+    appearance:none;
+    width:100%;
+    height:36px;
+    border:1px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    background:#ffffff;
+    color: var(--accent-pressed);
+    font-family: var(--font-body);
+    font-weight:500;
+    font-size:18px;
+    cursor:pointer;
+    transition: background-color 140ms ease, transform 100ms ease;
+  }
+  .btn-outline:hover{ background:#fff3ee; }
+  .btn-outline:active{ background:#ffe7dd; transform:scale(.985); }
+  .btn-outline:focus-visible{ outline:2px solid var(--text-default); outline-offset:2px; }
+
+  .filter-row{ display:flex; align-items:center; gap: var(--space-md); margin-top: var(--space-md); }
+  .ean-toggle{ display:flex; align-items:center; gap: var(--space-sm); font-size:16px; color: var(--text-on-light); cursor:default; flex:none; }
+  .toggle{ width:34px; height:20px; border-radius:999px; background: var(--accent-primary); position:relative; flex:none; }
+  .toggle-knob{ position:absolute; top:1px; right:1px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--accent-primary); box-sizing:border-box; }
+  .v-divider{ width:1px; height:20px; background: var(--border-default); flex:none; }
+  .mini-trigger{
+    appearance:none; background:none; border:none;
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--font-body); font-size:16px; color: var(--text-on-light);
+    cursor:default; padding:0; white-space:nowrap;
+  }
+  .mini-trigger svg:first-child{ width:18px; height:18px; color:var(--text-muted); flex:none; }
+  .mini-trigger .field-chevron{ color:var(--text-muted); }
+
+  .applied-filters{ display:flex; align-items:center; gap: var(--space-sm); flex-wrap:wrap; margin-top: var(--space-sm); }
+  .results-count{ font-size:14px; color: var(--text-muted); }
+  .filter-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    border:1px solid rgba(0,0,0,.2);
+    border-radius: var(--radius-pill);
+    padding:4px 10px;
+    font-family: var(--font-mono);
+    font-size:14px;
+    color: var(--accent-primary);
+  }
+  .pill-remove{
+    appearance:none; background:none; border:none; color:inherit;
+    font-size:14px; line-height:1; cursor:default; padding:0;
+  }
+  .clear-all{
+    appearance:none; background:none; border:none; padding:0;
+    align-self:flex-start;
+    font-family: var(--font-body); font-size:14px; color: var(--text-muted);
+    cursor:default; margin-top:2px;
+  }
+
+  /* ---------- PRODUCT ROW ---------- */
+  .product-row{
+    background:#ffffff;
+    border:1px solid var(--border-module);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display:flex; flex-direction:column; gap: var(--space-md);
+  }
+  .product-row + .product-row{ margin-top: var(--space-md); }
+  .pr-top{
+    border:1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    display:flex; justify-content:space-between; gap: var(--space-sm);
+  }
+  .pr-info{ display:flex; gap: var(--space-md); }
+  .pr-image{
+    flex:none; width:60px; height:92px;
+    background: var(--bg-page);
+    border-radius: var(--radius-sm);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--text-muted);
+  }
+  .pr-info-text{ display:flex; flex-direction:column; gap: var(--space-sm); }
+  .pr-spec{ font-size:16px; color: var(--text-default); }
+  .pr-model{ font-size:16px; color: var(--text-muted); margin-top:-6px; }
+  .pr-chips{ display:flex; gap: var(--space-sm); }
+  .info-tag{
+    border:1px solid var(--border-default);
+    background: var(--bg-chip);
+    color: var(--text-on-light);
+    font-family: var(--font-body);
+    font-size:14px;
+    padding:8px 10px;
+    border-radius: var(--radius-sm);
+    cursor:default;
+  }
+  .pr-icons{ display:flex; align-items:center; gap: var(--space-sm); color: var(--text-muted); }
+  .pr-icons svg{ width:22px; height:18px; }
+
+  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: var(--space-md); text-align:right; flex:none; }
+  .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:18px; color:var(--text-default); }
+  .pr-netto{ font-size:16px; color:var(--text-muted); margin-top:2px; }
+  .pr-stock{ display:flex; align-items:center; gap:6px; font-size:16px; color:var(--text-default); justify-content:flex-end; }
+  .stock-dot{ width:10px; height:10px; border-radius:50%; background:#16a34a; flex:none; }
+  .pr-delivery{ font-size:16px; color:#16a34a; margin-top:4px; }
+
+  .pr-second{
+    background:#ffffff;
+    border:1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    display:flex; flex-direction:column; gap: var(--space-xs);
+  }
+  .pr-brand-row{ display:flex; align-items:center; justify-content:space-between; }
+  .pr-brand{ font-size:16px; color: var(--text-on-light); }
+  .pr-eu-labels{ display:flex; align-items:center; gap: var(--space-sm); }
+  .eu-badge{ display:flex; align-items:center; gap:4px; font-family:var(--font-mono); font-size:14px; color:var(--text-default); }
+  .eu-badge .letter{ background: var(--text-on-light); color:#fff; border-radius: var(--radius-sm); padding:0 6px; }
+  .eu-badge svg{ width:14px; height:14px; color: var(--text-muted); }
+  .eu-badge.is-faded svg{ opacity:.45; }
+  .pr-segment-row{ display:flex; justify-content:space-between; font-size:16px; color:var(--text-muted); }
+
+  .pr-purchase{ display:flex; align-items:center; gap: var(--space-md); }
+  .qty-stepper{
+    display:flex; align-items:center;
+    border:1px solid var(--bg-chip);
+    border-radius: var(--radius-md);
+    overflow:hidden;
+    flex:0 0 106px;
+    height:34px;
+  }
+  .qty-btn{
+    appearance:none; border:none; background: var(--bg-chip);
+    width:28px; height:34px;
+    font-size:16px; color: var(--text-on-light);
+    cursor:pointer;
+    transition: background-color 140ms ease, color 140ms ease;
+  }
+  .qty-btn:hover{ background: var(--bg-chip-hover); }
+  .qty-btn:active{ background: var(--accent-pressed); color:#fff; }
+  .qty-btn:focus-visible{ outline:2px solid var(--text-default); outline-offset:1px; }
+  .qty-value{ flex:1; text-align:center; font-size:16px; color: var(--text-on-light); }
+  .cta.cta-sm{ height:32px; font-size:18px; }
+  .pr-add{ flex:1; }
+
+  /* ── FIELD interactive state ─────────────────── */
+  .field{ cursor:pointer; }
+  .field.dd-open .field-chevron{ transform:rotate(180deg); }
+  .field.dd-open .field-label{ color:var(--text-on-light); }
+  .field-chevron{ transition:transform 220ms ease; }
+  /* selected state */
+  .field.has-value .field-label{ color:var(--accent-primary); }
+
+  /* ── DROPDOWN POSITIONED ─────────────────────── */
+  .dd-backdrop{
+    display:none;
+    position:fixed; inset:0;
+    background:transparent;
+    z-index:200;
+  }
+  .dd-backdrop.is-open{ display:block; }
+  .dd-sheet{
+    display:none;
+    position:fixed;
+    background:#fff;
+    border-radius:0 0 var(--radius-lg) var(--radius-lg);
+    z-index:201;
+    max-height:220px;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,.14);
+    border:1px solid var(--border-default);
+    border-top:none;
+  }
+  .dd-sheet.is-open{ display:flex; }
+  .dd-header{ display:none; }
+  .dd-search-wrap{
+    padding:var(--space-sm) var(--space-md);
+    border-bottom:1px solid var(--border-surface);
+    flex:none;
+  }
+  .dd-search{
+    position:relative; height:32px;
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-sm);
+    display:flex; align-items:center;
+    padding:0 var(--space-sm) 0 28px;
+  }
+  .dd-search svg{
+    position:absolute; left:6px; width:14px; height:14px;
+    color:var(--text-muted);
+  }
+  .dd-search input{
+    border:none; outline:none; font-family:var(--font-body);
+    font-size:14px; color:var(--text-default); width:100%;
+    background:transparent;
+  }
+  .dd-search input::placeholder{ color:var(--text-placeholder); }
+  .dd-list{ overflow-y:auto; flex:1; }
+  .dd-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px var(--space-md);
+    border-bottom:1px solid var(--border-surface);
+    cursor:pointer;
+    pointer-events:auto;
+    gap:var(--space-sm);
+    transition:background 100ms ease;
+  }
+  .dd-item:hover{ background:var(--bg-page); }
+  .dd-item:last-child{ border-bottom:none; }
+  .dd-item-label{
+    font-size:16px; color:var(--text-on-light); flex:1;
+  }
+  .dd-item-label.is-code{
+    font-family:var(--font-mono); font-size:14px;
+  }
+  .dd-item-count{ font-size:14px; color:var(--text-muted); }
+  .dd-item-radio{
+    width:18px; height:18px; border-radius:50%;
+    border:1.5px solid var(--border-default);
+    flex:none; display:flex; align-items:center; justify-content:center;
+    transition:border-color 140ms ease;
+  }
+  .dd-item.is-selected .dd-item-radio{
+    border-color:var(--accent-primary);
+    background:var(--accent-primary);
+  }
+  .dd-item.is-selected .dd-item-radio::after{
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:#fff; display:block;
+  }
+  .dd-item.is-selected .dd-item-label{ color:var(--accent-primary); }
+  .dd-empty{
+    padding:var(--space-2xl) var(--space-lg);
+    text-align:center; color:var(--text-muted); font-size:15px;
+  }
+</style>
+</head>
+<body>
+
+<div class="meta-caption">TIOR — мобайл · інтерактивний прототип<br>«Pokaż opony» → переходить на «Wyniki wyszukiwania». Робочі елементи там: чіпи, кнопки, степер кількості. Лого на Wyniki wyszukiwania повертає на головну.</div>
+
+<div class="phone" id="phone">
+
+<div class="screen is-active" id="screenHome">
+
+  <header>
+    <div class="logo" id="logoHome"><img src="data:image/png;base64,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" alt="OPONYTOMY" style="height:24px;width:auto;display:block;"></div>
+    <div class="header-actions">
+      <span class="lang">EN</span>
+      <span class="icon-btn" title="Account (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
+      </span>
+      <span class="icon-btn" title="Cart (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
+      </span>
+      <span class="icon-btn" title="Menu (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </span>
+    </div>
+  </header>
+
+  <div class="hero">NIEZAWODNE DANE.<br><span class="muted-line">ZAWSZE POD RĘKĄ.</span></div>
+
+  <div class="tabs">
+    <div class="tab-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M8 12h12M4 18h16"/><circle cx="5" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="13" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.6" fill="currentColor" stroke="none"/></svg>
+      Ustaw filtry
+    </div>
+  </div>
+
+  <div class="card" id="filtersCard">
+
+    <div class="size-row">
+      <div class="field" style="flex:0 0 131px">
+        <div class="field-label-row">
+          <span class="field-label">ROZMIAR</span>
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <button class="add-size" id="addSizeLink">+ dodaj rozmiar</button>
+      <div class="field" id="secondSizeField" style="flex:1" hidden>
+        <div class="field-label-row">
+          <span class="field-label">ROZMIAR</span>
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="row two-col">
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">TYP</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">SEZON</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="field-label-row">
+          <span class="field-label">
+            <span class="eu-icons">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v15"/><path d="M3 21h10"/><rect x="6.3" y="6.3" width="3.4" height="2.6" rx=".3"/><path d="M12 11h1.3a1.7 1.7 0 0 1 1.7 1.7V16a1.5 1.5 0 0 0 3 0v-4.3l-1.8-1.8"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.3 17a4.3 4.3 0 0 1 0-8.6 5.3 5.3 0 0 1 10.2 1.7A3.9 3.9 0 0 1 16 17H6.3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4h3l4 4V6l-4 4H3z"/><path d="M14.5 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 7a7.6 7.6 0 0 1 0 10"/></svg>
+            </span>
+            EU LABLE
+          </span>
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="row two-col">
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">SEGMENT</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">MARKA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="row two-col">
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+      <div class="field">
+        <div class="field-label-row"><span class="field-label">EAN</span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="chips-row">
+        <button class="chip" data-name="Run Flat">Run Flat</button>
+        <button class="chip" data-name="XL">XL</button>
+        <button class="chip" data-name="RF">RF</button>
+        <button class="chip" data-name="Dostawa 48h">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h11v8H2zM13 11h4l4 3v1h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>
+          Dostawa 48h
+        </button>
+      </div>
+    </div>
+
+    <div class="row cta-slot" id="ctaSlotCollapsed">
+      <button class="cta" id="ctaCollapsed">Pokaż opony</button>
+    </div>
+
+    <div class="row">
+      <button class="accordion-trigger" id="accordionTrigger" aria-expanded="false" aria-controls="advancedWrap">
+        Wyszukiwanie zaawansowane
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="advanced-wrap" id="advancedWrap">
+      <div class="advanced-inner">
+        <div class="advanced-inner-pad">
+
+          <div class="two-col">
+            <div class="field">
+              <div class="field-label-row"><span class="field-label">HOMOLOGACJA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            </div>
+            <div class="field">
+              <div class="field-label-row"><span class="field-label">DOT</span></div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <div class="field-label-row"><span class="field-label">INDEKS NOŚNOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            </div>
+            <div class="field">
+              <div class="field-label-row"><span class="field-label">INDEKS PRĘDKOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+            </div>
+          </div>
+
+          <div class="chips-row">
+            <button class="chip" data-name="Ochrona felgi">Ochrona felgi</button>
+          </div>
+
+          <div class="cta-slot" id="ctaSlotExpanded" hidden>
+            <button class="cta" id="ctaExpanded">Pokaż opony</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /screenHome -->
+
+<div class="screen" id="screenResults">
+
+  <header>
+    <div class="logo" id="logoResults" style="cursor:pointer;"><img src="data:image/png;base64,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" alt="OPONYTOMY" style="height:24px;width:auto;display:block;"></div>
+    <div class="header-actions">
+      <span class="lang">EN</span>
+      <span class="icon-btn" title="Account (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
+      </span>
+      <span class="icon-btn" title="Cart (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
+      </span>
+      <span class="icon-btn" title="Menu (не в скоупі)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </span>
+    </div>
+  </header>
+
+  <div class="results-content">
+    <h1 class="results-title">Wyniki wyszukiwania</h1>
+
+    <div class="results-filters-card">
+      <div class="search-input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+        <span>Rozmiar, marka, model lub kod EAN</span>
+      </div>
+      <button class="btn-outline">Button</button>
+
+      <div class="filter-row">
+        <div class="ean-toggle">
+          <span>EAN</span>
+          <span class="toggle"><span class="toggle-knob"></span></span>
+        </div>
+        <span class="v-divider"></span>
+        <button class="mini-trigger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M8 12h8M11 18h2"/></svg>
+          Filtry
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="mini-trigger">
+          Dostępność
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="applied-filters">
+        <span class="results-count">9 wyników:</span>
+        <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń filtr LI 91">×</button></span>
+        <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń filtr 205/55 R16">×</button></span>
+      </div>
+      <button class="clear-all">Wyczyść wszystko</button>
+    </div>
+
+        <div class="product-row">
+      <div class="pr-top">
+        <div class="pr-info">
+          <div class="pr-image">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9.3"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="6.4" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="17.6" r=".9" fill="currentColor" stroke="none"/><circle cx="6.4" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="17.6" cy="12" r=".9" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="pr-info-text">
+            <div class="pr-spec">205/55 R16  91V</div>
+            <div class="pr-model">Primacy 4+</div>
+            <div class="pr-chips">
+              <span class="info-tag">XL</span>
+              <span class="info-tag">FR</span>
+            </div>
+            <div class="pr-icons">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 16l1.5-5.5A2 2 0 0 1 6.4 9h11.2a2 2 0 0 1 1.9 1.5L21 16"/><path d="M3 16h18v2.4A1.6 1.6 0 0 1 19.4 20H4.6A1.6 1.6 0 0 1 3 18.4z"/><circle cx="7.5" cy="16" r="1.4"/><circle cx="16.5" cy="16" r="1.4"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="pr-price-col">
+          <div class="pr-price">
+            <div class="pr-gross">151.59 zł</div>
+            <div class="pr-netto">129.28 zł</div>
+          </div>
+          <div class="pr-availability">
+            <div class="pr-stock"><span class="stock-dot"></span>84 szt.</div>
+            <div class="pr-delivery">1 dzień</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-second">
+        <div class="pr-brand-row">
+          <span class="pr-brand">Michelin</span>
+          <div class="pr-eu-labels">
+            <span class="eu-badge is-faded"><span class="letter">A</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v15"/><path d="M3 21h10"/></svg></span>
+            <span class="eu-badge"><span class="letter">B</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.3 17a4.3 4.3 0 0 1 0-8.6 5.3 5.3 0 0 1 10.2 1.7A3.9 3.9 0 0 1 16 17H6.3z"/></svg></span>
+            <span class="eu-badge">68B<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4h3l4 4V6l-4 4H3z"/><path d="M14.5 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 7a7.6 7.6 0 0 1 0 10"/></svg></span>
+          </div>
+        </div>
+        <div class="pr-segment-row">
+          <span>Medium</span>
+          <span>2023</span>
+        </div>
+      </div>
+
+      <div class="pr-purchase">
+        <div class="qty-stepper">
+          <button class="qty-btn qty-minus" aria-label="Zmniejsz liczbę">−</button>
+          <span class="qty-value">1</span>
+          <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
+        </div>
+        <button class="cta cta-sm pr-add">Dodaj</button>
+      </div>
+    </div>
+
+    <div class="product-row">
+      <div class="pr-top">
+        <div class="pr-info">
+          <div class="pr-image">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9.3"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="6.4" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="17.6" r=".9" fill="currentColor" stroke="none"/><circle cx="6.4" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="17.6" cy="12" r=".9" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="pr-info-text">
+            <div class="pr-spec">205/55 R16  91V</div>
+            <div class="pr-model">Primacy 4+</div>
+            <div class="pr-chips">
+              <span class="info-tag">XL</span>
+              <span class="info-tag">FR</span>
+            </div>
+            <div class="pr-icons">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 16l1.5-5.5A2 2 0 0 1 6.4 9h11.2a2 2 0 0 1 1.9 1.5L21 16"/><path d="M3 16h18v2.4A1.6 1.6 0 0 1 19.4 20H4.6A1.6 1.6 0 0 1 3 18.4z"/><circle cx="7.5" cy="16" r="1.4"/><circle cx="16.5" cy="16" r="1.4"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="pr-price-col">
+          <div class="pr-price">
+            <div class="pr-gross">151.59 zł</div>
+            <div class="pr-netto">129.28 zł</div>
+          </div>
+          <div class="pr-availability">
+            <div class="pr-stock"><span class="stock-dot"></span>84 szt.</div>
+            <div class="pr-delivery">1 dzień</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-second">
+        <div class="pr-brand-row">
+          <span class="pr-brand">Michelin</span>
+          <div class="pr-eu-labels">
+            <span class="eu-badge is-faded"><span class="letter">A</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v15"/><path d="M3 21h10"/></svg></span>
+            <span class="eu-badge"><span class="letter">B</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.3 17a4.3 4.3 0 0 1 0-8.6 5.3 5.3 0 0 1 10.2 1.7A3.9 3.9 0 0 1 16 17H6.3z"/></svg></span>
+            <span class="eu-badge">68B<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4h3l4 4V6l-4 4H3z"/><path d="M14.5 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 7a7.6 7.6 0 0 1 0 10"/></svg></span>
+          </div>
+        </div>
+        <div class="pr-segment-row">
+          <span>Medium</span>
+          <span>2023</span>
+        </div>
+      </div>
+
+      <div class="pr-purchase">
+        <div class="qty-stepper">
+          <button class="qty-btn qty-minus" aria-label="Zmniejsz liczbę">−</button>
+          <span class="qty-value">1</span>
+          <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
+        </div>
+        <button class="cta cta-sm pr-add">Dodaj</button>
+      </div>
+    </div>
+
+    <div class="product-row">
+      <div class="pr-top">
+        <div class="pr-info">
+          <div class="pr-image">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9.3"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="6.4" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="17.6" r=".9" fill="currentColor" stroke="none"/><circle cx="6.4" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="17.6" cy="12" r=".9" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="pr-info-text">
+            <div class="pr-spec">205/55 R16  91V</div>
+            <div class="pr-model">Primacy 4+</div>
+            <div class="pr-chips">
+              <span class="info-tag">XL</span>
+              <span class="info-tag">FR</span>
+            </div>
+            <div class="pr-icons">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 16l1.5-5.5A2 2 0 0 1 6.4 9h11.2a2 2 0 0 1 1.9 1.5L21 16"/><path d="M3 16h18v2.4A1.6 1.6 0 0 1 19.4 20H4.6A1.6 1.6 0 0 1 3 18.4z"/><circle cx="7.5" cy="16" r="1.4"/><circle cx="16.5" cy="16" r="1.4"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="pr-price-col">
+          <div class="pr-price">
+            <div class="pr-gross">151.59 zł</div>
+            <div class="pr-netto">129.28 zł</div>
+          </div>
+          <div class="pr-availability">
+            <div class="pr-stock"><span class="stock-dot"></span>84 szt.</div>
+            <div class="pr-delivery">1 dzień</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-second">
+        <div class="pr-brand-row">
+          <span class="pr-brand">Michelin</span>
+          <div class="pr-eu-labels">
+            <span class="eu-badge is-faded"><span class="letter">A</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v15"/><path d="M3 21h10"/></svg></span>
+            <span class="eu-badge"><span class="letter">B</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.3 17a4.3 4.3 0 0 1 0-8.6 5.3 5.3 0 0 1 10.2 1.7A3.9 3.9 0 0 1 16 17H6.3z"/></svg></span>
+            <span class="eu-badge">68B<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4h3l4 4V6l-4 4H3z"/><path d="M14.5 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 7a7.6 7.6 0 0 1 0 10"/></svg></span>
+          </div>
+        </div>
+        <div class="pr-segment-row">
+          <span>Medium</span>
+          <span>2023</span>
+        </div>
+      </div>
+
+      <div class="pr-purchase">
+        <div class="qty-stepper">
+          <button class="qty-btn qty-minus" aria-label="Zmniejsz liczbę">−</button>
+          <span class="qty-value">1</span>
+          <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
+        </div>
+        <button class="cta cta-sm pr-add">Dodaj</button>
+      </div>
+    </div>
+
+
+
+  </div>
+</div><!-- /screenResults -->
+
+
+
+</div><!-- /.phone -->
+
+<!-- DROPDOWN (outside phone, fixed to viewport) -->
+<div class="dd-backdrop" id="ddBackdrop"></div>
+<div class="dd-sheet" id="ddSheet">
+  <div class="dd-search-wrap" id="ddSearchWrap">
+    <div class="dd-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+      <input type="text" id="ddSearchInput" placeholder="Szukaj...">
+    </div>
+  </div>
+  <div class="dd-list" id="ddList"></div>
+</div>
+
+<script>
+  // "+ dodaj rozmiar" reveals a second Rozmiar field (Drugi Rozmiar)
+  const addSizeLink = document.getElementById('addSizeLink');
+  const secondSizeField = document.getElementById('secondSizeField');
+  addSizeLink.addEventListener('click', () => {
+    addSizeLink.hidden = true;
+    secondSizeField.hidden = false;
+  });
+
+  // chips: hover handled in CSS, click toggles persistent "selected" state
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('is-selected'));
+  });
+
+  // accordion: expand/collapse + move which CTA slot is visible
+  const card = document.getElementById('filtersCard');
+  const trigger = document.getElementById('accordionTrigger');
+  const ctaCollapsed = document.getElementById('ctaSlotCollapsed');
+  const ctaExpanded = document.getElementById('ctaSlotExpanded');
+
+  trigger.addEventListener('click', () => {
+    const expanded = !card.classList.contains('is-expanded');
+    card.classList.toggle('is-expanded', expanded);
+    trigger.setAttribute('aria-expanded', String(expanded));
+    ctaCollapsed.hidden = expanded;
+    ctaExpanded.hidden = !expanded;
+  });
+
+
+  // screen navigation: home <-> results
+  const phoneEl = document.getElementById('phone');
+  const screenHome = document.getElementById('screenHome');
+  const screenResults = document.getElementById('screenResults');
+
+  function goToResults(){
+    screenHome.classList.remove('is-active');
+    screenResults.classList.add('is-active');
+    phoneEl.classList.add('is-results');
+    phoneEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  function goHome(){
+    screenResults.classList.remove('is-active');
+    screenHome.classList.add('is-active');
+    phoneEl.classList.remove('is-results');
+  }
+  document.getElementById('ctaCollapsed').addEventListener('click', goToResults);
+  document.getElementById('ctaExpanded').addEventListener('click', goToResults);
+  document.getElementById('logoResults').addEventListener('click', goHome);
+
+  // quantity steppers on product rows
+  document.querySelectorAll('.qty-stepper').forEach(stepper => {
+    const valueEl = stepper.querySelector('.qty-value');
+    stepper.querySelector('.qty-minus').addEventListener('click', () => {
+      valueEl.textContent = Math.max(1, parseInt(valueEl.textContent, 10) - 1);
+    });
+    stepper.querySelector('.qty-plus').addEventListener('click', () => {
+      valueEl.textContent = parseInt(valueEl.textContent, 10) + 1;
+    });
+  });
+
+  // ── DROPDOWN DATA ────────────────────────────────────────────────────────
+  const DD_DATA = {
+    rozmiar: {
+      label: 'ROZMIAR', type: 'code', search: true,
+      items: [
+        '100/75 R12','100/75 R15','100/75 R15.3',
+        '100/75 R15.5','100/75 R20','100/75 R20 (2)',
+        '100/80 R12','100/80 R20','100/12','100/15'
+      ]
+    },
+    typ: {
+      label: 'TYP', type: 'text', search: true,
+      items: [
+        'Agricultural','Industrial','Ltt','Moto',
+        'Pcr','Quad','Racing','Rft','Scooter','Suv','Tbr'
+      ]
+    },
+    sezon: {
+      label: 'SEZON', type: 'text', search: false,
+      items: ['All seasons','Summer','Winter']
+    },
+    segment: {
+      label: 'SEGMENT', type: 'text', search: false,
+      items: ['Premium','Średnia','Budżet']
+    },
+    marka: {
+      label: 'MARKA', type: 'text', search: true,
+      items: [
+        'Antares','Aplus','Apollo','Aptany','Arisun',
+        'Arivo','Ascenso','Atf','Atlander','Atlas','Austone'
+      ]
+    },
+    model: {
+      label: 'MODEL', type: 'text', search: true,
+      items: []
+    },
+    homologacja: {
+      label: 'HOMOLOGACJA', type: 'text', search: true,
+      items: [
+        {label:'Alfa Romeo',count:1},{label:'Aston Martin',count:1},
+        {label:'Audi',count:3},{label:'BMW',count:2},
+        {label:'Ferrari',count:2},{label:'Jaguar',count:1},
+        {label:'Lamborghini',count:1},{label:'Land Rover',count:1},
+        {label:'Maserati',count:1},{label:'Mercedes-Benz',count:5}
+      ]
+    },
+    dot: {
+      label: 'DOT', type: 'code', search: true,
+      items: ['≥ 2025','≥ 2024','≥ 2023','≥ 2022','< 2021']
+    },
+    'indeks-nosnosci': {
+      label: 'INDEKS NOŚNOŚCI', type: 'code', search: true,
+      items: ['91','92','93','94','95','96','97','98','99','100']
+    },
+    'indeks-predkosci': {
+      label: 'INDEKS PRĘDKOŚCI', type: 'code', search: true,
+      items: ['H (210)','T (190)','V (240)','W (270)','Y (300)','Z (>240)']
+    }
+  };
+
+  // label text → dropdown key mapping
+  const LABEL_TO_KEY = {
+    'ROZMIAR':'rozmiar','TYP':'typ','SEZON':'sezon',
+    'SEGMENT':'segment','MARKA':'marka','MODEL':'model',
+    'HOMOLOGACJA':'homologacja','DOT':'dot',
+    'INDEKS NOŚNOŚCI':'indeks-nosnosci',
+    'INDEKS PRĘDKOŚCI':'indeks-predkosci'
+  };
+
+  const ddBackdrop = document.getElementById('ddBackdrop');
+  const ddSheet    = document.getElementById('ddSheet');
+  const ddTitle    = document.getElementById('ddTitle');
+  const ddList     = document.getElementById('ddList');
+  const ddSearchWrap = document.getElementById('ddSearchWrap');
+  const ddSearchInput = document.getElementById('ddSearchInput');
+  const ddClose    = document.getElementById('ddClose');
+
+  let activeField  = null;
+  let activeKey    = null;
+  const selections = {}; // key → selected label string
+
+  // Wire all .field divs
+  document.querySelectorAll('.field').forEach(field => {
+    const labelEl = field.querySelector('.field-label');
+    if (!labelEl) return;
+    const labelText = labelEl.textContent.trim();
+    const key = LABEL_TO_KEY[labelText];
+    if (!key) return;
+
+    field.dataset.ddKey = key;
+
+    field.addEventListener('click', () => openDropdown(key, field));
+  });
+
+  function openDropdown(key, fieldEl) {
+    const data = DD_DATA[key];
+    if (!data) return;
+
+    // close previous if different field
+    if (activeField && activeField !== fieldEl) {
+      activeField.classList.remove('dd-open');
+    }
+
+    activeField = fieldEl;
+    activeKey   = key;
+
+    ddSearchWrap.hidden = !data.search;
+    ddSearchInput.value = '';
+    renderList(data.items, '', key);
+
+    // position fixed, anchored to field in viewport
+    const fieldRect = fieldEl.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - fieldRect.bottom - 8;
+    const maxH = Math.min(220, spaceBelow);
+
+    ddSheet.style.top       = fieldRect.bottom + 'px';
+    ddSheet.style.left      = fieldRect.left + 'px';
+    ddSheet.style.width     = fieldRect.width + 'px';
+    ddSheet.style.maxHeight = maxH + 'px';
+
+    fieldEl.classList.add('dd-open');
+    ddBackdrop.classList.add('is-open');
+    ddSheet.classList.add('is-open');
+
+    if (data.search) setTimeout(() => ddSearchInput.focus(), 60);
+  }
+
+  function renderList(items, query, key) {
+    const data = DD_DATA[key];
+    const isCode = data.type === 'code';
+    const selected = selections[key];
+
+    const filtered = items.filter(item => {
+      const text = typeof item === 'string' ? item : item.label;
+      return text.toLowerCase().includes(query.toLowerCase());
+    });
+
+    if (!filtered.length) {
+      ddList.innerHTML = '<div class="dd-empty">Brak wyników</div>';
+      return;
+    }
+
+    ddList.innerHTML = filtered.map(item => {
+      const label = typeof item === 'string' ? item : item.label;
+      const count = typeof item === 'object' && item.count != null ? item.count : null;
+      const isSel = selected === label;
+      return `<div class="dd-item${isSel ? ' is-selected' : ''}" data-val="${label}">
+        <span class="dd-item-label${isCode ? ' is-code' : ''}">${label}</span>
+        ${count != null ? `<span class="dd-item-count">(${count})</span>` : ''}
+        <span class="dd-item-radio"></span>
+      </div>`;
+    }).join('');
+
+    ddList.querySelectorAll('.dd-item').forEach(item => {
+      item.addEventListener('click', () => selectItem(item.dataset.val));
+    });
+  }
+
+  function selectItem(val) {
+    selections[activeKey] = val;
+
+    // update field: color change only, no extra row
+    activeField.classList.add('has-value');
+
+    closeDropdown();
+  }
+
+  function closeDropdown() {
+    if (activeField) activeField.classList.remove('dd-open');
+    ddBackdrop.classList.remove('is-open');
+    ddSheet.classList.remove('is-open');
+    activeField = null;
+  }
+
+  // reposition sheet on any scroll (keeps it anchored to the trigger)
+  function syncSheetPos() {
+    if (!activeField || !ddSheet.classList.contains('is-open')) return;
+    const r = activeField.getBoundingClientRect();
+    // close if field scrolled out of view
+    if (r.bottom < 0 || r.top > window.innerHeight) { closeDropdown(); return; }
+    ddSheet.style.top  = r.bottom + 'px';
+    ddSheet.style.left = r.left + 'px';
+    ddSheet.style.width = r.width + 'px';
+  }
+  window.addEventListener('scroll', syncSheetPos, true);
+
+  // stop propagation inside sheet so backdrop doesn't steal clicks
+  ddSheet.addEventListener('click', e => e.stopPropagation());
+  ddBackdrop.addEventListener('click', closeDropdown);
+  ddClose.addEventListener('click', closeDropdown);
+  ddSearchInput.addEventListener('input', e => {
+    const data = DD_DATA[activeKey];
+    if (data) renderList(data.items, e.target.value, activeKey);
+  });
+
+</script>
+</body>
+</html>
