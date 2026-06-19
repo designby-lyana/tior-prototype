@@ -554,6 +554,39 @@
     padding:var(--space-2xl) var(--space-lg);
     text-align:center; color:var(--text-muted); font-size:15px;
   }
+
+  .card-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:var(--space-md);
+    border-bottom:1px solid var(--border-surface);
+  }
+  .card-title{
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:18px;
+    color:var(--text-default);
+  }
+  .card-count{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:11px;
+    color:var(--text-muted);
+    letter-spacing:.4px;
+  }
+  .rozmiar-block{
+    background:var(--bg-page);
+    border-radius:var(--radius-sm);
+    padding:var(--space-md);
+  }
+  .rozmiar-hint{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:10px;
+    letter-spacing:.7px;
+    color:var(--accent-primary);
+    text-transform:uppercase;
+    margin-bottom:var(--space-sm);
+  }
 </style>
 </head>
 <body>
@@ -591,7 +624,14 @@
 
   <div class="card" id="filtersCard">
 
-    <div class="size-row">
+    <div class="card-header">
+      <span class="card-title">Szukaj opon</span>
+      <span class="card-count">12 000+ pozycji</span>
+    </div>
+
+    <div class="rozmiar-block">
+      <div class="rozmiar-hint">↓ zacznij tutaj</div>
+      <div class="size-row">
       <div class="field" style="flex:0 0 131px">
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
@@ -604,6 +644,7 @@
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
+      </div>
       </div>
     </div>
 
