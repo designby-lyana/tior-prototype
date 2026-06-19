@@ -1255,6 +1255,155 @@
     if (data) renderList(data.items, e.target.value, activeKey);
   });
 
+
+  // ── EU LABEL CUSTOM DROPDOWN ─────────────────────────────────────────────
+  var euSel = {opor:null, mokra:null, halas:null};
+  var euActiveField = null;
+  var euBtns = {opor:[], mokra:[], halas:[]};
+  document.querySelectorAll('.eu-gb').forEach(function(b){
+    var m = b.getAttribute('onclick').match(/'(\w+)'/);
+    if(m) euBtns[m[1]].push(b);
+  });
+
+  function openEuDropdown(fieldEl) {
+    euActiveField = fieldEl;
+    var sheet = document.getElementById('euSheet');
+    var backdrop = document.getElementById('euBackdrop');
+    var r = fieldEl.getBoundingClientRect();
+    sheet.style.top    = r.bottom + 'px';
+    sheet.style.left   = r.left + 'px';
+    sheet.style.width  = r.width + 'px';
+    sheet.style.display = 'block';
+    backdrop.style.display = 'block';
+    fieldEl.classList.add('dd-open');
+    // sync scroll
+    function sync(){
+      if(sheet.style.display==='none') return;
+      var rr = fieldEl.getBoundingClientRect();
+      if(rr.bottom < 0 || rr.top > window.innerHeight){ closeEu(); return; }
+      sheet.style.top  = rr.bottom + 'px';
+      sheet.style.left = rr.left + 'px';
+    }
+    window._euSync = sync;
+    window.addEventListener('scroll', sync, true);
+  }
+
+  function closeEu(){
+    document.getElementById('euSheet').style.display = 'none';
+    document.getElementById('euBackdrop').style.display = 'none';
+    if(euActiveField) euActiveField.classList.remove('dd-open');
+    if(window._euSync) window.removeEventListener('scroll', window._euSync, true);
+    euActiveField = null;
+  }
+
+  document.getElementById('euBackdrop').addEventListener('click', closeEu);
+  document.getElementById('euSheet').addEventListener('click', function(e){ e.stopPropagation(); });
+
+  function euPick(btn, cat, val, bg, fg){
+    euBtns[cat].forEach(function(b){
+      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea'; b.style.color='#323744';
+    });
+    btn.style.background = bg;
+    btn.style.borderColor = bg;
+    btn.style.color = fg;
+    euSel[cat] = val;
+    euUpdateLabel();
+  }
+
+  function euClear(){
+    Object.keys(euSel).forEach(function(k){ euSel[k]=null; });
+    Object.values(euBtns).flat().forEach(function(b){
+      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea'; b.style.color='#323744';
+    });
+    if(euActiveField){
+      var lbl = euActiveField.querySelector('.field-label');
+      if(lbl){ lbl.textContent = lbl.dataset.originalLabel || 'EU LABEL'; lbl.style.cssText=''; }
+      euActiveField.classList.remove('has-value');
+    }
+    document.getElementById('eu-clearrow').style.display='none';
+  }
+
+  function euUpdateLabel(){
+    var parts=[];
+    if(euSel.opor)  parts.push('Opór '  + euSel.opor);
+    if(euSel.mokra) parts.push('Mokra ' + euSel.mokra);
+    if(euSel.halas) parts.push('Hałas ' + euSel.halas);
+    if(parts.length && euActiveField){
+      var lbl = euActiveField.querySelector('.field-label');
+      if(lbl){
+        lbl.textContent = parts.join(' · ');
+        lbl.style.color = '#0d0e13';
+        lbl.style.fontFamily = "'Outfit', sans-serif";
+        lbl.style.fontWeight = '400';
+        lbl.style.fontSize = '13px';
+        lbl.style.textTransform = 'none';
+        lbl.style.letterSpacing = '0';
+      }
+      euActiveField.classList.add('has-value');
+      document.getElementById('eu-clearrow').style.display='block';
+    }
+  }
+
+  // Override field wiring for EU LABEL — skip standard dropdown
+  document.querySelectorAll('.field').forEach(function(field){
+    var lbl = field.querySelector('.field-label');
+    if(!lbl) return;
+    if(lbl.textContent.trim().includes('EU LABEL')){
+      field.removeEventListener && field.removeEventListener('click', null);
+      field.onclick = function(e){
+        e.stopPropagation();
+        openEuDropdown(field);
+      };
+    }
+  });
+
 </script>
+
+<!-- EU LABEL CUSTOM OVERLAY -->
+<div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;"></div>
+<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;">
+  <div style="padding:10px 12px 0;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
+      <div style="display:flex;gap:5px;" id="eu-opor">
+        <button class="eu-gb" onclick="euPick(this,'opor','A','#009d37','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','B','#78bb00','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','C','#fdf100','#323744')">C</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','D','#ffb000','#fafafa')">D</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','E','#e70000','#fafafa')">E</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Mokra nawierzchnia</div>
+      <div style="display:flex;gap:5px;" id="eu-mokra">
+        <button class="eu-gb" onclick="euPick(this,'mokra','A','#005ba4','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','B','#0072b9','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','C','#22a5de','#fafafa')">C</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','D','#6cc3f1','#323744')">D</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','E','#b2ebfe','#323744')">E</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Hałas</div>
+      <div style="display:flex;gap:5px;" id="eu-halas">
+        <button class="eu-gb" onclick="euPick(this,'halas','A','#6b7280','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'halas','B','#6b7280','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'halas','C','#6b7280','#fafafa')">C</button>
+      </div>
+    </div>
+    <div id="eu-clearrow" style="display:none;padding:8px 0;border-top:1px solid #eaeaea;text-align:right;">
+      <button onclick="euClear()" style="font-size:11px;color:#6b7280;background:none;border:none;cursor:pointer;font-family:inherit;">Wyczyść</button>
+    </div>
+  </div>
+</div>
+<style>
+.eu-gb{
+  width:38px;height:38px;border-radius:5px;
+  border:1.5px solid #eaeaea;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+  cursor:pointer;background:#eaeaea;color:#323744;
+  transition:all 100ms;
+}
+</style>
 </body>
 </html>
