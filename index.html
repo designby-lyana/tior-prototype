@@ -650,9 +650,9 @@
     </div>
 
     <div class="row">
-      <div class="field">
+      <div class="field" id="euLabelField">
         <div class="field-label-row">
-          <span class="field-label">
+          <span class="field-label" id="euLabelText">
             <span class="eu-icons"><img src="data:image/png;base64,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" alt="EU Label icons" style="height:16px;width:auto;display:block;"></span>
             EU LABEL
           </span>
@@ -1317,8 +1317,8 @@
       b.style.background='#eaeaea'; b.style.borderColor='#eaeaea'; b.style.color='#323744';
     });
     if(euActiveField){
-      var lbl = euActiveField.querySelector('.field-label');
-      if(lbl){ lbl.textContent = lbl.dataset.originalLabel || 'EU LABEL'; lbl.style.cssText=''; }
+      var lbl = document.getElementById('euLabelText');
+      if(lbl){ lbl.innerHTML = lbl.innerHTML.replace(/\s*Opór[^<]*/g,'').replace(/\s*Mokra[^<]*/g,'').replace(/\s*Hałas[^<]*/g,''); lbl.style.cssText=''; }
       euActiveField.classList.remove('has-value');
     }
     document.getElementById('eu-clearrow').style.display='none';
@@ -1329,8 +1329,8 @@
     if(euSel.opor)  parts.push('Opór '  + euSel.opor);
     if(euSel.mokra) parts.push('Mokra ' + euSel.mokra);
     if(euSel.halas) parts.push('Hałas ' + euSel.halas);
-    if(parts.length && euActiveField){
-      var lbl = euActiveField.querySelector('.field-label');
+    if(parts.length){
+      var lbl = document.getElementById('euLabelText');
       if(lbl){
         lbl.textContent = parts.join(' · ');
         lbl.style.color = '#0d0e13';
@@ -1345,18 +1345,15 @@
     }
   }
 
-  // Wire EU LABEL field separately
-  document.querySelectorAll('.field').forEach(function(field){
-    var lbl = field.querySelector('.field-label');
-    if(!lbl) return;
-    if(lbl.dataset.originalLabel === 'EU LABEL' || lbl.textContent.trim() === 'EU LABEL'){
-      field.style.cursor = 'pointer';
-      field.addEventListener('click', function(e){
-        e.stopPropagation();
-        openEuDropdown(field);
-      });
-    }
-  });
+  // Wire EU LABEL field by id
+  var euField = document.getElementById('euLabelField');
+  if(euField){
+    euField.style.cursor = 'pointer';
+    euField.addEventListener('click', function(e){
+      e.stopPropagation();
+      openEuDropdown(euField);
+    });
+  }
 
 </script>
 
