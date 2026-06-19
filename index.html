@@ -1130,6 +1130,7 @@
     const labelText = labelEl.textContent.trim();
     const key = LABEL_TO_KEY[labelText];
     if (!key) return;
+    if (labelText === 'EU LABEL') return; // handled by custom EU overlay
 
     field.dataset.ddKey = key;
 
@@ -1344,16 +1345,16 @@
     }
   }
 
-  // Override field wiring for EU LABEL — skip standard dropdown
+  // Wire EU LABEL field separately
   document.querySelectorAll('.field').forEach(function(field){
     var lbl = field.querySelector('.field-label');
     if(!lbl) return;
-    if(lbl.textContent.trim().includes('EU LABEL')){
-      field.removeEventListener && field.removeEventListener('click', null);
-      field.onclick = function(e){
+    if(lbl.dataset.originalLabel === 'EU LABEL' || lbl.textContent.trim() === 'EU LABEL'){
+      field.style.cursor = 'pointer';
+      field.addEventListener('click', function(e){
         e.stopPropagation();
         openEuDropdown(field);
-      };
+      });
     }
   });
 
