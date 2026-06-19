@@ -767,7 +767,7 @@
       <button class="btn-outline">Button</button>
 
       <div class="filter-row">
-        <div class="ean-toggle">
+        <div class="ean-toggle" id="eanToggle" style="cursor:pointer;" title="Pokaż/ukryj EAN">
           <span>EAN</span>
           <span class="toggle"><span class="toggle-knob"></span></span>
         </div>
@@ -835,6 +835,7 @@
           <span>Medium</span>
           <span>2023</span>
         </div>
+        <div class="ean-val" style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-top:4px;">EAN: 4056829394115</div>
       </div>
 
       <div class="pr-purchase">
@@ -891,6 +892,7 @@
           <span>Medium</span>
           <span>2023</span>
         </div>
+        <div class="ean-val" style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-top:4px;">EAN: 5452000816078</div>
       </div>
 
       <div class="pr-purchase">
@@ -947,6 +949,7 @@
           <span>Medium</span>
           <span>2023</span>
         </div>
+        <div class="ean-val" style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-top:4px;">EAN: 3528701286419</div>
       </div>
 
       <div class="pr-purchase">
@@ -1360,6 +1363,32 @@
       }
     }
   });
+
+
+  // EAN toggle: show/hide EAN values on product cards
+  var eanToggle = document.getElementById('eanToggle');
+  var eanKnob = eanToggle ? eanToggle.querySelector('.toggle') : null;
+  var eanOn = true; // starts visible
+
+  function updateEanDisplay(){
+    document.querySelectorAll('.ean-val').forEach(function(el){
+      el.style.display = eanOn ? 'block' : 'none';
+    });
+    if(eanKnob){
+      eanKnob.style.background = eanOn ? 'var(--accent-primary)' : '#d1d5db';
+      eanKnob.querySelector('.toggle-knob').style.right = eanOn ? '1px' : 'auto';
+      eanKnob.querySelector('.toggle-knob').style.left  = eanOn ? 'auto' : '1px';
+    }
+  }
+
+  if(eanToggle){
+    eanToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      eanOn = !eanOn;
+      updateEanDisplay();
+    });
+    updateEanDisplay();
+  }
 
 </script>
 
