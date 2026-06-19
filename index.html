@@ -167,7 +167,7 @@
     font-family:var(--font-mono);
     font-weight:700;
     font-size:13px;
-    color:var(--text-on-light);
+    color:var(--text-muted);
     text-transform:uppercase;
     white-space:nowrap;
     overflow:hidden;
@@ -468,8 +468,7 @@
   .field.dd-open .field-chevron{ transform:rotate(180deg); }
   .field.dd-open .field-label{ color:var(--text-on-light); }
   .field-chevron{ transition:transform 220ms ease; }
-  /* selected state */
-  .field.has-value .field-label{ color:var(--accent-primary); }
+
 
   /* ── DROPDOWN POSITIONED ─────────────────────── */
   .dd-backdrop{
@@ -1138,6 +1137,8 @@
 
     field.dataset.ddKey = key;
 
+    // store original label for reference
+    labelEl.dataset.originalLabel = labelEl.textContent.trim();
     field.addEventListener('click', () => openDropdown(key, field));
   });
 
@@ -1208,7 +1209,23 @@
   function selectItem(val) {
     selections[activeKey] = val;
 
-    // update field: color change only, no extra row
+    const data = DD_DATA[activeKey];
+    const labelEl = activeField.querySelector('.field-label');
+    if (labelEl) {
+      labelEl.textContent = val;
+      labelEl.style.color = 'var(--text-default)';
+      labelEl.style.textTransform = 'none';
+      labelEl.style.letterSpacing = '0';
+      if (data.type === 'code') {
+        labelEl.style.fontFamily = 'var(--font-mono)';
+        labelEl.style.fontWeight = '400';
+        labelEl.style.fontSize = '14px';
+      } else {
+        labelEl.style.fontFamily = 'var(--font-body)';
+        labelEl.style.fontWeight = '400';
+        labelEl.style.fontSize = '16px';
+      }
+    }
     activeField.classList.add('has-value');
 
     closeDropdown();
