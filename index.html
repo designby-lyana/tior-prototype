@@ -780,14 +780,16 @@
 
     <div class="results-filters-card">
 
-      <div class="search-input">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
-        <span>Rozmiar, marka, model lub kod EAN</span>
-      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
 
-      <button class="btn-outline-search">Znajdź opony</button>
+        <div class="search-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+          <span>Rozmiar, marka, model lub kod EAN</span>
+        </div>
 
-      <div class="filter-bar">
+        <button class="btn-outline-search">Znajdź opony</button>
+
+        <div class="filter-bar">
         <div class="filter-bar-left">
           <button class="mini-trigger">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
@@ -802,14 +804,17 @@
           <span>EAN</span>
           <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
         </div>
-      </div>
 
-      <div class="applied-filters">
+      </div><!-- /top-group -->
+
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="applied-filters">
         <span class="results-count">4 wyników:</span>
         <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń">×</button></span>
         <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń">×</button></span>
       </div>
-      <button class="clear-all">Wyczyść wszystko</button>
+        <button class="clear-all">Wyczyść wszystko</button>
+      </div><!-- /bottom-group -->
 
     </div>
 
