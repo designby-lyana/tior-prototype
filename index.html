@@ -586,6 +586,24 @@
     text-transform:uppercase;
     margin-bottom:var(--space-sm);
   }
+
+  .btn-outline-search{
+    appearance:none;
+    width:100%;
+    height:36px;
+    border:1.5px solid var(--accent-primary);
+    border-radius:var(--radius-lg);
+    background:#fff;
+    color:var(--accent-pressed);
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:18px;
+    cursor:pointer;
+    transition:background 140ms ease, transform 100ms ease;
+  }
+  .btn-outline-search:hover{ background:#f0f9fa; }
+  .btn-outline-search:active{ transform:scale(.985); }
+
 </style>
 </head>
 <body>
@@ -760,35 +778,38 @@
     <h1 class="results-title">Wyniki wyszukiwania</h1>
 
     <div class="results-filters-card">
+
       <div class="search-input">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
         <span>Rozmiar, marka, model lub kod EAN</span>
       </div>
-      <button class="btn-outline">Button</button>
 
-      <div class="filter-row">
-        <div class="ean-toggle" id="eanToggle" style="cursor:pointer;" title="Pokaż/ukryj EAN">
-          <span>EAN</span>
-          <span class="toggle"><span class="toggle-knob"></span></span>
+      <button class="btn-outline-search">Znajdź opony</button>
+
+      <div class="filter-bar">
+        <div class="filter-bar-left">
+          <button class="mini-trigger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            Filtry
+          </button>
+          <button class="mini-trigger">
+            Dostępność
+            <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
         </div>
-        <span class="v-divider"></span>
-        <button class="mini-trigger">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M8 12h8M11 18h2"/></svg>
-          Filtry
-          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <button class="mini-trigger">
-          Dostępność
-          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
+        <div class="ean-toggle" id="eanToggle" style="cursor:pointer;">
+          <span>EAN</span>
+          <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
+        </div>
       </div>
 
       <div class="applied-filters">
-        <span class="results-count">9 wyników:</span>
-        <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń filtr LI 91">×</button></span>
-        <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń filtr 205/55 R16">×</button></span>
+        <span class="results-count">4 wyników:</span>
+        <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń">×</button></span>
+        <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń">×</button></span>
       </div>
       <button class="clear-all">Wyczyść wszystko</button>
+
     </div>
 
         <div class="product-row">
@@ -1367,15 +1388,15 @@
 
   // EAN toggle: show/hide EAN values on product cards
   var eanToggle = document.getElementById('eanToggle');
-  var eanKnob = eanToggle ? eanToggle.querySelector('.toggle') : null;
-  var eanOn = true; // starts visible
+  var eanKnob   = document.getElementById('eanKnob');
+  var eanOn = false; // starts OFF per Figma design
 
   function updateEanDisplay(){
     document.querySelectorAll('.ean-val').forEach(function(el){
       el.style.display = eanOn ? 'block' : 'none';
     });
     if(eanKnob){
-      eanKnob.style.background = eanOn ? 'var(--accent-primary)' : '#d1d5db';
+      eanKnob.style.background = eanOn ? 'var(--accent-primary)' : 'var(--text-muted)';
       eanKnob.querySelector('.toggle-knob').style.right = eanOn ? '1px' : 'auto';
       eanKnob.querySelector('.toggle-knob').style.left  = eanOn ? 'auto' : '1px';
     }
@@ -1437,6 +1458,37 @@
   cursor:pointer;background:#eaeaea;color:#323744;
   transition:all 100ms;
 }
+
+  .btn-outline-search{
+    appearance:none;
+    width:100%;
+    height:36px;
+    border:1.5px solid var(--accent-primary);
+    border-radius:var(--radius-lg);
+    background:#fff;
+    color:var(--accent-pressed);
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:18px;
+    cursor:pointer;
+    transition:background 140ms ease, transform 100ms ease;
+  }
+  .btn-outline-search:hover{ background:#f0f9fa; }
+  .btn-outline-search:active{ transform:scale(.985); }
+
+  .filter-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-sm);
+  }
+  .filter-bar-left{
+    display:flex;
+    align-items:center;
+    gap:var(--space-lg);
+  }
+  .toggle-off{ background:var(--text-muted); }
+  .toggle-off .toggle-knob{ right:auto; left:1px; }
 </style>
 </body>
 </html>
