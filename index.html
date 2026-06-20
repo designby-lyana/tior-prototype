@@ -1676,78 +1676,68 @@
   }
 
 
-  // Cart navigation
-  const screenCart = document.getElementById('screenCart');
+
+  // ── CART ──────────────────────────────────────────────
+  var screenCart = document.getElementById('screenCart');
+  var cartCount = 0;
 
   function goToCart(){
-    [screenHome, screenResults, screenCart].forEach(s => s.classList.remove('is-active'));
+    [screenHome, screenResults, screenCart].forEach(function(s){
+      s.classList.remove('is-active');
+    });
     screenCart.classList.add('is-active');
-    document.getElementById('phone').scrollTop = 0;
+    phoneEl.scrollTop = 0;
   }
   function goToCheckout(){ /* placeholder */ }
 
-  // Wire cart steppers
-  screenCart.querySelectorAll('.qty-stepper').forEach(function(stepper){
-    var val = stepper.querySelector('.qty-value');
-    stepper.querySelector('.qty-minus').addEventListener('click', function(){
-      val.textContent = Math.max(1, parseInt(val.textContent) - 1);
-    });
-    stepper.querySelector('.qty-plus').addEventListener('click', function(){
-      val.textContent = parseInt(val.textContent) + 1;
-    });
-  });
-
-  // Wire "Dodaj" buttons on results screen → go to cart
-  document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn){
-    btn.addEventListener('click', goToCart);
-  });
-
-  // Logo on cart → go home
-  document.getElementById('logoCart').style.cursor = 'pointer';
-  document.getElementById('logoCart').addEventListener('click', goHome);
-
-
-  // Cart state
-  var cartItems = [];
-  var cartCount = 0;
-
   function updateCartBadge(){
-    var badges = document.querySelectorAll('.cart-badge');
-    badges.forEach(function(b){
+    document.querySelectorAll('.cart-badge').forEach(function(b){
       if(cartCount > 0){
         b.textContent = cartCount;
-        b.classList.add('visible');
+        b.className = 'cart-badge visible';
       } else {
-        b.classList.remove('visible');
+        b.className = 'cart-badge';
       }
     });
   }
 
   function showFeedback(msg){
     var fb = document.getElementById('addFeedback');
+    if(!fb) return;
     fb.textContent = msg;
     fb.classList.add('show');
     setTimeout(function(){ fb.classList.remove('show'); }, 2000);
   }
 
-  // Wire Dodaj buttons on results screen
-  document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn, i){
-    // remove old goToCart listener
-    btn.onclick = null;
-    btn.addEventListener('click', function(){
+  // Logo on cart → home
+  var logoCart = document.getElementById('logoCart');
+  if(logoCart){
+    logoCart.style.cursor = 'pointer';
+    logoCart.addEventListener('click', goHome);
+  }
+
+  // Dodaj buttons → add to cart + badge + toast
+  document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
       cartCount++;
       updateCartBadge();
-      showFeedback('Dodano do koszyka · ' + cartCount + ' szt.');
+      showFeedback('Dodano do koszyka · ' + cartCount + ' szt. w koszyku');
     });
   });
 
-  // goToCart now also navigates to cart screen
-  var _origGoToCart = goToCart;
-  goToCart = function(){
-    [screenHome, screenResults, screenCart].forEach(function(s){ s.classList.remove('is-active'); });
-    screenCart.classList.add('is-active');
-    phoneEl.scrollTop = 0;
-  };
+  // Cart steppers
+  if(screenCart){
+    screenCart.querySelectorAll('.qty-stepper').forEach(function(stepper){
+      var val = stepper.querySelector('.qty-value');
+      stepper.querySelector('.qty-minus').addEventListener('click', function(){
+        val.textContent = Math.max(1, parseInt(val.textContent) - 1);
+      });
+      stepper.querySelector('.qty-plus').addEventListener('click', function(){
+        val.textContent = parseInt(val.textContent) + 1;
+      });
+    });
+  }
 
 </script>
 
