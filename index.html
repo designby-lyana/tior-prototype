@@ -1302,17 +1302,22 @@
   const screenHome = document.getElementById('screenHome');
   const screenResults = document.getElementById('screenResults');
 
-  function goToResults(){
-    screenHome.classList.remove('is-active');
-    screenResults.classList.add('is-active');
-    phoneEl.classList.add('is-results');
-    phoneEl.scrollIntoView({behavior:'smooth', block:'start'});
+
+
+  var ALL_SCREENS = ['screenHome','screenResults','screenCart'];
+  function setScreen(id){
+    ALL_SCREENS.forEach(function(s){
+      var el = document.getElementById(s);
+      if(el) el.classList.remove('is-active');
+    });
+    var target = document.getElementById(id);
+    if(target){ target.classList.add('is-active'); target.scrollTop = 0; }
   }
-  function goHome(){
-    screenResults.classList.remove('is-active');
-    screenHome.classList.add('is-active');
-    phoneEl.classList.remove('is-results');
-  }
+  function goToResults(){ setScreen('screenResults'); }
+  function goHome(){      setScreen('screenHome'); }
+  function goToCart(){    setScreen('screenCart'); }
+  function goToCheckout(){}
+
   document.getElementById('ctaCollapsed').addEventListener('click', goToResults);
   document.getElementById('ctaExpanded').addEventListener('click', goToResults);
   document.getElementById('logoResults').addEventListener('click', goHome);
@@ -1678,13 +1683,7 @@
 
 
   // ── CART ──────────────────────────────────────────────
-  function goToCart(){
-    document.getElementById('screenHome').classList.remove('is-active');
-    document.getElementById('screenResults').classList.remove('is-active');
-    var sc = document.getElementById('screenCart');
-    if(sc){ sc.classList.add('is-active'); sc.scrollTop = 0; }
-  }
-  function goToCheckout(){}
+
 
   // Cart steppers
   document.querySelectorAll('#screenCart .qty-stepper').forEach(function(stepper){
