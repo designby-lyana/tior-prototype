@@ -1013,7 +1013,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -1070,7 +1070,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -1127,7 +1127,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -1696,17 +1696,8 @@
       val.textContent = parseInt(val.textContent) + 1;
     });
   });
-
-  // Dodaj → add to cart + navigate to cart
   var cartCount = 0;
-  document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      cartCount++;
-      document.querySelectorAll('.cart-badge').forEach(function(b){
-        b.textContent = cartCount; b.className='cart-badge visible';
-      });
-      goToCart();
+goToCart();
     });
   });
 </script>
