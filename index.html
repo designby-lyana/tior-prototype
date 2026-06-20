@@ -1678,67 +1678,44 @@
 
 
   // ── CART ──────────────────────────────────────────────
-  var screenCart = document.getElementById('screenCart');
-  var cartCount = 0;
-
   function goToCart(){
-    [screenHome, screenResults, screenCart].forEach(function(s){
-      s.classList.remove('is-active');
-    });
-    screenCart.classList.add('is-active');
-    phoneEl.scrollTop = 0;
+    document.getElementById('screenHome').classList.remove('is-active');
+    document.getElementById('screenResults').classList.remove('is-active');
+    var sc = document.getElementById('screenCart');
+    if(sc){ sc.classList.add('is-active'); sc.scrollTop = 0; }
   }
-  function goToCheckout(){ /* placeholder */ }
+  function goToCheckout(){}
 
-  function updateCartBadge(){
-    document.querySelectorAll('.cart-badge').forEach(function(b){
-      if(cartCount > 0){
-        b.textContent = cartCount;
-        b.className = 'cart-badge visible';
-      } else {
-        b.className = 'cart-badge';
-      }
+  // Cart steppers
+  document.querySelectorAll('#screenCart .qty-stepper').forEach(function(stepper){
+    var val = stepper.querySelector('.qty-value');
+    stepper.querySelector('.qty-minus').addEventListener('click', function(){
+      val.textContent = Math.max(1, parseInt(val.textContent) - 1);
     });
-  }
-
-  function showFeedback(msg){
-    var fb = document.getElementById('addFeedback');
-    if(!fb) return;
-    fb.textContent = msg;
-    fb.classList.add('show');
-    setTimeout(function(){ fb.classList.remove('show'); }, 2000);
-  }
+    stepper.querySelector('.qty-plus').addEventListener('click', function(){
+      val.textContent = parseInt(val.textContent) + 1;
+    });
+  });
 
   // Logo on cart → home
-  var logoCart = document.getElementById('logoCart');
-  if(logoCart){
-    logoCart.style.cursor = 'pointer';
-    logoCart.addEventListener('click', goHome);
-  }
+  var lc = document.getElementById('logoCart');
+  if(lc){ lc.style.cursor='pointer'; lc.addEventListener('click', goHome); }
 
-  // Dodaj buttons → add to cart + badge + toast
+  // Dodaj → badge + toast (no navigation)
+  var cartCount = 0;
   document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn){
     btn.addEventListener('click', function(e){
       e.stopPropagation();
       cartCount++;
-      updateCartBadge();
-      showFeedback('Dodano do koszyka · ' + cartCount + ' szt. w koszyku');
+      document.querySelectorAll('.cart-badge').forEach(function(b){
+        b.textContent = cartCount; b.className='cart-badge visible';
+      });
+      var fb = document.getElementById('addFeedback');
+      if(fb){ fb.textContent = 'Dodano · '+cartCount+' szt. w koszyku';
+        fb.classList.add('show');
+        setTimeout(function(){ fb.classList.remove('show'); }, 2000); }
     });
   });
-
-  // Cart steppers
-  if(screenCart){
-    screenCart.querySelectorAll('.qty-stepper').forEach(function(stepper){
-      var val = stepper.querySelector('.qty-value');
-      stepper.querySelector('.qty-minus').addEventListener('click', function(){
-        val.textContent = Math.max(1, parseInt(val.textContent) - 1);
-      });
-      stepper.querySelector('.qty-plus').addEventListener('click', function(){
-        val.textContent = parseInt(val.textContent) + 1;
-      });
-    });
-  }
-
 </script>
 
 <!-- EU LABEL CUSTOM OVERLAY -->
