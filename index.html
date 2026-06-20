@@ -297,16 +297,18 @@
     font-weight:700;
     font-size:20px;
     color: var(--text-on-light);
-    margin:0 0 var(--space-md);
+    margin:0 0 var(--space-lg);
   }
   .results-filters-card{
     background: var(--bg-surface-light);
+    border:1px solid var(--border-default);
     border-radius: var(--radius-lg);
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-lg);
     display:flex;
     flex-direction:column;
-    gap: var(--space-sm);
+    gap: var(--space-xl);
     margin-bottom: var(--space-md);
+    box-shadow:1px 1px 4px 0 var(--bg-surface-light);
   }
   .search-input{
     position:relative;
@@ -373,8 +375,8 @@
   .clear-all{
     appearance:none; background:none; border:none; padding:0;
     align-self:flex-start;
-    font-family: var(--font-body); font-size:14px; color: var(--text-muted);
-    cursor:default; margin-top:2px;
+    font-family: var(--font-body); font-size:14px; color: var(--accent-primary);
+    cursor:pointer;
   }
 
   /* ---------- PRODUCT ROW ---------- */
@@ -1389,7 +1391,7 @@
   // EAN toggle: show/hide EAN values on product cards
   var eanToggle = document.getElementById('eanToggle');
   var eanKnob   = document.getElementById('eanKnob');
-  var eanOn = false; // starts OFF per Figma design
+  var eanOn = false;
 
   function updateEanDisplay(){
     document.querySelectorAll('.ean-val').forEach(function(el){
