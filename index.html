@@ -726,6 +726,26 @@
   }
   .btn-cart-secondary:hover{ background:#f0f9fa; }
   .btn-cart-secondary:active{ transform:scale(.985); }
+
+  .cart-icon-wrap{ position:relative; display:flex; cursor:pointer; }
+  .cart-badge{
+    position:absolute; top:-6px; right:-6px;
+    background:var(--accent-primary); color:#fff;
+    font-family:var(--font-mono); font-weight:700; font-size:10px;
+    width:16px; height:16px; border-radius:50%;
+    display:none; align-items:center; justify-content:center;
+  }
+  .cart-badge.visible{ display:flex; }
+  .add-feedback{
+    position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+    background:var(--text-default); color:#fff;
+    font-family:var(--font-body); font-size:14px;
+    padding:10px 20px; border-radius:var(--radius-lg);
+    z-index:300; opacity:0; pointer-events:none;
+    transition:opacity 200ms ease;
+    white-space:nowrap;
+  }
+  .add-feedback.show{ opacity:1; }
 </style>
 </head>
 <body>
@@ -743,8 +763,8 @@
       <span class="icon-btn" title="Account (не в скоупі)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
       </span>
-      <span class="icon-btn" title="Cart (не в скоупі)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
+      <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
       <span class="icon-btn" title="Menu (не в скоупі)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -887,8 +907,8 @@
       <span class="icon-btn" title="Account (не в скоупі)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
       </span>
-      <span class="icon-btn" title="Cart (не в скоупі)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
+      <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
       <span class="icon-btn" title="Menu (не в скоупі)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -1126,7 +1146,7 @@
     <div class="header-actions">
       <span class="lang">EN</span>
       <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg></span>
-      <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg></span>
+      <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg><span class="cart-badge"></span></span>
       <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
     </div>
   </header>
@@ -1686,6 +1706,49 @@
   document.getElementById('logoCart').style.cursor = 'pointer';
   document.getElementById('logoCart').addEventListener('click', goHome);
 
+
+  // Cart state
+  var cartItems = [];
+  var cartCount = 0;
+
+  function updateCartBadge(){
+    var badges = document.querySelectorAll('.cart-badge');
+    badges.forEach(function(b){
+      if(cartCount > 0){
+        b.textContent = cartCount;
+        b.classList.add('visible');
+      } else {
+        b.classList.remove('visible');
+      }
+    });
+  }
+
+  function showFeedback(msg){
+    var fb = document.getElementById('addFeedback');
+    fb.textContent = msg;
+    fb.classList.add('show');
+    setTimeout(function(){ fb.classList.remove('show'); }, 2000);
+  }
+
+  // Wire Dodaj buttons on results screen
+  document.querySelectorAll('.cta-sm.pr-add').forEach(function(btn, i){
+    // remove old goToCart listener
+    btn.onclick = null;
+    btn.addEventListener('click', function(){
+      cartCount++;
+      updateCartBadge();
+      showFeedback('Dodano do koszyka · ' + cartCount + ' szt.');
+    });
+  });
+
+  // goToCart now also navigates to cart screen
+  var _origGoToCart = goToCart;
+  goToCart = function(){
+    [screenHome, screenResults, screenCart].forEach(function(s){ s.classList.remove('is-active'); });
+    screenCart.classList.add('is-active');
+    phoneEl.scrollTop = 0;
+  };
+
 </script>
 
 <!-- EU LABEL CUSTOM OVERLAY -->
@@ -1885,6 +1948,27 @@
   }
   .btn-cart-secondary:hover{ background:#f0f9fa; }
   .btn-cart-secondary:active{ transform:scale(.985); }
+
+  .cart-icon-wrap{ position:relative; display:flex; cursor:pointer; }
+  .cart-badge{
+    position:absolute; top:-6px; right:-6px;
+    background:var(--accent-primary); color:#fff;
+    font-family:var(--font-mono); font-weight:700; font-size:10px;
+    width:16px; height:16px; border-radius:50%;
+    display:none; align-items:center; justify-content:center;
+  }
+  .cart-badge.visible{ display:flex; }
+  .add-feedback{
+    position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+    background:var(--text-default); color:#fff;
+    font-family:var(--font-body); font-size:14px;
+    padding:10px 20px; border-radius:var(--radius-lg);
+    z-index:300; opacity:0; pointer-events:none;
+    transition:opacity 200ms ease;
+    white-space:nowrap;
+  }
+  .add-feedback.show{ opacity:1; }
 </style>
+<div class="add-feedback" id="addFeedback"></div>
 </body>
 </html>
