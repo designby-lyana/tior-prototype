@@ -291,7 +291,7 @@
   #logoResults{ cursor:pointer; }
 
   /* ---------- RESULTS SCREEN ---------- */
-  .results-content{ padding: var(--space-2xl) var(--space-xl) var(--space-2xl); }
+  .results-content{ padding: var(--space-2xl) var(--space-lg) var(--space-2xl); }
   .results-title{
     font-family:'Plus Jakarta Sans', sans-serif;
     font-weight:700;
@@ -300,7 +300,7 @@
     margin:0 0 var(--space-lg);
   }
   .results-filters-card{
-    background: var(--bg-surface-light);
+    background: transparent;
     border:1px solid var(--border-default);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
@@ -308,20 +308,19 @@
     flex-direction:column;
     gap: var(--space-xl);
     margin-bottom: var(--space-md);
-    box-shadow:1px 1px 4px 0 var(--bg-surface-light);
   }
   .search-input{
     position:relative;
     height:36px;
-    border:1px solid var(--border-module);
+    border:.7px solid var(--border-module);
     border-radius: var(--radius-lg);
-    background: var(--bg-surface-light);
+    background: transparent;
     display:flex;
     align-items:center;
     gap: var(--space-sm);
     padding: 0 var(--space-md) 0 36px;
     font-size:16px;
-    color: var(--text-placeholder);
+    color: var(--text-default);
     cursor:default;
   }
   .search-input svg{ position:absolute; left:10px; width:18px; height:18px; color: var(--text-muted); }
