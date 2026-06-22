@@ -1095,6 +1095,35 @@
   .btn-confirm:hover{ filter:brightness(1.06); }
   .btn-confirm:active{ transform:scale(.985); background:var(--accent-pressed); }
 
+
+  /* addr dostawy expandable */
+  .addr-row-wrap{ display:flex; flex-direction:column; border-bottom:1px solid var(--border-surface); }
+  .addr-row-top{ display:flex; align-items:flex-start; gap:2px; padding:var(--space-md) 0; }
+  .addr-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; line-height:18px; }
+  .addr-value-col{ flex:1; display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:0; }
+  .addr-name{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:16px; color:var(--text-default); line-height:18px; text-align:right; }
+  .addr-toggle-btn{
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:16px;
+    color:var(--accent-primary); line-height:18px; text-align:right;
+    background:none; border:none; padding:0; cursor:pointer; display:block;
+  }
+  .addr-expanded{
+    display:grid; grid-template-rows:0fr;
+    transition:grid-template-rows 280ms ease;
+    margin-bottom:0;
+  }
+  .addr-expanded.open{ grid-template-rows:1fr; }
+  .addr-expanded-inner{ min-height:0; overflow:hidden; }
+  .addr-expanded-box{
+    background:rgba(0,95,110,0.06);
+    border-radius:3px;
+    padding:8px var(--space-md);
+    margin-bottom:var(--space-md);
+  }
+  .addr-expanded-text{
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-muted); line-height:18px; text-align:right;
+  }
 </style>
 </head>
 <body>
@@ -1846,11 +1875,20 @@
           <span class="sum-row-label">Oczekiwana dostawa</span>
           <span class="sum-row-value">śr., 24 lipca – pt., 26 lipca</span>
         </div>
-        <div class="sum-row">
-          <span class="sum-row-label">Adres dostawy</span>
-          <div class="sum-row-value">
-            Magazyn w Warszawie
-            <a style="display:block;">pokaż</a>
+        <div class="addr-row-wrap">
+          <div class="addr-row-top">
+            <span class="addr-label">Adres dostawy</span>
+            <div class="addr-value-col">
+              <span class="addr-name">Magazyn w Warszawie</span>
+              <button class="addr-toggle-btn" id="addrToggle" onclick="toggleAddr()">pokaż</button>
+            </div>
+          </div>
+          <div class="addr-expanded" id="addrExpand">
+            <div class="addr-expanded-inner">
+              <div class="addr-expanded-box">
+                <div class="addr-expanded-text">AutoParts Sp. z o.o.<br>ul. Jana Kazimierza 12,<br>01-248 Warszawa, Polska</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="sum-row">
@@ -2370,6 +2408,15 @@
   })();
 
 
+
+
+  function toggleAddr(){
+    var panel = document.getElementById('addrExpand');
+    var btn   = document.getElementById('addrToggle');
+    if(!panel) return;
+    var isOpen = panel.classList.toggle('open');
+    btn.textContent = isOpen ? 'ukryj' : 'pokaż';
+  }
 
 </script>
 
@@ -2932,6 +2979,35 @@
   .btn-confirm:hover{ filter:brightness(1.06); }
   .btn-confirm:active{ transform:scale(.985); background:var(--accent-pressed); }
 
+
+  /* addr dostawy expandable */
+  .addr-row-wrap{ display:flex; flex-direction:column; border-bottom:1px solid var(--border-surface); }
+  .addr-row-top{ display:flex; align-items:flex-start; gap:2px; padding:var(--space-md) 0; }
+  .addr-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; line-height:18px; }
+  .addr-value-col{ flex:1; display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:0; }
+  .addr-name{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:16px; color:var(--text-default); line-height:18px; text-align:right; }
+  .addr-toggle-btn{
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:16px;
+    color:var(--accent-primary); line-height:18px; text-align:right;
+    background:none; border:none; padding:0; cursor:pointer; display:block;
+  }
+  .addr-expanded{
+    display:grid; grid-template-rows:0fr;
+    transition:grid-template-rows 280ms ease;
+    margin-bottom:0;
+  }
+  .addr-expanded.open{ grid-template-rows:1fr; }
+  .addr-expanded-inner{ min-height:0; overflow:hidden; }
+  .addr-expanded-box{
+    background:rgba(0,95,110,0.06);
+    border-radius:3px;
+    padding:8px var(--space-md);
+    margin-bottom:var(--space-md);
+  }
+  .addr-expanded-text{
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-muted); line-height:18px; text-align:right;
+  }
 </style>
 <div class="add-feedback" id="addFeedback"></div>
 </body>
