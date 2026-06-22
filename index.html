@@ -760,10 +760,9 @@
     display:flex; flex-direction:column; gap:var(--space-lg);
   }
   .checkout-back{
-    display:flex; align-items:center; gap:6px;
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-muted); cursor:pointer;
-    margin-bottom:4px;
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-on-light); cursor:pointer;
+    margin-bottom:var(--space-sm);
   }
   .checkout-back:hover{ color:var(--text-default); }
 
@@ -773,15 +772,18 @@
     margin-bottom:var(--space-sm);
   }
   .step-circle{
-    width:32px; height:32px; border-radius:50%;
+    width:32px; height:32px; border-radius:14px;
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-body); font-weight:700; font-size:14px;
-    flex:none;
+    font-family:var(--font-mono); font-weight:400; font-size:22px;
+    line-height:18px; flex:none; cursor:pointer;
+    transition:opacity 140ms ease;
   }
-  .step-circle.active{ background:var(--text-default); color:#fff; }
-  .step-circle.inactive{ background:var(--border-surface); color:var(--text-placeholder); }
+  .step-circle:hover{ opacity:.8; }
+  .step-circle.active{ background:#323744; color:#fffaf2; }
+  .step-circle.inactive{ background:rgba(11,12,12,0.48); color:#ddd8d4; }
+  .step-circle.done{ background:rgba(11,12,12,0.48); color:#ddd8d4; }
   .step-line{
-    flex:1; height:1px; background:var(--border-default);
+    flex:1; height:1px; background:#9ca3af;
     margin:0 4px;
   }
   .checkout-title{
@@ -1668,17 +1670,13 @@
 
     <!-- back + steps + title -->
     <div>
-      <div class="checkout-back" onclick="goToCart()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        Powrót do koszyka
-      </div>
+      <div class="checkout-back" onclick="goToCart()">‹‹ Powrót do koszyka</div>
       <div class="checkout-steps">
         <div class="step-circle active">1</div>
         <div class="step-line"></div>
-        <div class="step-circle inactive">2</div>
+        <div class="step-circle inactive" onclick="setScreen('screenCheckout2')">2</div>
         <div class="step-line"></div>
-        <div class="step-circle inactive">3</div>
+        <div class="step-circle inactive" onclick="setScreen('screenCheckout3')">3</div>
       </div>
       <h1 class="checkout-title">Dostawa</h1>
     </div>
@@ -1767,17 +1765,13 @@
 
     <!-- back + steps + title -->
     <div>
-      <div class="checkout-back" onclick="setScreen('screenCheckout')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        Powrót do koszyka
-      </div>
+      <div class="checkout-back" onclick="setScreen('screenCheckout')">‹‹ Powrót do koszyka</div>
       <div class="checkout-steps">
-        <div class="step-circle done">1</div>
+        <div class="step-circle done" onclick="setScreen('screenCheckout')">1</div>
         <div class="step-line"></div>
         <div class="step-circle active">2</div>
         <div class="step-line"></div>
-        <div class="step-circle inactive">3</div>
+        <div class="step-circle inactive" onclick="setScreen('screenCheckout3')">3</div>
       </div>
       <h1 class="checkout-title">Płatność</h1>
     </div>
@@ -1861,15 +1855,11 @@
 
     <!-- back + steps + title -->
     <div>
-      <div class="checkout-back" onclick="setScreen('screenCheckout2')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-        Powrót do koszyka
-      </div>
+      <div class="checkout-back" onclick="setScreen('screenCheckout2')">‹‹ Powrót do koszyka</div>
       <div class="checkout-steps">
-        <div class="step-circle done">1</div>
+        <div class="step-circle done" onclick="setScreen('screenCheckout')">1</div>
         <div class="step-line"></div>
-        <div class="step-circle done">2</div>
+        <div class="step-circle done" onclick="setScreen('screenCheckout2')">2</div>
         <div class="step-line"></div>
         <div class="step-circle active">3</div>
       </div>
@@ -2668,10 +2658,9 @@
     display:flex; flex-direction:column; gap:var(--space-lg);
   }
   .checkout-back{
-    display:flex; align-items:center; gap:6px;
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-muted); cursor:pointer;
-    margin-bottom:4px;
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-on-light); cursor:pointer;
+    margin-bottom:var(--space-sm);
   }
   .checkout-back:hover{ color:var(--text-default); }
 
@@ -2681,15 +2670,18 @@
     margin-bottom:var(--space-sm);
   }
   .step-circle{
-    width:32px; height:32px; border-radius:50%;
+    width:32px; height:32px; border-radius:14px;
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-body); font-weight:700; font-size:14px;
-    flex:none;
+    font-family:var(--font-mono); font-weight:400; font-size:22px;
+    line-height:18px; flex:none; cursor:pointer;
+    transition:opacity 140ms ease;
   }
-  .step-circle.active{ background:var(--text-default); color:#fff; }
-  .step-circle.inactive{ background:var(--border-surface); color:var(--text-placeholder); }
+  .step-circle:hover{ opacity:.8; }
+  .step-circle.active{ background:#323744; color:#fffaf2; }
+  .step-circle.inactive{ background:rgba(11,12,12,0.48); color:#ddd8d4; }
+  .step-circle.done{ background:rgba(11,12,12,0.48); color:#ddd8d4; }
   .step-line{
-    flex:1; height:1px; background:var(--border-default);
+    flex:1; height:1px; background:#9ca3af;
     margin:0 4px;
   }
   .checkout-title{
