@@ -1078,7 +1078,7 @@
     padding:var(--space-md) 0;
   }
   .sum-checkbox{
-    width:14px; height:14px; min-width:14px; min-height:14px; border:1.5px solid var(--border-module);
+    width:16px; height:16px; min-width:16px; min-height:16px; border:1.5px solid var(--border-module);
     border-radius:2px; flex:none; margin-top:2px;
     cursor:pointer; appearance:none;
     display:flex; align-items:center; justify-content:center;
@@ -1134,6 +1134,14 @@
   .addr-expanded-text{
     font-family:var(--font-body); font-weight:400; font-size:16px;
     color:var(--text-muted); line-height:18px; text-align:right;
+  }
+
+  .btn-confirm:disabled{
+    background:var(--border-module);
+    cursor:not-allowed;
+    opacity:1;
+    filter:none;
+    transform:none;
   }
 </style>
 </head>
@@ -1914,13 +1922,13 @@
       </div>
 
       <div class="sum-checkbox-row">
-        <input type="checkbox" class="sum-checkbox" id="confirmCheck">
+        <input type="checkbox" class="sum-checkbox" id="confirmCheck" onchange="document.getElementById('confirmBtn').disabled=!this.checked;">
         <label class="sum-checkbox-label" for="confirmCheck">
           Potwierdzam szczegóły zamówienia i akceptuję warunki.
         </label>
       </div>
 
-      <button class="btn-confirm">Potwierdź zamówienie</button>
+      <button class="btn-confirm" id="confirmBtn" disabled>Potwierdź zamówienie</button>
 
     </div><!-- /summary card -->
 
@@ -2978,7 +2986,7 @@
     padding:var(--space-md) 0;
   }
   .sum-checkbox{
-    width:14px; height:14px; min-width:14px; min-height:14px; border:1.5px solid var(--border-module);
+    width:16px; height:16px; min-width:16px; min-height:16px; border:1.5px solid var(--border-module);
     border-radius:2px; flex:none; margin-top:2px;
     cursor:pointer; appearance:none;
     display:flex; align-items:center; justify-content:center;
@@ -3034,6 +3042,14 @@
   .addr-expanded-text{
     font-family:var(--font-body); font-weight:400; font-size:16px;
     color:var(--text-muted); line-height:18px; text-align:right;
+  }
+
+  .btn-confirm:disabled{
+    background:var(--border-module);
+    cursor:not-allowed;
+    opacity:1;
+    filter:none;
+    transform:none;
   }
 </style>
 <div class="add-feedback" id="addFeedback"></div>
