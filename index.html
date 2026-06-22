@@ -1239,6 +1239,60 @@
     font-family:var(--font-body); font-weight:500; font-size:16px;
     color:var(--text-default);
   }
+
+  /* ── DOKUMENTY ───────────────────────────────── */
+  .dok-item{
+    background:var(--bg-input);
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-lg);
+    padding:var(--space-lg);
+    display:flex; flex-direction:column; gap:var(--space-sm);
+  }
+  .dok-item-header{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .dok-item-name{
+    font-family:var(--font-body); font-weight:700;
+    font-size:16px; color:var(--text-default);
+  }
+  .dok-item-num{
+    font-family:var(--font-mono); font-weight:400;
+    font-size:16px; color:var(--text-default);
+  }
+  .dok-item-meta{
+    font-family:var(--font-body); font-size:16px;
+    color:var(--text-muted); line-height:1.5;
+  }
+  .dok-item-actions{
+    display:flex; align-items:center;
+    margin-top:var(--space-sm);
+    border-top:1px solid var(--border-surface);
+    padding-top:var(--space-md);
+  }
+  .dok-btn{
+    appearance:none; background:none; border:none;
+    display:flex; align-items:center; gap:var(--space-sm);
+    font-family:var(--font-body); font-size:16px;
+    color:var(--text-on-light); cursor:pointer;
+    padding:0; flex:1; justify-content:center;
+    transition:color 140ms ease;
+  }
+  .dok-btn:hover{ color:var(--text-default); }
+  .dok-btn svg{ flex:none; color:var(--text-on-light); }
+  .dok-divider{
+    width:1px; height:20px;
+    background:var(--border-default); flex:none;
+  }
+  .dok-add-btn{
+    appearance:none; background:none; border:none;
+    display:flex; align-items:center; justify-content:center; gap:var(--space-sm);
+    font-family:var(--font-body); font-size:16px; font-weight:400;
+    color:var(--accent-primary); cursor:pointer;
+    padding:var(--space-md) 0 var(--space-xs);
+    width:100%; transition:color 140ms ease;
+  }
+  .dok-add-btn:hover{ color:var(--accent-pressed); }
+  .dok-add-btn svg{ flex:none; }
 </style>
 </head>
 <body>
@@ -2188,6 +2242,47 @@
       </div>
 
     </div><!-- /PRZEDMIOTY -->
+
+    <!-- DOKUMENTY card -->
+    <div class="checkout-card" style="padding:var(--space-xl);gap:var(--space-lg);">
+      <div class="section-title" style="padding-bottom:var(--space-md);border-bottom:1px solid var(--border-surface);">DOKUMENTY</div>
+
+      <!-- Faktura -->
+      <div class="dok-item">
+        <div class="dok-item-header">
+          <span class="dok-item-name">Faktura</span>
+          <span class="dok-item-num">INV-2802</span>
+        </div>
+        <div class="dok-item-meta">
+          Opłacono z depozytu<br>
+          12 lip 2026
+        </div>
+        <div class="dok-item-actions">
+          <button class="dok-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Drukuj
+          </button>
+          <div class="dok-divider"></div>
+          <button class="dok-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Pobierz PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Dokument dostawy -->
+      <div class="dok-item">
+        <div class="dok-item-header">
+          <span class="dok-item-name">Dokument dostawy</span>
+        </div>
+        <div class="dok-item-meta">Brak dokumentu</div>
+        <button class="dok-add-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Dodaj dokument
+        </button>
+      </div>
+
+    </div><!-- /DOKUMENTY -->
 
   </div><!-- /od-content -->
 
