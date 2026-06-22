@@ -1064,6 +1064,9 @@
     padding:var(--space-md);
     outline:none; color:var(--text-muted);
     font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
+    resize:vertical; overflow:hidden;
+    min-height:calc(4 * 18px + 2 * 12px);
+    max-height:calc(8 * 18px + 2 * 12px);
     transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
@@ -1907,7 +1910,7 @@
 
       <div class="sum-note">
         <div class="sum-note-title">Uwagi do zamówienia</div>
-        <textarea class="sum-note-text" rows="4" maxlength="500" placeholder="Np. dostawa po godzinie 15:00"></textarea>
+        <textarea class="sum-note-text" rows="4" maxlength="500" placeholder="Np. dostawa po godzinie 15:00" oninput="autoGrow(this)"></textarea>
       </div>
 
       <div class="sum-checkbox-row">
@@ -2421,6 +2424,14 @@
     if(!panel) return;
     var isOpen = panel.classList.toggle('open');
     btn.textContent = isOpen ? 'ukryj' : 'pokaż';
+  }
+
+
+  function autoGrow(el){
+    el.style.height = 'auto';
+    var maxH = 8 * 18 + 2 * 12;
+    el.style.height = Math.min(el.scrollHeight, maxH) + 'px';
+    el.style.overflowY = el.scrollHeight > maxH ? 'auto' : 'hidden';
   }
 
 </script>
@@ -2953,6 +2964,9 @@
     padding:var(--space-md);
     outline:none; color:var(--text-muted);
     font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
+    resize:vertical; overflow:hidden;
+    min-height:calc(4 * 18px + 2 * 12px);
+    max-height:calc(8 * 18px + 2 * 12px);
     transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
