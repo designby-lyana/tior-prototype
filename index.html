@@ -1051,19 +1051,19 @@
     display:flex; flex-direction:column; gap:4px;
   }
   .sum-note-title{
-    display:flex; align-items:center; gap:6px;
-    font-family:var(--font-body); font-size:16px; font-weight:400;
-    color:var(--text-muted);
+    font-family:var(--font-body); font-weight:700; font-size:16px;
+    color:var(--text-default); margin-bottom:var(--space-sm);
   }
   .sum-note-title svg{ width:16px; height:16px; color:var(--text-muted); flex:none; }
-  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; }
+  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; font-weight:400; }
   .sum-note-text{
     width:100%; box-sizing:border-box; resize:none;
     border:1px solid var(--border-default);
     border-radius:var(--radius-sm);
     background:var(--bg-input);
-    padding:var(--space-sm) var(--space-md);
-    outline:none;
+    padding:var(--space-md);
+    outline:none; color:var(--text-default);
+    font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
     transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
@@ -1906,11 +1906,9 @@
       </div>
 
       <div class="sum-note">
-        <div class="sum-note-title">
-          <img src="data:image/png;base64,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" alt="note" style="width:18px;height:18px;display:block;flex:none;">
-          Twoja notatka
-        </div>
-        <div class="sum-note-text">"Proszę dostarczyć w godzinach pracy."</div>
+        <div class="sum-note-title">Uwagi do zamówienia</div>
+        <textarea class="sum-note-text" rows="4" maxlength="500" placeholder="Np. dostawa po godzinie 15:00"></textarea>
+        <span class="sum-note-counter">Maks. 500 znaków</span>
       </div>
 
       <div class="sum-checkbox-row">
@@ -2943,19 +2941,19 @@
     display:flex; flex-direction:column; gap:4px;
   }
   .sum-note-title{
-    display:flex; align-items:center; gap:6px;
-    font-family:var(--font-body); font-size:16px; font-weight:400;
-    color:var(--text-muted);
+    font-family:var(--font-body); font-weight:700; font-size:16px;
+    color:var(--text-default); margin-bottom:var(--space-sm);
   }
   .sum-note-title svg{ width:16px; height:16px; color:var(--text-muted); flex:none; }
-  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; }
+  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; font-weight:400; }
   .sum-note-text{
     width:100%; box-sizing:border-box; resize:none;
     border:1px solid var(--border-default);
     border-radius:var(--radius-sm);
     background:var(--bg-input);
-    padding:var(--space-sm) var(--space-md);
-    outline:none;
+    padding:var(--space-md);
+    outline:none; color:var(--text-default);
+    font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
     transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
