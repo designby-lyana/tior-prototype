@@ -1056,9 +1056,15 @@
     color:var(--text-muted);
   }
   .sum-note-title svg{ width:16px; height:16px; color:var(--text-muted); flex:none; }
+  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; }
   .sum-note-text{
-    width:100%; box-sizing:border-box; resize:none; border:none; outline:none;
-    background:transparent; padding:0;
+    width:100%; box-sizing:border-box; resize:none;
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-sm);
+    background:var(--bg-input);
+    padding:var(--space-sm) var(--space-md);
+    outline:none;
+    transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
     padding-left:22px;
@@ -2942,9 +2948,15 @@
     color:var(--text-muted);
   }
   .sum-note-title svg{ width:16px; height:16px; color:var(--text-muted); flex:none; }
+  .sum-note-text::placeholder{ color:var(--text-placeholder); font-style:normal; }
   .sum-note-text{
-    width:100%; box-sizing:border-box; resize:none; border:none; outline:none;
-    background:transparent; padding:0;
+    width:100%; box-sizing:border-box; resize:none;
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-sm);
+    background:var(--bg-input);
+    padding:var(--space-sm) var(--space-md);
+    outline:none;
+    transition:border-color 140ms ease;
     font-family:var(--font-body); font-size:16px; font-weight:500;
     color:#056b4b; line-height:18px;
     padding-left:22px;
