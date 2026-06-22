@@ -1064,7 +1064,7 @@
     padding:var(--space-md);
     outline:none; color:var(--text-muted);
     font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
-    resize:vertical; overflow:hidden;
+    resize:vertical; overflow-y:auto;
     min-height:calc(4 * 18px + 2 * 12px);
     max-height:calc(8 * 18px + 2 * 12px);
     transition:border-color 140ms ease;
@@ -2428,10 +2428,10 @@
 
 
   function autoGrow(el){
-    el.style.height = 'auto';
     var maxH = 8 * 18 + 2 * 12;
+    el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, maxH) + 'px';
-    el.style.overflowY = el.scrollHeight > maxH ? 'auto' : 'hidden';
+    el.style.overflowY = el.scrollHeight >= maxH ? 'auto' : 'hidden';
   }
 
 </script>
@@ -2964,7 +2964,7 @@
     padding:var(--space-md);
     outline:none; color:var(--text-muted);
     font-family:var(--font-body); font-weight:400; font-size:16px; line-height:18px;
-    resize:vertical; overflow:hidden;
+    resize:vertical; overflow-y:auto;
     min-height:calc(4 * 18px + 2 * 12px);
     max-height:calc(8 * 18px + 2 * 12px);
     transition:border-color 140ms ease;
