@@ -1178,17 +1178,17 @@
   .od-tl-item.pending-item .od-tl-date{ color:var(--text-placeholder); }
 
   /* info rows — reuse sum-row pattern */
-  .od-info-rows{ display:flex; flex-direction:column; padding-top:var(--space-md); border-top:1px solid var(--border-surface); }
-  .od-info-row{ display:flex; align-items:flex-start; gap:4px; padding:4px 0; border-bottom:1px solid var(--border-surface); }
-  .od-info-row:last-child{ border-bottom:none; }
+  .od-info-rows{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-info-row{ display:flex; align-items:flex-start; gap:4px; }
+
   .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
   .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; line-height:18px; word-break:break-word; }
 
-  .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-bottom:1px solid var(--border-surface); }
   .od-price-row{ display:flex; align-items:center; gap:4px; }
   .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; }
   .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
-  .od-shipment-row{ display:flex; align-items:center; gap:4px; padding-top:var(--space-md); }
+  .od-shipment-row{ display:flex; align-items:center; gap:4px; padding-top:var(--space-md); padding-bottom:4px; }
   .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; }
   .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
 </style>
@@ -1996,7 +1996,7 @@
       </div>
 
       <!-- note -->
-      <div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="od-note-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9"/><path d="M14 3l5 5"/><path d="M9 12h6M9 16h4"/></svg>
           Uwagi do zamówienia
@@ -3226,17 +3226,17 @@
   .od-tl-item.pending-item .od-tl-date{ color:var(--text-placeholder); }
 
   /* info rows — reuse sum-row pattern */
-  .od-info-rows{ display:flex; flex-direction:column; padding-top:var(--space-md); border-top:1px solid var(--border-surface); }
-  .od-info-row{ display:flex; align-items:flex-start; gap:4px; padding:4px 0; border-bottom:1px solid var(--border-surface); }
-  .od-info-row:last-child{ border-bottom:none; }
+  .od-info-rows{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-info-row{ display:flex; align-items:flex-start; gap:4px; }
+
   .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
   .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; line-height:18px; word-break:break-word; }
 
-  .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-bottom:1px solid var(--border-surface); }
   .od-price-row{ display:flex; align-items:center; gap:4px; }
   .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; }
   .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
-  .od-shipment-row{ display:flex; align-items:center; gap:4px; padding-top:var(--space-md); }
+  .od-shipment-row{ display:flex; align-items:center; gap:4px; padding-top:var(--space-md); padding-bottom:4px; }
   .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; }
   .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
 </style>
