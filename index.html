@@ -1024,19 +1024,22 @@
 
   .sum-rows{ display:flex; flex-direction:column; gap:0; }
   .sum-row{
-    display:flex; justify-content:space-between; align-items:flex-start;
+    display:flex; align-items:flex-start; gap:2px;
     padding:var(--space-md) 0;
     border-bottom:1px solid var(--border-surface);
   }
   .sum-row:last-child{ border-bottom:none; }
   .sum-row-label{
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-muted); flex:0 0 90px; line-height:1.5;
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-muted); flex:0 0 auto; line-height:18px;
+    white-space:nowrap;
   }
   .sum-row-value{
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-default); text-align:right; flex:1; line-height:1.5;
+    font-family:var(--font-body); font-weight:500; font-size:14px;
+    color:var(--text-on-light); flex:1; text-align:right;
+    line-height:18px; word-break:break-word;
   }
+  .sum-row-value.accent{ color:var(--accent-primary); }
   .sum-row-value a{
     color:var(--accent-primary); text-decoration:underline; cursor:pointer;
   }
@@ -2855,19 +2858,22 @@
 
   .sum-rows{ display:flex; flex-direction:column; gap:0; }
   .sum-row{
-    display:flex; justify-content:space-between; align-items:flex-start;
+    display:flex; align-items:flex-start; gap:2px;
     padding:var(--space-md) 0;
     border-bottom:1px solid var(--border-surface);
   }
   .sum-row:last-child{ border-bottom:none; }
   .sum-row-label{
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-muted); flex:0 0 90px; line-height:1.5;
+    font-family:var(--font-body); font-weight:400; font-size:16px;
+    color:var(--text-muted); flex:0 0 auto; line-height:18px;
+    white-space:nowrap;
   }
   .sum-row-value{
-    font-family:var(--font-body); font-size:14px;
-    color:var(--text-default); text-align:right; flex:1; line-height:1.5;
+    font-family:var(--font-body); font-weight:500; font-size:14px;
+    color:var(--text-on-light); flex:1; text-align:right;
+    line-height:18px; word-break:break-word;
   }
+  .sum-row-value.accent{ color:var(--accent-primary); }
   .sum-row-value a{
     color:var(--accent-primary); text-decoration:underline; cursor:pointer;
   }
