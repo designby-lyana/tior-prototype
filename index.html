@@ -1165,7 +1165,7 @@
   .od-note-text{ font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--text-default); line-height:1.4; padding-left:24px; }
 
   /* timeline */
-  .od-timeline{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-timeline{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); }
   .od-tl-item{ display:flex; align-items:center; gap:var(--space-md); padding:2px 0; }
   .od-tl-icon{ width:28px; height:28px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; }
   .od-tl-icon.done{ background:#16a34a; }
@@ -1181,16 +1181,16 @@
   .od-info-rows{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
   .od-info-row{ display:flex; align-items:flex-start; gap:8px; }
 
-  .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; line-height:18px; word-wrap:break-word; white-space:normal; }
+  .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; line-height:18px; word-wrap:break-word; }
 
   .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-bottom:1px solid var(--border-surface); }
   .od-price-row{ display:flex; align-items:center; gap:8px; }
-  .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; }
+  .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
   .od-shipment-row{ display:flex; align-items:center; gap:8px; padding-top:var(--space-md); }
-  .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; text-align:right; }
+  .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:1; text-align:right; white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -3213,7 +3213,7 @@
   .od-note-text{ font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--text-default); line-height:1.4; padding-left:24px; }
 
   /* timeline */
-  .od-timeline{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
+  .od-timeline{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); }
   .od-tl-item{ display:flex; align-items:center; gap:var(--space-md); padding:2px 0; }
   .od-tl-icon{ width:28px; height:28px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; }
   .od-tl-icon.done{ background:#16a34a; }
@@ -3229,16 +3229,16 @@
   .od-info-rows{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-top:1px solid var(--border-surface); border-bottom:1px solid var(--border-surface); }
   .od-info-row{ display:flex; align-items:flex-start; gap:8px; }
 
-  .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; line-height:18px; word-wrap:break-word; white-space:normal; }
+  .od-info-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-info-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; line-height:18px; word-wrap:break-word; }
 
   .od-price-group{ display:flex; flex-direction:column; gap:4px; padding:var(--space-md) 0; border-bottom:1px solid var(--border-surface); }
   .od-price-row{ display:flex; align-items:center; gap:8px; }
-  .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; }
+  .od-price-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-price-value{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-default); flex:1; text-align:right; }
   .od-shipment-row{ display:flex; align-items:center; gap:8px; padding-top:var(--space-md); }
-  .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 92px; width:92px; }
-  .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:0 0 152px; width:152px; text-align:right; }
+  .od-shipment-label{ font-family:var(--font-body); font-weight:400; font-size:16px; color:var(--text-muted); flex:0 0 auto; white-space:nowrap; }
+  .od-shipment-value{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); flex:1; text-align:right; white-space:nowrap; }
 </style>
 <div class="add-feedback" id="addFeedback"></div>
 </body>
