@@ -1094,6 +1094,35 @@
   }
   .btn-confirm:hover{ filter:brightness(1.06); }
   .btn-confirm:active{ transform:scale(.985); background:var(--accent-pressed); }
+
+  /* expanded address panel */
+  .addr-expand{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 280ms ease;
+  }
+  .addr-expand.open{ grid-template-rows:1fr; }
+  .addr-expand-inner{
+    min-height:0; overflow:hidden;
+  }
+  .addr-detail{
+    padding:var(--space-sm) 0 var(--space-xs);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .addr-detail-name{
+    font-family:var(--font-body); font-weight:700; font-size:16px;
+    color:var(--text-on-light); line-height:18px;
+  }
+  .addr-detail-text{
+    font-family:var(--font-body); font-weight:500; font-size:14px;
+    color:var(--text-muted); line-height:18px;
+  }
+  /* pokaż link toggler */
+  .addr-toggle{
+    color:var(--accent-primary); text-decoration:underline;
+    cursor:pointer; font-family:var(--font-body); font-size:14px;
+    background:none; border:none; padding:0;
+  }
 </style>
 </head>
 <body>
@@ -1845,11 +1874,21 @@
           <span class="sum-row-label">Oczekiwana dostawa</span>
           <span class="sum-row-value">śr., 24 lipca – pt., 26 lipca</span>
         </div>
-        <div class="sum-row">
-          <span class="sum-row-label">Adres dostawy</span>
-          <div class="sum-row-value">
-            Magazyn w Warszawie
-            <a style="display:block;">pokaż</a>
+        <div style="border-bottom:1px solid var(--border-surface);">
+          <div class="sum-row" style="border-bottom:none;">
+            <span class="sum-row-label">Adres dostawy</span>
+            <div class="sum-row-value">
+              Warszawa – Magazyn Wola
+              <button class="addr-toggle" onclick="toggleAddr()" id="addrToggle" style="display:block;">pokaż</button>
+            </div>
+          </div>
+          <div class="addr-expand" id="addrExpand">
+            <div class="addr-expand-inner">
+              <div class="addr-detail">
+                <div class="addr-detail-name">Warszawa – Magazyn Wola</div>
+                <div class="addr-detail-text">AutoParts Sp. z o.o. · ul. Jana Kazimierza 12, 01-248 Warszawa, Polska</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="sum-row">
@@ -2367,6 +2406,16 @@
     var co3 = document.getElementById('screenCheckout3');
     if(co3) addSwipe(co3, null, function(){ setScreen('screenCheckout2'); });
   })();
+
+
+  // Address detail toggle
+  function toggleAddr(){
+    var panel = document.getElementById('addrExpand');
+    var btn   = document.getElementById('addrToggle');
+    if(!panel) return;
+    var isOpen = panel.classList.toggle('open');
+    btn.textContent = isOpen ? 'ukryj' : 'pokaż';
+  }
 
 </script>
 
@@ -2928,6 +2977,35 @@
   }
   .btn-confirm:hover{ filter:brightness(1.06); }
   .btn-confirm:active{ transform:scale(.985); background:var(--accent-pressed); }
+
+  /* expanded address panel */
+  .addr-expand{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 280ms ease;
+  }
+  .addr-expand.open{ grid-template-rows:1fr; }
+  .addr-expand-inner{
+    min-height:0; overflow:hidden;
+  }
+  .addr-detail{
+    padding:var(--space-sm) 0 var(--space-xs);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .addr-detail-name{
+    font-family:var(--font-body); font-weight:700; font-size:16px;
+    color:var(--text-on-light); line-height:18px;
+  }
+  .addr-detail-text{
+    font-family:var(--font-body); font-weight:500; font-size:14px;
+    color:var(--text-muted); line-height:18px;
+  }
+  /* pokaż link toggler */
+  .addr-toggle{
+    color:var(--accent-primary); text-decoration:underline;
+    cursor:pointer; font-family:var(--font-body); font-size:14px;
+    background:none; border:none; padding:0;
+  }
 </style>
 <div class="add-feedback" id="addFeedback"></div>
 </body>
