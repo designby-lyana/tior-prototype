@@ -3256,7 +3256,7 @@
         <div class="firma-account-top">
           <span class="firma-badge-default" id="rachunkiBadge1" onclick="setDefaultRachunek(1)">Domyślny</span>
           <div class="firma-account-icons">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg onclick="editIBAN(1)" style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
           </div>
         </div>
@@ -3266,13 +3266,13 @@
         <div class="firma-account-top">
           <span class="firma-badge-set" id="rachunkiBadge2" onclick="setDefaultRachunek(2)">Ustaw jako domyślny</span>
           <div class="firma-account-icons">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg onclick="editIBAN(2)" style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
           </div>
         </div>
         <div class="firma-iban" id="dispIBAN2">DE89 3704 0044 0532 0130 18</div>
       </div>
-      <button class="firma-add-btn">
+      <button class="firma-add-btn" onclick="openAddRachunek()">
         <img src="data:image/png;base64,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" alt="" width="20" height="20" style="flex:none;">
         Dodaj rachunek
       </button>
@@ -3429,6 +3429,21 @@
   </div>
 
   <button class="flt-apply" onclick="saveRachunki()">Zapisz</button>
+</div>
+
+<!-- SINGLE IBAN OVERLAY (edit/add) -->
+<div class="flt-backdrop" id="ibanBackdrop" onclick="closeIBANForm()"></div>
+<div class="flt-sheet" id="ibanSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title" id="ibanSheetTitle">Dodaj rachunek</span>
+    <button class="flt-clear" onclick="closeIBANForm()">✕</button>
+  </div>
+  <div class="adres-field">
+    <div class="adres-label">NUMER IBAN</div>
+    <input type="text" class="adres-input" id="ibanInput" placeholder="np. DE89 3704 0044 0532 0130 00">
+  </div>
+  <button class="flt-apply" onclick="saveIBAN()">Zapisz</button>
 </div>
 
 <!-- DROPDOWN (outside phone, fixed to viewport) -->
@@ -3978,6 +3993,81 @@
     var s = document.getElementById('invStatusSheet');
     var open = s.classList.toggle('is-open');
     b.classList.toggle('is-open', open);
+  }
+
+  var _ibanEditTarget = null;
+
+  function editIBAN(n){
+    _ibanEditTarget = n;
+    var current = document.getElementById('dispIBAN' + n).textContent;
+    document.getElementById('ibanSheetTitle').textContent = 'Edytuj rachunek';
+    document.getElementById('ibanInput').value = current;
+    document.getElementById('ibanBackdrop').classList.add('is-open');
+    document.getElementById('ibanSheet').classList.add('is-open');
+  }
+
+  function openAddRachunek(){
+    _ibanEditTarget = null;
+    document.getElementById('ibanSheetTitle').textContent = 'Dodaj rachunek';
+    document.getElementById('ibanInput').value = '';
+    document.getElementById('ibanBackdrop').classList.add('is-open');
+    document.getElementById('ibanSheet').classList.add('is-open');
+  }
+
+  function closeIBANForm(){
+    document.getElementById('ibanBackdrop').classList.remove('is-open');
+    document.getElementById('ibanSheet').classList.remove('is-open');
+  }
+
+  function saveIBAN(){
+    var val = document.getElementById('ibanInput').value.trim();
+    if(!val){ closeIBANForm(); return; }
+
+    if(_ibanEditTarget){
+      // edit existing static
+      document.getElementById('dispIBAN' + _ibanEditTarget).textContent = val;
+      document.getElementById('editIBAN' + _ibanEditTarget).value = val;
+    } else if(window._ibanElRef){
+      // edit dynamic row
+      window._ibanElRef.textContent = val;
+      window._ibanElRef = null;
+    } else {
+      // add new — demote all to set, insert new as default
+      var card = document.querySelector('#screenFirma .firma-card:nth-child(2)');
+      var addBtn = card.querySelector('.firma-add-btn');
+      var nextIdx = card.querySelectorAll('.firma-account').length + 1;
+
+      // demote existing defaults
+      card.querySelectorAll('.firma-badge-default').forEach(function(b){
+        b.className = 'firma-badge-set';
+        b.textContent = 'Ustaw jako domyślny';
+      });
+
+      var newRow = document.createElement('div');
+      newRow.className = 'firma-account';
+      newRow.innerHTML =
+        '<div class="firma-account-top">' +
+          '<span class="firma-badge-default" onclick="setDefaultRachunek(' + nextIdx + ')">Domyślny</span>' +
+          '<div class="firma-account-icons">' +
+            '<svg onclick="editIBANDynamic(this)" style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>' +
+          '</div>' +
+        '</div>' +
+        '<div class="firma-iban">' + val + '</div>';
+      card.insertBefore(newRow, addBtn);
+    }
+    closeIBANForm();
+  }
+
+  function editIBANDynamic(svgEl){
+    var ibanEl = svgEl.closest('.firma-account').querySelector('.firma-iban');
+    _ibanEditTarget = null;
+    document.getElementById('ibanSheetTitle').textContent = 'Edytuj rachunek';
+    document.getElementById('ibanInput').value = ibanEl.textContent;
+    document.getElementById('ibanBackdrop').classList.add('is-open');
+    document.getElementById('ibanSheet').classList.add('is-open');
+    // store reference for save
+    window._ibanElRef = ibanEl;
   }
 
   function setDefaultRachunek(n){
