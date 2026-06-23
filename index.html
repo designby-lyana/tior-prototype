@@ -484,8 +484,9 @@
     position:fixed; inset:0;
     background:transparent;
     z-index:200;
+    pointer-events:none;
   }
-  .dd-backdrop.is-open{ display:block; }
+  .dd-backdrop.is-open{ display:block; pointer-events:auto; }
   .dd-sheet{
     display:none;
     position:fixed;
@@ -1928,7 +1929,7 @@
         </div>
 
         <div class="filter-bar">
-          <div class="ean-toggle" id="eanToggle" style="cursor:pointer;">
+          <div class="ean-toggle" id="eanToggle" style="cursor:pointer;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
             <span>EAN</span>
             <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
           </div>
