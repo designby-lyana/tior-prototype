@@ -1959,7 +1959,7 @@
             <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
           </div>
           <div class="filter-bar-right">
-            <button class="mini-trigger" onclick="toggleFilterOverlay()">
+            <button class="mini-trigger" onclick="toggleMoreFilters()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
               Filtry
             </button>
@@ -1978,13 +1978,7 @@
         <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń">×</button></span>
         <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń">×</button></span>
       </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <button class="clear-all">Wyczyść wszystko</button>
-          <button class="more-filters-btn" id="moreFiltersBtn" onclick="toggleMoreFilters()">
-            Więcej filtrów
-            <svg id="moreFiltersChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
+        <button class="clear-all">Wyczyść wszystko</button>
       </div><!-- /bottom-group -->
 
       <!-- EXPANDED FILTERS -->
@@ -4219,11 +4213,9 @@
 
   function toggleMoreFilters(){
     var wrap = document.getElementById('moreFiltersWrap');
-    var btn  = document.getElementById('moreFiltersBtn');
     var chev = document.getElementById('moreFiltersChevron');
     var isOpen = wrap.classList.toggle('is-open');
-    btn.childNodes[0].textContent = isOpen ? 'Mniej filtrów ' : 'Więcej filtrów ';
-    chev.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    if(chev) chev.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
   }
 
   function toggleAdresForm(){
