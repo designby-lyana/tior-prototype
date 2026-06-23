@@ -1959,13 +1959,14 @@
             <span>EAN</span>
             <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
           </div>
-          <div class="filter-bar-right">
+          <div class="filter-bar-right" style="flex-direction:column;align-items:flex-end;gap:var(--space-xs);">
+            <button class="mini-trigger" onclick="toggleDostepnoscOverlay()">
+              Dostępność
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="mini-trigger" onclick="toggleMoreFilters()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
               Filtry
-            </button>
-            <button class="mini-trigger" onclick="toggleFilterOverlay()">
-              Dostępność
               <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
           </div>
@@ -3516,6 +3517,34 @@
   <button class="flt-apply" onclick="closeResultsFilter()">Zastosuj</button>
 </div>
 
+<!-- DOSTĘPNOŚĆ OVERLAY -->
+<div class="flt-backdrop" id="dostBackdrop" onclick="toggleDostepnoscOverlay()"></div>
+<div class="flt-sheet" id="dostSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Dostępność</span>
+    <button class="flt-clear" onclick="toggleDostepnoscOverlay()">✕</button>
+  </div>
+  <div class="flt-section">
+    <div class="flt-section-label">Ilość w magazynie</div>
+    <div class="flt-chips">
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">Dostępne</button>
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">1–3 szt.</button>
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">4–10 szt.</button>
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">11–50 szt.</button>
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">50+ szt.</button>
+    </div>
+  </div>
+  <div class="flt-section">
+    <div class="flt-section-label">Dostawa</div>
+    <div class="flt-chips">
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">Dostawa 48h</button>
+      <button class="flt-chip" onclick="toggleFltChip(this)" style="width:auto;padding:4px 16px;">Dostawa 24h</button>
+    </div>
+  </div>
+  <button class="flt-apply" onclick="toggleDostepnoscOverlay()">Zastosuj</button>
+</div>
+
 <!-- DANE FIRMY EDIT OVERLAY -->
 <div class="flt-backdrop" id="daneFirmyBackdrop" onclick="toggleDaneFirmyForm()"></div>
 <div class="flt-sheet" id="daneFirmySheet">
@@ -4297,6 +4326,13 @@
   }
 
   var _rfKey = null;
+
+  function toggleDostepnoscOverlay(){
+    var b = document.getElementById('dostBackdrop');
+    var s = document.getElementById('dostSheet');
+    var open = s.classList.toggle('is-open');
+    b.classList.toggle('is-open', open);
+  }
 
   function openResultsFilter(key, label){
     _rfKey = key;
