@@ -3218,28 +3218,28 @@
     <div class="firma-card">
       <div class="firma-card-header">
         <span class="firma-card-title">Dane firmy</span>
-        <button class="firma-edit-btn">
+        <button class="firma-edit-btn" onclick="toggleDaneFirmyForm()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           Edytuj
         </button>
       </div>
       <div class="firma-field">
         <div class="firma-field-title">Nazwa prawna</div>
-        <div class="firma-field-value">AutoParts GmbH</div>
+        <div class="firma-field-value" id="dispFirmaNazwa">AutoParts GmbH</div>
       </div>
       <div class="firma-field-group">
         <div>
           <div class="firma-field-title">Numer rejestrowy (KRS / HRB)</div>
-          <div class="firma-field-value">HRB 12345 B</div>
+          <div class="firma-field-value" id="dispFirmaKRS">HRB 12345 B</div>
         </div>
         <div>
           <div class="firma-field-title">Numer VAT</div>
-          <div class="firma-field-value">DE123456789</div>
+          <div class="firma-field-value" id="dispFirmaVAT">DE123456789</div>
         </div>
       </div>
       <div class="firma-field" style="border-bottom:none;padding-bottom:0;">
         <div class="firma-field-title">Osoba kontaktowa</div>
-        <div class="firma-field-value" style="line-height:1.7;">Jan Kowalski<br>+49 30 123 456<br>jan@company.com</div>
+        <div class="firma-field-value" id="dispFirmaOsoba" style="line-height:1.7;">Jan Kowalski<br>+49 30 123 456<br>jan@company.com</div>
       </div>
     </div>
 
@@ -3367,6 +3367,45 @@
   </div>
 
   <button class="flt-apply" onclick="saveAdres()">Zapisz adres</button>
+</div>
+
+<!-- DANE FIRMY EDIT OVERLAY -->
+<div class="flt-backdrop" id="daneFirmyBackdrop" onclick="toggleDaneFirmyForm()"></div>
+<div class="flt-sheet" id="daneFirmySheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Dane firmy</span>
+    <button class="flt-clear" onclick="toggleDaneFirmyForm()">✕</button>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+    <div class="adres-field">
+      <div class="adres-label">NAZWA PRAWNA</div>
+      <input type="text" class="adres-input" id="firmaNazwa" value="AutoParts GmbH">
+    </div>
+    <div class="adres-field">
+      <div class="adres-label">NUMER REJESTROWY (KRS / HRB)</div>
+      <input type="text" class="adres-input" id="firmaKRS" value="HRB 12345 B">
+    </div>
+    <div class="adres-field">
+      <div class="adres-label">NUMER VAT</div>
+      <input type="text" class="adres-input" id="firmaVAT" value="DE123456789">
+    </div>
+    <div class="adres-field">
+      <div class="adres-label">OSOBA KONTAKTOWA</div>
+      <input type="text" class="adres-input" id="firmaOsoba" value="Jan Kowalski">
+    </div>
+    <div class="adres-field">
+      <div class="adres-label">TELEFON</div>
+      <input type="text" class="adres-input" id="firmaTel" value="+49 30 123 456">
+    </div>
+    <div class="adres-field">
+      <div class="adres-label">E-MAIL</div>
+      <input type="text" class="adres-input" id="firmaEmail" value="jan@company.com">
+    </div>
+  </div>
+
+  <button class="flt-apply" onclick="saveDaneFirmy()">Zapisz</button>
 </div>
 
 <!-- DROPDOWN (outside phone, fixed to viewport) -->
@@ -3916,6 +3955,29 @@
     var s = document.getElementById('invStatusSheet');
     var open = s.classList.toggle('is-open');
     b.classList.toggle('is-open', open);
+  }
+
+  function toggleDaneFirmyForm(){
+    var b = document.getElementById('daneFirmyBackdrop');
+    var s = document.getElementById('daneFirmySheet');
+    var open = s.classList.toggle('is-open');
+    b.classList.toggle('is-open', open);
+  }
+
+  function saveDaneFirmy(){
+    var nazwa = document.getElementById('firmaNazwa').value;
+    var krs   = document.getElementById('firmaKRS').value;
+    var vat   = document.getElementById('firmaVAT').value;
+    var osoba = document.getElementById('firmaOsoba').value;
+    var tel   = document.getElementById('firmaTel').value;
+    var email = document.getElementById('firmaEmail').value;
+
+    document.getElementById('dispFirmaNazwa').textContent = nazwa;
+    document.getElementById('dispFirmaKRS').textContent   = krs;
+    document.getElementById('dispFirmaVAT').textContent   = vat;
+    document.getElementById('dispFirmaOsoba').innerHTML   = osoba + '<br>' + tel + '<br>' + email;
+
+    toggleDaneFirmyForm();
   }
 
   function toggleAdresForm(){
