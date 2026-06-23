@@ -1275,8 +1275,9 @@
   .flt-backdrop{
     display:none; position:fixed; inset:0;
     background:rgba(0,0,0,.32); z-index:400;
+    pointer-events:none;
   }
-  .flt-backdrop.is-open{ display:block; }
+  .flt-backdrop.is-open{ display:block; pointer-events:auto; }
 
   .flt-sheet{
     position:fixed; bottom:0; left:50%; transform:translateX(-50%) translateY(100%);
@@ -4217,7 +4218,7 @@
 </script>
 
 <!-- EU LABEL CUSTOM OVERLAY -->
-<div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;"></div>
+<div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;pointer-events:none;"></div>
 <div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
   <div style="padding:10px 12px 0;">
     <div style="margin-bottom:10px;">
