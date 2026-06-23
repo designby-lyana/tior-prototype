@@ -639,6 +639,30 @@
   .filter-bar{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); }
   .filter-bar-right{ display:flex; align-items:center; gap:var(--space-lg); }
 
+  .more-filters-btn{
+    appearance:none; background:none; border:none; padding:0;
+    font-family:var(--font-body); font-size:14px; color:var(--accent-primary);
+    display:flex; align-items:center; gap:4px; cursor:pointer;
+  }
+  .more-filters-btn:hover{ color:var(--accent-pressed); }
+  #moreFiltersChevron{ transition:transform 280ms ease; }
+
+  .results-filter-chip{
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-lg);
+    padding:6px 12px;
+    font-size:14px;
+    background:var(--bg-input);
+  }
+
+  .more-filters-wrap{
+    display:grid; grid-template-rows:0fr;
+    transition:grid-template-rows 300ms ease;
+  }
+  .more-filters-wrap.is-open{ grid-template-rows:1fr; }
+  .more-filters-inner{ min-height:0; overflow:hidden; }
+  .more-filters-pad{ padding-top:var(--space-md); display:flex; flex-direction:column; gap:var(--space-sm); }
+
 
   /* ── CART SCREEN ─────────────────────────────────── */
   .cart-content{
@@ -1954,8 +1978,42 @@
         <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń">×</button></span>
         <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń">×</button></span>
       </div>
-        <button class="clear-all">Wyczyść wszystko</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <button class="clear-all">Wyczyść wszystko</button>
+          <button class="more-filters-btn" id="moreFiltersBtn" onclick="toggleMoreFilters()">
+            Więcej filtrów
+            <svg id="moreFiltersChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
       </div><!-- /bottom-group -->
+
+      <!-- EXPANDED FILTERS -->
+      <div class="more-filters-wrap" id="moreFiltersWrap">
+        <div class="more-filters-inner" id="moreFiltersInner">
+          <div class="more-filters-pad">
+            <!-- Row 1 -->
+            <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
+              <button class="mini-trigger results-filter-chip">Marka <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip">Segment <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip">EAN <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip">Homologacja <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip">Indeksy <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip">DOT <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            </div>
+            <!-- Chips -->
+            <div class="chips-row" style="margin-top:var(--space-sm);">
+              <button class="chip" data-name="Run Flat">Run Flat</button>
+              <button class="chip" data-name="XL">XL</button>
+              <button class="chip" data-name="RF">RF</button>
+              <button class="chip" data-name="Ochrona felgi">Ochrona felgi</button>
+              <button class="chip" data-name="Dostawa 48h">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h11v8H2zM13 11h4l4 3v1h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>
+                Dostawa 48h
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -4157,6 +4215,15 @@
     document.getElementById('dispFirmaOsoba').innerHTML   = osoba + '<br>' + tel + '<br>' + email;
 
     toggleDaneFirmyForm();
+  }
+
+  function toggleMoreFilters(){
+    var wrap = document.getElementById('moreFiltersWrap');
+    var btn  = document.getElementById('moreFiltersBtn');
+    var chev = document.getElementById('moreFiltersChevron');
+    var isOpen = wrap.classList.toggle('is-open');
+    btn.childNodes[0].textContent = isOpen ? 'Mniej filtrów ' : 'Więcej filtrów ';
+    chev.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
   }
 
   function toggleAdresForm(){
