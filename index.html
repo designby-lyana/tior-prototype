@@ -498,8 +498,9 @@
     box-shadow:0 6px 20px rgba(0,0,0,.14);
     border:1px solid var(--border-default);
     border-top:none;
+    pointer-events:none;
   }
-  .dd-sheet.is-open{ display:flex; }
+  .dd-sheet.is-open{ display:flex; pointer-events:auto; }
   .dd-header{ display:none; }
   .dd-search-wrap{
     padding:var(--space-sm) var(--space-md);
@@ -1932,11 +1933,11 @@
             <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
           </div>
           <div class="filter-bar-right">
-            <button class="mini-trigger">
+            <button class="mini-trigger" onclick="toggleFilterOverlay()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
               Filtry
             </button>
-            <button class="mini-trigger">
+            <button class="mini-trigger" onclick="toggleFilterOverlay()">
               Dostępność
               <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
