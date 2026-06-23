@@ -1616,31 +1616,33 @@
   .firma-add-btn:active{ background:rgba(2,75,87,.14); color:var(--accent-pressed); }
   .firma-add-btn:focus-visible{ outline:2px solid var(--text-default); outline-offset:2px; }
 
-  /* ── DOSTĘPNOŚĆ CHIPS (secondary button style) ── */
+  /* ── DOSTĘPNOŚĆ CHIPS = same as home .chip ── */
   .dost-chip{
     appearance:none;
-    height:44px; padding:0 var(--space-lg);
-    border:1px solid var(--accent-primary);
-    border-radius:var(--radius-lg);
-    background:var(--bg-input);
-    font-family:var(--font-body); font-weight:500; font-size:16px;
-    color:var(--accent-primary);
+    border:1px solid #bec5c8;
+    background:var(--bg-chip);
+    color:var(--text-on-light);
+    font-family:var(--font-body);
+    font-size:14px;
+    line-height:18px;
+    padding:8px 12px;
+    border-radius:var(--radius-sm);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
     cursor:pointer;
-    transition:opacity 140ms ease, border-color 140ms ease, color 140ms ease, background 140ms ease;
     white-space:nowrap;
+    transition:background 140ms ease, border-color 140ms ease;
   }
-  .dost-chip:hover{ opacity:.85; }
-  .dost-chip:active{ border-color:var(--accent-pressed); color:var(--accent-pressed); opacity:1; }
+  .dost-chip:hover{ background:rgba(107,114,128,0.4); }
+  .dost-chip:active{ border-color:var(--accent-pressed); }
   .dost-chip.is-selected{
     background:rgba(107,114,128,0.4);
     border:1px solid var(--accent-primary);
     color:var(--text-default);
-    opacity:1;
   }
   .dost-chip.is-selected:hover{
-    background:rgba(107,114,128,0.4);
     border:1.5px solid var(--accent-pressed);
-    color:var(--text-default);
   }
 
   /* ── ADRES FORM ──────────────────────────── */
