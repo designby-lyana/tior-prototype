@@ -1238,6 +1238,82 @@
   }
   .orl-action-btn:hover{ color:var(--text-default); }
   .orl-action-divider{ width:1px; height:20px; background:var(--border-default); }
+
+  /* ── FILTER OVERLAY ─────────────────────────────── */
+  .flt-backdrop{
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.32); z-index:400;
+  }
+  .flt-backdrop.is-open{ display:block; }
+
+  .flt-sheet{
+    position:fixed; bottom:0; left:50%; transform:translateX(-50%) translateY(100%);
+    width:390px; max-width:100%;
+    background:var(--bg-surface-light);
+    border-radius:16px 16px 0 0;
+    padding:var(--space-sm) var(--space-xl) var(--space-2xl);
+    z-index:401;
+    display:flex; flex-direction:column; gap:var(--space-xl);
+    transition:transform 320ms cubic-bezier(.32,0,.67,0);
+    max-height:85vh; overflow-y:auto;
+  }
+  .flt-sheet.is-open{ transform:translateX(-50%) translateY(0); }
+
+  .flt-handle{
+    width:36px; height:4px; border-radius:2px;
+    background:var(--border-default);
+    align-self:center; margin-bottom:var(--space-sm); flex:none;
+  }
+  .flt-header{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .flt-title{
+    font-family:var(--font-mono); font-weight:700; font-size:16px;
+    color:var(--text-default); text-transform:uppercase; letter-spacing:.3px;
+  }
+  .flt-clear{
+    appearance:none; background:none; border:none;
+    font-family:var(--font-body); font-size:14px; color:var(--text-muted);
+    cursor:pointer; padding:0;
+  }
+  .flt-clear:hover{ color:var(--text-default); }
+
+  .flt-section{ display:flex; flex-direction:column; gap:var(--space-md); }
+  .flt-section-label{
+    font-family:var(--font-body); font-size:14px; font-weight:400;
+    color:var(--text-muted);
+  }
+  .flt-chips{ display:flex; flex-wrap:wrap; gap:var(--space-sm); }
+
+  .flt-chip{
+    appearance:none; cursor:pointer;
+    font-family:var(--font-body); font-size:16px; font-weight:400; line-height:18px;
+    padding:4px var(--space-md);
+    border-radius:var(--radius-sm);
+    border:1px solid var(--border-default);
+    background:var(--bg-chip);
+    color:var(--text-on-light);
+    transition:border-color 140ms ease, box-shadow 140ms ease;
+  }
+  .flt-chip[style]{
+    background:var(--chip-bg); border-color:var(--chip-border); color:var(--chip-text);
+  }
+  .flt-chip.is-selected{
+    box-shadow:0 0 0 2px var(--accent-primary);
+    border-color:var(--accent-primary);
+  }
+
+  .flt-apply{
+    appearance:none; width:100%; height:48px;
+    border:none; border-radius:var(--radius-lg);
+    background:var(--accent-primary); color:var(--text-inverted);
+    font-family:var(--font-body); font-weight:500; font-size:18px;
+    cursor:pointer;
+    transition:background 140ms ease, transform 100ms ease;
+    flex:none;
+  }
+  .flt-apply:hover{ filter:brightness(1.06); }
+  .flt-apply:active{ transform:scale(.985); background:var(--accent-pressed); }
   /* badges */
   .od-badges{ display:flex; gap:var(--space-sm); flex-wrap:wrap; }
   .od-badge{
@@ -2408,7 +2484,7 @@
 
       <!-- filter buttons -->
       <div style="display:flex;gap:var(--space-sm);">
-        <button class="orl-filter-btn">
+        <button class="orl-filter-btn" onclick="toggleFilterOverlay()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
           Filtry
         </button>
@@ -2536,6 +2612,44 @@
   </div><!-- /orl-content -->
 
 </div><!-- /screenOrders -->
+
+<!-- FILTER OVERLAY -->
+<div class="flt-backdrop" id="fltBackdrop" onclick="toggleFilterOverlay()"></div>
+<div class="flt-sheet" id="fltSheet">
+  <div class="flt-handle"></div>
+
+  <div class="flt-header">
+    <span class="flt-title">Filtry</span>
+    <button class="flt-clear" onclick="clearFilters()">Wyczyść</button>
+  </div>
+
+  <!-- Status zamówienia -->
+  <div class="flt-section">
+    <div class="flt-section-label">Status zamówienia</div>
+    <div class="flt-chips">
+      <button class="flt-chip" data-group="order" data-val="Szkice" onclick="toggleFltChip(this)">Szkice</button>
+      <button class="flt-chip" data-group="order" data-val="Utworzone" onclick="toggleFltChip(this)" style="--chip-bg:#e8eef7;--chip-border:#b8c8e0;--chip-text:#2e5fa3;">Utworzone</button>
+      <button class="flt-chip" data-group="order" data-val="W realizacji" onclick="toggleFltChip(this)" style="--chip-bg:#fdf3e3;--chip-border:#e8d4a8;--chip-text:#9a6200;">W realizacji</button>
+      <button class="flt-chip" data-group="order" data-val="W dostawie" onclick="toggleFltChip(this)" style="--chip-bg:#e0f4f8;--chip-border:#a0d8e8;--chip-text:#0e7490;">W dostawie</button>
+      <button class="flt-chip" data-group="order" data-val="Dostarczono" onclick="toggleFltChip(this)" style="--chip-bg:rgba(206,84,48,0.85);--chip-border:#ce5430;--chip-text:#fffaf2;">Dostarczono</button>
+      <button class="flt-chip" data-group="order" data-val="Anulowane" onclick="toggleFltChip(this)" style="--chip-bg:#f0ebf7;--chip-border:#c8b0dc;--chip-text:#3d2468;">Anulowane</button>
+      <button class="flt-chip" data-group="order" data-val="Zwrot" onclick="toggleFltChip(this)" style="--chip-bg:#f0ebf7;--chip-border:#c8b0dc;--chip-text:#3d2468;">Zwrot</button>
+    </div>
+  </div>
+
+  <!-- Status płatności -->
+  <div class="flt-section">
+    <div class="flt-section-label">Status płatności</div>
+    <div class="flt-chips">
+      <button class="flt-chip" data-group="pay" data-val="Nieopłacone" onclick="toggleFltChip(this)" style="--chip-bg:#fdf3e3;--chip-border:#e8d4a8;--chip-text:#9a6200;">Nieopłacone</button>
+      <button class="flt-chip" data-group="pay" data-val="Opłacone" onclick="toggleFltChip(this)" style="--chip-bg:#e8f4ed;--chip-border:#a8d4b8;--chip-text:#1e6b3c;">Opłacone</button>
+      <button class="flt-chip" data-group="pay" data-val="Po terminie" onclick="toggleFltChip(this)" style="--chip-bg:#fceaea;--chip-border:#e8b0b0;--chip-text:#9b1c1c;">Po terminie</button>
+      <button class="flt-chip" data-group="pay" data-val="Zwrócone" onclick="toggleFltChip(this)" style="--chip-bg:#f0ebf7;--chip-border:#c8b0dc;--chip-text:#3d2468;">Zwrócone</button>
+    </div>
+  </div>
+
+  <button class="flt-apply" onclick="applyFilters()">Zastosuj filtry</button>
+</div>
 
 </div><!-- /.phone -->
 
@@ -3036,7 +3150,30 @@
   }
 
 
-  function autoGrow(el){
+  // ── FILTER OVERLAY ───────────────────────────────
+  function toggleFilterOverlay(){
+    var backdrop = document.getElementById('fltBackdrop');
+    var sheet    = document.getElementById('fltSheet');
+    var isOpen   = sheet.classList.contains('is-open');
+    backdrop.classList.toggle('is-open', !isOpen);
+    sheet.classList.toggle('is-open', !isOpen);
+  }
+
+  function toggleFltChip(btn){
+    btn.classList.toggle('is-selected');
+  }
+
+  function clearFilters(){
+    document.querySelectorAll('.flt-chip').forEach(function(c){
+      c.classList.remove('is-selected');
+    });
+  }
+
+  function applyFilters(){
+    toggleFilterOverlay();
+  }
+
+
     var maxH = 8 * 18 + 2 * 12;
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, maxH) + 'px';
