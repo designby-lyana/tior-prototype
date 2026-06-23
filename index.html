@@ -1979,20 +1979,20 @@
           <div class="more-filters-pad">
             <!-- Row 1: основні дропдауни -->
             <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
-              <button class="mini-trigger results-filter-chip">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">+ Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Etykieta UE <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('rozmiar',this)">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('rozmiar',this)">+ Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('typ',this)">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('sezon',this)">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openEuDropdown(this)">Etykieta UE <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
             </div>
             <!-- Row 2: zaawansowane -->
             <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
-              <button class="mini-trigger results-filter-chip">Marka <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Segment <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">EAN <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Homologacja <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">Indeksy <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip">DOT <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('marka',this)">Marka <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('segment',this)">Segment <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('rozmiar',this)">EAN <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('homologacja',this)">Homologacja <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('indeks-nosnosci',this)">Indeksy <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="openDropdown('dot',this)">DOT <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
             </div>
             <!-- Row 3: чіпи -->
             <div class="chips-row">
