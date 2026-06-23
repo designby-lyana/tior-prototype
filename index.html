@@ -2011,12 +2011,12 @@
 
       <!-- applied filters — bottom of card -->
       <div style="display:flex;flex-direction:column;gap:4px;padding-top:var(--space-md);border-top:1px solid var(--border-surface);">
-        <div class="applied-filters">
-          <span class="results-count">4 wyników:</span>
-          <span class="filter-pill">LI 91 <button class="pill-remove" aria-label="Usuń">×</button></span>
-          <span class="filter-pill">205/55 R16 <button class="pill-remove" aria-label="Usuń">×</button></span>
+        <div class="applied-filters" id="appliedFilters">
+          <span class="results-count" id="resultsCount">4 wyników:</span>
+          <span class="filter-pill" id="pill1">LI 91 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill1')">×</button></span>
+          <span class="filter-pill" id="pill2">205/55 R16 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill2')">×</button></span>
         </div>
-        <button class="clear-all">Wyczyść wszystko</button>
+        <button class="clear-all" onclick="clearAllFilters()">Wyczyść wszystko</button>
       </div>
 
     </div>
@@ -4219,6 +4219,23 @@
     document.getElementById('dispFirmaOsoba').innerHTML   = osoba + '<br>' + tel + '<br>' + email;
 
     toggleDaneFirmyForm();
+  }
+
+  function clearAllFilters(){
+    // Remove all filter pills
+    document.querySelectorAll('#appliedFilters .filter-pill').forEach(function(p){ p.remove(); });
+    // Update count
+    var count = document.getElementById('resultsCount');
+    if(count) count.textContent = '9 wyników:';
+  }
+
+  function removePill(id){
+    var pill = document.getElementById(id);
+    if(pill) pill.remove();
+    // Update count based on remaining pills
+    var remaining = document.querySelectorAll('#appliedFilters .filter-pill').length;
+    var count = document.getElementById('resultsCount');
+    if(count) count.textContent = (remaining === 0 ? '9' : remaining === 1 ? '6' : '4') + ' wyników:';
   }
 
   function toggleMoreFilters(){
