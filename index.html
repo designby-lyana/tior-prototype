@@ -3779,6 +3779,7 @@
     sheet.style.left   = r.left + 'px';
     sheet.style.width  = r.width + 'px';
     sheet.style.display = 'block';
+    sheet.style.pointerEvents = 'auto';
     backdrop.style.display = 'block';
     fieldEl.classList.add('dd-open');
     // sync scroll
@@ -3794,7 +3795,9 @@
   }
 
   function closeEu(){
-    document.getElementById('euSheet').style.display = 'none';
+    var s = document.getElementById('euSheet');
+    s.style.display = 'none';
+    s.style.pointerEvents = 'none';
     document.getElementById('euBackdrop').style.display = 'none';
     if(euActiveField) euActiveField.classList.remove('dd-open');
     if(window._euSync) window.removeEventListener('scroll', window._euSync, true);
@@ -4217,7 +4220,7 @@
 
 <!-- EU LABEL CUSTOM OVERLAY -->
 <div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;"></div>
-<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;">
+<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
   <div style="padding:10px 12px 0;">
     <div style="margin-bottom:10px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
