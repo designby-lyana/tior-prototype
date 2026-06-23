@@ -1546,16 +1546,19 @@
     color:var(--text-default); letter-spacing:.3px;
   }
   .firma-add-btn{
-    appearance:none; background:none;
-    border:1px dashed var(--border-module);
+    appearance:none; background:none; border:none;
+    display:flex; align-items:center; gap:var(--space-sm);
+    height:48px; padding:var(--space-sm) var(--space-lg);
     border-radius:var(--radius-lg);
-    display:flex; align-items:center; justify-content:center; gap:var(--space-sm);
-    width:100%; padding:var(--space-md);
-    margin-top:var(--space-md);
-    font-family:var(--font-body); font-size:14px; color:var(--text-muted);
-    cursor:pointer; transition:border-color 140ms ease, color 140ms ease;
+    font-family:var(--font-body); font-weight:500; font-size:18px; line-height:20px;
+    color:var(--accent-primary);
+    cursor:pointer;
+    transition:background 120ms ease, color 120ms ease;
+    margin-top:var(--space-sm);
   }
-  .firma-add-btn:hover{ border-color:var(--accent-primary); color:var(--accent-primary); }
+  .firma-add-btn:hover{ background:rgba(0,95,110,.07); }
+  .firma-add-btn:active{ background:rgba(2,75,87,.14); color:var(--accent-pressed); }
+  .firma-add-btn:focus-visible{ outline:2px solid var(--text-default); outline-offset:2px; }
   /* badges */
   .od-badges{ display:flex; gap:var(--space-sm); flex-wrap:wrap; }
   .od-badge{
@@ -3250,7 +3253,7 @@
         <div class="firma-iban">DE89 3704 0044 0532 0130 18</div>
       </div>
       <button class="firma-add-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <img src="data:image/png;base64,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" alt="" width="20" height="20" style="flex:none;">
         Dodaj rachunek
       </button>
     </div>
@@ -3278,7 +3281,7 @@
         <span class="firma-badge-set">Ustaw jako domyślny</span>
       </div>
       <button class="firma-add-btn" style="border-bottom:none;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <img src="data:image/png;base64,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" alt="" width="20" height="20" style="flex:none;">
         Dodaj adres prawny
       </button>
     </div>
