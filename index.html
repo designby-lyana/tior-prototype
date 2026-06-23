@@ -1391,7 +1391,8 @@
   .inv-row:hover{ background:#f4f6f7; box-shadow:0 2px 10px rgba(0,0,0,.09); }
 
   .inv-row-top{ display:flex; align-items:center; justify-content:space-between; }
-  .inv-row-left{ display:flex; align-items:center; gap:var(--space-sm); }
+  .inv-row-left{ display:flex; align-items:flex-start; gap:var(--space-sm); }
+  .inv-num-wrap{ display:flex; flex-direction:column; gap:2px; }
 
   .inv-checkbox{
     width:16px; height:16px; min-width:16px;
@@ -1403,6 +1404,13 @@
     font-family:var(--font-mono); font-weight:700; font-size:16px;
     color:var(--text-default);
   }
+  .inv-order-ref{
+    font-family:var(--font-body); font-size:13px; color:var(--text-muted);
+  }
+  .inv-order-ref a{
+    color:var(--accent-primary); text-decoration:underline;
+  }
+  .inv-order-ref a:hover{ color:var(--accent-pressed); }
   .inv-date{
     font-family:var(--font-body); font-size:14px; color:var(--text-muted);
   }
@@ -2919,7 +2927,10 @@
         <div class="inv-row-top">
           <div class="inv-row-left">
             <input type="checkbox" class="inv-checkbox">
-            <span class="inv-num">INV-2643</span>
+            <div class="inv-num-wrap">
+              <span class="inv-num">INV-2643</span>
+              <span class="inv-order-ref"><a onclick="setScreen('screenOrderDetail')" style="cursor:pointer;">zamówienie #5555</a></span>
+            </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--text-muted);flex:none;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
           <span class="inv-date">18 lut 2026</span>
@@ -2942,7 +2953,10 @@
         <div class="inv-row-top">
           <div class="inv-row-left">
             <input type="checkbox" class="inv-checkbox">
-            <span class="inv-num">INV-2643</span>
+            <div class="inv-num-wrap">
+              <span class="inv-num">INV-2643</span>
+              <span class="inv-order-ref"><a onclick="setScreen('screenOrderDetail')" style="cursor:pointer;">zamówienie #5555</a></span>
+            </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--text-muted);flex:none;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
           <span class="inv-date">18 lut 2026</span>
@@ -2965,7 +2979,10 @@
         <div class="inv-row-top">
           <div class="inv-row-left">
             <input type="checkbox" class="inv-checkbox">
-            <span class="inv-num">INV-2643</span>
+            <div class="inv-num-wrap">
+              <span class="inv-num">INV-2643</span>
+              <span class="inv-order-ref"><a onclick="setScreen('screenOrderDetail')" style="cursor:pointer;">zamówienie #5555</a></span>
+            </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--text-muted);flex:none;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
           <span class="inv-date">18 lut 2026</span>
@@ -2988,7 +3005,10 @@
         <div class="inv-row-top">
           <div class="inv-row-left">
             <input type="checkbox" class="inv-checkbox">
-            <span class="inv-num">INV-2643</span>
+            <div class="inv-num-wrap">
+              <span class="inv-num">INV-2643</span>
+              <span class="inv-order-ref"><a onclick="setScreen('screenOrderDetail')" style="cursor:pointer;">zamówienie #5555</a></span>
+            </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--text-muted);flex:none;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
           <span class="inv-date">18 lut 2026</span>
