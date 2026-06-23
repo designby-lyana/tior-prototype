@@ -344,7 +344,7 @@
 
   .filter-row{ display:flex; align-items:center; gap: var(--space-md); margin-top: var(--space-md); }
   .ean-toggle{ display:flex; align-items:center; gap: var(--space-sm); font-size:16px; color: var(--text-on-light); cursor:default; flex:none; }
-  .toggle{ width:34px; height:20px; border-radius:999px; background: var(--accent-primary); position:relative; flex:none; }
+  .toggle{ width:34px; height:20px; border-radius:999px; background: var(--accent-primary); position:relative; flex:none; transition:background 200ms ease; }
   .toggle-knob{ position:absolute; top:1px; right:1px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid rgba(0,0,0,.1); box-sizing:border-box; }
   .v-divider{ width:1px; height:20px; background: var(--border-default); flex:none; }
   .mini-trigger{
@@ -3886,8 +3886,10 @@
     });
     if(eanKnob){
       eanKnob.style.background = eanOn ? 'var(--accent-primary)' : 'var(--text-muted)';
-      eanKnob.querySelector('.toggle-knob').style.right = eanOn ? '1px' : 'auto';
-      eanKnob.querySelector('.toggle-knob').style.left  = eanOn ? 'auto' : '1px';
+      var knob = eanKnob.querySelector('.toggle-knob');
+      knob.style.right = eanOn ? '1px' : 'auto';
+      knob.style.left  = eanOn ? 'auto' : '1px';
+      knob.style.borderColor = eanOn ? 'var(--accent-primary)' : 'rgba(0,0,0,.1)';
     }
   }
 
