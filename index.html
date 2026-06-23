@@ -1623,15 +1623,22 @@
     font-family:var(--font-body); font-weight:500; font-size:16px;
     color:var(--accent-primary);
     cursor:pointer;
-    transition:opacity 140ms ease, border-color 140ms ease, color 140ms ease;
+    transition:opacity 140ms ease, border-color 140ms ease, color 140ms ease, background 140ms ease;
     white-space:nowrap;
   }
   .dost-chip:hover{ opacity:.85; }
   .dost-chip:active{ border-color:var(--accent-pressed); color:var(--accent-pressed); opacity:1; }
   .dost-chip.is-selected{
-    background:var(--accent-primary); color:var(--text-inverted);
+    background:rgba(107,114,128,0.4);
+    border:1px solid var(--accent-primary);
+    color:var(--text-default);
+    opacity:1;
   }
-  .dost-chip.is-selected:hover{ opacity:.85; }
+  .dost-chip.is-selected:hover{
+    background:rgba(107,114,128,0.4);
+    border:1.5px solid var(--accent-pressed);
+    color:var(--text-default);
+  }
 
   /* ── ADRES FORM ──────────────────────────── */
   .adres-field{ display:flex; flex-direction:column; gap:var(--space-xs); }
