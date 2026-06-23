@@ -1315,6 +1315,41 @@
   }
   .flt-apply:hover{ filter:brightness(1.06); }
   .flt-apply:active{ transform:scale(.985); background:var(--accent-pressed); }
+
+  .flt-date-field{
+    display:flex; align-items:center; justify-content:space-between;
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-lg);
+    background:var(--bg-input);
+    padding:10px var(--space-md);
+    gap:var(--space-sm);
+    position:relative;
+  }
+  .flt-date-label{
+    font-family:var(--font-body); font-size:16px; color:var(--text-muted);
+    flex:none;
+  }
+  .flt-date-input{
+    position:absolute; inset:0; opacity:0; cursor:pointer; width:100%;
+  }
+  .flt-date-field svg{ flex:none; color:var(--text-on-light); }
+
+  .flt-suma-field{
+    border:1px solid var(--border-default);
+    border-radius:var(--radius-lg);
+    background:var(--bg-input);
+    overflow:hidden;
+  }
+  .flt-suma-input{
+    width:100%; border:none; outline:none;
+    padding:10px var(--space-md);
+    font-family:var(--font-body); font-size:16px;
+    color:var(--text-on-light); background:transparent;
+    box-sizing:border-box;
+  }
+  .flt-suma-input::placeholder{ color:var(--text-muted); }
+  .flt-suma-input::-webkit-inner-spin-button,
+  .flt-suma-input::-webkit-outer-spin-button{ -webkit-appearance:none; }
   /* badges */
   .od-badges{ display:flex; gap:var(--space-sm); flex-wrap:wrap; }
   .od-badge{
@@ -2489,11 +2524,11 @@
           Status
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button class="orl-filter-btn">
+        <button class="orl-filter-btn" onclick="toggleDataOverlay()">
           Data
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button class="orl-filter-btn">
+        <button class="orl-filter-btn" onclick="toggleSumaOverlay()">
           Suma
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
@@ -2654,6 +2689,54 @@
   </div>
 
   <button class="flt-apply" onclick="applyFilters()">Zastosuj filtry</button>
+</div>
+
+<!-- DATA OVERLAY -->
+<div class="flt-backdrop" id="dataBackdrop" onclick="toggleDataOverlay()"></div>
+<div class="flt-sheet" id="dataSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Data</span>
+    <button class="flt-clear" onclick="clearData()">Wyczyść</button>
+  </div>
+  <div class="flt-section">
+    <div class="flt-section-label">Zakres dat</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);">
+      <div class="flt-date-field">
+        <span class="flt-date-label">od</span>
+        <input type="date" class="flt-date-input" id="dateFrom">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div class="flt-date-field">
+        <span class="flt-date-label">do</span>
+        <input type="date" class="flt-date-input" id="dateTo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+    </div>
+  </div>
+  <button class="flt-apply" onclick="toggleDataOverlay()">Zastosuj</button>
+</div>
+
+<!-- SUMA OVERLAY -->
+<div class="flt-backdrop" id="sumaBackdrop" onclick="toggleSumaOverlay()"></div>
+<div class="flt-sheet" id="sumaSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Suma</span>
+    <button class="flt-clear" onclick="clearSuma()">Wyczyść</button>
+  </div>
+  <div class="flt-section">
+    <div class="flt-section-label">Wartość zamówienia (PLN)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);">
+      <div class="flt-suma-field">
+        <input type="number" class="flt-suma-input" id="sumaMin" placeholder="min PLN" min="0">
+      </div>
+      <div class="flt-suma-field">
+        <input type="number" class="flt-suma-input" id="sumaMax" placeholder="maks PLN" min="0">
+      </div>
+    </div>
+  </div>
+  <button class="flt-apply" onclick="toggleSumaOverlay()">Zastosuj</button>
 </div>
 
 </div><!-- /.phone -->
@@ -3176,6 +3259,28 @@
 
   function applyFilters(){
     toggleFilterOverlay();
+  }
+
+  function toggleDataOverlay(){
+    var b = document.getElementById('dataBackdrop');
+    var s = document.getElementById('dataSheet');
+    var open = s.classList.toggle('is-open');
+    b.classList.toggle('is-open', open);
+  }
+  function clearData(){
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  }
+
+  function toggleSumaOverlay(){
+    var b = document.getElementById('sumaBackdrop');
+    var s = document.getElementById('sumaSheet');
+    var open = s.classList.toggle('is-open');
+    b.classList.toggle('is-open', open);
+  }
+  function clearSuma(){
+    document.getElementById('sumaMin').value = '';
+    document.getElementById('sumaMax').value = '';
   }
 
 
