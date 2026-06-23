@@ -634,6 +634,9 @@
   .results-search-field::placeholder{ color:var(--text-placeholder); }
   .results-find-btn{ height:48px; font-size:16px; }
 
+  .filter-bar{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); }
+  .filter-bar-right{ display:flex; align-items:center; gap:var(--space-lg); }
+
 
   /* ── CART SCREEN ─────────────────────────────────── */
   .cart-content{
@@ -1924,21 +1927,21 @@
         </div>
 
         <div class="filter-bar">
-        <div class="filter-bar-left">
-          <button class="mini-trigger">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-            Filtry
-          </button>
-          <button class="mini-trigger">
-            Dostępność
-            <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="ean-toggle" id="eanToggle" style="cursor:pointer;">
-          <span>EAN</span>
-          <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
-        </div>
-      </div><!-- /filter-bar -->
+          <div class="ean-toggle" id="eanToggle" style="cursor:pointer;">
+            <span>EAN</span>
+            <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
+          </div>
+          <div class="filter-bar-right">
+            <button class="mini-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              Filtry
+            </button>
+            <button class="mini-trigger">
+              Dostępność
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div><!-- /filter-bar -->
 
       </div><!-- /top-group -->
 
