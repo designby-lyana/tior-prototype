@@ -2893,32 +2893,18 @@
         <span>Nr zamówienia, data, suma, lokalizacja, brand</span>
       </div>
 
-      <!-- Data + Suma inline -->
-      <div class="inv-filter-row">
-        <span class="inv-filter-label">Data:</span>
-        <div class="flt-date-field inv-date-field">
-          <span class="flt-date-label">od</span>
-          <input type="date" class="flt-date-input">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        </div>
-        <div class="flt-date-field inv-date-field">
-          <span class="flt-date-label">do</span>
-          <input type="date" class="flt-date-input">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        </div>
-      </div>
-
-      <div class="inv-filter-row">
-        <span class="inv-filter-label">Suma:</span>
-        <div class="flt-suma-field inv-suma-field">
-          <input type="number" class="flt-suma-input" placeholder="min PLN">
-        </div>
-        <div class="flt-suma-field inv-suma-field">
-          <input type="number" class="flt-suma-input" placeholder="maks PLN">
-        </div>
-        <button class="orl-filter-btn inv-status-btn" onclick="toggleInvStatusOverlay()">
+      <div style="display:flex;gap:var(--space-sm);">
+        <button class="orl-filter-btn" onclick="toggleInvStatusOverlay()">
           Status
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="orl-filter-btn">
+          Data
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="orl-filter-btn">
+          Suma
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </div>
 
