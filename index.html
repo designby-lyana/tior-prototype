@@ -3656,26 +3656,6 @@
   </div>
 </div>
 
-<!-- ADDR SHEET -->
-<div class="flt-backdrop" id="addrBackdrop" onclick="closeAddrSheet()"></div>
-<div class="flt-sheet" id="addrSheet">
-  <div class="flt-handle"></div>
-  <div class="flt-header">
-    <span class="flt-title" id="addrSheetTitle">Nowy adres</span>
-    <button class="flt-clear" onclick="closeAddrSheet()">&#x2715;</button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:var(--space-md);">
-    <div class="adres-field"><div class="adres-label">NAZWA PUNKTU</div><input type="text" class="adres-input" id="addrInputName" placeholder="np. Magazyn Warszawa"></div>
-    <div class="adres-field"><div class="adres-label">FIRMA</div><input type="text" class="adres-input" id="addrInputCompany" placeholder="Nazwa firmy"></div>
-    <div class="adres-field"><div class="adres-label">ULICA I NUMER</div><input type="text" class="adres-input" id="addrInputStreet" placeholder="ul. Przykładowa 1"></div>
-    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-sm);">
-      <div class="adres-field"><div class="adres-label">KOD POCZTOWY</div><input type="text" class="adres-input" id="addrInputZip" placeholder="00-000"></div>
-      <div class="adres-field"><div class="adres-label">MIASTO</div><input type="text" class="adres-input" id="addrInputCity" placeholder="Warszawa"></div>
-    </div>
-    <div class="adres-field"><div class="adres-label">KRAJ</div><input type="text" class="adres-input" id="addrInputCountry" value="Polska"></div>
-  </div>
-  <button class="flt-apply" onclick="saveAddr()">Zapisz adres</button>
-</div>
 
 <div id="screenSuccess" class="screen" style="background:#d2d8db;min-height:100%;">
   <!-- Header (reuse same structure) -->
@@ -5061,8 +5041,8 @@ function submitOrder() {
       var el = document.getElementById(f); if(el) el.value = '';
     });
     var c = document.getElementById('addrInputCountry'); if(c) c.value = 'Polska';
-    document.getElementById('addrBackdrop').classList.add('is-open');
-    document.getElementById('addrSheet').classList.add('is-open');
+    document.getElementById('addrBackdrop').style.display = 'block';
+    var s = document.getElementById('addrSheet'); s.style.display = 'flex';
   }
 
   function openAddrEdit(id) {
@@ -5078,13 +5058,13 @@ function submitOrder() {
     document.getElementById('addrInputZip').value = parts[0] || '';
     document.getElementById('addrInputCity').value = parts.slice(1).join(' ') || a.city;
     document.getElementById('addrInputCountry').value = a.country;
-    document.getElementById('addrBackdrop').classList.add('is-open');
-    document.getElementById('addrSheet').classList.add('is-open');
+    document.getElementById('addrBackdrop').style.display = 'block';
+    var s = document.getElementById('addrSheet'); s.style.display = 'flex';
   }
 
   function closeAddrSheet() {
-    document.getElementById('addrBackdrop').classList.remove('is-open');
-    document.getElementById('addrSheet').classList.remove('is-open');
+    document.getElementById('addrBackdrop').style.display = 'none';
+    document.getElementById('addrSheet').style.display = 'none';
   }
 
   function saveAddr() {
@@ -5157,5 +5137,27 @@ function submitOrder() {
 
 
 <div class="add-feedback" id="addFeedback"></div>
+
+<!-- ADDR SHEET (viewport level) -->
+<div id="addrBackdrop" onclick="closeAddrSheet()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:1000;"></div>
+<div id="addrSheet" style="display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:390px;max-width:100%;background:#fff;border-radius:16px 16px 0 0;z-index:1001;padding:12px 24px 32px;box-sizing:border-box;flex-direction:column;gap:16px;max-height:90vh;overflow-y:auto;">
+  <div style="width:40px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 8px;"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <span id="addrSheetTitle" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--text-default);">Nowy adres</span>
+    <button onclick="closeAddrSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">&#x2715;</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+    <div class="adres-field"><div class="adres-label">NAZWA PUNKTU</div><input type="text" class="adres-input" id="addrInputName" placeholder="np. Magazyn Warszawa"></div>
+    <div class="adres-field"><div class="adres-label">FIRMA</div><input type="text" class="adres-input" id="addrInputCompany" placeholder="Nazwa firmy"></div>
+    <div class="adres-field"><div class="adres-label">ULICA I NUMER</div><input type="text" class="adres-input" id="addrInputStreet" placeholder="ul. Przykładowa 1"></div>
+    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-sm);">
+      <div class="adres-field"><div class="adres-label">KOD POCZTOWY</div><input type="text" class="adres-input" id="addrInputZip" placeholder="00-000"></div>
+      <div class="adres-field"><div class="adres-label">MIASTO</div><input type="text" class="adres-input" id="addrInputCity" placeholder="Warszawa"></div>
+    </div>
+    <div class="adres-field"><div class="adres-label">KRAJ</div><input type="text" class="adres-input" id="addrInputCountry" value="Polska"></div>
+  </div>
+  <button class="flt-apply" onclick="saveAddr()" style="margin-top:8px;">Zapisz adres</button>
+</div>
+
 </body>
 </html>
