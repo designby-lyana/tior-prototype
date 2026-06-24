@@ -2107,7 +2107,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -2164,7 +2164,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -2221,7 +2221,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="goToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
       </div>
     </div>
 
@@ -3653,6 +3653,23 @@
   <button class="flt-apply" onclick="saveIBAN()">Zapisz</button>
 </div>
 
+<!-- ADD TO CART OVERLAY -->
+<div class="flt-backdrop" id="atcBackdrop" onclick="closeAtcOverlay()" style="z-index:500;"></div>
+<div class="flt-sheet" id="atcSheet" style="z-index:501;">
+  <div class="flt-handle"></div>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-lg);">
+    <div>
+      <div style="font-family:var(--font-body);font-size:18px;font-weight:600;color:var(--text-default);margin-bottom:4px;">Produkt dodany do koszyka</div>
+      <div style="font-family:var(--font-body);font-size:14px;color:var(--text-muted);" id="atcProductName"></div>
+    </div>
+    <button onclick="closeAtcOverlay()" style="appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:20px;line-height:1;">✕</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+    <button class="cta" onclick="goToCart();closeAtcOverlay()">Przejdź do koszyka</button>
+    <button class="cta" style="background:transparent;border:1.5px solid var(--accent-primary);color:var(--accent-primary);" onclick="closeAtcOverlay()">Kontynuuj poszukiwania</button>
+  </div>
+</div>
+
 <!-- DROPDOWN (outside phone, fixed to viewport) -->
 <div class="dd-backdrop" id="ddBackdrop"></div>
 <div class="dd-sheet" id="ddSheet">
@@ -4357,6 +4374,25 @@
   }
 
   var _rfKey = null;
+
+  var cartCount = 0;
+
+  function addToCart(){
+    cartCount++;
+    // Update all cart badges
+    document.querySelectorAll('.cart-badge').forEach(function(b){
+      b.textContent = cartCount;
+      b.classList.add('visible');
+    });
+    // Show overlay
+    document.getElementById('atcBackdrop').classList.add('is-open');
+    document.getElementById('atcSheet').classList.add('is-open');
+  }
+
+  function closeAtcOverlay(){
+    document.getElementById('atcBackdrop').classList.remove('is-open');
+    document.getElementById('atcSheet').classList.remove('is-open');
+  }
 
   function toggleDostChip(btn){
     btn.classList.toggle('is-selected');
