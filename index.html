@@ -5092,6 +5092,46 @@ function submitOrder() {
 
 
   document.addEventListener('DOMContentLoaded', function(){ renderAddrList(); });
+
+  function openAddrPickSheet() {
+    var list = document.getElementById('addrPickList');
+    if (!list) return;
+    var html = '';
+    for (var i = 0; i < addrData.length; i++) {
+      var a = addrData[i];
+      var sel = a.isDefault ? ' selected' : '';
+      var badge = a.isDefault ? '<span class="firma-badge-default">Domy\u015blny</span>' : '';
+      html += '<div class="addr-card' + sel + '" onclick="pickAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">';
+      html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
+      html += '<div class="addr-body" style="flex:1;min-width:0;">';
+      html += '<div style="margin-bottom:4px;">' + badge + '</div>';
+      html += '<div class="addr-name">' + a.name + '</div>';
+      html += '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + '</div>';
+      html += '</div></div>';
+    }
+    list.innerHTML = html;
+    document.getElementById('addrPickBackdrop').style.display = 'block';
+    document.getElementById('addrPickSheet').style.display = 'flex';
+  }
+
+  function closeAddrPickSheet() {
+    document.getElementById('addrPickBackdrop').style.display = 'none';
+    document.getElementById('addrPickSheet').style.display = 'none';
+  }
+
+  function pickAddr(id) {
+    addrData.forEach(function(a){ a.isDefault = (a.id === id); });
+    var picked = null;
+    for (var i = 0; i < addrData.length; i++) { if (addrData[i].id === id) { picked = addrData[i]; break; } }
+    if (picked) {
+      var nameEl = document.querySelector('.address-name');
+      var textEl = document.querySelector('.address-text');
+      if (nameEl) nameEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
+      if (textEl) textEl.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
+    }
+    closeAddrPickSheet();
+  }
+
 </script>
 
 
@@ -5157,6 +5197,18 @@ function submitOrder() {
     <div class="adres-field"><div class="adres-label">KRAJ</div><input type="text" class="adres-input" id="addrInputCountry" value="Polska"></div>
   </div>
   <button class="flt-apply" onclick="saveAddr()" style="margin-top:8px;">Zapisz adres</button>
+</div>
+
+
+<!-- ADDR PICK SHEET -->
+<div id="addrPickBackdrop" onclick="closeAddrPickSheet()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:1000;"></div>
+<div id="addrPickSheet" style="display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:390px;max-width:100%;background:#fff;border-radius:16px 16px 0 0;z-index:1001;padding:12px 24px 32px;box-sizing:border-box;flex-direction:column;gap:12px;max-height:85vh;overflow-y:auto;">
+  <div style="width:40px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 8px;"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--text-default);">Wybierz adres</span>
+    <button onclick="closeAddrPickSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">&#x2715;</button>
+  </div>
+  <div id="addrPickList" style="display:flex;flex-direction:column;gap:12px;"></div>
 </div>
 
 </body>
