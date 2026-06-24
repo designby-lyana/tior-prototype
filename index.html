@@ -4651,45 +4651,6 @@ function submitOrder() {
 }
 </script>
 
-<!-- EU LABEL CUSTOM OVERLAY -->
-<div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;pointer-events:none;"></div>
-<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
-  <div style="padding:10px 12px 0;">
-    <div style="margin-bottom:10px;">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
-      <div style="display:flex;gap:5px;" id="eu-opor">
-        <button class="eu-gb" onclick="euPick(this,'opor','A','#009d37','#fafafa')">A</button>
-        <button class="eu-gb" onclick="euPick(this,'opor','B','#78bb00','#fafafa')">B</button>
-        <button class="eu-gb" onclick="euPick(this,'opor','C','#fdf100','#323744')">C</button>
-        <button class="eu-gb" onclick="euPick(this,'opor','D','#ffb000','#fafafa')">D</button>
-        <button class="eu-gb" onclick="euPick(this,'opor','E','#e70000','#fafafa')">E</button>
-      </div>
-    </div>
-    <div style="margin-bottom:10px;">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Mokra nawierzchnia</div>
-      <div style="display:flex;gap:5px;" id="eu-mokra">
-        <button class="eu-gb" onclick="euPick(this,'mokra','A','#005ba4','#fafafa')">A</button>
-        <button class="eu-gb" onclick="euPick(this,'mokra','B','#0072b9','#fafafa')">B</button>
-        <button class="eu-gb" onclick="euPick(this,'mokra','C','#22a5de','#fafafa')">C</button>
-        <button class="eu-gb" onclick="euPick(this,'mokra','D','#6cc3f1','#323744')">D</button>
-        <button class="eu-gb" onclick="euPick(this,'mokra','E','#b2ebfe','#323744')">E</button>
-      </div>
-    </div>
-    <div style="margin-bottom:10px;">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Hałas</div>
-      <div style="display:flex;gap:5px;" id="eu-halas">
-        <button class="eu-gb" onclick="euPick(this,'halas','A','#6b7280','#fafafa')">A</button>
-        <button class="eu-gb" onclick="euPick(this,'halas','B','#6b7280','#fafafa')">B</button>
-        <button class="eu-gb" onclick="euPick(this,'halas','C','#6b7280','#fafafa')">C</button>
-      </div>
-    </div>
-    <div id="eu-clearrow" style="display:none;padding:8px 0;border-top:1px solid #eaeaea;text-align:right;">
-      <button onclick="euClear()" style="font-size:11px;color:#6b7280;background:none;border:none;cursor:pointer;font-family:inherit;">Wyczyść</button>
-    </div>
-  </div>
-</div>
-
-
 <div id="screenSuccess" class="screen" style="background:#d2d8db;min-height:100%;">
   <!-- Header (reuse same structure) -->
   <div style="width:100%;height:68px;background:#fff;border-bottom:1px solid #9ba3af;display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-sizing:border-box;flex-shrink:0;">
@@ -4758,6 +4719,47 @@ function submitOrder() {
 
   </div>
 </div>
+
+
+
+<!-- EU LABEL CUSTOM OVERLAY -->
+<div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;pointer-events:none;"></div>
+<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
+  <div style="padding:10px 12px 0;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
+      <div style="display:flex;gap:5px;" id="eu-opor">
+        <button class="eu-gb" onclick="euPick(this,'opor','A','#009d37','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','B','#78bb00','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','C','#fdf100','#323744')">C</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','D','#ffb000','#fafafa')">D</button>
+        <button class="eu-gb" onclick="euPick(this,'opor','E','#e70000','#fafafa')">E</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Mokra nawierzchnia</div>
+      <div style="display:flex;gap:5px;" id="eu-mokra">
+        <button class="eu-gb" onclick="euPick(this,'mokra','A','#005ba4','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','B','#0072b9','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','C','#22a5de','#fafafa')">C</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','D','#6cc3f1','#323744')">D</button>
+        <button class="eu-gb" onclick="euPick(this,'mokra','E','#b2ebfe','#323744')">E</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Hałas</div>
+      <div style="display:flex;gap:5px;" id="eu-halas">
+        <button class="eu-gb" onclick="euPick(this,'halas','A','#6b7280','#fafafa')">A</button>
+        <button class="eu-gb" onclick="euPick(this,'halas','B','#6b7280','#fafafa')">B</button>
+        <button class="eu-gb" onclick="euPick(this,'halas','C','#6b7280','#fafafa')">C</button>
+      </div>
+    </div>
+    <div id="eu-clearrow" style="display:none;padding:8px 0;border-top:1px solid #eaeaea;text-align:right;">
+      <button onclick="euClear()" style="font-size:11px;color:#6b7280;background:none;border:none;cursor:pointer;font-family:inherit;">Wyczyść</button>
+    </div>
+  </div>
+</div>
+
 
 <div class="add-feedback" id="addFeedback"></div>
 </body>
