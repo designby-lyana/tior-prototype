@@ -5209,20 +5209,13 @@ function submitOrder() {
     for (var i = 0; i < addrData.length; i++) { if (addrData[i].id === id) { picked = addrData[i]; break; } }
     closeAddrPickSheet();
     if (!picked) return;
-    window._selectedAddrId = id;
+    _checkoutSelectedId = id;
+    if (typeof checkoutAddrData !== 'undefined') {
+      var exists = checkoutAddrData.some(function(a){ return a.id===id; });
+      if (!exists) checkoutAddrData.push(picked);
+    }
     setTimeout(function() {
-      var selCard = document.getElementById('checkoutSelectedCard');
-      var selName = document.getElementById('checkoutSelectedName');
-      var selText = document.getElementById('checkoutSelectedText');
-      if (picked.isDefault) {
-        if (selCard) selCard.style.display = 'none';
-        selectAddrCard('default');
-      } else {
-        if (selName) selName.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
-        if (selText) selText.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
-        if (selCard) selCard.style.display = 'block';
-        selectAddrCard('selected');
-      }
+      if (typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
     }, 200);
   }
 
