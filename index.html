@@ -5119,7 +5119,7 @@ function submitOrder() {
     for (var i = 0; i < items.length; i++) {
       var a = items[i];
       var sel = a.isDefault ? ' selected' : '';
-      var badge = a.isDefault ? '<span class="firma-badge-default">Domy\u015blny</span>' : '';
+      var badge = a.isDefault ? '<span class="firma-badge-default" title="Adres domyślny zmienisz w sekcji Adresy dostawy.">Domy\u015blny</span>' : '';
       html += '<div class="addr-card' + sel + '" onclick="pickAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">';
       html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
       html += '<div class="addr-body" style="flex:1;min-width:0;">';
