@@ -2661,7 +2661,7 @@
         </label>
       </div>
 
-      <button class="btn-confirm" id="confirmBtn" disabled>Potwierdź zamówienie</button>
+      <button class="btn-confirm" id="confirmBtn" disabled onclick="submitOrder()">Złóż zamówienie</button>
 
     </div><!-- /summary card -->
 
@@ -4633,6 +4633,22 @@
     el.style.overflowY = el.scrollHeight >= maxH ? 'auto' : 'hidden';
   }
 
+
+function submitOrder() {
+  var btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.textContent = 'Składanie zamówienia…';
+  btn.style.opacity = '0.75';
+  setTimeout(function() {
+    btn.textContent = 'Złóż zamówienie';
+    btn.style.opacity = '';
+    // reset checkbox so button is disabled again if user goes back
+    var cb = document.getElementById('confirmCheck');
+    if (cb) cb.checked = false;
+    btn.disabled = true;
+    navigate('screenSuccess');
+  }, 1200);
+}
 </script>
 
 <!-- EU LABEL CUSTOM OVERLAY -->
