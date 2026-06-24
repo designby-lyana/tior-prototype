@@ -1888,6 +1888,9 @@
   .addr-backdrop.is-open{ display:block; pointer-events:auto; }
   .addr-sheet.is-open{ transform:translateY(0); pointer-events:auto; }
   .addr-form-input:focus{ border-color:var(--accent-primary); }
+
+  .addr-card .firma-badge-set,
+  .addr-card .firma-account-icons span { position:relative; z-index:2; }
 </style>
 </head>
 <body><!-- cache-bust v3 -->
@@ -3647,7 +3650,7 @@
       </div>
     </div>
     <div id="addrListWrap" style="display:flex;flex-direction:column;gap:var(--space-md);">
-      <div class="addr-card selected" id="addrCard_a1" data-aid="a1" onclick="selectAddr(this.dataset.aid)">
+      <div class="addr-card selected" id="addrCard_a1" data-aid="a1">
         <div class="addr-radio"><div class="addr-radio-dot"></div></div>
         <div class="addr-body">
           <div class="firma-account-top"><span class="firma-badge-default">Domyślny</span><div class="firma-account-icons"><span data-aid="a1" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edytuj</span></div></div>
@@ -3655,7 +3658,7 @@
           <div class="addr-detail">AutoParts Sp. z o.o. · ul. Zakopiańska 58, 30-418 Kraków, Polska</div>
         </div>
       </div>
-      <div class="addr-card" id="addrCard_a2" data-aid="a2" onclick="selectAddr(this.dataset.aid)">
+      <div class="addr-card" id="addrCard_a2" data-aid="a2">
         <div class="addr-radio"><div class="addr-radio-dot"></div></div>
         <div class="addr-body">
           <div class="firma-account-top"><button class="firma-badge-set" data-aid="a2" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw jako domyślny</button><div class="firma-account-icons"><span data-aid="a2" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edytuj</span></div></div>
@@ -3663,7 +3666,7 @@
           <div class="addr-detail">AutoParts Sp. z o.o. · ul. Jana Kazimierza 12, 01-248 Warszawa, Polska</div>
         </div>
       </div>
-      <div class="addr-card" id="addrCard_a3" data-aid="a3" onclick="selectAddr(this.dataset.aid)">
+      <div class="addr-card" id="addrCard_a3" data-aid="a3">
         <div class="addr-radio"><div class="addr-radio-dot"></div></div>
         <div class="addr-body">
           <div class="firma-account-top"><button class="firma-badge-set" data-aid="a3" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw jako domyślny</button><div class="firma-account-icons"><span data-aid="a3" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edytuj</span></div></div>
@@ -5035,7 +5038,7 @@ function submitOrder() {
         : '<button class="firma-badge-set" data-aid="' + a.id + '" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw jako domyślny</button>';
       var editSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
       var editHtml = '<div class="firma-account-icons"><span data-aid="' + a.id + '" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;">' + editSvg + '</span></div>';
-      html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '" onclick="selectAddr(this.dataset.aid)">';
+      html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">';
       html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
       html += '<div class="addr-body">';
       html += '<div class="firma-account-top">' + chipHtml + editHtml + '</div>';
@@ -5053,6 +5056,20 @@ function submitOrder() {
     var card = document.getElementById('addrCard_' + id);
     if (card) card.classList.add('selected');
   }
+
+  // attach card clicks via addEventListener to allow stopPropagation from children
+  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+      // handle addr card click
+      var card = e.target.closest && e.target.closest('.addr-card');
+      if (card && card.dataset.aid) {
+        // only if click was NOT on a button or interactive child
+        if (!e.target.closest('button') && !e.target.closest('.firma-account-icons')) {
+          selectAddr(card.dataset.aid);
+        }
+      }
+    });
+  });
 
   function setDefaultAddr(id) {
     // update data
