@@ -5226,6 +5226,21 @@ function submitOrder() {
     }, 200);
   }
 
+
+  function deleteAddr(id) {
+    if (!id) return;
+    addrData = addrData.filter(function(a){ return a.id !== id; });
+    // if deleted selected card — hide it and re-select default
+    var selCard = document.getElementById('checkoutSelectedCard');
+    if (window._selectedAddrId === id) {
+      if (selCard) selCard.style.display = 'none';
+      selectAddrCard('default');
+      window._selectedAddrId = null;
+    }
+    // also re-render addr list if on screenAddresses
+    if (typeof renderAddrList === 'function') renderAddrList();
+  }
+
 </script>
 
 
