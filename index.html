@@ -5055,8 +5055,30 @@ function submitOrder() {
   }
 
   function setDefaultAddr(id) {
+    // update data
     addrData.forEach(function(a){ a.isDefault = (a.id === id); });
-    renderAddrList();
+    // update DOM directly — swap chips without full re-render
+    document.querySelectorAll('#addrListWrap .addr-card').forEach(function(card) {
+      var aid = card.dataset.aid;
+      var top = card.querySelector('.firma-account-top');
+      if (!top) return;
+      var isNowDefault = (aid === id);
+      // replace first child (chip)
+      var oldChip = top.firstElementChild;
+      if (isNowDefault) {
+        var span = document.createElement('span');
+        span.className = 'firma-badge-default';
+        span.textContent = 'Domyślny';
+        top.replaceChild(span, oldChip);
+      } else {
+        var btn = document.createElement('button');
+        btn.className = 'firma-badge-set';
+        btn.dataset.aid = aid;
+        btn.textContent = 'Ustaw jako domyślny';
+        btn.onclick = function(e) { e.stopPropagation(); setDefaultAddr(this.dataset.aid); };
+        top.replaceChild(btn, oldChip);
+      }
+    });
   }
 
   function openAddrSheet() {
