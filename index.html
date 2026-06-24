@@ -5111,8 +5111,13 @@ function submitOrder() {
     var list = document.getElementById('addrPickList');
     if (!list) return;
     var html = '';
-    for (var i = 0; i < addrData.length; i++) {
-      var a = addrData[i];
+    var items = (typeof addrData !== 'undefined' && addrData) ? addrData : [
+      {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',isDefault:True},
+      {id:'a2',name:'Warszawa – Magazyn Wola',company:'AutoParts Sp. z o.o.',street:'ul. Jana Kazimierza 12',city:'01-248 Warszawa',isDefault:False},
+      {id:'a3',name:'Poznań – Głogowska',company:'AutoParts Sp. z o.o.',street:'ul. Głogowska 120',city:'60-263 Poznań',isDefault:False}
+    ];
+    for (var i = 0; i < items.length; i++) {
+      var a = items[i];
       var sel = a.isDefault ? ' selected' : '';
       var badge = a.isDefault ? '<span class="firma-badge-default">Domy\u015blny</span>' : '';
       html += '<div class="addr-card' + sel + '" onclick="pickAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">';
