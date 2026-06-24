@@ -2510,13 +2510,10 @@
     <!-- delivery address card -->
     <div class="checkout-card">
       <div class="section-title">ADRES DOSTAWY</div>
-      <div class="address-card">
+      <div class="address-card" id="checkoutAddrCard">
         <div class="address-header">
-          <span class="chip-tooltip-wrap"><span class="address-badge firma-badge-default">Domyślny</span><span class="chip-tip">Adres domyślny zmienisz w sekcji Adresy dostawy.</span></span>
-          <span class="address-edit">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Edytuj
-          </span>
+          <span class="chip-tooltip-wrap" id="checkoutAddrBadgeWrap"><span class="address-badge firma-badge-default">Domyślny</span><span class="chip-tip">Adres domyślny zmienisz w sekcji Adresy dostawy.</span></span>
+          <button onclick="openAddrEdit('a1')" id="checkoutEditBtn" style="appearance:none;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edytuj</button>
         </div>
         <div class="address-name">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
@@ -2527,6 +2524,15 @@
           ul. Zakopiańska 58, 30-418<br>
           Kraków, Polska
         </div>
+      </div>
+      <!-- selected (non-default) address card — hidden by default -->
+      <div class="address-card" id="checkoutSelectedCard" style="display:none;margin-top:8px;border:1.5px solid var(--accent-primary);">
+        <div class="address-header">
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);text-transform:uppercase;">Wybrana</span>
+          <button onclick="openAddrEdit(window._selectedAddrId)" id="checkoutSelectedEditBtn" style="appearance:none;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edytuj</button>
+        </div>
+        <div class="address-name" id="checkoutSelectedName"></div>
+        <div class="address-text" id="checkoutSelectedText"></div>
       </div>
       <div class="address-actions">
         <button class="btn-addr-add" onclick="openAddrSheet()">+ Dodaj adres</button>
@@ -5124,14 +5130,15 @@ function submitOrder() {
       if (nameEl) nameEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + a.name;
       if (textEl) textEl.innerHTML = a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country;
     } else {
-      // update checkout with new address
+      // show new address in selected card
       var newA = addrData[addrData.length - 1];
-      var nameEl = document.querySelector('.address-name');
-      var textEl = document.querySelector('.address-text');
-      if (nameEl) nameEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + newA.name;
-      if (textEl) textEl.innerHTML = newA.company + '<br>' + newA.street + '<br>' + newA.city + ', ' + newA.country;
-      var headerEl = document.querySelector('.address-header');
-      if (headerEl) { var cw = headerEl.querySelector('.chip-tooltip-wrap'); if(cw) cw.style.display='none'; }
+      window._selectedAddrId = newA.id;
+      var selCard = document.getElementById('checkoutSelectedCard');
+      var selName = document.getElementById('checkoutSelectedName');
+      var selText = document.getElementById('checkoutSelectedText');
+      if (selName) selName.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + newA.name;
+      if (selText) selText.innerHTML = newA.company + '<br>' + newA.street + '<br>' + newA.city + ', ' + newA.country;
+      if (selCard) selCard.style.display = 'block';
     }
   }
 
@@ -5182,17 +5189,22 @@ function submitOrder() {
     for (var i = 0; i < addrData.length; i++) { if (addrData[i].id === id) { picked = addrData[i]; break; } }
     closeAddrPickSheet();
     if (!picked) return;
+    window._selectedAddrId = id;
     setTimeout(function() {
-      // update address name and text
-      var nameEl = document.querySelector('.address-name');
-      var textEl = document.querySelector('.address-text');
-      if (nameEl) nameEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
-      if (textEl) textEl.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
-      // no chip — selected address is not default
-      var headerEl = document.querySelector('.address-header');
-      if (headerEl) {
-        var chipWrap = headerEl.querySelector('.chip-tooltip-wrap');
-        if (chipWrap) chipWrap.style.display = 'none';
+      var isDefault = picked.isDefault;
+      var selCard = document.getElementById('checkoutSelectedCard');
+      var selName = document.getElementById('checkoutSelectedName');
+      var selText = document.getElementById('checkoutSelectedText');
+      var editBtn = document.getElementById('checkoutSelectedEditBtn');
+      if (isDefault) {
+        // selected default — hide selected card
+        if (selCard) selCard.style.display = 'none';
+      } else {
+        // show selected card below
+        if (selName) selName.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
+        if (selText) selText.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
+        if (editBtn) editBtn.onclick = function(){ openAddrEdit(id); };
+        if (selCard) selCard.style.display = 'block';
       }
     }, 200);
   }
