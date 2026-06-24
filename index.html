@@ -5041,8 +5041,16 @@ function submitOrder() {
       var el = document.getElementById(f); if(el) el.value = '';
     });
     var c = document.getElementById('addrInputCountry'); if(c) c.value = 'Polska';
+    var phone2 = document.getElementById('phone');
+    var s = document.getElementById('addrSheet');
+    if (phone2 && s) {
+      var r2 = phone2.getBoundingClientRect();
+      s.style.left = r2.left + 'px';
+      s.style.width = r2.width + 'px';
+      s.style.transform = 'none';
+    }
     document.getElementById('addrBackdrop').style.display = 'block';
-    var s = document.getElementById('addrSheet'); s.style.display = 'flex';
+    s.style.display = 'flex';
   }
 
   function openAddrEdit(id) {
@@ -5110,8 +5118,16 @@ function submitOrder() {
       html += '</div></div>';
     }
     list.innerHTML = html;
+    var phone = document.getElementById('phone');
+    var sheet = document.getElementById('addrPickSheet');
+    if (phone && sheet) {
+      var r = phone.getBoundingClientRect();
+      sheet.style.left = r.left + 'px';
+      sheet.style.width = r.width + 'px';
+      sheet.style.transform = 'none';
+    }
     document.getElementById('addrPickBackdrop').style.display = 'block';
-    document.getElementById('addrPickSheet').style.display = 'flex';
+    sheet.style.display = 'flex';
   }
 
   function closeAddrPickSheet() {
