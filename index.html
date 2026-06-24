@@ -5102,32 +5102,33 @@ function submitOrder() {
   document.addEventListener('DOMContentLoaded', function(){ renderAddrList(); });
 
   function openAddrPickSheet() {
-    var list = document.getElementById('addrPickList');
-    if (!list) return;
-    var html = '';
-    for (var i = 0; i < addrData.length; i++) {
-      var a = addrData[i];
-      var sel = a.isDefault ? ' selected' : '';
-      var badge = a.isDefault ? '<span class="firma-badge-default">Domy\u015blny</span>' : '';
-      html += '<div class="addr-card' + sel + '" onclick="pickAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">';
-      html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
-      html += '<div class="addr-body" style="flex:1;min-width:0;">';
-      html += '<div style="margin-bottom:4px;">' + badge + '</div>';
-      html += '<div class="addr-name">' + a.name + '</div>';
-      html += '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + '</div>';
-      html += '</div></div>';
-    }
-    list.innerHTML = html;
+    var s = document.getElementById('addrPickSheet');
+    var b = document.getElementById('addrPickBackdrop');
+    var l = document.getElementById('addrPickList');
+    if (!s || !b || !l) return;
     var phone = document.getElementById('phone');
-    var sheet = document.getElementById('addrPickSheet');
-    if (phone && sheet) {
-      var r = phone.getBoundingClientRect();
-      sheet.style.left = r.left + 'px';
-      sheet.style.width = r.width + 'px';
-      sheet.style.transform = 'none';
+    if (phone) {
+      var rc = phone.getBoundingClientRect();
+      s.style.left = rc.left + 'px';
+      s.style.width = rc.width + 'px';
+      s.style.transform = 'none';
     }
-    document.getElementById('addrPickBackdrop').style.display = 'block';
-    sheet.style.display = 'flex';
+    var items = addrData && addrData.length ? addrData : [
+      {id:'a1', name:'Kraków – Serwis 1', company:'AutoParts Sp. z o.o.', street:'ul. Zakopiańska 58', city:'30-418 Kraków', isDefault:true},
+      {id:'a2', name:'Warszawa – Magazyn Wola', company:'AutoParts Sp. z o.o.', street:'ul. Jana Kazimierza 12', city:'01-248 Warszawa', isDefault:false},
+      {id:'a3', name:'Poznań – Głogowska', company:'AutoParts Sp. z o.o.', street:'ul. Głogowska 120', city:'60-263 Poznań', isDefault:false}
+    ];
+    l.innerHTML = items.map(function(a) {
+      var badge = a.isDefault ? '<span class="firma-badge-default" style="margin-bottom:4px;display:inline-block;">Domyślny</span><br>' : '';
+      return '<div class="addr-card' + (a.isDefault ? ' selected' : '') + '" onclick="pickAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">' +
+        '<div class="addr-radio"><div class="addr-radio-dot"></div></div>' +
+        '<div class="addr-body" style="flex:1;min-width:0;">' + badge +
+        '<div class="addr-name">' + a.name + '</div>' +
+        '<div class="addr-detail">' + a.company + ' · ' + a.street + ', ' + a.city + '</div>' +
+        '</div></div>';
+    }).join('');
+    b.style.display = 'block';
+    s.style.display = 'flex';
   }
 
   function closeAddrPickSheet() {
