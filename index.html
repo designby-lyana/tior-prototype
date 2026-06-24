@@ -3503,6 +3503,63 @@
   </div><!-- /firma-content -->
 </div><!-- /screenFirma -->
 
+<div id="screenPassword" class="screen" style="background:#d2d8db;min-height:100%;">
+  <!-- Header -->
+  <div style="height:68px;background:#fff;border-bottom:1px solid #9ba3af;display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-sizing:border-box;flex-shrink:0;">
+    <div style="width:105px;height:24px;">
+      <svg viewBox="0 0 105 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;"><text x="0" y="18" font-family="JetBrains Mono" font-weight="700" font-size="14" fill="#0d0e13">OPONYTOMY</text></svg>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#0d0e13;">EN</span>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="3.5" stroke="#0d0e13" stroke-width="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7h0c3.866 0 7 3.134 7 7" stroke="#0d0e13" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div style="position:relative;cursor:pointer;" onclick="setScreen('screenCart')">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 3h2l2.4 10.4a1 1 0 00.98.8h8.24a1 1 0 00.97-.76L19 8H6" stroke="#0d0e13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1" fill="#0d0e13"/><circle cx="17" cy="19" r="1" fill="#0d0e13"/></svg>
+        <span class="cart-badge" style="position:absolute;top:-4px;right:-6px;background:#005f6e;color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;"></span>
+      </div>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="#0d0e13" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div style="padding:32px 24px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;">
+
+    <!-- Breadcrumb + Title -->
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div onclick="setScreen('screenProfile')" style="display:flex;align-items:center;gap:6px;padding:4px 0;border-radius:6px;cursor:pointer;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L5 7l4 4.5" stroke="#323744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L5 7l4 4.5" stroke="#323744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-family:'Outfit',sans-serif;font-size:16px;line-height:18px;color:#323744;">Powrót do danych konta</span>
+      </div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#323744;">Zmiana hasła</div>
+    </div>
+
+    <!-- Card -->
+    <div style="background:#fff;border-radius:8px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px;">
+      <!-- Label -->
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;line-height:15.84px;color:#323744;text-transform:uppercase;letter-spacing:0;">HASŁO</span>
+
+      <!-- Form -->
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <!-- Password field -->
+        <div style="display:flex;align-items:center;gap:16px;height:42px;">
+          <div style="flex:1;border-bottom:1px solid #939496;height:100%;display:flex;align-items:flex-end;padding-bottom:4px;overflow:hidden;">
+            <input id="pwdInput" type="password" value="•••••••" style="flex:1;border:none;outline:none;font-size:16px;color:#0d0e13;font-family:'Outfit',sans-serif;background:transparent;padding:0;" />
+          </div>
+          <button onclick="togglePwd()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;width:22px;height:22px;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 2l18 18" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round"/><path d="M6.7 6.7A8 8 0 003 11c1.6 3.3 5 5.5 8.5 5.5a8.1 8.1 0 003.8-.9" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round"/><path d="M9.9 9.9A3 3 0 0014 14" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round"/><path d="M13.4 5.1A8.4 8.4 0 0111.5 5C8 5 4.6 7.2 3 10.5c.5 1 1.2 2 2 2.8" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+
+        <!-- CTA button -->
+        <button onclick="setScreen('screenProfile')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#fffaf2;cursor:pointer;">
+          Zmień hasło
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <div id="screenSuccess" class="screen" style="background:#d2d8db;min-height:100%;">
   <!-- Header (reuse same structure) -->
   <div style="width:100%;height:68px;background:#fff;border-bottom:1px solid #9ba3af;display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-sizing:border-box;flex-shrink:0;">
@@ -3897,7 +3954,7 @@
 
 
 
-  var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess'];
+  var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword'];
   function setScreen(id){
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
@@ -4755,6 +4812,12 @@ function submitOrder() {
     setScreen('screenSuccess');
   }, 1200);
 }
+
+  function togglePwd() {
+    var inp = document.getElementById('pwdInput');
+    if (!inp) return;
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
 </script>
 
 
