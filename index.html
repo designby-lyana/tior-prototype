@@ -5003,25 +5003,24 @@ function submitOrder() {
     }
     if (empty) empty.style.display = 'none';
     wrap.style.display = 'flex';
+    var editSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
     var html = '';
     for (var i = 0; i < addrData.length; i++) {
       var a = addrData[i];
       var sel = a.isDefault ? ' selected' : '';
-      var chipHtml = a.isDefault
-        ? '<span class="firma-badge-default">Domyślny</span>'
-        : '<button class="firma-badge-set" data-aid="' + a.id + '" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw jako domyślny</button>';
-      var editSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
-      var editHtml = '<div class="firma-account-icons"><span data-aid="' + a.id + '" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;">' + editSvg + '</span></div>';
-      html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">';
+      var chip = a.isDefault
+        ? '<span id="chipwrap_' + a.id + '" class="firma-badge-default">Domyślny</span>'
+        : '<button id="chipwrap_' + a.id + '" class="firma-badge-set" onclick="setDefaultAddr(\'' + a.id + '\')" style="position:relative;z-index:10;pointer-events:all;">Ustaw jako domyślny</button>';
+      var editBtn = '<button onclick="event.stopPropagation();openAddrEdit(\'' + a.id + '\')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;position:relative;z-index:10;">' + editSvg + ' Edytuj</button>';
+      html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '" onclick="selectAddr(\'' + a.id + '\')">';
       html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
-      html += '<div class="addr-body">';
-      html += '<div class="firma-account-top">' + chipHtml + editHtml + '</div>';
-      html += '<div class="addr-name" style="margin-top:6px;">' + a.name + '</div>';
-      html += '<div class="addr-detail">' + a.company + ' · ' + a.street + ', ' + a.city + ', ' + a.country + '</div>';
-      html += '</div>';
-      html += '</div>';
+      html += '<div class="addr-body" style="flex:1;min-width:0;">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' + chip + editBtn + '</div>';
+      html += '<div class="addr-name">' + a.name + '</div>';
+      html += '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + a.country + '</div>';
+      html += '</div></div>';
     }
-    html += '<button class="addr-add-btn" onclick="openAddrSheet()">+ Dodaj adres</button>';
+    html += '<button class="addr-add-btn" onclick="openAddrSheet()"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres</button>';
     wrap.innerHTML = html;
   }
 
