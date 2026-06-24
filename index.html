@@ -1645,7 +1645,56 @@
     border:1.5px solid var(--accent-pressed);
   }
 
-  /* ── ADRES FORM ──────────────────────────── */
+  /* ── ADD TO CART RIGHT DRAWER ─────────────── */
+  .atc-backdrop{
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.32); z-index:500;
+    pointer-events:none;
+  }
+  .atc-backdrop.is-open{ display:block; pointer-events:auto; }
+  .atc-drawer{
+    position:fixed; top:0; right:0; bottom:0;
+    width:88%; max-width:360px;
+    background:var(--bg-surface-light);
+    z-index:501;
+    display:flex; flex-direction:column;
+    padding:var(--space-xl);
+    transform:translateX(100%);
+    transition:transform 300ms ease;
+    pointer-events:none;
+    overflow-y:auto;
+  }
+  .atc-drawer.is-open{ transform:translateX(0); pointer-events:auto; }
+  .atc-header{
+    display:flex; align-items:center; gap:var(--space-md);
+    margin-bottom:var(--space-xl);
+  }
+  .atc-title{
+    flex:1; font-family:var(--font-body); font-weight:600;
+    font-size:18px; color:var(--text-default);
+  }
+  .atc-close{
+    appearance:none; background:none; border:none;
+    font-size:20px; color:var(--text-muted); cursor:pointer; padding:4px;
+  }
+  .atc-item{
+    background:var(--bg-input);
+    border-radius:var(--radius-lg);
+    padding:var(--space-md);
+    border:1px solid var(--border-surface);
+    margin-bottom:var(--space-xl);
+  }
+  .atc-item-top{ margin-bottom:var(--space-md); }
+  .atc-item-name{ font-family:var(--font-body); font-weight:600; font-size:16px; color:var(--text-default); }
+  .atc-item-size{ font-family:var(--font-body); font-size:14px; color:var(--text-muted); margin-top:2px; }
+  .atc-item-bottom{ display:flex; align-items:center; justify-content:space-between; }
+  .atc-actions{ display:flex; flex-direction:column; gap:var(--space-sm); margin-top:auto; }
+  .atc-secondary{
+    background:transparent !important;
+    border:1.5px solid var(--accent-primary) !important;
+    color:var(--accent-primary) !important;
+  }
+  .atc-secondary:hover{ background:rgba(0,95,110,.06) !important; }
   .adres-field{ display:flex; flex-direction:column; gap:var(--space-xs); }
   .adres-label{
     font-family:var(--font-mono); font-weight:700; font-size:11px;
@@ -3653,20 +3702,39 @@
   <button class="flt-apply" onclick="saveIBAN()">Zapisz</button>
 </div>
 
-<!-- ADD TO CART OVERLAY -->
-<div class="flt-backdrop" id="atcBackdrop" onclick="closeAtcOverlay()" style="z-index:500;"></div>
-<div class="flt-sheet" id="atcSheet" style="z-index:501;">
-  <div class="flt-handle"></div>
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-lg);">
-    <div>
-      <div style="font-family:var(--font-body);font-size:18px;font-weight:600;color:var(--text-default);margin-bottom:4px;">Produkt dodany do koszyka</div>
-      <div style="font-family:var(--font-body);font-size:14px;color:var(--text-muted);" id="atcProductName"></div>
-    </div>
-    <button onclick="closeAtcOverlay()" style="appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:20px;line-height:1;">✕</button>
+<!-- ADD TO CART RIGHT DRAWER -->
+<div class="atc-backdrop" id="atcBackdrop" onclick="closeAtcOverlay()"></div>
+<div class="atc-drawer" id="atcSheet">
+  <!-- header -->
+  <div class="atc-header">
+    <img src="data:image/png;base64,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" alt="" width="40" height="40">
+    <span class="atc-title">Dodano do koszyka</span>
+    <button class="atc-close" onclick="closeAtcOverlay()">✕</button>
   </div>
-  <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+  <!-- cart item row -->
+  <div class="atc-item">
+    <div class="atc-item-top">
+      <div class="atc-item-info">
+        <div class="atc-item-name" id="atcProductName">Continental Premium Contact 7</div>
+        <div class="atc-item-size">205/55 R16 &nbsp;91V</div>
+      </div>
+    </div>
+    <div class="atc-item-bottom">
+      <div class="qty-stepper">
+        <button class="qty-btn qty-minus">−</button>
+        <span class="qty-value">1</span>
+        <button class="qty-btn qty-plus">+</button>
+      </div>
+      <div class="cart-right">
+        <div class="cart-item-unit">151.59 zł</div>
+        <div class="cart-item-total">151.59 zł</div>
+      </div>
+    </div>
+  </div>
+  <!-- actions -->
+  <div class="atc-actions">
     <button class="cta" onclick="goToCart();closeAtcOverlay()">Przejdź do koszyka</button>
-    <button class="cta" style="background:transparent;border:1.5px solid var(--accent-primary);color:var(--accent-primary);" onclick="closeAtcOverlay()">Kontynuuj poszukiwania</button>
+    <button class="cta atc-secondary" onclick="closeAtcOverlay()">Kontynuuj poszukiwania</button>
   </div>
 </div>
 
