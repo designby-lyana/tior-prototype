@@ -290,6 +290,7 @@
 
   .screen{ display:none; height:100%; overflow-y:auto; }
   .screen.is-active{ display:block; }
+    #screenSuccess.is-active{ display:flex; }
   .logo{ cursor:default; }
   #logoResults{ cursor:pointer; }
 
@@ -4689,7 +4690,7 @@ function submitOrder() {
 </div>
 
 
-<div id="screenSuccess" class="screen" style="display:none;background:#d2d8db;min-height:100%;flex-direction:column;">
+<div id="screenSuccess" class="screen" style="background:#d2d8db;min-height:100%;flex-direction:column;">
   <!-- Header (reuse same structure) -->
   <div style="width:100%;height:68px;background:#fff;border-bottom:1px solid #9ba3af;display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-sizing:border-box;flex-shrink:0;">
     <div style="display:flex;align-items:center;gap:4px;">
