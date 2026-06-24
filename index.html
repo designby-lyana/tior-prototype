@@ -1861,6 +1861,40 @@
   }
   .dok-add-btn:hover{ color:var(--accent-pressed); }
   .dok-add-btn svg{ flex:none; }
+
+  /* ── ADDRESSES SCREEN ── */
+  .addr-content{ padding:var(--space-2xl) var(--space-lg) var(--space-xl); display:flex; flex-direction:column; gap:var(--space-md); }
+  .addr-empty{ background:var(--bg-surface-light); border-radius:var(--radius-lg); padding:var(--space-3xl) var(--space-xl); display:flex; flex-direction:column; align-items:center; gap:var(--space-lg); text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.08); }
+  .addr-empty-icon{ width:48px; height:48px; background:var(--bg-page); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .addr-empty-title{ font-family:var(--font-body); font-weight:600; font-size:18px; color:var(--text-default); }
+  .addr-empty-desc{ font-family:var(--font-body); font-size:16px; color:var(--text-muted); line-height:1.5; }
+  .addr-card{ background:var(--bg-surface-light); border-radius:var(--radius-lg); padding:var(--space-lg); display:flex; align-items:flex-start; gap:var(--space-md); box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.08); cursor:pointer; border:1.5px solid transparent; transition:border-color 150ms; }
+  .addr-card.selected{ border-color:var(--accent-primary); }
+  .addr-radio{ width:20px; height:20px; border-radius:50%; border:2px solid var(--border-surface); flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:border-color 150ms; }
+  .addr-card.selected .addr-radio{ border-color:var(--accent-primary); }
+  .addr-radio-dot{ width:10px; height:10px; border-radius:50%; background:var(--accent-primary); display:none; }
+  .addr-card.selected .addr-radio-dot{ display:block; }
+  .addr-body{ flex:1; min-width:0; }
+  .addr-name{ font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--text-default); display:flex; align-items:center; gap:8px; margin-bottom:2px; }
+  .addr-detail{ font-family:var(--font-body); font-size:16px; color:var(--text-muted); }
+  .addr-badge-default{ display:inline-flex; align-items:center; padding:2px 8px; border-radius:var(--radius-pill); border:1px solid #1e6b3c; font-family:var(--font-body); font-size:12px; color:#1e6b3c; background:rgba(30,107,60,.08); white-space:nowrap; }
+  .addr-actions{ display:flex; align-items:center; gap:4px; flex-shrink:0; }
+  .addr-edit-btn{ appearance:none; background:none; border:none; font-family:var(--font-body); font-size:14px; color:var(--text-muted); cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px; }
+  .addr-edit-btn:hover{ color:var(--text-default); }
+  .addr-add-btn{ appearance:none; background:none; border:1.5px dashed var(--border-surface); border-radius:var(--radius-lg); padding:var(--space-lg); width:100%; display:flex; align-items:center; justify-content:center; gap:var(--space-sm); font-family:var(--font-body); font-weight:500; font-size:16px; color:var(--accent-primary); cursor:pointer; transition:border-color 150ms,background 150ms; }
+  .addr-add-btn:hover{ border-color:var(--accent-primary); background:rgba(0,95,110,.04); }
+  .addr-set-default-btn{ appearance:none; background:none; border:none; font-family:var(--font-body); font-size:13px; color:var(--text-muted); cursor:pointer; padding:0; text-decoration:underline; }
+  /* addr bottom sheet */
+  .addr-backdrop{ display:none; position:absolute; inset:0; background:rgba(0,0,0,.32); z-index:500; pointer-events:none; border-radius:inherit; }
+  .addr-backdrop.is-open{ display:block; pointer-events:auto; }
+  .addr-sheet{ position:absolute; bottom:0; left:0; right:0; background:var(--bg-surface-light); border-radius:var(--radius-lg) var(--radius-lg) 0 0; z-index:501; padding:var(--space-xl); display:flex; flex-direction:column; gap:var(--space-lg); transform:translateY(100%); transition:transform 300ms ease; pointer-events:none; max-height:90%; overflow-y:auto; }
+  .addr-sheet.is-open{ transform:translateY(0); pointer-events:auto; }
+  .addr-sheet-handle{ width:40px; height:4px; background:var(--border-surface); border-radius:2px; margin:0 auto var(--space-sm); }
+  .addr-sheet-title{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); text-transform:uppercase; }
+  .addr-form-field{ display:flex; flex-direction:column; gap:6px; }
+  .addr-form-label{ font-family:var(--font-mono); font-weight:700; font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
+  .addr-form-input{ border:none; border-bottom:1px solid var(--border-surface); padding:var(--space-sm) 0; font-family:var(--font-body); font-size:16px; color:var(--text-default); background:transparent; outline:none; width:100%; }
+  .addr-form-input:focus{ border-color:var(--accent-primary); }
 </style>
 </head>
 <body><!-- cache-bust v3 -->
@@ -3361,7 +3395,7 @@
           <span class="prf-nav-radio"></span>
           Faktury
         </button>
-        <button class="prf-nav-item">
+        <button class="prf-nav-item" onclick="setScreen('screenAddresses');renderAddrList()">
           <span class="prf-nav-radio"></span>
           Adresy dostawy
         </button>
@@ -3594,6 +3628,122 @@
     </div>
   </div>
 </div>
+
+<div class="screen" id="screenAddresses">
+  <header>
+    <div class="logo" onclick="goHome()" style="cursor:pointer;"><img src="{}" alt="" style="height:24px;" onerror="this.style.display='none'"/></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-family:var(--font-mono);font-weight:700;font-size:14px;color:var(--text-default);">EN</span>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="3.5" stroke="var(--text-default)" stroke-width="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7h0c3.866 0 7 3.134 7 7" stroke="var(--text-default)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div style="position:relative;" onclick="setScreen('screenCart')" style="cursor:pointer;">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 3h2l2.4 10.4a1 1 0 00.98.8h8.24a1 1 0 00.97-.76L19 8H6" stroke="var(--text-default)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1" fill="var(--text-default)"/><circle cx="17" cy="19" r="1" fill="var(--text-default)"/></svg>
+        <span class="cart-badge"></span>
+      </div>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="var(--text-default)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+  </header>
+
+  <div class="addr-content">
+    <!-- breadcrumb -->
+    <div onclick="setScreen('screenProfile')" style="display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;">
+      <span style="font-size:18px;color:var(--text-default);line-height:1;">«</span>
+      <span style="font-family:var(--font-body);font-size:16px;color:var(--text-default);">Powrót do danych konta</span>
+    </div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:var(--text-default);margin-bottom:4px;">Adresy dostawy</div>
+
+    <!-- STATE: empty (shown when addrList is empty) -->
+    <div id="addrEmptyState" style="display:none;">
+      <div class="addr-empty">
+        <div class="addr-empty-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="3" stroke="#9ba3af" stroke-width="1.5"/><path d="M12 2a8 8 0 018 8c0 5-8 12-8 12S4 15 4 10a8 8 0 018-8z" stroke="#9ba3af" stroke-width="1.5"/></svg></div>
+        <div class="addr-empty-title">Brak adresu dostawy</div>
+        <div class="addr-empty-desc">Aby złożyć zamówienie, potrzebujesz przynajmniej jednego adresu dostawy.</div>
+        <button class="cta" onclick="openAddrSheet()" style="display:flex;align-items:center;gap:8px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres dostawy
+        </button>
+      </div>
+    </div>
+
+    <!-- STATE: has addresses -->
+    <div id="addrListWrap" style="display:flex;flex-direction:column;gap:var(--space-md);">
+      <div class="addr-card selected" id="addrCard_a1" onclick="selectAddr('a1')">
+        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
+        <div class="addr-body">
+          <div class="addr-name">Kraków – Serwis 1 <span class="addr-badge-default">Domyślny</span></div>
+          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Zakopiańska 58, 30-418 Kraków, Polska</div>
+          
+        </div>
+        <div class="addr-actions">
+          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a1')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
+        </div>
+      </div>
+<div class="addr-card" id="addrCard_a2" onclick="selectAddr('a2')">
+        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
+        <div class="addr-body">
+          <div class="addr-name">Warszawa – Magazyn Wola </div>
+          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Jana Kazimierza 12, 01-248 Warszawa, Polska</div>
+          <button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr('a2')">Ustaw domyślny</button>
+        </div>
+        <div class="addr-actions">
+          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a2')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
+        </div>
+      </div>
+<div class="addr-card" id="addrCard_a3" onclick="selectAddr('a3')">
+        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
+        <div class="addr-body">
+          <div class="addr-name">Poznań – Głogowska </div>
+          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Głogowska 120, 60-263 Poznań, Polska</div>
+          <button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr('a3')">Ustaw domyślny</button>
+        </div>
+        <div class="addr-actions">
+          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a3')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
+        </div>
+      </div>
+      <button class="addr-add-btn" onclick="openAddrSheet()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom sheet backdrop -->
+  <div class="addr-backdrop" id="addrBackdrop" onclick="closeAddrSheet()"></div>
+
+  <!-- Bottom sheet form -->
+  <div class="addr-sheet" id="addrSheet">
+    <div class="addr-sheet-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="addr-sheet-title" id="addrSheetTitle">Nowy adres</div>
+      <button onclick="closeAddrSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:var(--text-muted);cursor:pointer;padding:4px;">✕</button>
+    </div>
+    <div class="addr-form-field">
+      <label class="addr-form-label">Nazwa punktu</label>
+      <input class="addr-form-input" id="addrInputName" type="text" placeholder="np. Magazyn Warszawa" />
+    </div>
+    <div class="addr-form-field">
+      <label class="addr-form-label">Firma</label>
+      <input class="addr-form-input" id="addrInputCompany" type="text" placeholder="Nazwa firmy" />
+    </div>
+    <div class="addr-form-field">
+      <label class="addr-form-label">Ulica i numer</label>
+      <input class="addr-form-input" id="addrInputStreet" type="text" placeholder="ul. Przykładowa 1" />
+    </div>
+    <div style="display:flex;gap:var(--space-md);">
+      <div class="addr-form-field" style="flex:1;">
+        <label class="addr-form-label">Kod pocztowy</label>
+        <input class="addr-form-input" id="addrInputZip" type="text" placeholder="00-000" />
+      </div>
+      <div class="addr-form-field" style="flex:2;">
+        <label class="addr-form-label">Miasto</label>
+        <input class="addr-form-input" id="addrInputCity" type="text" placeholder="Warszawa" />
+      </div>
+    </div>
+    <div class="addr-form-field">
+      <label class="addr-form-label">Kraj</label>
+      <input class="addr-form-input" id="addrInputCountry" type="text" value="Polska" />
+    </div>
+    <button class="cta" onclick="saveAddr()" style="margin-top:4px;">Zapisz adres</button>
+  </div>
+</div>
+
 
 <div id="screenSuccess" class="screen" style="background:#d2d8db;min-height:100%;">
   <!-- Header (reuse same structure) -->
@@ -3989,7 +4139,7 @@
 
 
 
-  var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword'];
+  var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses'];
   function setScreen(id){
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
@@ -4901,6 +5051,109 @@ function submitOrder() {
       }, 1800);
     }, 900);
   }
+
+  // ── ADDRESSES ──────────────────────────────────────────
+  var addrData = [
+    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true},
+    {id:'a2',name:'Warszawa – Magazyn Wola',company:'AutoParts Sp. z o.o.',street:'ul. Jana Kazimierza 12',city:'01-248 Warszawa',country:'Polska',isDefault:false},
+    {id:'a3',name:'Poznań – Głogowska',company:'AutoParts Sp. z o.o.',street:'ul. Głogowska 120',city:'60-263 Poznań',country:'Polska',isDefault:false}
+  ];
+  var addrEditId = null;
+
+  function renderAddrList() {
+    var wrap = document.getElementById('addrListWrap');
+    var empty = document.getElementById('addrEmptyState');
+    if (!wrap) return;
+    if (addrData.length === 0) {
+      wrap.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    wrap.style.display = 'flex';
+    var html = addrData.map(function(a) {
+      var sel = a.isDefault ? ' selected' : '';
+      var badge = a.isDefault ? '<span class="addr-badge-default">Domyślny</span>' : '';
+      var setDef = a.isDefault ? '' : '<button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr(''+a.id+'')">Ustaw domyślny</button>';
+      return '<div class="addr-card'+sel+'" id="addrCard_'+a.id+'" onclick="selectAddr(''+a.id+'')">' +
+        '<div class="addr-radio"><div class="addr-radio-dot"></div></div>' +
+        '<div class="addr-body">' +
+          '<div class="addr-name">'+a.name+' '+badge+'</div>' +
+          '<div class="addr-detail">'+a.company+' · '+a.street+', '+a.city+', '+a.country+'</div>' +
+          setDef +
+        '</div>' +
+        '<div class="addr-actions">' +
+          '<button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit(''+a.id+'')">✎ Edytuj</button>' +
+        '</div></div>';
+    }).join('');
+    html += '<button class="addr-add-btn" onclick="openAddrSheet()">' +
+      '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres</button>';
+    wrap.innerHTML = html;
+  }
+
+  function selectAddr(id) {
+    document.querySelectorAll('.addr-card').forEach(function(c){ c.classList.remove('selected'); });
+    var card = document.getElementById('addrCard_' + id);
+    if (card) card.classList.add('selected');
+  }
+
+  function setDefaultAddr(id) {
+    addrData.forEach(function(a){ a.isDefault = (a.id === id); });
+    renderAddrList();
+  }
+
+  function openAddrSheet() {
+    addrEditId = null;
+    document.getElementById('addrSheetTitle').textContent = 'Nowy adres';
+    ['addrInputName','addrInputCompany','addrInputStreet','addrInputZip','addrInputCity'].forEach(function(f){
+      var el = document.getElementById(f); if(el) el.value = '';
+    });
+    var country = document.getElementById('addrInputCountry'); if(country) country.value = 'Polska';
+    document.getElementById('addrBackdrop').classList.add('is-open');
+    document.getElementById('addrSheet').classList.add('is-open');
+  }
+
+  function openAddrEdit(id) {
+    addrEditId = id;
+    var a = addrData.find(function(x){ return x.id === id; });
+    if (!a) return;
+    document.getElementById('addrSheetTitle').textContent = 'Edytuj adres';
+    document.getElementById('addrInputName').value = a.name;
+    document.getElementById('addrInputCompany').value = a.company;
+    document.getElementById('addrInputStreet').value = a.street;
+    var parts = a.city.split(' '); 
+    document.getElementById('addrInputZip').value = parts[0] || '';
+    document.getElementById('addrInputCity').value = parts.slice(1).join(' ') || a.city;
+    document.getElementById('addrInputCountry').value = a.country;
+    document.getElementById('addrBackdrop').classList.add('is-open');
+    document.getElementById('addrSheet').classList.add('is-open');
+  }
+
+  function closeAddrSheet() {
+    document.getElementById('addrBackdrop').classList.remove('is-open');
+    document.getElementById('addrSheet').classList.remove('is-open');
+  }
+
+  function saveAddr() {
+    var name = document.getElementById('addrInputName').value.trim() || 'Nowy adres';
+    var company = document.getElementById('addrInputCompany').value.trim() || 'AutoParts Sp. z o.o.';
+    var street = document.getElementById('addrInputStreet').value.trim() || '';
+    var zip = document.getElementById('addrInputZip').value.trim() || '';
+    var city = document.getElementById('addrInputCity').value.trim() || '';
+    var country = document.getElementById('addrInputCountry').value.trim() || 'Polska';
+    var fullCity = zip + (zip && city ? ' ' : '') + city;
+    if (addrEditId) {
+      addrData = addrData.map(function(a){
+        return a.id === addrEditId ? Object.assign({},a,{name:name,company:company,street:street,city:fullCity,country:country}) : a;
+      });
+    } else {
+      var newId = 'a' + Date.now();
+      addrData.push({id:newId,name:name,company:company,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
+    }
+    closeAddrSheet();
+    renderAddrList();
+  }
+
 </script>
 
 
