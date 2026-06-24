@@ -1885,15 +1885,8 @@
   .addr-add-btn:hover{ border-color:var(--accent-primary); background:rgba(0,95,110,.04); }
   .addr-set-default-btn{ appearance:none; background:none; border:none; font-family:var(--font-body); font-size:13px; color:var(--text-muted); cursor:pointer; padding:0; text-decoration:underline; }
   /* addr bottom sheet */
-  .addr-backdrop{ display:none; position:absolute; inset:0; background:rgba(0,0,0,.32); z-index:500; pointer-events:none; border-radius:inherit; }
   .addr-backdrop.is-open{ display:block; pointer-events:auto; }
-  .addr-sheet{ position:absolute; bottom:0; left:0; right:0; background:var(--bg-surface-light); border-radius:var(--radius-lg) var(--radius-lg) 0 0; z-index:501; padding:var(--space-xl); display:flex; flex-direction:column; gap:var(--space-lg); transform:translateY(100%); transition:transform 300ms ease; pointer-events:none; max-height:90%; overflow-y:auto; }
   .addr-sheet.is-open{ transform:translateY(0); pointer-events:auto; }
-  .addr-sheet-handle{ width:40px; height:4px; background:var(--border-surface); border-radius:2px; margin:0 auto var(--space-sm); }
-  .addr-sheet-title{ font-family:var(--font-mono); font-weight:700; font-size:16px; color:var(--text-default); text-transform:uppercase; }
-  .addr-form-field{ display:flex; flex-direction:column; gap:6px; }
-  .addr-form-label{ font-family:var(--font-mono); font-weight:700; font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; }
-  .addr-form-input{ border:none; border-bottom:1px solid var(--border-surface); padding:var(--space-sm) 0; font-family:var(--font-body); font-size:16px; color:var(--text-default); background:transparent; outline:none; width:100%; }
   .addr-form-input:focus{ border-color:var(--accent-primary); }
 </style>
 </head>
@@ -3704,43 +3697,43 @@
     </div>
   </div>
 
-  <!-- Bottom sheet backdrop -->
-  <div class="addr-backdrop" id="addrBackdrop" onclick="closeAddrSheet()"></div>
-
-  <!-- Bottom sheet form -->
-  <div class="addr-sheet" id="addrSheet">
-    <div class="addr-sheet-handle"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <div class="addr-sheet-title" id="addrSheetTitle">Nowy adres</div>
-      <button onclick="closeAddrSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:var(--text-muted);cursor:pointer;padding:4px;">✕</button>
+  <!-- Bottom sheet -->
+  <div class="flt-backdrop" id="addrBackdrop" onclick="closeAddrSheet()"></div>
+  <div class="flt-sheet" id="addrSheet">
+    <div class="flt-handle"></div>
+    <div class="flt-header">
+      <span class="flt-title" id="addrSheetTitle">Nowy adres</span>
+      <button class="flt-clear" onclick="closeAddrSheet()">✕</button>
     </div>
-    <div class="addr-form-field">
-      <label class="addr-form-label">Nazwa punktu</label>
-      <input class="addr-form-input" id="addrInputName" type="text" placeholder="np. Magazyn Warszawa" />
-    </div>
-    <div class="addr-form-field">
-      <label class="addr-form-label">Firma</label>
-      <input class="addr-form-input" id="addrInputCompany" type="text" placeholder="Nazwa firmy" />
-    </div>
-    <div class="addr-form-field">
-      <label class="addr-form-label">Ulica i numer</label>
-      <input class="addr-form-input" id="addrInputStreet" type="text" placeholder="ul. Przykładowa 1" />
-    </div>
-    <div style="display:flex;gap:var(--space-md);">
-      <div class="addr-form-field" style="flex:1;">
-        <label class="addr-form-label">Kod pocztowy</label>
-        <input class="addr-form-input" id="addrInputZip" type="text" placeholder="00-000" />
+    <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+      <div class="adres-field">
+        <div class="adres-label">NAZWA PUNKTU</div>
+        <input type="text" class="adres-input" id="addrInputName" placeholder="np. Magazyn Warszawa">
       </div>
-      <div class="addr-form-field" style="flex:2;">
-        <label class="addr-form-label">Miasto</label>
-        <input class="addr-form-input" id="addrInputCity" type="text" placeholder="Warszawa" />
+      <div class="adres-field">
+        <div class="adres-label">FIRMA</div>
+        <input type="text" class="adres-input" id="addrInputCompany" placeholder="Nazwa firmy">
+      </div>
+      <div class="adres-field">
+        <div class="adres-label">ULICA I NUMER</div>
+        <input type="text" class="adres-input" id="addrInputStreet" placeholder="ul. Przykładowa 1">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-sm);">
+        <div class="adres-field">
+          <div class="adres-label">KOD POCZTOWY</div>
+          <input type="text" class="adres-input" id="addrInputZip" placeholder="00-000">
+        </div>
+        <div class="adres-field">
+          <div class="adres-label">MIASTO</div>
+          <input type="text" class="adres-input" id="addrInputCity" placeholder="Warszawa">
+        </div>
+      </div>
+      <div class="adres-field">
+        <div class="adres-label">KRAJ</div>
+        <input type="text" class="adres-input" id="addrInputCountry" value="Polska">
       </div>
     </div>
-    <div class="addr-form-field">
-      <label class="addr-form-label">Kraj</label>
-      <input class="addr-form-input" id="addrInputCountry" type="text" value="Polska" />
-    </div>
-    <button class="cta" onclick="saveAddr()" style="margin-top:4px;">Zapisz adres</button>
+    <button class="flt-apply" onclick="saveAddr()">Zapisz adres</button>
   </div>
 </div>
 
