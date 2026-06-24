@@ -4642,11 +4642,10 @@ function submitOrder() {
   setTimeout(function() {
     btn.textContent = 'Złóż zamówienie';
     btn.style.opacity = '';
-    // reset checkbox so button is disabled again if user goes back
     var cb = document.getElementById('confirmCheck');
     if (cb) cb.checked = false;
     btn.disabled = true;
-    navigate('screenSuccess');
+    setScreen('screenSuccess');
   }, 1200);
 }
 </script>
