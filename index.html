@@ -2516,7 +2516,7 @@
       </div>
       <div class="address-actions">
         <button class="btn-addr-add" onclick="openAddrSheet()">+ Dodaj adres</button>
-        <button class="btn-addr-sel" onclick="(function(){var b=document.getElementById('addrPickBackdrop');var s=document.getElementById('addrPickSheet');var l=document.getElementById('addrPickList');if(!b||!s||!l){alert('Sheet not found');return;}var h='';for(var i=0;i<addrData.length;i++){var a=addrData[i];h+='<div class=\'addr-card'+(a.isDefault?' selected':'')+'\'style=\'cursor:pointer;margin-bottom:8px;\' onclick=\'pickAddr(\''+a.id+'\')\'>'+a.name+'</div>';}l.innerHTML=h;b.style.display='block';s.style.display='flex';})()">∨ Wybierz</button>
+        <button class="btn-addr-sel" onclick="openAddrPickSheet()">v Wybierz</button>
       </div>
     </div>
 
