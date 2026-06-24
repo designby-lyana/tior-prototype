@@ -1894,6 +1894,20 @@
   .addr-card .firma-account-icons span { position:relative; z-index:2; }
 
   .addr-card button, .addr-card span[id] { position:relative; z-index:10; }
+
+  /* custom tooltip for Domyslny chip */
+  .chip-tooltip-wrap { position:relative; display:inline-flex; }
+  .chip-tooltip-wrap .chip-tip {
+    display:none; position:absolute; bottom:calc(100% + 6px); left:0;
+    background:#323744; color:#fff; font-family:var(--font-body);
+    font-size:13px; white-space:nowrap; padding:5px 10px;
+    border-radius:6px; z-index:2000; pointer-events:none;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+  }
+  .chip-tooltip-wrap:hover .chip-tip { display:block; }
+  /* address card transition */
+  .address-card { transition: all 400ms ease; }
+  .address-name, .address-text { transition: opacity 300ms ease; }
 </style>
 </head>
 <body><!-- cache-bust v3 -->
@@ -5150,10 +5164,26 @@ function submitOrder() {
     var picked = null;
     for (var i = 0; i < addrData.length; i++) { if (addrData[i].id === id) { picked = addrData[i]; break; } }
     if (picked) {
+      // fade out
       var nameEl = document.querySelector('.address-name');
       var textEl = document.querySelector('.address-text');
-      if (nameEl) nameEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
-      if (textEl) textEl.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
+      if (nameEl) nameEl.style.opacity = '0';
+      if (textEl) textEl.style.opacity = '0';
+      setTimeout(function() {
+        if (nameEl) {
+          nameEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + picked.name;
+          nameEl.style.opacity = '1';
+        }
+        if (textEl) {
+          textEl.innerHTML = picked.company + '<br>' + picked.street + '<br>' + picked.city + ', ' + picked.country;
+          textEl.style.opacity = '1';
+        }
+        // update badge area
+        var badgeEl = document.querySelector('.address-badge');
+        if (badgeEl) {
+          badgeEl.innerHTML = '<span class="chip-tooltip-wrap"><span class="firma-badge-default">Domyślny</span><span class="chip-tip">Adres domyślny zmienisz w sekcji Adresy dostawy.</span></span>';
+        }
+      }, 300);
     }
     closeAddrPickSheet();
   }
