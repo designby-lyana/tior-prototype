@@ -5008,9 +5008,7 @@ function submitOrder() {
 
   // ── ADDRESSES ──────────────────────────────────────────
   var addrData = [
-    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true},
-    {id:'a2',name:'Warszawa – Magazyn Wola',company:'AutoParts Sp. z o.o.',street:'ul. Jana Kazimierza 12',city:'01-248 Warszawa',country:'Polska',isDefault:false},
-    {id:'a3',name:'Poznań – Głogowska',company:'AutoParts Sp. z o.o.',street:'ul. Głogowska 120',city:'60-263 Poznań',country:'Polska',isDefault:false}
+    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true}
   ];
   var addrEditId = null;
 
@@ -5269,8 +5267,14 @@ function submitOrder() {
   function renderCheckoutAddrList() {
     var wrap = document.getElementById('checkoutAddrList');
     if (!wrap) return;
-    var fallback = [{id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true}];
-    var items = (typeof addrData !== 'undefined' && addrData && addrData.length) ? addrData : fallback;
+    var items = (typeof addrData !== 'undefined' && addrData) ? addrData : [];
+    if (items.length === 0) {
+      wrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;padding:32px 16px;text-align:center;gap:16px;">'
+        + '<div style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);">Nie masz jeszcze adresu dostawy.</div>'
+        + '<button onclick="openAddrSheet()" style="height:44px;padding:0 24px;background:#005f6e;border:none;border-radius:8px;font-family:var(--font-body);font-weight:500;font-size:16px;color:#fffaf2;cursor:pointer;">+ Dodaj adres dostawy</button>'
+        + '</div>';
+      return;
+    }
     if (!_checkoutSelectedId) {
       for(var i=0;i<items.length;i++){if(items[i].isDefault){_checkoutSelectedId=items[i].id;break;}}
       if(!_checkoutSelectedId && items.length) _checkoutSelectedId=items[0].id;
