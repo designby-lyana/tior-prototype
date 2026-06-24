@@ -4289,8 +4289,8 @@
   // stop propagation inside sheet so backdrop doesn't steal clicks
   ddSheet.addEventListener('click', e => e.stopPropagation());
   ddBackdrop.addEventListener('click', closeDropdown);
-  ddClose.addEventListener('click', closeDropdown);
-  ddSearchInput.addEventListener('input', e => {
+  if (ddClose) ddClose.addEventListener('click', closeDropdown);
+  if (ddSearchInput) ddSearchInput.addEventListener('input', e => {
     const data = DD_DATA[activeKey];
     if (data) renderList(data.items, e.target.value, activeKey);
   });
