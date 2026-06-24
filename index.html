@@ -3661,7 +3661,7 @@
       <div class="addr-card selected" id="addrCard_a1" onclick="selectAddr('a1')">
         <div class="addr-radio"><div class="addr-radio-dot"></div></div>
         <div class="addr-body">
-          <div class="addr-name">Kraków – Serwis 1 <span class="addr-badge-default">Domyślny</span></div>
+          <div class="addr-name">Kraków – Serwis 1 <span class="firma-badge-default">Domyślny</span></div>
           <div class="addr-detail">AutoParts Sp. z o.o. · ul. Zakopiańska 58, 30-418 Kraków, Polska</div>
           
         </div>
@@ -3674,7 +3674,7 @@
         <div class="addr-body">
           <div class="addr-name">Warszawa – Magazyn Wola </div>
           <div class="addr-detail">AutoParts Sp. z o.o. · ul. Jana Kazimierza 12, 01-248 Warszawa, Polska</div>
-          <button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr('a2')">Ustaw domyślny</button>
+          <button class="firma-badge-set" onclick="event.stopPropagation();setDefaultAddr('a2')">Ustaw jako domyślny</button>
         </div>
         <div class="addr-actions">
           <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a2')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
@@ -3685,7 +3685,7 @@
         <div class="addr-body">
           <div class="addr-name">Poznań – Głogowska </div>
           <div class="addr-detail">AutoParts Sp. z o.o. · ul. Głogowska 120, 60-263 Poznań, Polska</div>
-          <button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr('a3')">Ustaw domyślny</button>
+          <button class="firma-badge-set" onclick="event.stopPropagation();setDefaultAddr('a3')">Ustaw jako domyślny</button>
         </div>
         <div class="addr-actions">
           <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a3')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
@@ -5069,17 +5069,18 @@ function submitOrder() {
     for (var i = 0; i < addrData.length; i++) {
       var a = addrData[i];
       var sel = a.isDefault ? ' selected' : '';
-      var badge = a.isDefault ? '<span class="addr-badge-default">Domyślny</span>' : '';
-      var setDefHtml = a.isDefault ? '' : '<button class="addr-set-default-btn" data-aid="' + a.id + '" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw domyślny</button>';
-      var editHtml = '<button class="addr-edit-btn" data-aid="' + a.id + '" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)">&#9998; Edytuj</button>';
+      var chipHtml = a.isDefault
+        ? '<span class="firma-badge-default">Domyślny</span>'
+        : '<button class="firma-badge-set" data-aid="' + a.id + '" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw jako domyślny</button>';
+      var editSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+      var editHtml = '<div class="firma-account-icons"><span data-aid="' + a.id + '" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)" style="cursor:pointer;">' + editSvg + '</span></div>';
       html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '" onclick="selectAddr(this.dataset.aid)">';
       html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
       html += '<div class="addr-body">';
-      html += '<div class="addr-name">' + a.name + ' ' + badge + '</div>';
+      html += '<div class="firma-account-top">' + chipHtml + editHtml + '</div>';
+      html += '<div class="addr-name" style="margin-top:6px;">' + a.name + '</div>';
       html += '<div class="addr-detail">' + a.company + ' · ' + a.street + ', ' + a.city + ', ' + a.country + '</div>';
-      html += setDefHtml;
       html += '</div>';
-      html += '<div class="addr-actions">' + editHtml + '</div>';
       html += '</div>';
     }
     html += '<button class="addr-add-btn" onclick="openAddrSheet()">+ Dodaj adres</button>';
