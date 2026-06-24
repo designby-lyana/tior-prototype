@@ -1647,14 +1647,15 @@
 
   /* ── ADD TO CART RIGHT DRAWER ─────────────── */
   .atc-backdrop{
-    display:none; position:fixed; inset:0;
+    display:none; position:absolute; inset:0;
     background:rgba(0,0,0,.32); z-index:500;
     pointer-events:none;
+    border-radius:inherit;
   }
   .atc-backdrop.is-open{ display:block; pointer-events:auto; }
   .atc-drawer{
-    position:fixed; top:0; right:0; bottom:0;
-    width:88%; max-width:360px;
+    position:absolute; top:0; right:0; bottom:0;
+    width:88%;
     background:var(--bg-surface-light);
     z-index:501;
     display:flex; flex-direction:column;
@@ -1663,6 +1664,7 @@
     transition:transform 300ms ease;
     pointer-events:none;
     overflow-y:auto;
+    border-radius:0 var(--radius-lg) var(--radius-lg) 0;
   }
   .atc-drawer.is-open{ transform:translateX(0); pointer-events:auto; }
   .atc-header{
@@ -3702,7 +3704,6 @@
   <button class="flt-apply" onclick="saveIBAN()">Zapisz</button>
 </div>
 
-<!-- ADD TO CART RIGHT DRAWER -->
 <div class="atc-backdrop" id="atcBackdrop" onclick="closeAtcOverlay()"></div>
 <div class="atc-drawer" id="atcSheet">
   <!-- header -->
