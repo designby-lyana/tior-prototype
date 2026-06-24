@@ -3388,7 +3388,7 @@
           <span class="prf-nav-radio"></span>
           Faktury
         </button>
-        <button class="prf-nav-item" onclick="setScreen('screenAddresses');renderAddrList()">
+        <button class="prf-nav-item" onclick="setScreen('screenAddresses')">
           <span class="prf-nav-radio"></span>
           Adresy dostawy
         </button>
@@ -4098,13 +4098,13 @@
 
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses'];
   function setScreen(id){
-    if(id==='screenAddresses'){ setTimeout(renderAddrList,0); }
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
       if(el) el.classList.remove('is-active');
     });
     var target = document.getElementById(id);
     if(target){ target.classList.add('is-active'); target.scrollTop = 0; }
+    if(id==='screenAddresses'){ renderAddrList(); }
   }
   function goToResults(){ setScreen('screenResults'); }
   function goHome(){      setScreen('screenHome'); }
