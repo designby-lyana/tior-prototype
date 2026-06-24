@@ -5052,6 +5052,7 @@ function submitOrder() {
     }, 900);
   }
 
+
   // ── ADDRESSES ──────────────────────────────────────────
   var addrData = [
     {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true},
@@ -5071,28 +5072,29 @@ function submitOrder() {
     }
     if (empty) empty.style.display = 'none';
     wrap.style.display = 'flex';
-    var html = addrData.map(function(a) {
+    var html = '';
+    for (var i = 0; i < addrData.length; i++) {
+      var a = addrData[i];
       var sel = a.isDefault ? ' selected' : '';
       var badge = a.isDefault ? '<span class="addr-badge-default">Domyślny</span>' : '';
-      var setDef = a.isDefault ? '' : '<button class="addr-set-default-btn" onclick="event.stopPropagation();setDefaultAddr(''+a.id+'')">Ustaw domyślny</button>';
-      return '<div class="addr-card'+sel+'" id="addrCard_'+a.id+'" onclick="selectAddr(''+a.id+'')">' +
-        '<div class="addr-radio"><div class="addr-radio-dot"></div></div>' +
-        '<div class="addr-body">' +
-          '<div class="addr-name">'+a.name+' '+badge+'</div>' +
-          '<div class="addr-detail">'+a.company+' · '+a.street+', '+a.city+', '+a.country+'</div>' +
-          setDef +
-        '</div>' +
-        '<div class="addr-actions">' +
-          '<button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit(''+a.id+'')">✎ Edytuj</button>' +
-        '</div></div>';
-    }).join('');
-    html += '<button class="addr-add-btn" onclick="openAddrSheet()">' +
-      '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres</button>';
+      var setDefHtml = a.isDefault ? '' : '<button class="addr-set-default-btn" data-aid="' + a.id + '" onclick="event.stopPropagation();setDefaultAddr(this.dataset.aid)">Ustaw domyślny</button>';
+      var editHtml = '<button class="addr-edit-btn" data-aid="' + a.id + '" onclick="event.stopPropagation();openAddrEdit(this.dataset.aid)">&#9998; Edytuj</button>';
+      html += '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '" onclick="selectAddr(this.dataset.aid)">';
+      html += '<div class="addr-radio"><div class="addr-radio-dot"></div></div>';
+      html += '<div class="addr-body">';
+      html += '<div class="addr-name">' + a.name + ' ' + badge + '</div>';
+      html += '<div class="addr-detail">' + a.company + ' · ' + a.street + ', ' + a.city + ', ' + a.country + '</div>';
+      html += setDefHtml;
+      html += '</div>';
+      html += '<div class="addr-actions">' + editHtml + '</div>';
+      html += '</div>';
+    }
+    html += '<button class="addr-add-btn" onclick="openAddrSheet()">+ Dodaj adres</button>';
     wrap.innerHTML = html;
   }
 
   function selectAddr(id) {
-    document.querySelectorAll('.addr-card').forEach(function(c){ c.classList.remove('selected'); });
+    document.querySelectorAll('#addrListWrap .addr-card').forEach(function(c){ c.classList.remove('selected'); });
     var card = document.getElementById('addrCard_' + id);
     if (card) card.classList.add('selected');
   }
@@ -5108,20 +5110,21 @@ function submitOrder() {
     ['addrInputName','addrInputCompany','addrInputStreet','addrInputZip','addrInputCity'].forEach(function(f){
       var el = document.getElementById(f); if(el) el.value = '';
     });
-    var country = document.getElementById('addrInputCountry'); if(country) country.value = 'Polska';
+    var c = document.getElementById('addrInputCountry'); if(c) c.value = 'Polska';
     document.getElementById('addrBackdrop').classList.add('is-open');
     document.getElementById('addrSheet').classList.add('is-open');
   }
 
   function openAddrEdit(id) {
     addrEditId = id;
-    var a = addrData.find(function(x){ return x.id === id; });
+    var a = null;
+    for(var i=0;i<addrData.length;i++){ if(addrData[i].id===id){ a=addrData[i]; break; } }
     if (!a) return;
     document.getElementById('addrSheetTitle').textContent = 'Edytuj adres';
     document.getElementById('addrInputName').value = a.name;
     document.getElementById('addrInputCompany').value = a.company;
     document.getElementById('addrInputStreet').value = a.street;
-    var parts = a.city.split(' '); 
+    var parts = a.city.split(' ');
     document.getElementById('addrInputZip').value = parts[0] || '';
     document.getElementById('addrInputCity').value = parts.slice(1).join(' ') || a.city;
     document.getElementById('addrInputCountry').value = a.country;
@@ -5143,12 +5146,15 @@ function submitOrder() {
     var country = document.getElementById('addrInputCountry').value.trim() || 'Polska';
     var fullCity = zip + (zip && city ? ' ' : '') + city;
     if (addrEditId) {
-      addrData = addrData.map(function(a){
-        return a.id === addrEditId ? Object.assign({},a,{name:name,company:company,street:street,city:fullCity,country:country}) : a;
-      });
+      for(var i=0;i<addrData.length;i++){
+        if(addrData[i].id===addrEditId){
+          addrData[i].name=name; addrData[i].company=company;
+          addrData[i].street=street; addrData[i].city=fullCity; addrData[i].country=country;
+          break;
+        }
+      }
     } else {
-      var newId = 'a' + Date.now();
-      addrData.push({id:newId,name:name,company:company,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
+      addrData.push({id:'a'+Date.now(),name:name,company:company,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
     }
     closeAddrSheet();
     renderAddrList();
