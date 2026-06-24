@@ -4673,6 +4673,78 @@
   </div>
 </div>
 
+
+<div id="screenSuccess" class="screen" style="display:none;background:#d2d8db;min-height:100%;flex-direction:column;">
+  <!-- Header (reuse same structure) -->
+  <div style="width:100%;height:68px;background:#fff;border-bottom:1px solid #9ba3af;display:flex;align-items:center;justify-content:space-between;padding:0 16px;box-sizing:border-box;flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:4px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#005f6e" stroke-width="2"/><path d="M8 12.5L11 15.5L16 9.5" stroke="#005f6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#0d0e13;letter-spacing:-0.5px;">OPONYTOMY</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#0d0e13;">EN</span>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="3.5" stroke="#0d0e13" stroke-width="1.5"/><path d="M4 19c0-3.866 3.134-7 7-7h0c3.866 0 7 3.134 7 7" stroke="#0d0e13" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="#0d0e13" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:60px 24px 40px;box-sizing:border-box;gap:0;">
+
+    <!-- OrderSuccessCard -->
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:0;">
+
+      <!-- Check icon -->
+      <div style="width:48px;height:48px;background:#1e6b3c;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- Title -->
+      <div style="text-align:center;margin-bottom:52px;">
+        <p style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;line-height:24px;color:#323744;margin:0;">Zamówienie #2802<br>potwierdzone</p>
+      </div>
+
+      <!-- Delivery info -->
+      <div style="width:100%;background:transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;">
+        <svg width="30" height="28" viewBox="0 0 30 28" fill="none" style="flex-shrink:0;">
+          <rect x="1" y="4" width="28" height="23" rx="3" stroke="#323744" stroke-width="1.5"/>
+          <path d="M1 10h28" stroke="#323744" stroke-width="1.5"/>
+          <path d="M9 1v6M21 1v6" stroke="#323744" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="5" y="14" width="4" height="3" rx="0.5" fill="#323744"/>
+          <rect x="13" y="14" width="4" height="3" rx="0.5" fill="#323744"/>
+          <rect x="21" y="14" width="4" height="3" rx="0.5" fill="#323744"/>
+          <rect x="5" y="20" width="4" height="3" rx="0.5" fill="#323744"/>
+          <rect x="13" y="20" width="4" height="3" rx="0.5" fill="#323744"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <span style="font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#6b7280;">Oczekiwana dostawa</span>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:18px;line-height:18px;color:#323744;">wt, 24 lut – pt, 28 lut</span>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div style="width:100%;display:flex;flex-direction:column;gap:16px;">
+        <button onclick="navigate('screenOrders')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zobacz zamówienia</button>
+        <button onclick="navigate('screenHome')" style="width:100%;height:48px;background:#fff;border:1.5px solid #005f6e;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#024b57;cursor:pointer;">Kontynuuj zakupy</button>
+      </div>
+    </div>
+
+    <!-- HelpCard -->
+    <div style="width:100%;margin-top:60px;padding:18px 12px;box-sizing:border-box;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <svg width="25" height="26" viewBox="0 0 25 26" fill="none"><path d="M6 2C4.9 2 4 2.9 4 4v18c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8l-6-6H6z" stroke="#323744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#323744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- phone svg -->
+        <svg width="25" height="26" viewBox="0 0 25 26" fill="none" style="display:none;"></svg>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:18px;color:#323744;">Potrzebujesz pomocy?</span>
+      </div>
+      <p style="font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#6b7280;margin:0 0 16px 0;">Specjaliści od opon pomogą w zamówieniu i doborze produktów. Zadzwoń!</p>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:18px;color:#0d0e13;margin:0 0 2px 0;">+48 123 456 789</p>
+      <p style="font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;color:#6b7280;margin:0;">Pn–Pt 8:00–17:00</p>
+    </div>
+
+  </div>
+</div>
+
 <div class="add-feedback" id="addFeedback"></div>
 </body>
 </html>
