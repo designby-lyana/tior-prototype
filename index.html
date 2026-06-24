@@ -3980,52 +3980,46 @@
 <div class="atc-backdrop" id="atcBackdrop" onclick="closeAtcOverlay()"></div>
 <div class="atc-drawer" id="atcSheet">
 
-  <!-- header -->
+  <!-- header: checkmark + title + close -->
   <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:var(--space-lg);border-bottom:1px solid var(--border-surface);">
     <div style="display:flex;align-items:center;gap:var(--space-md);">
-      <img src="data:image/png;base64,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" alt="" width="36" height="36" style="flex:none;">
-      <span style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--text-default);">Dodano do koszyka</span>
+      <div style="width:40px;height:40px;border-radius:50%;background:#1e6b3c;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10l4.5 4.5 9.5-9" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span style="font-family:var(--font-body);font-weight:600;font-size:18px;color:var(--text-default);">Dodano do koszyka</span>
     </div>
-    <button onclick="closeAtcOverlay()" style="appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:20px;line-height:1;flex:none;">✕</button>
+    <button onclick="closeAtcOverlay()" style="appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
   </div>
 
-  <!-- product row -->
-  <div style="padding:var(--space-lg) 0;border-bottom:1px solid var(--border-surface);">
-    <!-- name + size -->
-    <div style="margin-bottom:var(--space-md);">
-      <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--text-default);margin-bottom:2px;" id="atcProductName">205/55 R16 91V</div>
-      <div style="font-family:var(--font-body);font-size:13px;color:var(--text-muted);">Primacy 4+</div>
-    </div>
-    <!-- details grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm) var(--space-lg);margin-bottom:var(--space-md);">
+  <!-- product card -->
+  <div style="border:1px solid var(--border-surface);border-radius:var(--radius-lg);padding:var(--space-lg);margin-top:var(--space-lg);">
+    <!-- row 1: model+size left | brand+segment right -->
+    <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-md);">
       <div>
-        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:2px;">Marka</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--text-default);">Michelin</div>
+        <div style="font-family:var(--font-body);font-size:16px;color:var(--text-default);" id="atcModel">Primacy 4+</div>
+        <div style="font-family:var(--font-body);font-weight:700;font-size:18px;color:var(--text-default);" id="atcSize">205/55 R16 91V</div>
       </div>
-      <div>
-        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:2px;">Segment</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--text-default);">Medium</div>
-      </div>
-      <div>
-        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:2px;">Ilość</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--text-default);font-weight:600;" id="atcQty">1</div>
-      </div>
-      <div>
-        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:2px;">Cena / szt.</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--text-default);">151.59 zł</div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--font-body);font-size:16px;color:var(--text-default);" id="atcBrand">Michelin</div>
+        <div style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);" id="atcSegment">Medium</div>
       </div>
     </div>
-    <!-- total -->
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:var(--space-md);">
-      <div style="font-family:var(--font-body);font-size:13px;color:var(--text-muted);">Razem</div>
-      <div style="font-family:var(--font-body);font-weight:700;font-size:18px;color:var(--text-default);" id="atcTotal">151.59 zł</div>
+    <!-- row 2: qty · price/szt → total -->
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <span style="font-family:var(--font-body);font-size:16px;color:var(--text-default);" id="atcQty">4 szt.</span>
+      <span style="color:var(--text-muted);">·</span>
+      <span style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);" id="atcUnitPrice">151.59 zł / szt.</span>
+      <span style="flex:1;"></span>
+      <span style="font-family:var(--font-body);font-weight:700;font-size:18px;color:var(--text-default);" id="atcTotal">151.59 zł</span>
     </div>
   </div>
 
   <!-- actions -->
   <div style="display:flex;flex-direction:column;gap:var(--space-sm);padding-top:var(--space-lg);">
     <button class="cta" onclick="goToCart();closeAtcOverlay()">Przejdź do koszyka</button>
-    <button class="cta atc-secondary" onclick="closeAtcOverlay()">Kontynuuj poszukiwania</button>
+    <button class="cta atc-secondary" onclick="closeAtcOverlay()">Kontynuuj zakupy</button>
   </div>
 
 </div>
@@ -4749,10 +4743,27 @@
       b.classList.add('visible');
     });
 
-    var atcQty = document.getElementById('atcQty');
-    var atcTotal = document.getElementById('atcTotal');
-    if(atcQty) atcQty.textContent = qty;
-    if(atcTotal) atcTotal.textContent = total + ' zł';
+    var atcQtyEl = document.getElementById('atcQty');
+    var atcTotalEl = document.getElementById('atcTotal');
+    var atcUnitEl = document.getElementById('atcUnitPrice');
+    var atcModelEl = document.getElementById('atcModel');
+    var atcSizeEl = document.getElementById('atcSize');
+    var atcBrandEl = document.getElementById('atcBrand');
+    var atcSegEl = document.getElementById('atcSegment');
+    if(atcQtyEl) atcQtyEl.textContent = qty + ' szt.';
+    if(atcTotalEl) atcTotalEl.textContent = total + ' zł';
+    if(atcUnitEl) atcUnitEl.textContent = unitPrice.toFixed(2) + ' zł / szt.';
+    // fill model/brand from card
+    if(card) {
+      var modelEl = card.querySelector('.tire-model') || card.querySelector('.pr-model');
+      var sizeEl = card.querySelector('.tire-size') || card.querySelector('.pr-size');
+      var brandEl = card.querySelector('.tire-brand') || card.querySelector('.pr-brand');
+      var segEl = card.querySelector('.tire-segment') || card.querySelector('.pr-segment');
+      if(modelEl && atcModelEl) atcModelEl.textContent = modelEl.textContent.trim();
+      if(sizeEl && atcSizeEl) atcSizeEl.textContent = sizeEl.textContent.trim();
+      if(brandEl && atcBrandEl) atcBrandEl.textContent = brandEl.textContent.trim();
+      if(segEl && atcSegEl) atcSegEl.textContent = segEl.textContent.trim();
+    }
 
     // Position drawer relative to the Dodaj button
     var sheet = document.getElementById('atcSheet');
