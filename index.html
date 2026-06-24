@@ -2158,7 +2158,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart(this)">Dodaj</button>
       </div>
     </div>
 
@@ -2215,7 +2215,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart(this)">Dodaj</button>
       </div>
     </div>
 
@@ -2272,7 +2272,7 @@
           <span class="qty-value">1</span>
           <button class="qty-btn qty-plus" aria-label="Zwiększ liczbę">+</button>
         </div>
-        <button class="cta cta-sm pr-add" onclick="addToCart()">Dodaj</button>
+        <button class="cta cta-sm pr-add" onclick="addToCart(this)">Dodaj</button>
       </div>
     </div>
 
@@ -3721,10 +3721,8 @@
       </div>
     </div>
     <div class="atc-item-bottom">
-      <div class="qty-stepper">
-        <button class="qty-btn qty-minus">−</button>
-        <span class="qty-value">1</span>
-        <button class="qty-btn qty-plus">+</button>
+      <div style="font-family:var(--font-body);font-size:14px;color:var(--text-muted);">
+        Ilość: <span id="atcQty" style="color:var(--text-default);font-weight:600;">1</span>
       </div>
       <div class="cart-right">
         <div class="cart-item-unit">151.59 zł</div>
@@ -4444,16 +4442,20 @@
 
   var _rfKey = null;
 
-  var cartCount = 0;
+  function addToCart(btn){
+    // Get qty from the card's stepper
+    var card = btn ? btn.closest('.product-row') : null;
+    var qty = card ? parseInt(card.querySelector('.qty-value').textContent) || 1 : 1;
 
-  function addToCart(){
-    cartCount++;
-    // Update all cart badges
+    cartCount += qty;
     document.querySelectorAll('.cart-badge').forEach(function(b){
       b.textContent = cartCount;
       b.classList.add('visible');
     });
-    // Show overlay
+    // Update drawer qty
+    var atcQty = document.getElementById('atcQty');
+    if(atcQty) atcQty.textContent = qty;
+
     document.getElementById('atcBackdrop').classList.add('is-open');
     document.getElementById('atcSheet').classList.add('is-open');
   }
