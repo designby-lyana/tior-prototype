@@ -4339,8 +4339,8 @@
     euActiveField = null;
   }
 
-  document.getElementById('euBackdrop').addEventListener('click', closeEu);
-  document.getElementById('euSheet').addEventListener('click', function(e){ e.stopPropagation(); });
+  var euBd=document.getElementById('euBackdrop'); if(euBd) euBd.addEventListener('click', closeEu);
+  var euSh=document.getElementById('euSheet'); if(euSh) euSh.addEventListener('click', function(e){ e.stopPropagation(); });
 
   function euPick(btn, cat, val, bg, fg){
     euBtns[cat].forEach(function(b){
