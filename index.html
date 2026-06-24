@@ -3658,42 +3658,6 @@
 
     <!-- STATE: has addresses -->
     <div id="addrListWrap" style="display:flex;flex-direction:column;gap:var(--space-md);">
-      <div class="addr-card selected" id="addrCard_a1" onclick="selectAddr('a1')">
-        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
-        <div class="addr-body">
-          <div class="addr-name">Kraków – Serwis 1 <span class="firma-badge-default">Domyślny</span></div>
-          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Zakopiańska 58, 30-418 Kraków, Polska</div>
-          
-        </div>
-        <div class="addr-actions">
-          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a1')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
-        </div>
-      </div>
-<div class="addr-card" id="addrCard_a2" onclick="selectAddr('a2')">
-        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
-        <div class="addr-body">
-          <div class="addr-name">Warszawa – Magazyn Wola </div>
-          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Jana Kazimierza 12, 01-248 Warszawa, Polska</div>
-          <button class="firma-badge-set" onclick="event.stopPropagation();setDefaultAddr('a2')">Ustaw jako domyślny</button>
-        </div>
-        <div class="addr-actions">
-          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a2')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
-        </div>
-      </div>
-<div class="addr-card" id="addrCard_a3" onclick="selectAddr('a3')">
-        <div class="addr-radio"><div class="addr-radio-dot"></div></div>
-        <div class="addr-body">
-          <div class="addr-name">Poznań – Głogowska </div>
-          <div class="addr-detail">AutoParts Sp. z o.o. · ul. Głogowska 120, 60-263 Poznań, Polska</div>
-          <button class="firma-badge-set" onclick="event.stopPropagation();setDefaultAddr('a3')">Ustaw jako domyślny</button>
-        </div>
-        <div class="addr-actions">
-          <button class="addr-edit-btn" onclick="event.stopPropagation();openAddrEdit('a3')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Edytuj</button>
-        </div>
-      </div>
-      <button class="addr-add-btn" onclick="openAddrSheet()">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres
-      </button>
     </div>
   </div>
 
@@ -4134,6 +4098,7 @@
 
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses'];
   function setScreen(id){
+    if(id==='screenAddresses'){ setTimeout(renderAddrList,0); }
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
       if(el) el.classList.remove('is-active');
@@ -5154,6 +5119,8 @@ function submitOrder() {
     renderAddrList();
   }
 
+
+  document.addEventListener('DOMContentLoaded', function(){ renderAddrList(); });
 </script>
 
 
