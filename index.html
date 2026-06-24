@@ -1657,6 +1657,8 @@
   .atc-drawer{
     position:absolute; top:0; right:0; bottom:auto;
     width:88%;
+    max-height:90%;
+    overflow-y:auto;
     background:var(--bg-surface-light);
     z-index:501;
     display:flex; flex-direction:column;
@@ -4551,6 +4553,21 @@
     if(atcQty) atcQty.textContent = qty;
     if(atcTotal) atcTotal.textContent = total + ' zł';
 
+    // Position drawer relative to the Dodaj button
+    var sheet = document.getElementById('atcSheet');
+    if(btn) {
+      var phone = document.getElementById('phone');
+      var btnRect = btn.getBoundingClientRect();
+      var phoneRect = phone.getBoundingClientRect();
+      var relTop = btnRect.top - phoneRect.top + phone.querySelector('.is-active').scrollTop;
+      var phoneH = phoneRect.height;
+      var sheetH = Math.min(phoneH * 0.9, 520);
+      var top = relTop - sheetH + btnRect.height + 16;
+      top = Math.max(0, Math.min(top, phoneH - sheetH));
+      sheet.style.top = top + 'px';
+    } else {
+      sheet.style.top = '0px';
+    }
     document.getElementById('atcBackdrop').classList.add('is-open');
     document.getElementById('atcSheet').classList.add('is-open');
   }
