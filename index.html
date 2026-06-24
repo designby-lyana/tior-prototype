@@ -4029,11 +4029,11 @@
 
 <script>
   // "+ dodaj rozmiar" reveals a second Rozmiar field (Drugi Rozmiar)
-  const addSizeLink = document.getElementById('addSizeLink');
-  const secondSizeField = document.getElementById('secondSizeField');
-  addSizeLink.addEventListener('click', () => {
+  var addSizeLink = document.getElementById('addSizeLink');
+  var secondSizeField = document.getElementById('secondSizeField');
+  if (addSizeLink) addSizeLink.addEventListener('click', function() {
     addSizeLink.hidden = true;
-    secondSizeField.hidden = false;
+    if (secondSizeField) secondSizeField.hidden = false;
   });
 
   // chips: hover handled in CSS, click toggles persistent "selected" state
