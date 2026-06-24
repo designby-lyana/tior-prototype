@@ -5140,24 +5140,7 @@ function submitOrder() {
     }
     closeAddrSheet();
     renderAddrList();
-    // if first address — show on checkout card
-    if (addrData.length === 1) {
-      var a = addrData[0];
-      var nameEl = document.querySelector('.address-name');
-      var textEl = document.querySelector('.address-text');
-      if (nameEl) nameEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + a.name;
-      if (textEl) textEl.innerHTML = a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country;
-    } else {
-      // show new address in selected card
-      var newA = addrData[addrData.length - 1];
-      window._selectedAddrId = newA.id;
-      var selCard = document.getElementById('checkoutSelectedCard');
-      var selName = document.getElementById('checkoutSelectedName');
-      var selText = document.getElementById('checkoutSelectedText');
-      if (selName) selName.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> ' + newA.name;
-      if (selText) selText.innerHTML = newA.company + '<br>' + newA.street + '<br>' + newA.city + ', ' + newA.country;
-      if (selCard) selCard.style.display = 'block';
-    }
+    if (typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
   }
 
 
