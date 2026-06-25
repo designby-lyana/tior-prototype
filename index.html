@@ -704,7 +704,7 @@
   .cart-item-top{
     display:flex; align-items:flex-start; gap:var(--space-sm);
   }
-  .cart-item-icon{ font-size:18px; flex:none; margin-top:1px; }
+  .cart-item-icon{ font-size:18px; flex:none; margin-top:1px; display:flex; align-items:center; justify-content:center; }
   .cart-item-info{ flex:1; }
   .cart-item-name{
     font-family:var(--font-body); font-weight:500;
@@ -4074,7 +4074,7 @@
   }
   function goToResults(){ setScreen('screenResults'); }
   function goHome(){      setScreen('screenHome'); }
-  function goToCart(){    setScreen('screenCart'); updateCartState(); }
+  function goToCart(){    setScreen('screenCart'); renderCartItems(); updateCartState(); }
   function goToCheckout(){ setScreen('screenCheckout'); if(typeof renderCheckoutAddrList==='function') renderCheckoutAddrList(); }
 
   document.getElementById('ctaCollapsed').addEventListener('click', goToResults);
@@ -4455,6 +4455,7 @@
     });
   });
   var cartCount = 0;
+  var cartItems = []; // [{id, model, spec, brand, unitPrice, qty, seasonIcon}]
 
   // Delivery method selection
   function selectDelivery(el){
@@ -4727,6 +4728,28 @@
     var unitPrice = priceEl ? parseFloat(priceEl.textContent.replace(/[^\d.,]/g,'').replace(',','.')) : 151.59;
     var total = (unitPrice * qty).toFixed(2);
 
+    // Gather season icon SVG from product-row .pr-image
+    var seasonSvg = '';
+    if(card) {
+      var imgEl = card.querySelector('.pr-image svg');
+      if(imgEl) seasonSvg = imgEl.outerHTML;
+    }
+
+    // Save to cartItems (merge if same model+spec)
+    var spec = card ? (card.querySelector('.pr-spec') ? card.querySelector('.pr-spec').textContent.trim() : '') : '';
+    var model = card ? (card.querySelector('.pr-model') ? card.querySelector('.pr-model').textContent.trim() : '') : '';
+    var brand = card ? (card.querySelector('.pr-brand') ? card.querySelector('.pr-brand').textContent.trim() : '') : '';
+    var itemKey = model + '|' + spec;
+    var existing = cartItems.find(function(i){ return i.key === itemKey; });
+    if(existing){
+      existing.qty += qty;
+      existing.total = (existing.unitPrice * existing.qty).toFixed(2);
+    } else {
+      cartItems.push({key: itemKey, model: model, spec: spec, brand: brand,
+        unitPrice: unitPrice, qty: qty, total: (unitPrice * qty).toFixed(2),
+        seasonSvg: seasonSvg});
+    }
+
     cartCount += qty;
     document.querySelectorAll('.cart-badge').forEach(function(b){
       b.textContent = cartCount;
@@ -4774,6 +4797,72 @@
     document.getElementById('atcSheet').classList.add('is-open');
   }
 
+
+  function renderCartItems(){
+    var block = document.getElementById('cartItemsBlock');
+    if(!block) return;
+    if(cartItems.length === 0){ block.innerHTML = ''; return; }
+    var html = '';
+    cartItems.forEach(function(item){
+      var iconHtml = item.seasonSvg
+        ? '<span class="cart-item-icon" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;color:var(--text-muted);flex:none;">' + item.seasonSvg + '</span>'
+        : '<span class="cart-item-icon" style="font-size:18px;flex:none;">🔵</span>';
+      html += '<div class="cart-item">'
+        + '<div class="cart-item-top">'
+        +   iconHtml
+        +   '<div class="cart-item-info">'
+        +     '<p class="cart-item-name">' + (item.model || 'Opona') + '</p>'
+        +     '<div class="cart-item-size">' + item.spec + (item.brand ? ' · ' + item.brand : '') + '</div>'
+        +   '</div>'
+        + '</div>'
+        + '<div class="cart-item-bottom">'
+        +   '<div class="qty-stepper" style="width:100px;height:28px;">'
+        +     '<button class="qty-btn" onclick="cartChangeQty('' + item.key.replace(/'/g,"\'") + '',-1)" aria-label="Zmniejsz">−</button>'
+        +     '<span class="qty-value" style="font-size:15px;">' + item.qty + '</span>'
+        +     '<button class="qty-btn" onclick="cartChangeQty('' + item.key.replace(/'/g,"\'") + '',1)" aria-label="Zwiększ">+</button>'
+        +   '</div>'
+        +   '<div class="cart-right">'
+        +     '<div class="cart-item-unit">€' + parseFloat(item.unitPrice).toFixed(2) + ' / szt.</div>'
+        +     '<div class="cart-item-total">€' + parseFloat(item.total).toFixed(2) + '</div>'
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    });
+    block.innerHTML = html;
+    renderCartSummary();
+  }
+
+  function cartChangeQty(key, delta){
+    var item = cartItems.find(function(i){ return i.key === key; });
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty < 1){
+      // remove item
+      var removed = item.qty === 0 ? item.qty + delta : 1;
+      cartCount -= (removed < 1 ? 1 : removed - item.qty);
+      cartItems = cartItems.filter(function(i){ return i.key !== key; });
+      cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
+    } else {
+      item.total = (item.unitPrice * item.qty).toFixed(2);
+      cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
+    }
+    document.querySelectorAll('.cart-badge').forEach(function(b){
+      b.textContent = cartCount;
+      if(cartCount > 0) b.classList.add('visible');
+      else b.classList.remove('visible');
+    });
+    renderCartItems();
+    updateCartState();
+  }
+
+  function renderCartSummary(){
+    var total = cartItems.reduce(function(s,i){return s+parseFloat(i.total);},0);
+    var itemCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
+    var el = document.querySelector('.cart-summary-value');
+    if(el) el.textContent = itemCount + ' szt.';
+    var totalEl = document.querySelector('.cart-summary-total-value');
+    if(totalEl) totalEl.textContent = '€' + total.toFixed(2);
+  }
 
   function updateCartState() {
     var empty = document.getElementById('cartEmptyState');
