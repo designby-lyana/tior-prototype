@@ -5598,6 +5598,83 @@ function submitOrder() {
   ];
   var addrEditId = null;
 
+  // ── Address delete logic ─────────────────────────────────────────
+  var _snackTimer = null;
+  var _pendingDeleteId = null;
+  var _pendingDeleteData = null;
+  var _confirmDeleteId = null;
+
+  function deleteAddr(aid){
+    var allCards = document.querySelectorAll('#addrListWrap .addr-card');
+    if(allCards.length <= 1){
+      showAddrSnackbar('Nie można usunąć jedynego adresu dostawy.', false);
+      return;
+    }
+    var addrData = checkoutAddrData.find(function(a){ return a.id === aid; });
+    if(addrData && addrData.isDefault){
+      _confirmDeleteId = aid;
+      document.getElementById('addrConfirmBackdrop').classList.add('visible');
+      return;
+    }
+    performDeleteAddr(aid);
+  }
+
+  function performDeleteAddr(aid){
+    _pendingDeleteId = aid;
+    _pendingDeleteData = checkoutAddrData.find(function(a){ return a.id === aid; });
+    checkoutAddrData = checkoutAddrData.filter(function(a){ return a.id !== aid; });
+    renderAddrList();
+    showAddrSnackbar('Adres został usunięty.', true);
+  }
+
+  function showAddrSnackbar(msg, withUndo){
+    var sb = document.getElementById('addrSnackbar');
+    if(!sb) return;
+    sb.querySelector('.snack-text').textContent = msg;
+    sb.querySelector('.snack-undo').style.display = withUndo ? '' : 'none';
+    var bar = document.getElementById('snackTimerBar');
+    var duration = withUndo ? 6000 : 3000;
+    if(bar){
+      bar.style.transition = 'none';
+      bar.style.width = '100%';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        bar.style.transition = 'width ' + duration + 'ms linear';
+        bar.style.width = '0%';
+      }); });
+    }
+    sb.classList.add('visible');
+    if(_snackTimer) clearTimeout(_snackTimer);
+    _snackTimer = setTimeout(function(){
+      sb.classList.remove('visible');
+      _pendingDeleteId = null; _pendingDeleteData = null;
+    }, duration);
+  }
+
+  function undoDeleteAddr(){
+    if(!_pendingDeleteData) return;
+    clearTimeout(_snackTimer);
+    checkoutAddrData.push(_pendingDeleteData);
+    _pendingDeleteId = null; _pendingDeleteData = null;
+    renderAddrList();
+    var sb = document.getElementById('addrSnackbar');
+    if(sb) sb.classList.remove('visible');
+  }
+
+  function closeAddrConfirm(){
+    _confirmDeleteId = null;
+    document.getElementById('addrConfirmBackdrop').classList.remove('visible');
+  }
+
+  function confirmDeleteAddr(){
+    var aid = _confirmDeleteId;
+    closeAddrConfirm();
+    if(!aid) return;
+    var others = checkoutAddrData.filter(function(a){ return a.id !== aid; });
+    if(others.length > 0) others[0].isDefault = true;
+    performDeleteAddr(aid);
+  }
+  // ── end address delete logic ──────────────────────────────────────────────
+
   function renderAddrList() {
     var wrap = document.getElementById('addrListWrap');
     var empty = document.getElementById('addrEmptyState');
