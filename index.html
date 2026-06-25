@@ -3967,7 +3967,7 @@
           <input id="cpwd2" type="password" oninput="checkPwdMatch()" onblur="checkPwdStrength()" placeholder="Nowe hasło" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
           <button type="button" onclick="toggleField('cpwd2')" id="eye_cpwd2" style="background:none;border:none;outline:none;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l18 18" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M6.94 6.94A9 9 0 003 11c1.73 3.47 5.1 5.5 8 5.5a8.1 8.1 0 003.06-.61" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.53 9.53A3 3 0 0014 14" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M14.85 14.85C13.68 15.6 12.37 16 11 16c-3.87 0-7-3.13-7-5.5 0-1.2.6-2.4 1.58-3.42M11 6c3.87 0 7 3.13 7 5.5 0 .91-.32 1.84-.92 2.71" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
-        <div id="cpwd2Error" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Proszę wprowadzić hasło zgodne z wymaganiami.</div>
+        
       </div>
       
       <div style="display:flex;flex-direction:column;gap:4px;">
@@ -3979,10 +3979,10 @@
         <div id="cpwd3Error" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Hasła nie są zgodne.</div>
       </div>
       <div id="pwdReqs" style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:6px;padding:13px 17px;display:flex;flex-direction:column;gap:6px;transition:border-color 300ms ease;">
-        <div style="display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-9" stroke="#1e6b3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">Min 8 znaków</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-9" stroke="#1e6b3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 wielka litera</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-9" stroke="#1e6b3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 cyfra</span></div>
-        <div id="req_special" style="display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="#ce5430" stroke-width="1.8" stroke-linecap="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 znak specjalny</span></div>
+        <div id="req_len"     class="pwd-req" style="display:flex;align-items:center;gap:8px;"><span class="req-icon" style="width:16px;height:16px;flex:none;"></span><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">Min 8 znaków</span></div>
+        <div id="req_upper"   class="pwd-req" style="display:flex;align-items:center;gap:8px;"><span class="req-icon" style="width:16px;height:16px;flex:none;"></span><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 wielka litera</span></div>
+        <div id="req_digit"   class="pwd-req" style="display:flex;align-items:center;gap:8px;"><span class="req-icon" style="width:16px;height:16px;flex:none;"></span><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 cyfra</span></div>
+        <div id="req_special" class="pwd-req" style="display:flex;align-items:center;gap:8px;"><span class="req-icon" style="width:16px;height:16px;flex:none;"></span><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#323744;">1 znak specjalny</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px;align-items:center;">
         <button onclick="setScreen('screenPassword')" style="width:100%;height:48px;background:transparent;border:none;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#005f6e;cursor:pointer;">Anuluj</button>
@@ -5554,38 +5554,63 @@ function submitOrder() {
 
   function togglePwd() { toggleField('spwd1'); }
 
+  var CHECK_ICON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-9" stroke="#1e6b3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CROSS_ICON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+  function getPwdChecks(val){
+    var special = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    return {
+      len:     val.length >= 8,
+      upper:   /[A-Z]/.test(val),
+      digit:   /[0-9]/.test(val),
+      special: special.test(val)
+    };
+  }
+
+  function setReqIcon(id, state){
+    // state: 'check' | 'cross' | 'none'
+    var el = document.getElementById(id);
+    if(!el) return;
+    var icon = el.querySelector('.req-icon');
+    if(!icon) return;
+    if(state === 'check')      icon.innerHTML = CHECK_ICON;
+    else if(state === 'cross') icon.innerHTML = CROSS_ICON;
+    else                       icon.innerHTML = '';
+  }
+
   function checkPwdMatch() {
     var p2 = document.getElementById('cpwd2');
     var p3 = document.getElementById('cpwd3');
     var btn = document.getElementById('savePwdBtn');
-    var special = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var newVal = p2 ? p2.value : '';
     var rptVal = p3 ? p3.value : '';
-    var hasLen     = newVal.length >= 8;
-    var hasUpper   = /[A-Z]/.test(newVal);
-    var hasDigit   = /[0-9]/.test(newVal);
-    var hasSpecial = special.test(newVal);
-    var pwdValid   = hasLen && hasUpper && hasDigit && hasSpecial;
-    var matches    = rptVal.length > 0 && newVal === rptVal;
+    var chk = getPwdChecks(newVal);
+    var pwdValid = chk.len && chk.upper && chk.digit && chk.special;
+    var matches  = rptVal.length > 0 && newVal === rptVal;
 
-    // update requirements box
-    var reqEl = document.getElementById('req_special');
-    var cross = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="#ce5430" stroke-width="1.8" stroke-linecap="round"/></svg>';
-    var check = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-9" stroke="#1e6b3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    if (reqEl) reqEl.innerHTML = (hasSpecial ? check : cross) + '<span style="font-family:Outfit,sans-serif;font-size:14px;color:#323744;">1 znak specjalny</span>';
+    // oninput: show green check for satisfied rules, blank for unsatisfied
+    if(newVal.length > 0){
+      setReqIcon('req_len',     chk.len     ? 'check' : 'none');
+      setReqIcon('req_upper',   chk.upper   ? 'check' : 'none');
+      setReqIcon('req_digit',   chk.digit   ? 'check' : 'none');
+      setReqIcon('req_special', chk.special ? 'check' : 'none');
+    } else {
+      // empty — reset all to none
+      ['req_len','req_upper','req_digit','req_special'].forEach(function(id){ setReqIcon(id,'none'); });
+    }
 
-    // inline error for new password field — only shown on blur (checkPwdStrength)
+    // border for new password — green if valid, else neutral (red only on blur)
     var wrap2 = document.getElementById('cpwd2Wrap');
-    if(wrap2) wrap2.style.borderColor = pwdValid ? '#005f6e' : (document.getElementById('cpwd2Error').style.display==='block' ? '#dc2626' : '#bec5c8');
+    if(wrap2) wrap2.style.borderColor = pwdValid ? '#005f6e' : '#bec5c8';
 
-    // inline error for repeat field
-    var err3 = document.getElementById('cpwd3Error');
+    // repeat field
+    var err3  = document.getElementById('cpwd3Error');
     var wrap3 = document.getElementById('cpwd3Wrap');
     var showRptErr = rptVal.length > 0 && !matches;
-    if(err3) err3.style.display = showRptErr ? 'block' : 'none';
+    if(err3)  err3.style.display  = showRptErr ? 'block' : 'none';
     if(wrap3) wrap3.style.borderColor = showRptErr ? '#dc2626' : (matches ? '#005f6e' : '#bec5c8');
 
-    if (btn) {
+    if(btn){
       var ok = pwdValid && matches;
       btn.disabled = !ok;
       btn.style.background = ok ? '#005f6e' : '#9ba3af';
@@ -5596,22 +5621,17 @@ function submitOrder() {
   function checkPwdStrength(){
     var p2 = document.getElementById('cpwd2');
     if(!p2 || p2.value.length === 0) return;
-    var special = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    var v = p2.value;
-    var pwdValid = v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v) && special.test(v);
-    var err2 = document.getElementById('cpwd2Error');
+    var chk = getPwdChecks(p2.value);
+    var pwdValid = chk.len && chk.upper && chk.digit && chk.special;
     var wrap2 = document.getElementById('cpwd2Wrap');
-    var reqs = document.getElementById('pwdReqs');
     if(!pwdValid){
-      if(err2) err2.style.display = 'block';
       if(wrap2) wrap2.style.borderColor = '#dc2626';
-      // highlight requirements box
-      if(reqs){
-        reqs.style.borderColor = '#dc2626';
-        setTimeout(function(){ reqs.style.borderColor = '#e5e7eb'; }, 2000);
-      }
+      // show cross on unsatisfied, check on satisfied
+      setReqIcon('req_len',     chk.len     ? 'check' : 'cross');
+      setReqIcon('req_upper',   chk.upper   ? 'check' : 'cross');
+      setReqIcon('req_digit',   chk.digit   ? 'check' : 'cross');
+      setReqIcon('req_special', chk.special ? 'check' : 'cross');
     } else {
-      if(err2) err2.style.display = 'none';
       if(wrap2) wrap2.style.borderColor = '#005f6e';
     }
   }
