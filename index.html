@@ -2176,8 +2176,7 @@
         <p class="results-status" id="resultsStatus">Wyświetlane są wszystkie opony. Dodaj parametry wyszukiwania.</p>
         <div class="applied-filters" id="appliedFilters" style="display:none;">
           <span class="results-count" id="resultsCount">4 wyników:</span>
-          <span class="filter-pill" id="pill1">LI 91 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill1')">×</button></span>
-          <span class="filter-pill" id="pill2">205/55 R16 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill2')">×</button></span>
+
         </div>
         <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
       </div>
@@ -4172,8 +4171,7 @@
       <input type="text" class="adres-input" placeholder="np. 4056829394115">
     </div>
   </div>
-  <button class="flt-apply" onclick="applyResultsFilter()">Zastosuj</button>
-</div>
+  </div>
 
 <!-- DOSTĘPNOŚĆ OVERLAY -->
 <div class="flt-backdrop" id="dostBackdrop" onclick="toggleDostepnoscOverlay()"></div>
@@ -4836,6 +4834,10 @@
 
   function toggleFltChip(btn){
     btn.classList.toggle('is-selected');
+    // only auto-apply if inside rfSheet
+    if(btn.closest('#rfSheet')){
+      applyResultsFilter();
+    }
   }
 
   function clearFilters(){
@@ -5295,6 +5297,8 @@
   function rfSelectItem(el, val){
     el.closest('.dd-list').querySelectorAll('.dd-item').forEach(function(i){ i.classList.remove('is-selected'); });
     el.classList.add('is-selected');
+    // auto-apply: add pill and close
+    applyResultsFilter();
   }
 
   function applyResultsFilter(){
