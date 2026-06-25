@@ -4162,7 +4162,7 @@
       <input type="text" class="adres-input" placeholder="np. 4056829394115">
     </div>
   </div>
-  <button class="flt-apply" onclick="closeResultsFilter()">Zastosuj</button>
+  <button class="flt-apply" onclick="applyResultsFilter()">Zastosuj</button>
 </div>
 
 <!-- DOSTĘPNOŚĆ OVERLAY -->
@@ -5263,6 +5263,48 @@
   function rfSelectItem(el, val){
     el.closest('.dd-list').querySelectorAll('.dd-item').forEach(function(i){ i.classList.remove('is-selected'); });
     el.classList.add('is-selected');
+  }
+
+  function applyResultsFilter(){
+    // Collect selected items from dropdown list
+    var selectedItems = document.querySelectorAll('#rfSheet .dd-item.is-selected');
+    // Collect selected flt-chips
+    var selectedChips = document.querySelectorAll('#rfSheet .flt-chip.is-selected');
+    // Collect current rfTitle
+    var titleEl = document.getElementById('rfTitle');
+    var filterName = titleEl ? titleEl.textContent.trim() : 'Filtr';
+
+    // Build pills from selections
+    var values = [];
+    selectedItems.forEach(function(el){
+      var lbl = el.querySelector('.dd-item-label');
+      if(lbl) values.push(lbl.textContent.trim());
+    });
+    selectedChips.forEach(function(el){
+      values.push(el.textContent.trim());
+    });
+
+    if(values.length > 0){
+      var filtersEl = document.getElementById('appliedFilters');
+      values.forEach(function(val){
+        // avoid duplicates
+        var exists = false;
+        filtersEl.querySelectorAll('.filter-pill').forEach(function(p){
+          if(p.textContent.replace('×','').trim() === val) exists = true;
+        });
+        if(!exists){
+          var id = 'pill_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+          var pill = document.createElement('span');
+          pill.className = 'filter-pill';
+          pill.id = id;
+          pill.innerHTML = val + ' <button class="pill-remove" aria-label="Usuń" onclick="removePill(\''+id+'\')">×</button>';
+          filtersEl.appendChild(pill);
+        }
+      });
+      updateFilterState();
+    }
+
+    closeResultsFilter();
   }
 
   function closeResultsFilter(){
