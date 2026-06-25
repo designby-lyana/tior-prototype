@@ -1931,11 +1931,15 @@
   .firma-account-icons{display:flex;align-items:center;gap:12px;}
   .firma-account-icons svg{width:18px;height:18px;cursor:pointer;stroke:var(--text-muted);transition:stroke 140ms;flex:none;fill:none;}
   .firma-account-icons svg:not(.trash-disabled):hover{stroke:var(--text-default);}
-  .trash-disabled{opacity:.35;cursor:default;pointer-events:none;}
+  .trash-disabled{opacity:.35;cursor:default;pointer-events:none;width:18px;height:18px;flex:none;stroke:var(--text-muted);}
   .addr-trash-wrap{position:relative;display:inline-flex;align-items:center;}
-  .addr-trash-wrap .addr-trash-tip{display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#323744;color:#fff;font-family:var(--font-body);font-size:13px;line-height:1.4;padding:7px 10px;border-radius:6px;width:200px;z-index:100;pointer-events:none;}
+  .addr-trash-wrap .addr-trash-tip{
+    display:none;position:absolute;bottom:calc(100% + 8px);right:0;
+    background:#323744;color:#fff;font-family:var(--font-body);font-size:13px;
+    line-height:1.4;padding:7px 10px;border-radius:6px;width:200px;
+    z-index:9999;pointer-events:none;white-space:normal;
+  }
   .addr-trash-wrap:hover .addr-trash-tip{display:block;}
-  .addr-trash-wrap .addr-trash-tip{ white-space:normal; }
   .addr-card{ background:var(--bg-surface-light); border-radius:var(--radius-lg); padding:var(--space-lg); display:flex; align-items:flex-start; gap:var(--space-md); box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.08); cursor:pointer; border:1.5px solid transparent; transition:border-color 150ms; }
   .addr-card.selected{ border-color:var(--accent-primary); }
   .addr-radio{ width:20px; height:20px; border-radius:50%; border:2px solid var(--border-surface); flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:border-color 150ms; }
@@ -5794,7 +5798,7 @@ function submitOrder() {
         ? '<span id="' + chipId + '" class="firma-badge-default">Domy\u015blny</span>'
         : '<button id="' + chipId + '" class="firma-badge-set" onclick="setDefaultAddr(\'' + a.id + '\')">Ustaw jako domy\u015blny</button>';
       var editSvg='<svg onclick="openAddrEdit(\''+a.id+'\')", style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+_e1+'"/><path d="'+_e2+'"/></svg>';
-      var tOff='<span class="addr-trash-wrap" style="position:relative;display:inline-flex;align-items:center;"><svg class="trash-disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:.35;cursor:default;width:18px;height:18px;flex:none;"><path d="'+_t+'"/></svg><span class="addr-trash-tip" style="position:absolute;bottom:calc(100% + 8px);right:0;background:#323744;color:#fff;font-family:var(--font-body);font-size:13px;line-height:1.4;padding:7px 10px;border-radius:6px;width:200px;z-index:9999;pointer-events:none;display:none;white-space:normal;">Aby usun\u0105\u0107 ten adres, najpierw wybierz inny adres jako domy\u015blny.</span></span>';
+      var tOff='<span class="addr-trash-wrap"><svg class="trash-disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+_t+'"/></svg><span class="addr-trash-tip">Aby usun\u0105\u0107 ten adres, najpierw wybierz inny adres jako domy\u015blny.</span></span>';
       var tOn='<svg onclick="deleteAddr(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px;flex:none;stroke:var(--text-muted);transition:stroke 140ms;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" onmouseover="this.style.stroke=\'var(--text-default)\'" onmouseout="this.style.stroke=\'var(--text-muted)\'"><path d="'+_t+'"/></svg>';
       var trashHtml=isSingle?'':a.isDefault?tOff:tOn;
       var topRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'+chip+'<div class="firma-account-icons">'+editSvg+trashHtml+'</div></div>';
