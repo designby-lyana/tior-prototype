@@ -3964,7 +3964,7 @@
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">NOWE HASŁO</div>
         <div id="cpwd2Wrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
-          <input id="cpwd2" type="password" oninput="checkPwdMatch()" onblur="checkPwdStrength()" placeholder="Nowe hasło" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
+          <input id="cpwd2" type="password" oninput="checkPwdMatch()" onblur="checkPwdStrength()" placeholder="" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
           <button type="button" onclick="toggleField('cpwd2')" id="eye_cpwd2" style="background:none;border:none;outline:none;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l18 18" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M6.94 6.94A9 9 0 003 11c1.73 3.47 5.1 5.5 8 5.5a8.1 8.1 0 003.06-.61" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.53 9.53A3 3 0 0014 14" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M14.85 14.85C13.68 15.6 12.37 16 11 16c-3.87 0-7-3.13-7-5.5 0-1.2.6-2.4 1.58-3.42M11 6c3.87 0 7 3.13 7 5.5 0 .91-.32 1.84-.92 2.71" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         
@@ -3973,7 +3973,7 @@
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">POWTÓRZ NOWE HASŁO</div>
         <div id="cpwd3Wrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
-          <input id="cpwd3" type="password" oninput="checkPwdMatch()" placeholder="Powtórz nowe hasło" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
+          <input id="cpwd3" type="password" oninput="checkPwdMatch()" placeholder="" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
           <button type="button" onclick="toggleField('cpwd3')" id="eye_cpwd3" style="background:none;border:none;outline:none;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l18 18" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M6.94 6.94A9 9 0 003 11c1.73 3.47 5.1 5.5 8 5.5a8.1 8.1 0 003.06-.61" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.53 9.53A3 3 0 0014 14" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M14.85 14.85C13.68 15.6 12.37 16 11 16c-3.87 0-7-3.13-7-5.5 0-1.2.6-2.4 1.58-3.42M11 6c3.87 0 7 3.13 7 5.5 0 .91-.32 1.84-.92 2.71" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         <div id="cpwd3Error" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Hasła nie są zgodne.</div>
@@ -5637,16 +5637,19 @@ function submitOrder() {
   }
 
   function savePassword() {
-    var msg = document.getElementById('pwdSuccess');
     var btn = document.getElementById('savePwdBtn');
     if (btn) { btn.disabled = true; btn.textContent = 'Zapisywanie…'; btn.style.opacity = '0.75'; }
     setTimeout(function() {
-      if (btn) { btn.textContent = 'Aktualizuj hasło'; btn.style.opacity = ''; }
-      if (msg) { msg.style.opacity = '1'; }
-      setTimeout(function() {
-        if (msg) msg.style.opacity = '0';
-        setScreen('screenProfile');
-      }, 1800);
+      if (btn) { btn.textContent = 'Aktualizuj hasło'; btn.style.opacity = ''; btn.disabled = true; btn.style.background = '#9ba3af'; btn.style.cursor = 'not-allowed'; }
+      ['cpwd1','cpwd2','cpwd3'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+      if(typeof setReqIcon==='function') ['req_len','req_upper','req_digit','req_special'].forEach(function(id){ setReqIcon(id,'none'); });
+      var w2=document.getElementById('cpwd2Wrap'); if(w2) w2.style.borderColor='#bec5c8';
+      var w3=document.getElementById('cpwd3Wrap'); if(w3) w3.style.borderColor='#bec5c8';
+      var e3=document.getElementById('cpwd3Error'); if(e3) e3.style.display='none';
+      setScreen('screenPassword');
+      var sb=document.getElementById('pwdSnackbar');
+      if(sb){ sb.style.opacity='1'; sb.style.pointerEvents='auto';
+        setTimeout(function(){ sb.style.opacity='0'; sb.style.pointerEvents='none'; }, 3500); }
     }, 900);
   }
 
@@ -5677,7 +5680,7 @@ function submitOrder() {
     var addrEntry = addrData.find(function(a){ return a.id === aid; });
     if(addrEntry && addrEntry.isDefault){
       _confirmDeleteId = aid;
-      document.getElementById('addrConfirmBackdrop').classList.add('visible');
+      var cb=document.getElementById('addrConfirmBackdrop'); if(cb){ cb.style.display='flex'; }
       return;
     }
     performDeleteAddr(aid);
@@ -5726,7 +5729,7 @@ function submitOrder() {
 
   function closeAddrConfirm(){
     _confirmDeleteId = null;
-    document.getElementById('addrConfirmBackdrop').classList.remove('visible');
+    var cb=document.getElementById('addrConfirmBackdrop'); if(cb){ cb.style.display='none'; }
   }
 
   function confirmDeleteAddr(){
@@ -6085,6 +6088,35 @@ function submitOrder() {
     <button onclick="closeAddrPickSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">&#x2715;</button>
   </div>
   <div id="addrPickList" style="display:flex;flex-direction:column;gap:12px;"></div>
+</div>
+
+<!-- PWD SUCCESS SNACKBAR -->
+<div id="pwdSnackbar" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
+  <div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M2 10l5 5 11-11" stroke="#1e6b3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <span>Hasło zostało zmienione</span>
+</div>
+
+<!-- ADDR SNACKBAR -->
+<div id="addrSnackbar" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#323744;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 16px 16px;border-radius:8px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:280px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 200ms ease;">
+  <span class="snack-text" style="flex:1;"></span>
+  <button class="snack-undo" onclick="undoDeleteAddr()" style="background:none;border:none;color:#4fb3c2;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;cursor:pointer;padding:0;white-space:nowrap;">Cofnij</button>
+  <div class="snack-timer" style="height:3px;background:rgba(255,255,255,.3);position:absolute;bottom:0;left:0;right:0;border-radius:0 0 8px 8px;overflow:hidden;">
+    <div id="snackTimerBar" style="height:100%;background:#fff;width:100%;"></div>
+  </div>
+</div>
+
+<!-- ADDR CONFIRM DELETE DEFAULT -->
+<div id="addrConfirmBackdrop" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9998;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;gap:16px;">
+    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Usunąć domyślny adres dostawy?</div>
+    <p style="font-size:15px;color:var(--text-muted);line-height:1.5;margin:0;">Po usunięciu wybierz nowy adres domyślny.</p>
+    <div style="display:flex;gap:12px;">
+      <button onclick="closeAddrConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
+      <button onclick="confirmDeleteAddr()" style="flex:1;height:44px;background:#dc2626;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Usuń</button>
+    </div>
+  </div>
 </div>
 
 </body>
