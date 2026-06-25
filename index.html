@@ -675,12 +675,12 @@
   #moreFiltersChevron{ transition:transform 280ms ease; }
 
   .rozmiar-add-btn{
-    appearance:none; background:none; border:none; padding:4px;
+    appearance:none; background:none; border:none; padding:0;
     display:inline-flex; align-items:center; justify-content:center;
     color:var(--text-on-light); cursor:pointer;
     border-radius:50%; transition:background 120ms ease;
-    width:24px; height:24px; flex:none;
-    margin-left:4px;
+    width:20px; height:20px; flex:none;
+    margin-left:-4px;
   }
   .rozmiar-add-btn:hover{ background:rgba(0,0,0,.06); }
   .rozmiar-remove-btn{
@@ -2158,7 +2158,7 @@
         <div class="more-filters-inner" id="moreFiltersInner">
           <div class="more-filters-pad">
             <!-- Row 1: основні дропдауни -->
-            <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
+            <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;">
               <button class="mini-trigger results-filter-chip" id="rozmiar1Btn" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar') : openResultsFilter('rozmiar','Rozmiar')">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><button class="rozmiar-add-btn" id="rozmiarAddBtn" onclick="toggleRozmiar2()" title="Dodaj drugi rozmiar" aria-label="Dodaj drugi rozmiar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button><button class="mini-trigger results-filter-chip" id="rozmiar2Btn" style="display:none;" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar2') : openResultsFilter('rozmiar2','Rozmiar 2')">Rozmiar 2 <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><button class="rozmiar-remove-btn" id="rozmiarRemoveBtn" style="display:none;" onclick="hideRozmiar2()" title="Usuń drugi rozmiar" aria-label="Usuń drugi rozmiar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
               <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'typ') : openResultsFilter('typ','Typ')">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
               <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'sezon') : openResultsFilter('sezon','Sezon')">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
