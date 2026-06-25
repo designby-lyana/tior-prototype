@@ -140,11 +140,14 @@
     appearance:none;
     background:none;
     border:none;
-    font-family:var(--font-body);
-    font-size:14px;
-    color:var(--text-muted);
-    white-space:nowrap;
+    padding:0;
     cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    opacity:0.7;
+    transition:opacity 140ms ease;
     padding:0;
   }
   .add-size:hover{color:var(--text-on-light);text-decoration:underline;}
@@ -610,9 +613,9 @@
     letter-spacing:.4px;
   }
   .rozmiar-block{
-    background:var(--bg-page);
-    border-radius:var(--radius-sm);
-    padding:var(--space-md);
+    background:transparent;
+    border-radius:0;
+    padding:0;
   }
   .rozmiar-hint{
     font-family:var(--font-mono);
@@ -1994,7 +1997,7 @@
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </div>
-      <button class="add-size" id="addSizeLink">+ dodaj rozmiar</button>
+      <button class="add-size" id="addSizeLink" title="Dodaj rozmiar" aria-label="Dodaj rozmiar"><img src="data:image/png;base64,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" width="24" height="24" alt="" style="display:block;"/></button>
       <div class="field" id="secondSizeField" style="flex:1" hidden>
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
