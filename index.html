@@ -361,6 +361,10 @@
     color: var(--accent-primary);
   }
   .mini-trigger.results-filter-chip.is-active .field-chevron{
+    display: none;
+  }
+  .mini-trigger.results-filter-chip.is-active .filter-x{
+    display: inline-block !important;
     stroke: var(--accent-primary);
   }
   .mini-trigger svg:first-child{ width:18px; height:18px; color:var(--text-muted); flex:none; }
@@ -2137,20 +2141,20 @@
           <div class="more-filters-pad">
             <!-- Row 1: основні дропдауни -->
             <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('rozmiar','Rozmiar')">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('rozmiar','+ Rozmiar')">+ Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('typ','Typ')">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('sezon','Sezon')">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('eu','Etykieta UE')">Etykieta UE <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar') : openResultsFilter('rozmiar','Rozmiar')">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar') : openResultsFilter('rozmiar','+ Rozmiar')">+ Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'typ') : openResultsFilter('typ','Typ')">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'sezon') : openResultsFilter('sezon','Sezon')">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'eu') : openResultsFilter('eu','Etykieta UE')">Etykieta UE <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
             <!-- Row 2: zaawansowane -->
             <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('marka','Marka')">Marka <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('segment','Segment')">Segment <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('ean','EAN')">EAN <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('homologacja','Homologacja')">Homologacja <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('indeks-nosnosci','Indeksy')">Indeksy <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-              <button class="mini-trigger results-filter-chip" onclick="openResultsFilter('dot','DOT')">DOT <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'marka') : openResultsFilter('marka','Marka')">Marka <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'segment') : openResultsFilter('segment','Segment')">Segment <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'ean') : openResultsFilter('ean','EAN')">EAN <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'homologacja') : openResultsFilter('homologacja','Homologacja')">Homologacja <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'indeks-nosnosci') : openResultsFilter('indeks-nosnosci','Indeksy')">Indeksy <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'dot') : openResultsFilter('dot','DOT')">DOT <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
             <!-- Row 3: чіпи -->
             <div class="chips-row">
@@ -5017,7 +5021,18 @@
 
   function removePill(id){
     var pill = document.getElementById(id);
+    var key = pill ? pill.getAttribute('data-key') : null;
     if(pill) pill.remove();
+    // if no more pills for this key, deactivate its trigger
+    if(key){
+      var remaining = document.querySelectorAll('#appliedFilters .filter-pill[data-key="'+key+'"]').length;
+      if(remaining === 0){
+        document.querySelectorAll('.results-filter-chip').forEach(function(btn){
+          var oc = btn.getAttribute('onclick') || '';
+          if(oc.indexOf("'"+key+"'") !== -1) btn.classList.remove('is-active');
+        });
+      }
+    }
     updateFilterState();
   }
 
@@ -5210,6 +5225,15 @@
     b.classList.toggle('is-open', open);
   }
 
+  function clearFilterKey(btn, key){
+    // Remove all pills that were added for this key
+    // We track by storing data-key on pills
+    var filtersEl = document.getElementById('appliedFilters');
+    filtersEl.querySelectorAll('.filter-pill[data-key="'+key+'"]').forEach(function(p){ p.remove(); });
+    btn.classList.remove('is-active');
+    updateFilterState();
+  }
+
   function openResultsFilter(key, label){
     _rfKey = key;
     document.getElementById('rfTitle').textContent = label;
@@ -5305,6 +5329,7 @@
           var pill = document.createElement('span');
           pill.className = 'filter-pill';
           pill.id = id;
+          pill.setAttribute('data-key', _rfKey || '');
           pill.innerHTML = val + ' <button class="pill-remove" aria-label="Usuń" onclick="removePill(\''+id+'\')">×</button>';
           filtersEl.appendChild(pill);
         }
