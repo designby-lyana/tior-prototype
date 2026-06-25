@@ -5639,16 +5639,33 @@ function submitOrder() {
     var btn = document.getElementById('savePwdBtn');
     if (btn) { btn.disabled = true; btn.textContent = 'Zapisywanie…'; btn.style.opacity = '0.75'; }
     setTimeout(function() {
+      // reset change-password form
       if (btn) { btn.textContent = 'Aktualizuj hasło'; btn.style.opacity = ''; btn.disabled = true; btn.style.background = '#9ba3af'; btn.style.cursor = 'not-allowed'; }
       ['cpwd1','cpwd2','cpwd3'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
       if(typeof setReqIcon==='function') ['req_len','req_upper','req_digit','req_special'].forEach(function(id){ setReqIcon(id,'none'); });
       var w2=document.getElementById('cpwd2Wrap'); if(w2) w2.style.borderColor='#bec5c8';
       var w3=document.getElementById('cpwd3Wrap'); if(w3) w3.style.borderColor='#bec5c8';
       var e3=document.getElementById('cpwd3Error'); if(e3) e3.style.display='none';
-      setScreen('screenPassword');
-      var sb=document.getElementById('pwdSnackbar');
-      if(sb){ sb.style.opacity='1'; sb.style.pointerEvents='auto';
-        setTimeout(function(){ sb.style.opacity='0'; sb.style.pointerEvents='none'; }, 3500); }
+
+      // disable "Zmień hasło" button on screenPassword
+      var changePwdBtn = document.querySelector('#screenPassword button[onclick*="screenChangePassword"]');
+      if(changePwdBtn){
+        changePwdBtn.disabled = true;
+        changePwdBtn.style.background = '#9ba3af';
+        changePwdBtn.style.cursor = 'not-allowed';
+      }
+
+      // show toast, then redirect to screenProfile after 400ms
+      var sb = document.getElementById('pwdSnackbar');
+      if(sb){ sb.style.opacity='1'; sb.style.pointerEvents='auto'; }
+
+      setTimeout(function(){
+        setScreen('screenProfile');
+        // hide toast after 3s from redirect
+        setTimeout(function(){
+          if(sb){ sb.style.opacity='0'; sb.style.pointerEvents='none'; }
+        }, 3000);
+      }, 400);
     }, 900);
   }
 
@@ -6090,11 +6107,11 @@ function submitOrder() {
 </div>
 
 <!-- PWD SUCCESS SNACKBAR -->
-<div id="pwdSnackbar" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
+<div id="pwdSnackbar" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
   <div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;">
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M2 10l5 5 11-11" stroke="#1e6b3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
-  <span>Hasło zostało zmienione</span>
+  <span>Hasło zostało zmienione.</span>
 </div>
 
 <!-- ADDR SNACKBAR -->
