@@ -506,6 +506,16 @@
   .field.dd-open .field-chevron{ transform:rotate(180deg); }
   .field.dd-open .field-label{ color:var(--text-on-light); }
   .field-chevron{ transition:transform 220ms ease; }
+  .field.has-value .field-label{ color:var(--accent-primary) !important; }
+  .field.has-value .field-chevron{ display:none; }
+  .field.has-value .field-clear{ display:flex !important; }
+  .field-clear{
+    display:none;
+    align-items:center; justify-content:center;
+    background:none; border:none; padding:0;
+    color:var(--accent-primary); cursor:pointer;
+    flex:none; width:16px; height:16px;
+  }
 
 
   /* ── DROPDOWN POSITIONED ─────────────────────── */
@@ -1995,6 +2005,7 @@
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
       </div>
       <button class="add-size" id="addSizeLink" title="Dodaj rozmiar" aria-label="Dodaj rozmiar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--border-default)" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
@@ -2005,6 +2016,7 @@
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
       </div>
       </div>
@@ -2012,10 +2024,10 @@
 
     <div class="row two-col">
       <div class="field">
-        <div class="field-label-row"><span class="field-label">TYP</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="field-label-row"><span class="field-label">TYP</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
       <div class="field">
-        <div class="field-label-row"><span class="field-label">SEZON</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="field-label-row"><span class="field-label">SEZON</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
     </div>
 
@@ -2027,22 +2039,23 @@
             <span id="euDefaultText">EU LABEL</span><span id="euValuesText" style="display:none;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:#0d0e13;"></span>
           </span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
       </div>
     </div>
 
     <div class="row two-col">
       <div class="field">
-        <div class="field-label-row"><span class="field-label">SEGMENT</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="field-label-row"><span class="field-label">SEGMENT</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
       <div class="field">
-        <div class="field-label-row"><span class="field-label">MARKA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="field-label-row"><span class="field-label">MARKA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
     </div>
 
     <div class="row two-col">
       <div class="field">
-        <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
       <div class="field">
         <div class="field-label-row"><span class="field-label">EAN</span></div>
@@ -2078,7 +2091,7 @@
 
           <div class="two-col">
             <div class="field">
-              <div class="field-label-row"><span class="field-label">HOMOLOGACJA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              <div class="field-label-row"><span class="field-label">HOMOLOGACJA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
             <div class="field">
               <div class="field-label-row"><span class="field-label">DOT</span></div>
@@ -2087,10 +2100,10 @@
 
           <div class="two-col">
             <div class="field">
-              <div class="field-label-row"><span class="field-label">INDEKS NOŚNOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              <div class="field-label-row"><span class="field-label">INDEKS NOŚNOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
             <div class="field">
-              <div class="field-label-row"><span class="field-label">INDEKS PRĘDKOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              <div class="field-label-row"><span class="field-label">INDEKS PRĘDKOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
           </div>
 
@@ -4611,6 +4624,25 @@
     activeField.classList.add('has-value');
 
     closeDropdown();
+  }
+
+  function clearField(event, btn) {
+    event.stopPropagation();
+    const field = btn.closest('.field');
+    if (!field) return;
+    const key = field.dataset.ddKey;
+    if (key) delete selections[key];
+    const labelEl = field.querySelector('.field-label');
+    if (labelEl) {
+      labelEl.textContent = labelEl.dataset.originalLabel || labelEl.textContent;
+      labelEl.style.color = '';
+      labelEl.style.textTransform = '';
+      labelEl.style.letterSpacing = '';
+      labelEl.style.fontFamily = '';
+      labelEl.style.fontWeight = '';
+      labelEl.style.fontSize = '';
+    }
+    field.classList.remove('has-value');
   }
 
   function closeDropdown() {
