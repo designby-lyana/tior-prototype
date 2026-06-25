@@ -675,19 +675,14 @@
   #moreFiltersChevron{ transition:transform 280ms ease; }
 
   .rozmiar-add-btn{
-    appearance:none; border:1px solid var(--border-default);
-    background:var(--bg-input);
-    padding:0 10px;
+    appearance:none; background:none; border:none; padding:4px;
     display:inline-flex; align-items:center; justify-content:center;
     color:var(--text-on-light); cursor:pointer;
-    border-radius:var(--radius-lg);
-    height:32px; flex:none;
+    border-radius:50%; transition:background 120ms ease;
+    width:24px; height:24px; flex:none;
     margin-left:4px;
-    font-size:16px; line-height:1;
-    transition:border-color 140ms ease;
-    align-self:center;
   }
-  .rozmiar-add-btn:hover{ border-color:var(--accent-primary); }
+  .rozmiar-add-btn:hover{ background:rgba(0,0,0,.06); }
   .rozmiar-remove-btn{
     appearance:none; background:none; border:none; padding:3px;
     display:inline-flex; align-items:center; justify-content:center;
