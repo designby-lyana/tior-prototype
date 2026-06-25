@@ -374,6 +374,8 @@
   .mini-trigger .field-chevron{ color:var(--text-muted); }
 
   .applied-filters{ display:flex; align-items:center; gap: var(--space-sm); flex-wrap:wrap; }
+  .eu-gb{appearance:none;border:1.5px solid #eaeaea;border-radius:4px;background:#eaeaea;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;padding:6px 0;cursor:pointer;flex:1;min-width:0;transition:border-color 120ms,background 120ms;}
+  .eu-gb.eu-selected{background:transparent !important;}
   .results-status{
     font-family:var(--font-body); font-size:16px; line-height:18px;
     color:var(--text-muted); font-weight:400;
@@ -2108,17 +2110,19 @@
             <div class="field">
               <div class="field-label-row"><span class="field-label">HOMOLOGACJA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
-            <div class="field">
+            <div class="field" style="position:relative;">
               <div class="field-label-row"><span class="field-label">DOT</span></div>
+              <input type="text" placeholder="np. 2024" maxlength="4"
+                style="width:100%;border:none;outline:none;font-family:var(--font-mono);font-size:14px;color:var(--text-default);background:transparent;padding:4px 0 0;margin:0;box-sizing:border-box;" />
             </div>
           </div>
 
           <div class="two-col">
             <div class="field">
-              <div class="field-label-row"><span class="field-label">INDEKS NOŚNOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+              <div class="field-label-row"><span class="field-label">NOŚNOŚĆ</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
             <div class="field">
-              <div class="field-label-row"><span class="field-label">INDEKS PRĘDKOŚCI</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+              <div class="field-label-row"><span class="field-label">PRĘDKOŚĆ</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
             </div>
           </div>
 
@@ -4752,11 +4756,14 @@
 
   function euPick(btn, cat, val, bg, fg){
     euBtns[cat].forEach(function(b){
-      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea'; b.style.color='#323744';
+      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea';
+      b.style.color='#323744'; b.classList.remove('eu-selected');
     });
-    btn.style.background = bg;
+    // selected: border in bg color, transparent fill
+    btn.style.background = 'transparent';
     btn.style.borderColor = bg;
-    btn.style.color = fg;
+    btn.style.color = '#323744';
+    btn.classList.add('eu-selected');
     euSel[cat] = val;
     euUpdateLabel();
   }
@@ -4764,7 +4771,8 @@
   function euClear(){
     Object.keys(euSel).forEach(function(k){ euSel[k]=null; });
     Object.values(euBtns).flat().forEach(function(b){
-      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea'; b.style.color='#323744';
+      b.style.background='#eaeaea'; b.style.borderColor='#eaeaea';
+      b.style.color='#323744'; b.classList.remove('eu-selected');
     });
     if(euActiveField){
       var def=document.getElementById('euDefaultText'); if(def) def.style.display='inline';
@@ -6053,10 +6061,10 @@ function submitOrder() {
 <!-- EU LABEL CUSTOM OVERLAY -->
 <div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;pointer-events:none;"></div>
 <div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
-  <div style="padding:10px 12px 0;">
-    <div style="margin-bottom:10px;">
+  <div style="padding:16px;">
+    <div style="margin-bottom:8px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
-      <div style="display:flex;gap:5px;" id="eu-opor">
+      <div style="display:flex;gap:5px;" id="eu-opor" style="display:flex;gap:4px;width:100%;">
         <button class="eu-gb" onclick="euPick(this,'opor','A','#009d37','#fafafa')">A</button>
         <button class="eu-gb" onclick="euPick(this,'opor','B','#78bb00','#fafafa')">B</button>
         <button class="eu-gb" onclick="euPick(this,'opor','C','#fdf100','#323744')">C</button>
@@ -6064,9 +6072,9 @@ function submitOrder() {
         <button class="eu-gb" onclick="euPick(this,'opor','E','#e70000','#fafafa')">E</button>
       </div>
     </div>
-    <div style="margin-bottom:10px;">
+    <div style="margin-bottom:8px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Mokra nawierzchnia</div>
-      <div style="display:flex;gap:5px;" id="eu-mokra">
+      <div style="display:flex;gap:5px;" id="eu-mokra" style="display:flex;gap:4px;width:100%;">
         <button class="eu-gb" onclick="euPick(this,'mokra','A','#005ba4','#fafafa')">A</button>
         <button class="eu-gb" onclick="euPick(this,'mokra','B','#0072b9','#fafafa')">B</button>
         <button class="eu-gb" onclick="euPick(this,'mokra','C','#22a5de','#fafafa')">C</button>
@@ -6074,9 +6082,9 @@ function submitOrder() {
         <button class="eu-gb" onclick="euPick(this,'mokra','E','#b2ebfe','#323744')">E</button>
       </div>
     </div>
-    <div style="margin-bottom:10px;">
+    <div style="margin-bottom:8px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Hałas</div>
-      <div style="display:flex;gap:5px;" id="eu-halas">
+      <div style="display:flex;gap:5px;" id="eu-halas" style="display:flex;gap:4px;width:100%;">
         <button class="eu-gb" onclick="euPick(this,'halas','A','#6b7280','#fafafa')">A</button>
         <button class="eu-gb" onclick="euPick(this,'halas','B','#6b7280','#fafafa')">B</button>
         <button class="eu-gb" onclick="euPick(this,'halas','C','#6b7280','#fafafa')">C</button>
