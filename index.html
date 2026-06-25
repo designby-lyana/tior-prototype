@@ -361,6 +361,12 @@
   .mini-trigger .field-chevron{ color:var(--text-muted); }
 
   .applied-filters{ display:flex; align-items:center; gap: var(--space-sm); flex-wrap:wrap; }
+  .results-status{
+    font-family:var(--font-body); font-size:16px; line-height:18px;
+    color:var(--text-muted); font-weight:400;
+    padding: var(--space-sm) 0;
+    margin:0;
+  }
   .results-count{ font-size:14px; color: var(--text-muted); }
   .filter-pill{
     display:inline-flex; align-items:center; gap:6px;
@@ -2157,12 +2163,13 @@
 
       <!-- applied filters — bottom of card -->
       <div style="display:flex;flex-direction:column;gap:var(--space-sm);padding-top:var(--space-lg);margin-top:var(--space-md);border-top:1px solid var(--border-surface);">
-        <div class="applied-filters" id="appliedFilters">
+        <p class="results-status" id="resultsStatus">Wyświetlane są wszystkie opony. Dodaj parametry wyszukiwania.</p>
+        <div class="applied-filters" id="appliedFilters" style="display:none;">
           <span class="results-count" id="resultsCount">4 wyników:</span>
           <span class="filter-pill" id="pill1">LI 91 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill1')">×</button></span>
           <span class="filter-pill" id="pill2">205/55 R16 <button class="pill-remove" aria-label="Usuń" onclick="removePill('pill2')">×</button></span>
         </div>
-        <button class="clear-all" onclick="clearAllFilters()">Wyczyść wszystko</button>
+        <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
       </div>
 
     </div>
@@ -4998,20 +5005,33 @@
   }
 
   function clearAllFilters(){
-    // Remove all filter pills
     document.querySelectorAll('#appliedFilters .filter-pill').forEach(function(p){ p.remove(); });
-    // Update count
-    var count = document.getElementById('resultsCount');
-    if(count) count.textContent = '920 wyników:';
+    updateFilterState();
   }
 
   function removePill(id){
     var pill = document.getElementById(id);
     if(pill) pill.remove();
-    // Update count based on remaining pills
-    var remaining = document.querySelectorAll('#appliedFilters .filter-pill').length;
+    updateFilterState();
+  }
+
+  function updateFilterState(){
+    var pills = document.querySelectorAll('#appliedFilters .filter-pill');
+    var remaining = pills.length;
+    var status = document.getElementById('resultsStatus');
+    var filters = document.getElementById('appliedFilters');
+    var clearBtn = document.getElementById('clearAllBtn');
     var count = document.getElementById('resultsCount');
-    if(count) count.textContent = (remaining === 0 ? '9' : remaining === 1 ? '6' : '4') + ' wyników:';
+    if(remaining === 0){
+      if(status) status.style.display = '';
+      if(filters) filters.style.display = 'none';
+      if(clearBtn) clearBtn.style.display = 'none';
+    } else {
+      if(status) status.style.display = 'none';
+      if(filters) filters.style.display = '';
+      if(clearBtn) clearBtn.style.display = '';
+      if(count) count.textContent = remaining + (remaining === 1 ? ' wynik:' : remaining < 5 ? ' wyniki:' : ' wyników:');
+    }
   }
 
   var _rfKey = null;
