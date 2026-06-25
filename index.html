@@ -357,6 +357,12 @@
     font-family:var(--font-body); font-size:16px; color: var(--text-on-light);
     cursor:default; padding:0; white-space:nowrap;
   }
+  .mini-trigger.results-filter-chip.is-active{
+    color: var(--accent-primary);
+  }
+  .mini-trigger.results-filter-chip.is-active .field-chevron{
+    stroke: var(--accent-primary);
+  }
   .mini-trigger svg:first-child{ width:18px; height:18px; color:var(--text-muted); flex:none; }
   .mini-trigger .field-chevron{ color:var(--text-muted); }
 
@@ -5026,6 +5032,8 @@
       if(status) status.style.display = '';
       if(filters) filters.style.display = 'none';
       if(clearBtn) clearBtn.style.display = 'none';
+      // remove all active states
+      document.querySelectorAll('.results-filter-chip.is-active').forEach(function(b){ b.classList.remove('is-active'); });
     } else {
       if(status) status.style.display = 'none';
       if(filters) filters.style.display = '';
@@ -5302,6 +5310,16 @@
         }
       });
       updateFilterState();
+    }
+
+    // Mark the trigger button for this filter as active
+    if(_rfKey){
+      document.querySelectorAll('.results-filter-chip').forEach(function(btn){
+        var onclick = btn.getAttribute('onclick') || '';
+        if(onclick.indexOf("'"+_rfKey+"'") !== -1 || onclick.indexOf('"'+_rfKey+'"') !== -1){
+          if(values.length > 0) btn.classList.add('is-active');
+        }
+      });
     }
 
     closeResultsFilter();
