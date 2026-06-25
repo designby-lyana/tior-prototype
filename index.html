@@ -5674,8 +5674,8 @@ function submitOrder() {
       showAddrSnackbar('Nie można usunąć jedynego adresu dostawy.', false);
       return;
     }
-    var addrData = checkoutAddrData.find(function(a){ return a.id === aid; });
-    if(addrData && addrData.isDefault){
+    var addrEntry = addrData.find(function(a){ return a.id === aid; });
+    if(addrEntry && addrEntry.isDefault){
       _confirmDeleteId = aid;
       document.getElementById('addrConfirmBackdrop').classList.add('visible');
       return;
@@ -5685,8 +5685,8 @@ function submitOrder() {
 
   function performDeleteAddr(aid){
     _pendingDeleteId = aid;
-    _pendingDeleteData = checkoutAddrData.find(function(a){ return a.id === aid; });
-    checkoutAddrData = checkoutAddrData.filter(function(a){ return a.id !== aid; });
+    _pendingDeleteData = addrData.find(function(a){ return a.id === aid; });
+    addrData = addrData.filter(function(a){ return a.id !== aid; });
     renderAddrList();
     showAddrSnackbar('Adres został usunięty.', true);
   }
@@ -5717,7 +5717,7 @@ function submitOrder() {
   function undoDeleteAddr(){
     if(!_pendingDeleteData) return;
     clearTimeout(_snackTimer);
-    checkoutAddrData.push(_pendingDeleteData);
+    addrData.push(_pendingDeleteData);
     _pendingDeleteId = null; _pendingDeleteData = null;
     renderAddrList();
     var sb = document.getElementById('addrSnackbar');
@@ -5733,7 +5733,7 @@ function submitOrder() {
     var aid = _confirmDeleteId;
     closeAddrConfirm();
     if(!aid) return;
-    var others = checkoutAddrData.filter(function(a){ return a.id !== aid; });
+    var others = addrData.filter(function(a){ return a.id !== aid; });
     if(others.length > 0) others[0].isDefault = true;
     performDeleteAddr(aid);
   }
@@ -5934,19 +5934,7 @@ function submitOrder() {
   }
 
 
-  function deleteAddr(id) {
-    if (!id) return;
-    addrData = addrData.filter(function(a){ return a.id !== id; });
-    // if deleted selected card — hide it and re-select default
-    var selCard = document.getElementById('checkoutSelectedCard');
-    if (window._selectedAddrId === id) {
-      if (selCard) selCard.style.display = 'none';
-      selectAddrCard('default');
-      window._selectedAddrId = null;
-    }
-    // also re-render addr list if on screenAddresses
-    if (typeof renderAddrList === 'function') renderAddrList();
-  }
+
 
 
   function updateAddrTrashVisibility() {
