@@ -5763,11 +5763,12 @@ function submitOrder() {
         : '<button id="' + chipId + '" class="firma-badge-set" onclick="setDefaultAddr(\'' + a.id + '\')">Ustaw jako domy\u015blny</button>';
       var editBtn = '<button onclick="openAddrEdit(\'' + a.id + '\')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;">' + esvg + ' Edytuj</button>';
       var trashBtn = isSingle ? '' : '<button class="addr-delete-btn" onclick="deleteAddr(\'' + a.id + '\')" aria-label="Usu\u0144 adres">' + tsvg + '</button>';
-      var actions = '<div style="display:flex;align-items:center;gap:8px;">' + editBtn + trashBtn + '</div>';
+      var topRow = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' + chip +
+        '<div style="display:flex;align-items:center;gap:8px;">' + editBtn + trashBtn + '</div></div>';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' + chip + actions + '</div>' +
+        topRow +
         '<div class="addr-name">' + a.name + '</div>' +
         '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
         '</div></div>'
