@@ -1928,6 +1928,13 @@
   .addr-empty-icon{ width:48px; height:48px; background:var(--bg-page); border-radius:50%; display:flex; align-items:center; justify-content:center; }
   .addr-empty-title{ font-family:var(--font-body); font-weight:600; font-size:18px; color:var(--text-default); }
   .addr-empty-desc{ font-family:var(--font-body); font-size:16px; color:var(--text-muted); line-height:1.5; }
+  .firma-account-icons{display:flex;align-items:center;gap:12px;}
+  .firma-account-icons svg{width:18px;height:18px;cursor:pointer;stroke:var(--text-muted);transition:stroke 140ms;flex:none;fill:none;}
+  .firma-account-icons svg:not(.trash-disabled):hover{stroke:var(--text-default);}
+  .trash-disabled{opacity:.35;cursor:default;pointer-events:none;}
+  .addr-trash-wrap{position:relative;display:inline-flex;align-items:center;}
+  .addr-trash-wrap .addr-trash-tip{display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#323744;color:#fff;font-family:var(--font-body);font-size:13px;line-height:1.4;padding:7px 10px;border-radius:6px;width:200px;z-index:100;pointer-events:none;}
+  .addr-trash-wrap:hover .addr-trash-tip{display:block;}
   .addr-card{ background:var(--bg-surface-light); border-radius:var(--radius-lg); padding:var(--space-lg); display:flex; align-items:flex-start; gap:var(--space-md); box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.08); cursor:pointer; border:1.5px solid transparent; transition:border-color 150ms; }
   .addr-card.selected{ border-color:var(--accent-primary); }
   .addr-radio{ width:20px; height:20px; border-radius:50%; border:2px solid var(--border-surface); flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:border-color 150ms; }
@@ -5773,8 +5780,9 @@ function submitOrder() {
     }
     if (empty) empty.style.display = 'none';
     wrap.style.display = 'flex';
-    var esvg = '<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z\"/></svg>';
-    var tsvg = '<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6\"/><path d=\"M10 11v6M14 11v6\"/><path d=\"M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2\"/></svg>';
+    var _e1='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7',_e2='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z';
+    var _t='M3 6h18';
+
     var isSingle = addrData.length === 1;
     var parts = [];
     for (var i = 0; i < addrData.length; i++) {
@@ -5784,10 +5792,11 @@ function submitOrder() {
       var chip = a.isDefault
         ? '<span id="' + chipId + '" class="firma-badge-default">Domy\u015blny</span>'
         : '<button id="' + chipId + '" class="firma-badge-set" onclick="setDefaultAddr(\'' + a.id + '\')">Ustaw jako domy\u015blny</button>';
-      var editBtn = '<button onclick="openAddrEdit(\'' + a.id + '\')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;">' + esvg + ' Edytuj</button>';
-      var trashBtn = isSingle ? '' : '<button class="addr-delete-btn" onclick="deleteAddr(\'' + a.id + '\')" aria-label="Usu\u0144 adres">' + tsvg + '</button>';
-      var topRow = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' + chip +
-        '<div style="display:flex;align-items:center;gap:8px;">' + editBtn + trashBtn + '</div></div>';
+      var editSvg='<svg onclick="openAddrEdit(\''+a.id+'\')", style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+_e1+'"/><path d="'+_e2+'"/></svg>';
+      var tOff='<span class="addr-trash-wrap"><svg class="trash-disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+_t+'"/></svg><span class="addr-trash-tip">Aby usun\u0105\u0107 ten adres, najpierw wybierz inny adres jako domy\u015blny.</span></span>';
+      var tOn='<svg onclick="deleteAddr(\''+a.id+'\')", style="cursor:pointer;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+_t+'"/></svg>';
+      var trashHtml=isSingle?'':a.isDefault?tOff:tOn;
+      var topRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'+chip+'<div class="firma-account-icons">'+editSvg+trashHtml+'</div></div>';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
