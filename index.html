@@ -4803,10 +4803,10 @@
     if(!block) return;
     if(cartItems.length === 0){ block.innerHTML = ''; return; }
     var html = '';
-    cartItems.forEach(function(item){
+    cartItems.forEach(function(item, idx){
       var iconHtml = item.seasonSvg
         ? '<span class="cart-item-icon" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;color:var(--text-muted);flex:none;">' + item.seasonSvg + '</span>'
-        : '<span class="cart-item-icon" style="font-size:18px;flex:none;">🔵</span>';
+        : '<span class="cart-item-icon" style="font-size:18px;flex:none;margin-top:1px;">&#9679;</span>';
       html += '<div class="cart-item">'
         + '<div class="cart-item-top">'
         +   iconHtml
@@ -4817,9 +4817,9 @@
         + '</div>'
         + '<div class="cart-item-bottom">'
         +   '<div class="qty-stepper" style="width:100px;height:28px;">'
-        +     '<button class="qty-btn" onclick="cartChangeQty('' + item.key.replace(/'/g,"\'") + '',-1)" aria-label="Zmniejsz">−</button>'
+        +     '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',-1)" aria-label="Zmniejsz">&#8722;</button>'
         +     '<span class="qty-value" style="font-size:15px;">' + item.qty + '</span>'
-        +     '<button class="qty-btn" onclick="cartChangeQty('' + item.key.replace(/'/g,"\'") + '',1)" aria-label="Zwiększ">+</button>'
+        +     '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',1)" aria-label="Zwiększ">+</button>'
         +   '</div>'
         +   '<div class="cart-right">'
         +     '<div class="cart-item-unit">€' + parseFloat(item.unitPrice).toFixed(2) + ' / szt.</div>'
@@ -4832,20 +4832,16 @@
     renderCartSummary();
   }
 
-  function cartChangeQty(key, delta){
-    var item = cartItems.find(function(i){ return i.key === key; });
+  function cartChangeQty(idx, delta){
+    var item = cartItems[idx];
     if(!item) return;
     item.qty += delta;
     if(item.qty < 1){
-      // remove item
-      var removed = item.qty === 0 ? item.qty + delta : 1;
-      cartCount -= (removed < 1 ? 1 : removed - item.qty);
-      cartItems = cartItems.filter(function(i){ return i.key !== key; });
-      cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
+      cartItems.splice(idx, 1);
     } else {
       item.total = (item.unitPrice * item.qty).toFixed(2);
-      cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
     }
+    cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
     document.querySelectorAll('.cart-badge').forEach(function(b){
       b.textContent = cartCount;
       if(cartCount > 0) b.classList.add('visible');
