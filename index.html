@@ -5723,47 +5723,39 @@ function submitOrder() {
     var wrap = document.getElementById('addrListWrap');
     var empty = document.getElementById('addrEmptyState');
     if (!wrap) return;
-    if (addrData.length === 0) {
+    if (!addrData || addrData.length === 0) {
       wrap.style.display = 'none';
       if (empty) empty.style.display = 'block';
       return;
     }
     if (empty) empty.style.display = 'none';
     wrap.style.display = 'flex';
-    var esvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    var esvg = '<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z\"/></svg>';
+    var tsvg = '<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6\"/><path d=\"M10 11v6M14 11v6\"/><path d=\"M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2\"/></svg>';
+    var isSingle = addrData.length === 1;
     var parts = [];
-    var items = (typeof addrData !== 'undefined' && addrData.length) ? addrData : [
-      {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',isDefault:True},
-      {id:'a2',name:'Warszawa – Magazyn Wola',company:'AutoParts Sp. z o.o.',street:'ul. Jana Kazimierza 12',city:'01-248 Warszawa',isDefault:False},
-      {id:'a3',name:'Poznań – Głogowska',company:'AutoParts Sp. z o.o.',street:'ul. Głogowska 120',city:'60-263 Poznań',isDefault:False}
-    ];
-    for (var i = 0; i < items.length; i++) {
-      var a = items[i];
+    for (var i = 0; i < addrData.length; i++) {
       var a = addrData[i];
       var sel = a.isDefault ? ' selected' : '';
       var chipId = 'chipwrap_' + a.id;
-      var chip, editBtn, radio;
-      if (a.isDefault) {
-        chip = ['<span id="', chipId, '" class="firma-badge-default">Domyślny</span>'].join('');
-      } else {
-        chip = ['<button id="', chipId, '" class="firma-badge-set" onclick="setDefaultAddr(&#39;', a.id, '&#39;)">Ustaw jako domyślny</button>'].join('');
-      }
-      editBtn = ['<button onclick="openAddrEdit(&#39;', a.id, '&#39;)" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;">', esvg, ' Edytuj</button>'].join('');
-      radio = ['<div onclick="selectAddr(&#39;', a.id, '&#39;)" style="flex-shrink:0;cursor:pointer;padding:8px;margin:-8px;"><div class="addr-radio"><div class="addr-radio-dot"></div></div></div>'].join('');
+      var chip = a.isDefault
+        ? '<span id="' + chipId + '" class="firma-badge-default">Domy\u015blny</span>'
+        : '<button id="' + chipId + '" class="firma-badge-set" onclick="setDefaultAddr(\'' + a.id + '\')">Ustaw jako domy\u015blny</button>';
+      var editBtn = '<button onclick="openAddrEdit(\'' + a.id + '\')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;color:var(--text-muted);padding:0;">' + esvg + ' Edytuj</button>';
+      var trashBtn = isSingle ? '' : '<button class="addr-delete-btn" onclick="deleteAddr(\'' + a.id + '\')" aria-label="Usu\u0144 adres">' + tsvg + '</button>';
+      var actions = '<div style="display:flex;align-items:center;gap:8px;">' + editBtn + trashBtn + '</div>';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
-        radio +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' + chip + editBtn + '</div>' +
-        '<div class="addr-name" onclick="selectAddr(&#39;' + a.id + '&#39;)" style="cursor:pointer;">' + a.name + '</div>' +
-        '<div class="addr-detail">' + a.company + ' · ' + a.street + ', ' + a.city + ', ' + a.country + '</div>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' + chip + actions + '</div>' +
+        '<div class="addr-name">' + a.name + '</div>' +
+        '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
         '</div></div>'
       );
     }
     parts.push('<button class="addr-add-btn" onclick="openAddrSheet()"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Dodaj adres</button>');
     wrap.innerHTML = parts.join('');
   }
-
   function selectAddr(id) {
     document.querySelectorAll('#addrListWrap .addr-card').forEach(function(c){ c.classList.remove('selected'); });
     var card = document.getElementById('addrCard_' + id);
