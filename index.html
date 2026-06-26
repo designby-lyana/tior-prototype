@@ -633,17 +633,22 @@
   .dd-list{ overflow-y:auto; flex:1; min-height:0; }
   .dd-item{
     display:flex; align-items:center; justify-content:space-between;
-    padding:10px var(--space-md);
+    padding:0 var(--space-md);
+    height:44px;
+    min-height:44px;
+    flex-shrink:0;
     border-bottom:1px solid var(--border-surface);
     cursor:pointer;
     pointer-events:auto;
     gap:var(--space-sm);
     transition:background 100ms ease;
+    overflow:hidden;
   }
   .dd-item:hover{ background:var(--bg-page); }
   .dd-item:last-child{ border-bottom:none; }
   .dd-item-label{
     font-size:16px; color:var(--text-on-light); flex:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
   .dd-item-label.is-code{
     font-family:var(--font-mono); font-size:14px;
@@ -5389,7 +5394,7 @@
     // height: 5 rows if 5+ items, auto otherwise
     var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
     var searchH = (DD_DATA[key] && DD_DATA[key].search) ? 52 : 0;
-    var ROW_H = 45;
+    var ROW_H = 44;
     if(itemCount >= 5){
       ddSheet.style.height = (searchH + ROW_H * 5) + 'px';
     } else {
