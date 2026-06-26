@@ -3851,35 +3851,30 @@
       <!-- Page title -->
       <h1 class="od-title">Wszystkie zamówienia</h1>
 
-    </div>
-
-    <!-- filters card -->
-    <div class="checkout-card" style="padding:var(--space-lg);gap:var(--space-sm);">
-
-      <div class="orl-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
-        <span>Nr zamówienia, data, suma, lokalizacja, brand</span>
-      </div>
-
-      <div style="display:flex;gap:var(--space-sm);">
-        <button class="orl-filter-btn" onclick="toggleOrdStatusOverlay()">
-          Status
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <button class="orl-filter-btn" onclick="toggleDataOverlay()">
-          Data
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <button class="orl-filter-btn" onclick="toggleSumaOverlay()">
-          Suma
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-      </div>
-
-    </div><!-- /filters -->
+      <!-- filters card -->
+      <div class="checkout-card" style="padding:var(--space-lg);gap:var(--space-sm);">
+        <div class="orl-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+          <span>Nr zamówienia, data, suma, lokalizacja, brand</span>
+        </div>
+        <div style="display:flex;gap:var(--space-sm);">
+          <button class="orl-filter-btn" onclick="toggleInvStatusOverlay()">
+            Status
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <button class="orl-filter-btn" onclick="toggleDataOverlay()">
+            Data
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <button class="orl-filter-btn" onclick="toggleSumaOverlay()">
+            Suma
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+      </div><!-- /filters -->
 
       <!-- Order cards -->
-      <div style="display:flex;flex-direction:column;padding:0 var(--space-lg);">
+      <div style="display:flex;flex-direction:column;">
         <div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
       <!-- Header row -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
