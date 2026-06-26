@@ -2138,14 +2138,12 @@
       <div class="field">
         <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
-      <div class="field" id="eanField" onclick="focusEanInput(event)">
+      <div class="field" data-dd-key="ean" onclick="openDropdown('ean', this)">
         <div class="field-label-row">
           <span class="field-label">EAN</span>
+          <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść" style="display:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
-        <input id="eanInput" type="text" placeholder="Wpisz kod EAN"
-          style="width:100%;border:none;outline:none;font-family:var(--font-mono);font-size:14px;color:var(--text-default);background:transparent;padding:4px 0 0;margin:0;box-sizing:border-box;display:none;"
-          oninput="onEanInput(this)" />
       </div>
     </div>
 
@@ -4776,6 +4774,10 @@
       label: 'MODEL', type: 'text', search: true,
       items: []
     },
+    ean: {
+      label: 'EAN', type: 'code', search: true,
+      items: []
+    },
     homologacja: {
       label: 'HOMOLOGACJA', type: 'text', search: true,
       items: [
@@ -4943,26 +4945,6 @@
       labelEl.style.fontSize = '';
     }
     field.classList.remove('has-value');
-  }
-
-  function focusEanInput(e){
-    var input = document.getElementById('eanInput');
-    var field = document.getElementById('eanField');
-    if(!input) return;
-    input.style.display = 'block';
-    input.focus();
-    if(field) field.classList.add('has-value');
-  }
-  function onEanInput(inp){
-    var field = document.getElementById('eanField');
-    var clearBtn = field ? field.querySelector('.field-clear') : null;
-    if(inp.value.length > 0){
-      if(clearBtn) clearBtn.style.display = 'flex';
-      if(field) field.classList.add('has-value');
-    } else {
-      if(clearBtn) clearBtn.style.display = 'none';
-      if(field) field.classList.remove('has-value');
-    }
   }
 
   function closeDropdown() {
