@@ -132,10 +132,12 @@
     gap:20px;
     box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
   }
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 
-  .size-row{display:flex;align-items:center;gap:16px;}
+  .size-row{display:flex;align-items:center;gap:8px;}
+  .size-row.has-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;}
   .size-row .field{flex:0 0 131px;}
+  .size-row.has-two .field{flex:none;width:auto;}
   .add-size{
     appearance:none;
     background:none;
@@ -2146,8 +2148,8 @@
   <div class="card" id="filtersCard">
 
     <div class="rozmiar-block">
-      <div class="size-row">
-      <div class="field" style="flex:0 0 131px">
+      <div class="size-row" id="sizeRow">
+      <div class="field" id="rozmiar1Field" data-dd-key="rozmiar" onclick="openDropdown('rozmiar', this)" style="flex:0 0 131px">
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -6204,19 +6206,27 @@
     var btn2 = document.getElementById('rozmiar2Btn');
     var addBtn = document.getElementById('rozmiarAddBtn');
     var removeBtn = document.getElementById('rozmiarRemoveBtn');
+    var sizeRow = document.getElementById('sizeRow');
+    var r1 = document.getElementById('rozmiar1Field');
     if(!btn2) return;
     btn2.style.display = '';
     if(removeBtn) removeBtn.style.display = '';
     if(addBtn){ addBtn.style.display = 'none'; addBtn.style.visibility = 'hidden'; }
+    if(sizeRow) sizeRow.classList.add('has-two');
+    if(r1) r1.style.flex = '';
   }
 
   function hideRozmiar2(){
     var btn2 = document.getElementById('rozmiar2Btn');
     var addBtn = document.getElementById('rozmiarAddBtn');
     var removeBtn = document.getElementById('rozmiarRemoveBtn');
+    var sizeRow = document.getElementById('sizeRow');
+    var r1 = document.getElementById('rozmiar1Field');
     if(btn2){ btn2.style.display = 'none'; btn2.classList.remove('is-active'); }
     if(addBtn){ addBtn.style.display = ''; addBtn.style.visibility = ''; }
     if(removeBtn) removeBtn.style.display = 'none';
+    if(sizeRow) sizeRow.classList.remove('has-two');
+    if(r1) r1.style.flex = '0 0 131px';
     // remove rozmiar2 pills
     document.querySelectorAll('#appliedFilters .filter-pill[data-key="rozmiar2"]').forEach(function(p){ p.remove(); });
     updateFilterState();
