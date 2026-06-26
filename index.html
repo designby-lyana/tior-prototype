@@ -135,7 +135,7 @@
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;column-gap:16px;}
 
   .size-row{display:flex;align-items:center;gap:8px;}
-  .size-row .field{flex:0 0 calc(50% - 20px);}
+  .size-row .field{flex:1;}
   .size-row.has-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .size-row.has-two .rozmiar-add-btn,.size-row.has-two .rozmiar-remove-btn{display:none !important;}
   .size-row.has-two .field{width:auto;flex:none;}
@@ -638,8 +638,8 @@
   .dd-item{
     display:flex; align-items:center; justify-content:space-between;
     padding:0 var(--space-md);
-    height:44px;
-    min-height:44px;
+    height:40px;
+    min-height:40px;
     flex-shrink:0;
     border-bottom:1px solid var(--border-surface);
     cursor:pointer;
@@ -768,7 +768,6 @@
     color:var(--text-on-light); cursor:pointer;
     border-radius:50%;
     width:20px; height:20px; flex:none;
-    margin-left:-16px;
     align-self:center;
     position:relative;
     transition:color 140ms ease;
