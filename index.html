@@ -2086,13 +2086,15 @@
 
   /* ===== HOME SEARCH TABS ===== */
   #homeSearchSection{
-    background:var(--bg-page);
+    background:var(--bg-input);
+    margin-top:16px;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
   }
   .home-tabs-wrap{
     display:flex;
     align-items:stretch;
     border-bottom:none;
-    background:var(--bg-page);
+    background:var(--bg-input);
     padding:0 0 0 24px;
     gap:0;
     overflow-x:auto;
@@ -2130,7 +2132,7 @@
     border-bottom-color:var(--accent-primary);
   }
 
-  .home-tab-panel{ background:var(--bg-page); }
+  .home-tab-panel{ background:var(--bg-input); }
 
   /* Słowo kluczowe input */
   .home-kw-input{
@@ -2140,7 +2142,7 @@
     height:56px;
     border:1.5px solid var(--border-default);
     border-radius:var(--radius-sm);
-    background:var(--bg-input);
+    background:var(--bg-surface-light);
     padding:0 var(--space-lg);
     font-family:var(--font-body);
     font-size:18px;
@@ -2156,6 +2158,7 @@
   #homeChipsSection{
     background:var(--bg-page);
     padding-bottom:40px;
+    padding-top:8px;
   }
   .home-chips-section{
     display:flex;
