@@ -2056,6 +2056,65 @@
 <body><!-- cache-bust v3 -->
 
 <div class="phone" id="phone">
+<!-- SIDE MENU -->
+<div id="sideMenuBackdrop" onclick="closeSideMenu()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:1100;border-radius:18px;"></div>
+<div id="sideMenu" style="position:absolute;top:0;right:-100%;width:80%;max-width:280px;height:100%;background:#fff;z-index:1101;display:flex;flex-direction:column;transition:right 280ms cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.12);overflow-y:auto;">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border-default);">
+    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--text-default);letter-spacing:.5px;">MENU</span>
+    <button onclick="closeSideMenu()" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Navigation -->
+  <nav style="padding:8px 0;flex:1;">
+    <button onclick="goHome();closeSideMenu()" class="side-nav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+      Szukaj opon
+    </button>
+    <button onclick="setScreen('screenOrders');closeSideMenu()" class="side-nav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      Moje zamówienia
+    </button>
+    <button onclick="setScreen('screenInvoices');closeSideMenu()" class="side-nav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+      Faktury
+    </button>
+    <button onclick="setScreen('screenProfile');closeSideMenu()" class="side-nav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
+      Moje konto
+    </button>
+    <button onclick="goToCart();closeSideMenu()" class="side-nav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 001.6 1.3h7.6a1.6 1.6 0 001.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
+      Koszyk
+    </button>
+  </nav>
+
+  <!-- Language switcher -->
+  <div style="padding:16px 20px;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);">
+    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Język</div>
+    <div style="display:flex;gap:8px;">
+      <button id="langPL" onclick="switchLang('PL')" style="flex:1;height:36px;border:1.5px solid var(--accent-primary);border-radius:6px;background:var(--accent-primary);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">PL</button>
+      <button id="langEN" onclick="switchLang('EN')" style="flex:1;height:36px;border:1.5px solid var(--border-default);border-radius:6px;background:none;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">EN</button>
+    </div>
+  </div>
+
+  <!-- Contacts -->
+  <div style="padding:16px 20px 32px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Kontakt</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .39 1.97.76 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.37 1.9.63 2.9.76A2 2 0 0122 14.92z"/></svg>
+      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">+48 123 456 789</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">kontakt@tior.pl</span>
+    </div>
+  </div>
+
+</div>
 
 <div class="screen is-active" id="screenHome">
 
@@ -6790,14 +6849,13 @@ function submitOrder() {
     var backdrop = document.getElementById('sideMenuBackdrop');
     if(!menu) return;
     backdrop.style.display = 'block';
-    setTimeout(function(){ menu.style.right = '0'; backdrop.style.opacity = '1'; }, 10);
+    requestAnimationFrame(function(){ menu.style.right = '0'; });
   }
   function closeSideMenu(){
     var menu = document.getElementById('sideMenu');
     var backdrop = document.getElementById('sideMenuBackdrop');
     if(!menu) return;
     menu.style.right = '-100%';
-    backdrop.style.opacity = '0';
     setTimeout(function(){ backdrop.style.display = 'none'; }, 280);
   }
   var currentLang = 'PL';
@@ -6925,65 +6983,6 @@ function submitOrder() {
 </div>
 
 
-<!-- SIDE MENU -->
-<div id="sideMenuBackdrop" onclick="closeSideMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1100;transition:opacity 200ms;"></div>
-<div id="sideMenu" style="position:fixed;top:0;right:-100%;width:280px;height:100%;background:#fff;z-index:1101;display:flex;flex-direction:column;transition:right 280ms cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.12);overflow-y:auto;">
-
-  <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border-default);">
-    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--text-default);letter-spacing:.5px;">MENU</span>
-    <button onclick="closeSideMenu()" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-
-  <!-- Navigation -->
-  <nav style="padding:8px 0;flex:1;">
-    <button onclick="goHome();closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
-      Szukaj opon
-    </button>
-    <button onclick="setScreen('screenOrders');closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-      Moje zamówienia
-    </button>
-    <button onclick="setScreen('screenInvoices');closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-      Faktury
-    </button>
-    <button onclick="setScreen('screenProfile');closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
-      Moje konto
-    </button>
-    <button onclick="goToCart();closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 001.6 1.3h7.6a1.6 1.6 0 001.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
-      Koszyk
-    </button>
-  </nav>
-
-  <!-- Language switcher -->
-  <div style="padding:16px 20px;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);">
-    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Język</div>
-    <div style="display:flex;gap:8px;">
-      <button id="langPL" onclick="switchLang('PL')" style="flex:1;height:36px;border:1.5px solid var(--accent-primary);border-radius:6px;background:var(--accent-primary);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">PL</button>
-      <button id="langEN" onclick="switchLang('EN')" style="flex:1;height:36px;border:1.5px solid var(--border-default);border-radius:6px;background:none;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">EN</button>
-    </div>
-  </div>
-
-  <!-- Contacts -->
-  <div style="padding:16px 20px 32px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Kontakt</div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .39 1.97.76 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.37 1.9.63 2.9.76A2 2 0 0122 14.92z"/></svg>
-      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">+48 123 456 789</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">kontakt@tior.pl</span>
-    </div>
-  </div>
-
-</div>
 
 </body>
 </html>
