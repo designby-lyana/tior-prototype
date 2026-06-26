@@ -2142,6 +2142,22 @@
     padding:0 16px;
     margin-bottom:12px;
   }
+  /* Wrapper з fade-ефектом праворуч */
+  .home-chips-wrap{
+    position:relative;
+  }
+  .home-chips-wrap::after{
+    content:'';
+    position:absolute;
+    top:0; right:0; bottom:0;
+    width:48px;
+    background:linear-gradient(to right, transparent, var(--bg-page));
+    pointer-events:none;
+    transition:opacity 200ms ease;
+  }
+  .home-chips-wrap.at-end::after{
+    opacity:0;
+  }
   .home-chips-scroll{
     display:flex;
     flex-wrap:nowrap;
@@ -2150,7 +2166,7 @@
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
     padding-left:24px;
-    padding-right:0;
+    padding-right:32px;
   }
   .home-chips-scroll::-webkit-scrollbar{ display:none; }
   .home-chip{
@@ -2424,26 +2440,29 @@
 
     <div class="home-chips-section">
       <div class="home-chips-label">SZYBKI WYBÓR</div>
-      <div class="home-chips-scroll">
-        <button class="home-chip" onclick="setKwAndSearch('205/55')">205/55</button>
-        <button class="home-chip" onclick="setKwAndSearch('235/65')">235/65</button>
-        <button class="home-chip" onclick="setKwAndSearch('104/102')">104/102</button>
-        <button class="home-chip" onclick="setKwAndSearch('235/65 R16')">235/65 R16</button>
-        <button class="home-chip" onclick="setKwAndSearch('195/65 R15')">195/65 R15</button>
-        <button class="home-chip" onclick="setKwAndSearch('225/45 R17')">225/45 R17</button>
-        <button class="home-chip" onclick="setKwAndSearch('255/55 R19')">255/55 R19</button>
+      <div class="home-chips-wrap" id="chipsWrap1">
+        <div class="home-chips-scroll" id="chipsScroll1">
+          <button class="home-chip" onclick="setKwAndSearch('205/55')">205/55</button>
+          <button class="home-chip" onclick="setKwAndSearch('235/65')">235/65</button>
+          <button class="home-chip" onclick="setKwAndSearch('104/102')">104/102</button>
+          <button class="home-chip" onclick="setKwAndSearch('235/65 R16')">235/65 R16</button>
+          <button class="home-chip" onclick="setKwAndSearch('195/65 R15')">195/65 R15</button>
+          <button class="home-chip" onclick="setKwAndSearch('225/45 R17')">225/45 R17</button>
+        </div>
       </div>
     </div>
 
     <div class="home-chips-section">
       <div class="home-chips-label">POPULARNE PRODUKTY</div>
-      <div class="home-chips-scroll">
-        <button class="home-chip" onclick="setKwAndSearch('Pilot Sport 5')">Pilot Sport 5</button>
-        <button class="home-chip" onclick="setKwAndSearch('Continental Winter')">Continental Winter</button>
-        <button class="home-chip" onclick="setKwAndSearch('Solazo')">Solazo</button>
-        <button class="home-chip" onclick="setKwAndSearch('Michelin Primacy')">Michelin Primacy</button>
-        <button class="home-chip" onclick="setKwAndSearch('Goodyear Vector')">Goodyear Vector</button>
-        <button class="home-chip" onclick="setKwAndSearch('Bridgestone Turanza')">Bridgestone Turanza</button>
+      <div class="home-chips-wrap" id="chipsWrap2">
+        <div class="home-chips-scroll" id="chipsScroll2">
+          <button class="home-chip" onclick="setKwAndSearch('Pilot Sport 5')">Pilot Sport 5</button>
+          <button class="home-chip" onclick="setKwAndSearch('Continental Winter')">Continental Winter</button>
+          <button class="home-chip" onclick="setKwAndSearch('Solazo')">Solazo</button>
+          <button class="home-chip" onclick="setKwAndSearch('Michelin Primacy')">Michelin Primacy</button>
+          <button class="home-chip" onclick="setKwAndSearch('Goodyear Vector')">Goodyear Vector</button>
+          <button class="home-chip" onclick="setKwAndSearch('Bridgestone Turanza')">Bridgestone Turanza</button>
+        </div>
       </div>
     </div>
 
@@ -7163,6 +7182,23 @@ function submitOrder() {
     var inp = document.getElementById('kwSearchInput');
     if (inp) { inp.value = val; inp.focus(); }
   }
+
+  // ===== CHIPS FADE: hide right fade when scrolled to end =====
+  function initChipsFade(scrollId, wrapId) {
+    var scroll = document.getElementById(scrollId);
+    var wrap = document.getElementById(wrapId);
+    if (!scroll || !wrap) return;
+    function check() {
+      var atEnd = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 4;
+      wrap.classList.toggle('at-end', atEnd);
+    }
+    scroll.addEventListener('scroll', check, { passive: true });
+    check();
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    initChipsFade('chipsScroll1', 'chipsWrap1');
+    initChipsFade('chipsScroll2', 'chipsWrap2');
+  });
 
 </script>
 
