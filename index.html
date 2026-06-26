@@ -21,6 +21,8 @@
     --text-muted:#6b7280;
     --border-default:#eaeaea;
     --bg-chip:#ddd8d4;
+    --bg-subtle:#f0eeed;
+    --text-subtle:#9ba3af;
     --text-inverted:#fffaf2;
     --bg-surface-light:#fafafa;
     --border-surface:#e5e7eb;
@@ -2198,20 +2200,29 @@
   .home-chip{
     appearance:none;
     flex:none;
-    border:1px solid #bec5c8;
-    background:var(--bg-chip);
+    /* default: background/subtle + border/default 0.3 inside */
+    background:var(--bg-subtle);
+    border:0.3px solid var(--border-default);
     color:var(--text-on-light);
     font-family:var(--font-body);
     font-size:16px;
-    line-height:1;
-    padding:14px 16px;
-    border-radius:var(--radius-sm);
+    line-height:18px;
+    padding:8px;
+    border-radius:3px;
     cursor:pointer;
     white-space:nowrap;
-    transition:background 120ms ease, border-color 120ms ease;
+    transition:background 120ms ease, border-color 120ms ease, color 120ms ease;
   }
-  .home-chip:hover{ background:var(--bg-page); border-color:var(--accent-primary); }
-  .home-chip:active{ transform:scale(.97); }
+  .home-chip:hover{
+    /* hover: border/module fill + text/subtle stroke */
+    background:var(--border-module);
+    border-color:var(--text-subtle);
+  }
+  .home-chip:active{
+    background:var(--bg-chip);
+    border-color:var(--text-subtle);
+    transform:scale(.98);
+  }
 
 </style>
 </head>
