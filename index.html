@@ -631,7 +631,7 @@
     background:transparent;
   }
   .dd-search input::placeholder{ color:var(--text-placeholder); }
-  .dd-list{ overflow-y:auto; flex:1; min-height:0; }
+  .dd-list{ overflow-y:auto; flex:1; min-height:0; scroll-snap-type:y mandatory; }
   .dd-item{
     display:flex; align-items:center; justify-content:space-between;
     padding:0 var(--space-md);
@@ -644,6 +644,7 @@
     gap:var(--space-sm);
     transition:background 100ms ease;
     overflow:hidden;
+    scroll-snap-align:start;
   }
   .dd-item:hover{ background:var(--bg-page); }
   .dd-item:last-child{ border-bottom:none; }
