@@ -136,7 +136,7 @@
 
   .size-row{display:flex;align-items:center;gap:8px;}
   .size-row.has-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;}
-  .size-row .field{flex:0 0 131px;}
+  .size-row .field{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px);}
   .size-row.has-two .field{flex:none;width:auto;}
   .add-size{
     appearance:none;
@@ -633,7 +633,7 @@
     background:transparent;
   }
   .dd-search input::placeholder{ color:var(--text-placeholder); }
-  .dd-list{ overflow-y:auto; flex:1; min-height:0; scroll-snap-type:y mandatory; }
+  .dd-list{ overflow-y:auto; flex:1; min-height:0; scroll-snap-type:y mandatory; padding-bottom:1px; }
   .dd-item{
     display:flex; align-items:center; justify-content:space-between;
     padding:0 var(--space-md);
@@ -2149,7 +2149,7 @@
 
     <div class="rozmiar-block">
       <div class="size-row" id="sizeRow">
-      <div class="field" id="rozmiar1Field" data-dd-key="rozmiar" onclick="openDropdown('rozmiar', this)" style="flex:0 0 131px">
+      <div class="field" id="rozmiar1Field" data-dd-key="rozmiar" onclick="openDropdown('rozmiar', this)">
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
