@@ -587,7 +587,7 @@
   /* ── DROPDOWN POSITIONED ─────────────────────── */
   .dd-backdrop{
     display:none;
-    position:fixed; inset:0;
+    position:absolute; inset:0;
     background:transparent;
     z-index:200;
     pointer-events:none;
@@ -595,11 +595,11 @@
   .dd-backdrop.is-open{ display:block; pointer-events:auto; }
   .dd-sheet{
     display:none;
-    position:fixed;
+    position:absolute;
     background:#fff;
     border-radius:0 0 var(--radius-lg) var(--radius-lg);
     z-index:201;
-    max-height:220px;
+    height:260px;
     flex-direction:column;
     overflow:hidden;
     box-shadow:0 6px 20px rgba(0,0,0,.14);
@@ -666,7 +666,7 @@
   }
   .dd-item.is-selected .dd-item-label{ color:var(--accent-primary); }
   .dd-empty{
-    padding:var(--space-2xl) var(--space-lg);
+    padding:16px var(--space-lg);
     text-align:center; color:var(--text-muted); font-size:15px;
   }
 
@@ -5375,15 +5375,18 @@
     ddSearchInput.value = '';
     renderList(data.items, '', key);
 
-    // position fixed, anchored to field in viewport
+    // position absolute inside .phone
+    const phone = document.getElementById('phone');
+    const phoneRect = phone ? phone.getBoundingClientRect() : {left:0, top:0};
     const fieldRect = fieldEl.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - fieldRect.bottom - 8;
-    const maxH = Math.min(220, spaceBelow);
+    const topInPhone = fieldRect.bottom - phoneRect.top;
+    const leftInPhone = fieldRect.left - phoneRect.left;
 
-    ddSheet.style.top       = fieldRect.bottom + 'px';
-    ddSheet.style.left      = fieldRect.left + 'px';
-    ddSheet.style.width     = fieldRect.width + 'px';
-    ddSheet.style.maxHeight = maxH + 'px';
+    ddSheet.style.top    = topInPhone + 'px';
+    ddSheet.style.left   = leftInPhone + 'px';
+    ddSheet.style.width  = fieldRect.width + 'px';
+    ddSheet.style.height = '260px';
+    ddSheet.style.maxHeight = '';
 
     fieldEl.classList.add('dd-open');
     ddBackdrop.classList.add('is-open');
