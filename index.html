@@ -5175,7 +5175,7 @@
       ]
     },
     nosnosc: { label: 'NOŚNŐŚĆ', type: 'code', search: true, items: ["62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130"] },
-    predkosc: { label: 'PRĘDKOŚĆ', type: 'code', search: false, items: ["F", "G", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "H", "V", "W", "Y", "ZR"] },
+    predkosc: { label: 'PRĘDKOŚĆ', type: 'code', search: true, items: ["F", "G", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "H", "V", "W", "Y", "ZR"] },
     model: {
       label: 'MODEL', type: 'text', search: true,
       items: [
@@ -5408,11 +5408,19 @@
     var ROW_H = 44;
     var sheetH = (itemCount >= 5 && !isTextOnly2) ? (searchH + ROW_H * 5) : (isTextOnly2 ? searchH : 'auto');
 
-    // Flip-up if not enough space below
-    var phoneH = phone ? phone.getBoundingClientRect().height : 844;
-    var spaceBelow = phoneH - topInPhone - 8;
+    // Flip-up: use scrollable area, not just visible height
+    var phoneEl = phone;
+    var phoneH = phoneEl ? phoneEl.scrollHeight : 844;
+    var phoneVisible = phoneEl ? phoneEl.getBoundingClientRect().height : 844;
+    // spaceBelow in scrollable content
+    var spaceBelow = phoneH - topInPhone - (phoneEl ? phoneEl.scrollTop : 0) - 8;
+    // Also check visible area
+    var fieldBottomVisible = fieldRect.bottom;
+    var spaceVisibleBelow = window.innerHeight - fieldBottomVisible - 8;
     var sheetHNum = typeof sheetH === 'number' ? sheetH : (itemCount > 0 ? itemCount * ROW_H + searchH : searchH + 60);
-    var flipUp = spaceBelow < sheetHNum && topInPhone > sheetHNum;
+    // Flip up if either: not enough scroll space below, or field is in lower 40% of phone
+    var fieldRelPos = topInPhone / phoneVisible;
+    var flipUp = (spaceBelow < sheetHNum) || (fieldRelPos > 0.55 && topInPhone > sheetHNum);
 
     ddSheet.style.left   = leftInPhone + 'px';
     ddSheet.style.width  = fieldRect.width + 'px';
