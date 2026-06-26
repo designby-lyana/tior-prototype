@@ -135,9 +135,10 @@
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;column-gap:16px;}
 
   .size-row{display:flex;align-items:center;gap:8px;}
-  .size-row.has-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;}
-  .size-row .field{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px);}
-  .size-row.has-two .field{flex:none;width:auto;}
+  .size-row .field{flex:0 0 calc(50% - 20px);}
+  .size-row.has-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .size-row.has-two .rozmiar-add-btn,.size-row.has-two .rozmiar-remove-btn{display:none !important;}
+  .size-row.has-two .field{width:auto;flex:none;}
   .add-size{
     appearance:none;
     background:none;
@@ -2156,17 +2157,15 @@
           <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
       </div>
-      <button class="add-size" id="addSizeLink" title="Dodaj rozmiar" aria-label="Dodaj rozmiar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--border-default)" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="12" cy="12" r="10"/>
-  <path d="M12 7v10M7 12h10" stroke-linecap="round"/>
-</svg></button>
-      <div class="field" id="secondSizeField" style="flex:1" hidden>
+      <button class="rozmiar-add-btn" id="rozmiarAddBtn" onclick="toggleRozmiar2()" title="Dodaj drugi rozmiar" aria-label="Dodaj drugi rozmiar"><svg class="plus-default" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-hover" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10" stroke-linecap="round"/></svg></button>
+      <div class="field" id="rozmiar2Field" data-dd-key="rozmiar" onclick="openDropdown('rozmiar', this)" style="display:none;">
         <div class="field-label-row">
           <span class="field-label">ROZMIAR</span>
           <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
       </div>
+      <button class="rozmiar-remove-btn" id="rozmiarRemoveBtn" style="display:none;" onclick="hideRozmiar2()" title="Usuń drugi rozmiar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
     </div>
 
@@ -6211,30 +6210,25 @@
   }
 
   function toggleRozmiar2(){
-    var btn2 = document.getElementById('rozmiar2Btn');
+    var field2 = document.getElementById('rozmiar2Field');
     var addBtn = document.getElementById('rozmiarAddBtn');
     var removeBtn = document.getElementById('rozmiarRemoveBtn');
     var sizeRow = document.getElementById('sizeRow');
-    var r1 = document.getElementById('rozmiar1Field');
-    if(!btn2) return;
-    btn2.style.display = '';
+    if(field2) field2.style.display = '';
     if(removeBtn) removeBtn.style.display = '';
     if(addBtn){ addBtn.style.display = 'none'; addBtn.style.visibility = 'hidden'; }
     if(sizeRow) sizeRow.classList.add('has-two');
-    if(r1) r1.style.flex = '';
   }
 
   function hideRozmiar2(){
-    var btn2 = document.getElementById('rozmiar2Btn');
+    var field2 = document.getElementById('rozmiar2Field');
     var addBtn = document.getElementById('rozmiarAddBtn');
     var removeBtn = document.getElementById('rozmiarRemoveBtn');
     var sizeRow = document.getElementById('sizeRow');
-    var r1 = document.getElementById('rozmiar1Field');
-    if(btn2){ btn2.style.display = 'none'; btn2.classList.remove('is-active'); }
+    if(field2){ field2.style.display = 'none'; var lbl=field2.querySelector('.field-label'); if(lbl){lbl.textContent='ROZMIAR';lbl.style.color='';lbl.style.fontSize='';lbl.style.fontFamily='';lbl.style.fontWeight='';lbl.style.textTransform='';} field2.classList.remove('has-value'); var clr=field2.querySelector('.field-clear'); if(clr)clr.style.display='none'; }
     if(addBtn){ addBtn.style.display = ''; addBtn.style.visibility = ''; }
     if(removeBtn) removeBtn.style.display = 'none';
     if(sizeRow) sizeRow.classList.remove('has-two');
-    if(r1) r1.style.flex = '0 0 131px';
     // remove rozmiar2 pills
     document.querySelectorAll('#appliedFilters .filter-pill[data-key="rozmiar2"]').forEach(function(p){ p.remove(); });
     updateFilterState();
