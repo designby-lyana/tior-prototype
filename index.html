@@ -2158,7 +2158,10 @@
     padding-bottom:40px;
   }
   .home-chips-section{
-    padding-top:32px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding:12px 0;
   }
   .home-chips-label{
     font-family:var(--font-mono);
@@ -2168,7 +2171,6 @@
     color:var(--accent-primary);
     text-transform:uppercase;
     padding:0 24px;
-    margin-bottom:12px;
   }
   /* Wrapper з fade-ефектом праворуч */
   .home-chips-wrap{
@@ -2189,7 +2191,7 @@
   .home-chips-scroll{
     display:flex;
     flex-wrap:nowrap;
-    gap:8px;
+    gap:0;
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
