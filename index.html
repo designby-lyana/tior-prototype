@@ -2138,8 +2138,14 @@
       <div class="field">
         <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
       </div>
-      <div class="field">
-        <div class="field-label-row"><span class="field-label">EAN</span></div>
+      <div class="field" id="eanField" onclick="focusEanInput(event)">
+        <div class="field-label-row">
+          <span class="field-label">EAN</span>
+          <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść" style="display:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <input id="eanInput" type="text" placeholder="Wpisz kod EAN"
+          style="width:100%;border:none;outline:none;font-family:var(--font-mono);font-size:14px;color:var(--text-default);background:transparent;padding:4px 0 0;margin:0;box-sizing:border-box;display:none;"
+          oninput="onEanInput(this)" />
       </div>
     </div>
 
@@ -4939,6 +4945,26 @@
     field.classList.remove('has-value');
   }
 
+  function focusEanInput(e){
+    var input = document.getElementById('eanInput');
+    var field = document.getElementById('eanField');
+    if(!input) return;
+    input.style.display = 'block';
+    input.focus();
+    if(field) field.classList.add('has-value');
+  }
+  function onEanInput(inp){
+    var field = document.getElementById('eanField');
+    var clearBtn = field ? field.querySelector('.field-clear') : null;
+    if(inp.value.length > 0){
+      if(clearBtn) clearBtn.style.display = 'flex';
+      if(field) field.classList.add('has-value');
+    } else {
+      if(clearBtn) clearBtn.style.display = 'none';
+      if(field) field.classList.remove('has-value');
+    }
+  }
+
   function closeDropdown() {
     if (activeField) activeField.classList.remove('dd-open');
     ddBackdrop.classList.remove('is-open');
@@ -4982,9 +5008,12 @@
     var sheet = document.getElementById('euSheet');
     var backdrop = document.getElementById('euBackdrop');
     var r = fieldEl.getBoundingClientRect();
+    var phone = document.getElementById('phone');
+    var phoneR = phone ? phone.getBoundingClientRect() : {left:0};
     sheet.style.top    = r.bottom + 'px';
     sheet.style.left   = r.left + 'px';
     sheet.style.width  = r.width + 'px';
+    sheet.style.boxSizing = 'border-box';
     sheet.style.display = 'block';
     sheet.style.pointerEvents = 'auto';
     backdrop.style.display = 'block';
@@ -6351,7 +6380,7 @@ function submitOrder() {
 
 <!-- EU LABEL CUSTOM OVERLAY -->
 <div id="euBackdrop" style="display:none;position:fixed;inset:0;background:transparent;z-index:200;pointer-events:none;"></div>
-<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;">
+<div id="euSheet" style="display:none;position:fixed;background:#fff;border-radius:0 0 8px 8px;z-index:201;border:1px solid #eaeaea;border-top:none;box-shadow:0 6px 20px rgba(0,0,0,.14);font-family:'JetBrains Mono',monospace;overflow:hidden;pointer-events:none;box-sizing:border-box;">
   <div style="padding:16px;">
     <div style="margin-bottom:8px;">
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Opór</div>
