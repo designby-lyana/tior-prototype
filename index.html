@@ -601,6 +601,7 @@
     z-index:201;
     flex-direction:column;
     overflow:hidden;
+    overflow:hidden;
     box-shadow:0 6px 20px rgba(0,0,0,.14);
     border:1px solid var(--border-default);
     border-top:none;
@@ -5379,9 +5380,17 @@
     activeField = fieldEl;
     activeKey   = key;
 
-    ddSearchWrap.hidden = !data.search;
-    ddSearchInput.value = '';
-    renderList(data.items, '', key);
+    var isTextOnly = !!(data.textInput);
+    ddSearchWrap.hidden = isTextOnly ? false : !data.search;
+    if(isTextOnly){
+      ddSearchInput.placeholder = 'Wpisz kod EAN';
+      ddSearchInput.value = selections[key] || '';
+      ddList.innerHTML = '';
+    } else {
+      ddSearchInput.placeholder = 'Szukaj...';
+      ddSearchInput.value = '';
+      renderList(data.items, '', key);
+    }
 
     // position absolute inside .phone
     const phone = document.getElementById('phone');
@@ -5390,15 +5399,31 @@
     const topInPhone = fieldRect.bottom - phoneRect.top;
     const leftInPhone = fieldRect.left - phoneRect.left;
 
-    ddSheet.style.top    = topInPhone + 'px';
+    var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
+    var isTextOnly2 = !!(DD_DATA[key] && DD_DATA[key].textInput);
+    var searchH = (DD_DATA[key] && DD_DATA[key].search || isTextOnly2) ? 52 : 0;
+    var ROW_H = 44;
+    var sheetH = (itemCount >= 5 && !isTextOnly2) ? (searchH + ROW_H * 5) : (isTextOnly2 ? searchH : 'auto');
+
+    // Flip-up if not enough space below
+    var phoneH = phone ? phone.getBoundingClientRect().height : 844;
+    var spaceBelow = phoneH - topInPhone - 8;
+    var sheetHNum = typeof sheetH === 'number' ? sheetH : (itemCount > 0 ? itemCount * ROW_H + searchH : searchH + 60);
+    var flipUp = spaceBelow < sheetHNum && topInPhone > sheetHNum;
+
     ddSheet.style.left   = leftInPhone + 'px';
     ddSheet.style.width  = fieldRect.width + 'px';
-    // height: 5 rows if 5+ items, auto otherwise
-    var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
-    var searchH = (DD_DATA[key] && DD_DATA[key].search) ? 52 : 0;
-    var ROW_H = 44;
-    if(itemCount >= 5){
-      ddSheet.style.height = (searchH + ROW_H * 5) + 'px';
+    if(flipUp){
+      ddSheet.style.bottom = (phoneH - (fieldRect.top - phoneRect.top)) + 'px';
+      ddSheet.style.top = 'auto';
+      ddSheet.style.borderRadius = 'var(--radius-lg) var(--radius-lg) 0 0';
+    } else {
+      ddSheet.style.top    = topInPhone + 'px';
+      ddSheet.style.bottom = 'auto';
+      ddSheet.style.borderRadius = '0 0 var(--radius-lg) var(--radius-lg)';
+    }
+    if(typeof sheetH === 'number'){
+      ddSheet.style.height = sheetH + 'px';
     } else {
       ddSheet.style.height = 'auto';
     }
@@ -5422,7 +5447,11 @@
     });
 
     if (!filtered.length) {
-      ddList.innerHTML = '<div class="dd-empty">Brak wyników</div>';
+      if(query && query.trim() && !(DD_DATA[activeKey] && DD_DATA[activeKey].textInput)){
+        ddList.innerHTML = '<div class="dd-empty">Brak wyników</div>';
+      } else {
+        ddList.innerHTML = '';
+      }
       return;
     }
 
@@ -5486,8 +5515,28 @@
     field.classList.remove('has-value');
   }
 
+  function commitEanValue(){
+    if(activeKey && DD_DATA[activeKey] && DD_DATA[activeKey].textInput){
+      var val = ddSearchInput.value.trim();
+      if(val && activeField){
+        selections[activeKey] = val;
+        var lbl = activeField.querySelector('.field-label');
+        if(lbl){ lbl.textContent=val; lbl.style.color='var(--accent-primary)'; lbl.style.fontSize='12px'; lbl.style.fontFamily='var(--font-mono)'; lbl.style.fontWeight='400'; lbl.style.textTransform='none'; lbl.style.letterSpacing='0'; }
+        activeField.classList.add('has-value');
+        var clr = activeField.querySelector('.field-clear'); if(clr) clr.style.display='flex';
+      } else if(!val && activeField && activeField.classList.contains('has-value')){
+        delete selections[activeKey];
+        var lbl2 = activeField.querySelector('.field-label');
+        if(lbl2){ lbl2.textContent='EAN'; lbl2.style.color=''; lbl2.style.fontSize=''; lbl2.style.fontFamily=''; lbl2.style.fontWeight=''; lbl2.style.textTransform=''; lbl2.style.letterSpacing=''; }
+        activeField.classList.remove('has-value');
+        var clr2 = activeField.querySelector('.field-clear'); if(clr2) clr2.style.display='none';
+      }
+    }
+  }
+
   function closeDropdown() {
     if (activeField) activeField.classList.remove('dd-open');
+    commitEanValue();
     ddBackdrop.classList.remove('is-open');
     ddSheet.classList.remove('is-open');
     activeField = null;
@@ -5509,6 +5558,9 @@
   ddSheet.addEventListener('click', e => e.stopPropagation());
   ddBackdrop.addEventListener('click', closeDropdown);
   if (ddClose) ddClose.addEventListener('click', closeDropdown);
+  if (ddSearchInput) ddSearchInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ commitEanValue(); closeDropdown(); }
+  });
   if (ddSearchInput) ddSearchInput.addEventListener('input', e => {
     const data = DD_DATA[activeKey];
     if (data) renderList(data.items, e.target.value, activeKey);
