@@ -599,7 +599,6 @@
     background:#fff;
     border-radius:0 0 var(--radius-lg) var(--radius-lg);
     z-index:201;
-    height:260px;
     flex-direction:column;
     overflow:hidden;
     box-shadow:0 6px 20px rgba(0,0,0,.14);
@@ -631,7 +630,7 @@
     background:transparent;
   }
   .dd-search input::placeholder{ color:var(--text-placeholder); }
-  .dd-list{ overflow-y:auto; flex:1; }
+  .dd-list{ overflow-y:auto; flex:1; min-height:0; }
   .dd-item{
     display:flex; align-items:center; justify-content:space-between;
     padding:10px var(--space-md);
@@ -5385,7 +5384,15 @@
     ddSheet.style.top    = topInPhone + 'px';
     ddSheet.style.left   = leftInPhone + 'px';
     ddSheet.style.width  = fieldRect.width + 'px';
-    ddSheet.style.height = '260px';
+    // height: 5 rows if 5+ items, auto otherwise
+    var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
+    var searchH = (DD_DATA[key] && DD_DATA[key].search) ? 52 : 0;
+    var ROW_H = 45;
+    if(itemCount >= 5){
+      ddSheet.style.height = (searchH + ROW_H * 5) + 'px';
+    } else {
+      ddSheet.style.height = 'auto';
+    }
     ddSheet.style.maxHeight = '';
 
     fieldEl.classList.add('dd-open');
