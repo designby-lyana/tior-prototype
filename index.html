@@ -3849,29 +3849,37 @@
         <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#323744;">Powrót do wszystkich zamówień</span>
       </div>
       <!-- Page title -->
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#323744;margin-bottom:16px;">Wszystkie zamówienia</div>
-      <!-- Search + filters bar -->
-      <div style="background:#fff;border-radius:8px;padding:16px;margin-bottom:12px;box-sizing:border-box;">
-        <!-- Search input -->
-        <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(107,114,128,0.4);border-radius:8px;padding:0 12px;height:44px;margin-bottom:10px;">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#6b7280" stroke-width="1.4"/><line x1="10.5" y1="10.5" x2="14" y2="14" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">Nr zam., data, suma, lokalizacja, brand</span>
-        </div>
-        <!-- Filter row -->
-        <div style="display:flex;gap:8px;">
-          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(107,114,128,0.4);border-radius:3px;height:26px;padding:0 8px;cursor:pointer;">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="2" y1="4" x2="14" y2="4" stroke="#323744" stroke-width="1.4" stroke-linecap="round"/><line x1="4" y1="8" x2="12" y2="8" stroke="#323744" stroke-width="1.4" stroke-linecap="round"/><line x1="6" y1="12" x2="10" y2="12" stroke="#323744" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#323744;">Filtry</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 5l2 2 2-2" stroke="#323744" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(107,114,128,0.4);border-radius:3px;height:26px;padding:0 8px;cursor:pointer;">
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#323744;">Status</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 5l2 2 2-2" stroke="#323744" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
+      <h1 class="od-title">Wszystkie zamówienia</h1>
+
+    </div>
+
+    <!-- filters card -->
+    <div class="checkout-card" style="padding:var(--space-lg);gap:var(--space-sm);">
+
+      <div class="orl-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+        <span>Nr zamówienia, data, suma, lokalizacja, brand</span>
       </div>
+
+      <div style="display:flex;gap:var(--space-sm);">
+        <button class="orl-filter-btn" onclick="toggleOrdStatusOverlay()">
+          Status
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="orl-filter-btn" onclick="toggleDataOverlay()">
+          Data
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="orl-filter-btn" onclick="toggleSumaOverlay()">
+          Suma
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+    </div><!-- /filters -->
+
       <!-- Order cards -->
-      <div style="display:flex;flex-direction:column;">
+      <div style="display:flex;flex-direction:column;padding:0 var(--space-lg);">
         <div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
       <!-- Header row -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
