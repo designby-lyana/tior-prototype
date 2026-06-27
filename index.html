@@ -3628,7 +3628,7 @@
       </div>
 
       <!-- timeline -->
-      <div class="od-timeline">
+      <div class="od-timeline" id="odTimeline">
         <div class="od-tl-item done-item">
           <div class="od-tl-icon done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="od-tl-label">Nowe</span>
@@ -3680,14 +3680,14 @@
             <span class="od-price-label">Brutto</span>
             <span class="od-price-value" id="odTotal">729,20 €</span>
           </div>
-          <div class="od-price-row">
+          <div class="od-price-row" id="odNettoRow">
             <span class="od-price-label">Netto</span>
-            <span class="od-price-value">710,50€</span>
+            <span class="od-price-value" id="odNetto">710,50€</span>
           </div>
         </div>
 
         <!-- shipment -->
-        <div class="od-shipment-row">
+        <div class="od-shipment-row" id="odShipmentRow">
           <span class="od-shipment-label">Przesyłka</span>
           <span class="od-shipment-value">DPD: 09987654321012</span>
         </div>
@@ -5872,11 +5872,53 @@
     var titleEl = document.getElementById('odTitle');
     if (titleEl) titleEl.textContent = 'Zamówienie N°' + o.id.replace('ORD-','');
 
-    // Update badges
+    // Update badges — Nowe + Opłacone for fresh checkout
     var badgesEl = document.getElementById('odBadges');
     if (badgesEl) badgesEl.innerHTML =
       '<span class="od-badge gray">Nowe</span>' +
       '<span class="od-badge green">Opłacone</span>';
+
+    // Update timeline — only first step done, rest pending
+    var tlEl = document.getElementById('odTimeline');
+    if (tlEl) {
+      var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+      var now2 = new Date();
+      var months2 = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+      var nowStr = now2.getDate() + ' ' + months2[now2.getMonth()] + ' ' + now2.getFullYear() + ', ' +
+        String(now2.getHours()).padStart(2,'0') + ':' + String(now2.getMinutes()).padStart(2,'0');
+      tlEl.innerHTML =
+        '<div class="od-tl-item done-item">' +
+          '<div class="od-tl-icon done">' + checkSvg + '</div>' +
+          '<span class="od-tl-label">Nowe</span>' +
+          '<span class="od-tl-date">' + nowStr + '</span>' +
+        '</div>' +
+        '<div class="od-tl-item pending-item">' +
+          '<div class="od-tl-icon pending"></div>' +
+          '<span class="od-tl-label">W realizacji</span>' +
+          '<span class="od-tl-date"></span>' +
+        '</div>' +
+        '<div class="od-tl-item pending-item">' +
+          '<div class="od-tl-icon pending"></div>' +
+          '<span class="od-tl-label">Opłacone</span>' +
+          '<span class="od-tl-date"></span>' +
+        '</div>' +
+        '<div class="od-tl-item pending-item">' +
+          '<div class="od-tl-icon pending"></div>' +
+          '<span class="od-tl-label">Wysłane</span>' +
+          '<span class="od-tl-date"></span>' +
+        '</div>' +
+        '<div class="od-tl-item pending-item">' +
+          '<div class="od-tl-icon pending"></div>' +
+          '<span class="od-tl-label">Dostawa</span>' +
+          '<span class="od-tl-date"></span>' +
+        '</div>';
+    }
+
+    // Hide netto and shipment tracking for new order
+    var nettoRow = document.getElementById('odNettoRow');
+    if (nettoRow) nettoRow.style.display = 'none';
+    var shipRow = document.getElementById('odShipmentRow');
+    if (shipRow) shipRow.style.display = 'none';
 
     // Update PRZEDMIOTY
     var itemsEl = document.getElementById('odItems');
