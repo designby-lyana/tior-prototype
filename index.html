@@ -3862,241 +3862,19 @@
           Status
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button class="orl-filter-btn" onclick="toggleDataOverlay()">
+        <button class="orl-filter-btn" id="sortDataBtn" onclick="sortOrdersBy('date')">
           Data
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg id="sortDataIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button class="orl-filter-btn" onclick="toggleSumaOverlay()">
+        <button class="orl-filter-btn" id="sortSumaBtn" onclick="sortOrdersBy('suma')">
           Suma
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg id="sortSumaIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </div>
     </div><!-- /filters -->
 
     <!-- Order cards -->
-    <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
-        <div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
-      <!-- Header row -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#0d0e13;">ORD-5555</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">18 lut 2026</span>
-      </div>
-      <!-- Status chips -->
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#e8eef7;border:1px solid #b8c8e0;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#2e5fa3;white-space:nowrap;">Utworzone</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#fdf3e3;border:1px solid #e8d4a8;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#9a6200;white-space:nowrap;">Nieopłacone</span>
-      </div>
-      <!-- Delivery -->
-      <div style="margin-bottom:16px;">
-        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:#0d0e13;">Warszawa – Magazyn Wola</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;">Odbiór osobisty</div>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:16px;"></div>
-      <!-- Tires -->
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="#6b7280" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="3" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="3" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="11.54" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="4.46" y1="11.54" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Continental Premium Contact 7</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bridgestone Turanza T005</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Goodyear EfficientGrip P2</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">16 szt.</span>
-          </div></div>
-      <!-- Total -->
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">Wartość gross</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">621,60 zł</span>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:12px;"></div>
-      <!-- Actions -->
-      <div style="display:flex;align-items:center;">
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;color:#005f6e;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h14" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Pobierz</span>
-        </button>
-        <div style="width:1px;height:40px;background:#eaeaea;"></div>
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="7" width="12" height="9" rx="1" stroke="#005f6e" stroke-width="1.5"/><path d="M4 10V4h12v3" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="12" width="6" height="1.5" rx="0.75" fill="#005f6e"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Drukuj</span>
-        </button>
-      </div>
-    </div><div style="height:12px;"></div><div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
-      <!-- Header row -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#0d0e13;">ORD-5555</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">18 lut 2026</span>
-      </div>
-      <!-- Status chips -->
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#e0f4f8;border:1px solid #a0d8e8;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#0e7490;white-space:nowrap;">W dostawie</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#e8f4ed;border:1px solid #a8d4b8;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#1e6b3c;white-space:nowrap;">Opłacone</span>
-      </div>
-      <!-- Delivery -->
-      <div style="margin-bottom:16px;">
-        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:#0d0e13;">Warszawa – Magazyn Wola</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;">Odbiór osobisty</div>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:16px;"></div>
-      <!-- Tires -->
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="#6b7280" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="3" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="3" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="11.54" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="4.46" y1="11.54" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Continental Premium Contact 7</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bridgestone Turanza T005</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Goodyear EfficientGrip P2</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">16 szt.</span>
-          </div></div>
-      <!-- Total -->
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">Wartość gross</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">621,60 zł</span>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:12px;"></div>
-      <!-- Actions -->
-      <div style="display:flex;align-items:center;">
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;color:#005f6e;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h14" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Pobierz</span>
-        </button>
-        <div style="width:1px;height:40px;background:#eaeaea;"></div>
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="7" width="12" height="9" rx="1" stroke="#005f6e" stroke-width="1.5"/><path d="M4 10V4h12v3" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="12" width="6" height="1.5" rx="0.75" fill="#005f6e"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Drukuj</span>
-        </button>
-      </div>
-    </div><div style="height:12px;"></div><div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
-      <!-- Header row -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#0d0e13;">ORD-5555</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">18 lut 2026</span>
-      </div>
-      <!-- Status chips -->
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#f0ebf7;border:1px solid #c8b0dc;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#3d2468;white-space:nowrap;">Anulowane</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#f0ebf7;border:1px solid #c8b0dc;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#3d2468;white-space:nowrap;">Zwrócone</span>
-      </div>
-      <!-- Delivery -->
-      <div style="margin-bottom:16px;">
-        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:#0d0e13;">Warszawa – Magazyn Wola</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;">Odbiór osobisty</div>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:16px;"></div>
-      <!-- Tires -->
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="#6b7280" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="3" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="3" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="11.54" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="4.46" y1="11.54" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Continental Premium Contact 7</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bridgestone Turanza T005</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Goodyear EfficientGrip P2</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">16 szt.</span>
-          </div></div>
-      <!-- Total -->
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">Wartość gross</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">621,60 zł</span>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:12px;"></div>
-      <!-- Actions -->
-      <div style="display:flex;align-items:center;">
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;color:#005f6e;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h14" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Pobierz</span>
-        </button>
-        <div style="width:1px;height:40px;background:#eaeaea;"></div>
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="7" width="12" height="9" rx="1" stroke="#005f6e" stroke-width="1.5"/><path d="M4 10V4h12v3" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="12" width="6" height="1.5" rx="0.75" fill="#005f6e"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Drukuj</span>
-        </button>
-      </div>
-    </div><div style="height:12px;"></div><div onclick="setScreen('screenOrderDetail')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">
-      <!-- Header row -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#0d0e13;">ORD-5555</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">18 lut 2026</span>
-      </div>
-      <!-- Status chips -->
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#ce5430;border:1px solid #ce5430;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#fffaf2;white-space:nowrap;">Dostarczono</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:#e8f4ed;border:1px solid #a8d4b8;border-radius:3px;font-family:'Outfit',sans-serif;font-weight:400;font-size:16px;line-height:18px;color:#1e6b3c;white-space:nowrap;">Opłacone</span>
-      </div>
-      <!-- Delivery -->
-      <div style="margin-bottom:16px;">
-        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:#0d0e13;">Warszawa – Magazyn Wola</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;">Odbiór osobisty</div>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:16px;"></div>
-      <!-- Tires -->
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="#6b7280" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="3" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="3" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="11.54" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="4.46" y1="11.54" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Continental Premium Contact 7</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bridgestone Turanza T005</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">4 szt.</span>
-          </div><div style="display:flex;align-items:center;justify-content:space-between;height:24px;">
-            <div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">
-              <span style="flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="1" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="#6b7280"/></svg></span>
-              <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Goodyear EfficientGrip P2</span>
-            </div>
-            <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">16 szt.</span>
-          </div></div>
-      <!-- Total -->
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">Wartość gross</span>
-        <span style="font-family:'Outfit',sans-serif;font-size:16px;color:#6b7280;">621,60 zł</span>
-      </div>
-      <!-- Divider -->
-      <div style="border-top:1px solid #eaeaea;margin-bottom:12px;"></div>
-      <!-- Actions -->
-      <div style="display:flex;align-items:center;">
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;color:#005f6e;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h14" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Pobierz</span>
-        </button>
-        <div style="width:1px;height:40px;background:#eaeaea;"></div>
-        <button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="7" width="12" height="9" rx="1" stroke="#005f6e" stroke-width="1.5"/><path d="M4 10V4h12v3" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="12" width="6" height="1.5" rx="0.75" fill="#005f6e"/></svg><span style="font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;">Drukuj</span>
-        </button>
-      </div>
-    </div>
-    </div><!-- /order cards -->
+    <div id="ordersListContainer" style="display:flex;flex-direction:column;gap:var(--space-sm);"><!-- rendered by JS --></div><!-- /order cards -->
 
   </div><!-- /inv-content -->
 </div>
@@ -5021,6 +4799,7 @@
     var target = document.getElementById(id);
     if(target){ target.classList.add('is-active'); target.scrollTop = 0; }
     if(id==='screenAddresses'){ renderAddrList(); }
+    if(id==='screenOrders'){ renderOrders(); }
   }
   function goToResults(){ setScreen('screenResults'); }
   function goHome(){      setScreen('screenHome'); }
@@ -6081,7 +5860,206 @@
     toggleFilterOverlay();
   }
 
-  function toggleDataOverlay(){
+
+  // ── ORDERS DATA & RENDER ──────────────────────────────────────────────
+  var ORDERS_DATA = [
+    {
+      id: 'ORD-5821',
+      date: '2026-06-12',
+      dateLabel: '12 cze 2026',
+      status: 'Zrealizowane',
+      statusColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      payment: 'Opłacone',
+      payColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      location: 'Kraków – Magazyn Południe',
+      delivery: 'Dostawa kurierska',
+      items: [
+        {name:'Michelin Pilot Sport 5', qty:'4 szt.', type:'pcr'},
+        {name:'Michelin Pilot Sport 5', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 2148.00,
+      totalLabel: '2 148,00 zł'
+    },
+    {
+      id: 'ORD-5798',
+      date: '2026-05-28',
+      dateLabel: '28 maj 2026',
+      status: 'W dostawie',
+      statusColor: {bg:'#e0f4f8',border:'#a0d8e8',text:'#0e7490'},
+      payment: 'Opłacone',
+      payColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      location: 'Warszawa – Magazyn Wola',
+      delivery: 'Odbiór osobisty',
+      items: [
+        {name:'Continental PremiumContact 7', qty:'4 szt.', type:'pcr'},
+        {name:'Bridgestone Turanza T005', qty:'8 szt.', type:'pcr'},
+        {name:'Goodyear UltraGrip Performance 3', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 5376.40,
+      totalLabel: '5 376,40 zł'
+    },
+    {
+      id: 'ORD-5761',
+      date: '2026-04-15',
+      dateLabel: '15 kwi 2026',
+      status: 'Zrealizowane',
+      statusColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      payment: 'Opłacone',
+      payColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      location: 'Wrocław – Magazyn Zachód',
+      delivery: 'Dostawa kurierska',
+      items: [
+        {name:'Pirelli P Zero PZ4', qty:'4 szt.', type:'pcr'},
+        {name:'Hankook Ventus S1 evo3', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 3290.80,
+      totalLabel: '3 290,80 zł'
+    },
+    {
+      id: 'ORD-5744',
+      date: '2026-03-22',
+      dateLabel: '22 mar 2026',
+      status: 'Utworzone',
+      statusColor: {bg:'#e8eef7',border:'#b8c8e0',text:'#2e5fa3'},
+      payment: 'Nieopłacone',
+      payColor: {bg:'#fdf3e3',border:'#e8d4a8',text:'#9a6200'},
+      location: 'Gdańsk – Magazyn Północ',
+      delivery: 'Dostawa kurierska',
+      items: [
+        {name:'Nokian Tyres Powerproof 2', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 1436.00,
+      totalLabel: '1 436,00 zł'
+    },
+    {
+      id: 'ORD-5712',
+      date: '2026-02-10',
+      dateLabel: '10 lut 2026',
+      status: 'Anulowane',
+      statusColor: {bg:'#f0ebf7',border:'#c8b0dc',text:'#3d2468'},
+      payment: 'Zwrócone',
+      payColor: {bg:'#f0ebf7',border:'#c8b0dc',text:'#3d2468'},
+      location: 'Poznań – Magazyn Centralny',
+      delivery: 'Odbiór osobisty',
+      items: [
+        {name:'Goodyear EfficientGrip Performance 2', qty:'8 szt.', type:'pcr'},
+        {name:'Dunlop Sport Maxx RT2', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 2807.60,
+      totalLabel: '2 807,60 zł'
+    },
+    {
+      id: 'ORD-5680',
+      date: '2026-01-08',
+      dateLabel: '8 sty 2026',
+      status: 'Zrealizowane',
+      statusColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      payment: 'Opłacone',
+      payColor: {bg:'#e8f4ed',border:'#a8d4b8',text:'#1e6b3c'},
+      location: 'Katowice – Magazyn Śląsk',
+      delivery: 'Dostawa kurierska',
+      items: [
+        {name:'Yokohama Advan Sport V107', qty:'4 szt.', type:'pcr'},
+        {name:'Falken Ziex ZE914 Ecorun', qty:'16 szt.', type:'pcr'},
+        {name:'Semperit Speed-Life 3', qty:'4 szt.', type:'pcr'}
+      ],
+      total: 7922.40,
+      totalLabel: '7 922,40 zł'
+    }
+  ];
+
+  var _ordersSortField = null;
+  var _ordersSortAsc = true;
+
+  function sortOrdersBy(field) {
+    if (_ordersSortField === field) {
+      _ordersSortAsc = !_ordersSortAsc;
+    } else {
+      _ordersSortField = field;
+      _ordersSortAsc = false; // newest/highest first by default
+    }
+    // Update button icons
+    ['Data','Suma'].forEach(function(f){
+      var key = f === 'Data' ? 'date' : 'suma';
+      var icon = document.getElementById('sort' + (f === 'Data' ? 'Data' : 'Suma') + 'Icon');
+      if (!icon) return;
+      if (_ordersSortField === key) {
+        icon.innerHTML = _ordersSortAsc
+          ? '<path d="M6 15l6-6 6 6"/>'
+          : '<path d="M6 9l6 6 6-6"/>';
+        icon.setAttribute('stroke','#005f6e');
+      } else {
+        icon.innerHTML = '<path d="M6 9l6 6 6-6"/>';
+        icon.setAttribute('stroke','currentColor');
+      }
+      var btn = document.getElementById('sort' + (f === 'Data' ? 'Data' : 'Suma') + 'Btn');
+      if (btn) btn.style.borderColor = (_ordersSortField === key) ? '#005f6e' : '';
+    });
+    renderOrders();
+  }
+
+  var TIRE_SVG_PCR = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="#6b7280" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="3" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="15" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="8" x2="3" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="8" x2="15" y2="8" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="12.95" y1="3.05" x2="11.54" y2="4.46" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/><line x1="4.46" y1="11.54" x2="3.05" y2="12.95" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round"/></svg>';
+
+  function renderOrders() {
+    var container = document.getElementById('ordersListContainer');
+    if (!container) return;
+    var data = ORDERS_DATA.slice();
+    if (_ordersSortField === 'date') {
+      data.sort(function(a,b){ return _ordersSortAsc ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date); });
+    } else if (_ordersSortField === 'suma') {
+      data.sort(function(a,b){ return _ordersSortAsc ? a.total - b.total : b.total - a.total; });
+    }
+    var dlDL = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15h14" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    var prDL = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="7" width="12" height="9" rx="1" stroke="#005f6e" stroke-width="1.5"/><path d="M4 10V4h12v3" stroke="#005f6e" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="12" width="6" height="1.5" rx="0.75" fill="#005f6e"/></svg>';
+    var html = '';
+    data.forEach(function(o, idx) {
+      if (idx > 0) html += '<div style="height:12px;"></div>';
+      var itemsHtml = o.items.map(function(it){
+        return '<div style="display:flex;align-items:center;justify-content:space-between;height:24px;">' +
+          '<div style="display:flex;align-items:center;gap:4px;flex:1;min-width:0;">' +
+          '<span style="flex-shrink:0;">' + TIRE_SVG_PCR + '</span>' +
+          '<span style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#0d0e13;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + it.name + '</span>' +
+          '</div>' +
+          '<span style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#0d0e13;flex-shrink:0;margin-left:8px;">' + it.qty + '</span>' +
+          '</div>';
+      }).join('');
+      html += '<div onclick="setScreen(\'screenOrderDetail\')" style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:16px;box-sizing:border-box;cursor:pointer;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">' +
+        '<span style="font-family:\'Outfit\',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:#0d0e13;">' + o.id + '</span>' +
+        '<span style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#6b7280;">' + o.dateLabel + '</span>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;margin-bottom:16px;">' +
+        '<span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:' + o.statusColor.bg + ';border:1px solid ' + o.statusColor.border + ';border-radius:3px;font-family:\'Outfit\',sans-serif;font-size:16px;color:' + o.statusColor.text + ';white-space:nowrap;">' + o.status + '</span>' +
+        '<span style="display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;background:' + o.payColor.bg + ';border:1px solid ' + o.payColor.border + ';border-radius:3px;font-family:\'Outfit\',sans-serif;font-size:16px;color:' + o.payColor.text + ';white-space:nowrap;">' + o.payment + '</span>' +
+        '</div>' +
+        '<div style="margin-bottom:16px;">' +
+        '<div style="font-family:\'Outfit\',sans-serif;font-weight:700;font-size:16px;color:#0d0e13;">' + o.location + '</div>' +
+        '<div style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#0d0e13;">' + o.delivery + '</div>' +
+        '</div>' +
+        '<div style="border-top:1px solid #eaeaea;margin-bottom:16px;"></div>' +
+        '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">' + itemsHtml + '</div>' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:16px;">' +
+        '<span style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#6b7280;">Wartość gross</span>' +
+        '<span style="font-family:\'Outfit\',sans-serif;font-size:16px;color:#6b7280;">' + o.totalLabel + '</span>' +
+        '</div>' +
+        '<div style="border-top:1px solid #eaeaea;margin-bottom:12px;"></div>' +
+        '<div style="display:flex;align-items:center;">' +
+        '<button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">' +
+        dlDL + '<span style="font-family:\'Outfit\',sans-serif;font-size:14px;color:#005f6e;">Pobierz</span>' +
+        '</button>' +
+        '<div style="width:1px;height:40px;background:#eaeaea;"></div>' +
+        '<button onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;background:none;border:none;cursor:pointer;gap:6px;">' +
+        prDL + '<span style="font-family:\'Outfit\',sans-serif;font-size:14px;color:#005f6e;">Drukuj</span>' +
+        '</button>' +
+        '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+  }
+
+  // ── END ORDERS ─────────────────────────────────────────────────────────
+
+    function toggleDataOverlay(){
     var b = document.getElementById('dataBackdrop');
     var s = document.getElementById('dataSheet');
     var open = s.classList.toggle('is-open');
@@ -7372,7 +7350,7 @@ function submitOrder() {
 </div>
 
 <!-- PWD SUCCESS SNACKBAR -->
-<div id="pwdSnackbar" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
+<div id="pwdSnackbar" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:\'Outfit\',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
   <div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;">
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M2 10l5 5 11-11" stroke="#1e6b3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
@@ -7380,9 +7358,9 @@ function submitOrder() {
 </div>
 
 <!-- ADDR SNACKBAR -->
-<div id="addrSnackbar" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#323744;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:12px 16px 16px;border-radius:8px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:280px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 200ms ease;">
+<div id="addrSnackbar" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#323744;color:#fff;font-family:\'Outfit\',sans-serif;font-size:15px;padding:12px 16px 16px;border-radius:8px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:280px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 200ms ease;">
   <span class="snack-text" style="flex:1;"></span>
-  <button class="snack-undo" onclick="undoDeleteAddr()" style="background:none;border:none;color:#4fb3c2;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;cursor:pointer;padding:0;white-space:nowrap;">Cofnij</button>
+  <button class="snack-undo" onclick="undoDeleteAddr()" style="background:none;border:none;color:#4fb3c2;font-family:\'Outfit\',sans-serif;font-size:15px;font-weight:600;cursor:pointer;padding:0;white-space:nowrap;">Cofnij</button>
   <div class="snack-timer" style="height:3px;background:rgba(255,255,255,.3);position:absolute;bottom:0;left:0;right:0;border-radius:0 0 8px 8px;overflow:hidden;">
     <div id="snackTimerBar" style="height:100%;background:#fff;width:100%;"></div>
   </div>
@@ -7390,12 +7368,12 @@ function submitOrder() {
 
 <!-- ADDR CONFIRM DELETE DEFAULT -->
 <div id="addrConfirmBackdrop" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9998;display:none;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;gap:16px;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:\'Outfit\',sans-serif;display:flex;flex-direction:column;gap:16px;">
     <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Usunąć domyślny adres dostawy?</div>
     <p style="font-size:15px;color:var(--text-muted);line-height:1.5;margin:0;">Po usunięciu wybierz nowy adres domyślny.</p>
     <div style="display:flex;gap:12px;">
-      <button onclick="closeAddrConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
-      <button onclick="confirmDeleteAddr()" style="flex:1;height:44px;background:#dc2626;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Usuń</button>
+      <button onclick="closeAddrConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:\'Outfit\',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
+      <button onclick="confirmDeleteAddr()" style="flex:1;height:44px;background:#dc2626;border:none;border-radius:8px;font-family:\'Outfit\',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Usuń</button>
     </div>
   </div>
 </div>
