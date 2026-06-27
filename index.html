@@ -3605,7 +3605,7 @@
 
     <div style="display:flex;flex-direction:column;gap:4px;">
       <div class="od-breadcrumb" onclick="setScreen('screenOrders')">‹‹ Wszystkie zamówienia</div>
-      <h1 class="od-title">Zamówienie N°5555</h1>
+      <h1 class="od-title" id="odTitle">Zamówienie N°5555</h1>
     </div>
 
     <!-- SZCZEGÓŁY card -->
@@ -3613,7 +3613,7 @@
       <div class="section-title" style="padding-bottom:var(--space-lg);border-bottom:1px solid var(--border-surface);">SZCZEGÓŁY</div>
 
       <!-- status badges -->
-      <div class="od-badges">
+      <div class="od-badges" id="odBadges">
         <span class="od-badge gray">Wysłane</span>
         <span class="od-badge green">Opłacone</span>
       </div>
@@ -3660,7 +3660,7 @@
       <div class="od-info-rows">
         <div class="od-info-row">
           <span class="od-info-label">Adres dostawy</span>
-          <span class="od-info-value">Warszawa –<br>Magazyn</span>
+          <span class="od-info-value" id="odAddrVal">Warszawa –<br>Magazyn</span>
         </div>
         <div class="od-info-row">
           <span class="od-info-label">Dostawa</span>
@@ -3668,7 +3668,7 @@
         </div>
         <div class="od-info-row">
           <span class="od-info-label">Pozycje</span>
-          <span class="od-info-value">16 szt.</span>
+          <span class="od-info-value" id="odQtyVal">16 szt.</span>
         </div>
         <div class="od-info-row">
           <span class="od-info-label">Płatność</span>
@@ -3678,7 +3678,7 @@
         <div class="od-price-group">
           <div class="od-price-row">
             <span class="od-price-label">Brutto</span>
-            <span class="od-price-value">729,20 €</span>
+            <span class="od-price-value" id="odTotal">729,20 €</span>
           </div>
           <div class="od-price-row">
             <span class="od-price-label">Netto</span>
@@ -3699,6 +3699,7 @@
     <div class="checkout-card" style="padding:var(--space-xl);gap:0;">
       <div class="section-title" style="padding-bottom:var(--space-lg);">PRZEDMIOTY</div>
 
+      <div id="odItems">
       <!-- item 1 -->
       <div class="od-item">
         <div class="od-item-top">
@@ -3761,8 +3762,8 @@
           <span class="od-item-total">256,80 €</span>
         </div>
       </div>
-
-    </div><!-- /PRZEDMIOTY -->
+      </div>
+        </div><!-- /PRZEDMIOTY -->
 
     <!-- DOKUMENTY card -->
     <div class="checkout-card" style="padding:var(--space-xl);gap:var(--space-lg);">
@@ -4430,7 +4431,7 @@
 
       <!-- Title -->
       <div style="text-align:center;margin-bottom:52px;">
-        <p style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;line-height:24px;color:#323744;margin:0;">Zamówienie #2802<br>potwierdzone</p>
+        <p id="successOrderNum" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;line-height:24px;color:#323744;margin:0;">Zamówienie #2802<br>potwierdzone</p>
       </div>
 
       <!-- Delivery info -->
@@ -4453,7 +4454,7 @@
 
       <!-- Buttons -->
       <div style="width:100%;display:flex;flex-direction:column;gap:16px;">
-        <button onclick="setScreen('screenOrderDetail')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zobacz zamówienia</button>
+        <button onclick="openLastOrder()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zobacz zamówienie</button>
         <button onclick="setScreen('screenResults')" style="width:100%;height:48px;background:#fff;border:1.5px solid #005f6e;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#024b57;cursor:pointer;">Kontynuuj zakupy</button>
       </div>
     </div>
@@ -5861,7 +5862,71 @@
   }
 
 
-  // ── ORDERS DATA & RENDER ──────────────────────────────────────────────
+  var _lastOrder = null;
+
+  function openLastOrder() {
+    if (!_lastOrder) { setScreen('screenOrders'); return; }
+    var o = _lastOrder;
+
+    // Update title + breadcrumb
+    var titleEl = document.getElementById('odTitle');
+    if (titleEl) titleEl.textContent = 'Zamówienie N°' + o.id.replace('ORD-','');
+
+    // Update badges
+    var badgesEl = document.getElementById('odBadges');
+    if (badgesEl) badgesEl.innerHTML =
+      '<span class="od-badge gray">Nowe</span>' +
+      '<span class="od-badge green">Opłacone</span>';
+
+    // Update PRZEDMIOTY
+    var itemsEl = document.getElementById('odItems');
+    if (itemsEl) {
+      var html = '';
+      o.items.forEach(function(it, idx) {
+        var isLast = idx === o.items.length - 1;
+        html += '<div class="od-item"' + (isLast ? ' style="border-bottom:none;"' : '') + '>' +
+          '<div class="od-item-top">' +
+            '<div class="od-item-img">' +
+              '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="24" cy="24" r="22" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="10" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="#9ca3af"/></svg>' +
+            '</div>' +
+            '<div class="od-item-info">' +
+              '<div class="od-item-name">' + (it.model || it.brand || '—') + '</div>' +
+              '<div class="od-item-size">' + (it.spec || '') + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="od-item-price-row">' +
+            '<span class="od-item-unit">' + parseFloat(it.unitPrice || 0).toFixed(2).replace('.',',') + ' zł</span>' +
+            '<span class="od-item-divider"></span>' +
+            '<span class="od-item-qty">' + it.qty + ' szt.</span>' +
+            '<span class="od-item-divider"></span>' +
+            '<span class="od-item-total">' + parseFloat(it.total || 0).toFixed(2).replace('.',',') + ' zł</span>' +
+          '</div>' +
+        '</div>';
+      });
+      itemsEl.innerHTML = html;
+    }
+
+    // Update address value (od-info-row)
+    var addrValEl = document.getElementById('odAddrVal');
+    if (addrValEl && o.addr) {
+      addrValEl.innerHTML = (o.addr.name || '—').replace(' – ', ' –<br>');
+    }
+
+    // Update Pozycje count
+    var qtyEl = document.getElementById('odQtyVal');
+    if (qtyEl) {
+      var totalQty = o.items.reduce(function(s,i){ return s + (parseInt(i.qty)||0); }, 0);
+      qtyEl.textContent = totalQty + ' szt.';
+    }
+
+    // Update total (Brutto)
+    var totalEl = document.getElementById('odTotal');
+    if (totalEl) totalEl.textContent = o.totalLabel;
+
+    setScreen('screenOrderDetail');
+  }
+
+    // ── ORDERS DATA & RENDER ──────────────────────────────────────────────
   var ORDERS_DATA = [
     {
       id: 'ORD-5821', date: '2026-06-12', dateLabel: '12 cze 2026',
@@ -6617,6 +6682,31 @@ function submitOrder() {
     var cb = document.getElementById('confirmCheck');
     if (cb) cb.checked = false;
     btn.disabled = true;
+
+    // Capture order snapshot
+    var now = new Date();
+    var ordNum = 5822 + Math.floor(Math.random()*100);
+    var addr = checkoutAddrData[0] || {name:'—', street:'—', city:'—', company:'—'};
+    var totalVal = cartItems.reduce(function(s,i){return s+parseFloat(i.total);},0);
+    var months = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+    var dateLabel = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+    _lastOrder = {
+      id: 'ORD-' + ordNum,
+      dateLabel: dateLabel,
+      addr: addr,
+      items: cartItems.slice(),
+      total: totalVal,
+      totalLabel: totalVal.toFixed(2).replace('.',',') + ' zł'
+    };
+
+    // Update success screen order number
+    var titleEl = document.getElementById('successOrderNum');
+    if (titleEl) titleEl.innerHTML = 'Zamówienie #' + ordNum + '<br>potwierdzone';
+
+    // Clear cart
+    cartItems = [];
+    updateCartState();
+
     setScreen('screenSuccess');
   }, 1200);
 }
