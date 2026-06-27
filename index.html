@@ -892,40 +892,64 @@
   }
   .cart-right{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
 
-  /* summary card */
+  /* summary card — Figma: Order Summary/short version */
   .cart-summary-card{
-    background:var(--bg-surface-light);
+    background:#fff;
     border-radius:var(--radius-lg);
-    padding:var(--space-lg);
-    display:flex; flex-direction:column; gap:var(--space-lg);
+    display:flex; flex-direction:column;
     box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+  .cart-summary-header{
+    background:#fafafa;
+    border-bottom:1px solid #939496;
+    padding:12px 16px;
+    min-height:54px;
+    display:flex; align-items:center;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
   }
   .cart-summary-title{
     font-family:var(--font-body); font-weight:700;
-    font-size:18px; color:var(--text-default);
-    padding-bottom:var(--space-md);
-    border-bottom:1px solid var(--border-surface);
-    margin:0;
+    font-size:16px; line-height:18px; color:var(--text-default);
+    margin:0; flex:1;
   }
-  .cart-summary-rows{ display:flex; flex-direction:column; gap:var(--space-sm); }
+  .cart-summary-body{
+    padding:24px 0 0;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .cart-summary-rows{
+    display:flex; flex-direction:column; gap:8px;
+    padding:0 16px;
+  }
+  .cart-summary-meta{
+    font-family:var(--font-body); font-weight:500;
+    font-size:14px; line-height:18px; color:var(--text-muted);
+  }
   .cart-summary-row{
     display:flex; justify-content:space-between; align-items:center;
+    height:18px;
   }
   .cart-summary-label{
-    font-family:var(--font-body); font-size:14px; color:var(--text-muted);
+    font-family:var(--font-body); font-weight:500;
+    font-size:14px; line-height:18px; color:var(--text-muted);
+    flex:0 0 80px;
   }
   .cart-summary-value{
-    font-family:var(--font-body); font-size:14px; color:var(--text-default);
+    font-family:var(--font-body); font-weight:400;
+    font-size:16px; line-height:18px; color:#111827;
   }
   .cart-summary-total-label{
-    font-family:var(--font-body); font-size:16px; color:var(--text-default);
+    font-family:var(--font-body); font-weight:500;
+    font-size:14px; line-height:18px; color:var(--text-muted);
+    flex:0 0 80px;
   }
   .cart-summary-total-value{
     font-family:var(--font-body); font-weight:700;
-    font-size:18px; color:var(--text-default);
+    font-size:16px; line-height:18px; color:#111827;
   }
-  .cart-summary-meta{
-    font-family:var(--font-body); font-size:14px; color:var(--text-muted);
+  .cart-summary-actions{
+    padding:0 20px var(--space-xl);
+    display:flex; flex-direction:column; gap:16px;
   }
   .cart-actions{ display:flex; flex-direction:column; gap:var(--space-sm); }
   .btn-cart-primary{
@@ -3228,23 +3252,27 @@
 
     </div><!-- /cartItemsBlock -->
 
-    <!-- Block 3: order summary -->
+    <!-- Block 3: order summary — Figma 5381:14327 -->
     <div class="cart-summary-card">
-      <h2 class="cart-summary-title">Podsumowanie zamówienia</h2>
-      <div class="cart-summary-rows">
-        <div class="cart-summary-meta">6 produktów · 17 szt.</div>
-        <div class="cart-summary-row">
-          <span class="cart-summary-total-label">Razem (z VAT)</span>
-          <span class="cart-summary-total-value">1 712,96 €</span>
-        </div>
-        <div class="cart-summary-row">
-          <span class="cart-summary-label">Dostawa</span>
-          <span class="cart-summary-value">0</span>
-        </div>
+      <div class="cart-summary-header">
+        <h2 class="cart-summary-title">Podsumowanie zamówienia</h2>
       </div>
-      <div class="cart-actions">
-        <button class="btn-cart-primary" onclick="goToCheckout()">Przejdź do kasy</button>
-        <button class="btn-cart-secondary" onclick="goToResults()">Kontynuuj zakupy</button>
+      <div class="cart-summary-body">
+        <div class="cart-summary-rows">
+          <span class="cart-summary-meta" id="cartSummaryMeta">0 produktów · 0 szt.</span>
+          <div class="cart-summary-row">
+            <span class="cart-summary-total-label">Razem (z VAT)</span>
+            <span class="cart-summary-total-value" id="cartSummaryTotal">0,00 zł</span>
+          </div>
+          <div class="cart-summary-row">
+            <span class="cart-summary-label">Dostawa</span>
+            <span class="cart-summary-value">0</span>
+          </div>
+        </div>
+        <div class="cart-summary-actions">
+          <button class="btn-cart-primary" onclick="goToCheckout()">Przejdź do kasy</button>
+          <button class="btn-cart-secondary" onclick="goToResults()">Kontynuuj zakupy</button>
+        </div>
       </div>
     </div><!-- /cart-summary-card -->
 
@@ -6471,6 +6499,19 @@
     if (empty) empty.style.display = isEmpty ? 'flex' : 'none';
     if (items) items.style.display = isEmpty ? 'none' : 'block';
     if (sumCard) sumCard.style.display = isEmpty ? 'none' : 'block';
+
+    // Update summary meta and total
+    var metaEl = document.getElementById('cartSummaryMeta');
+    var totalEl = document.getElementById('cartSummaryTotal');
+    if (metaEl) {
+      var uniqueProducts = cartItems.length;
+      var totalQty = cartItems.reduce(function(s,i){ return s + i.qty; }, 0);
+      metaEl.textContent = uniqueProducts + ' produktów · ' + totalQty + ' szt.';
+    }
+    if (totalEl) {
+      var totalVal = cartItems.reduce(function(s,i){ return s + parseFloat(i.total); }, 0);
+      totalEl.textContent = totalVal.toFixed(2).replace('.', ',') + ' zł';
+    }
   }
   // Call on setScreen to screenCart
 
