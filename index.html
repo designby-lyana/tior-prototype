@@ -2112,7 +2112,8 @@
   /* ===== HOME SEARCH TABS ===== */
   #homeSearchSection{
     background:none;
-    margin-top:16px;
+    margin-top:64px;
+    margin-bottom:64px;
   }
   .home-tabs-wrap{
     display:flex;
@@ -2182,7 +2183,7 @@
   #homeChipsSection{
     background:var(--bg-page);
     padding-bottom:40px;
-    padding-top:8px;
+    padding-top:0;
   }
   .home-chips-section{
     display:flex;
@@ -2190,6 +2191,7 @@
     gap:4px;
     padding:12px 0;
   }
+  .home-chips-section:first-child{ padding-top:0; }
   .home-chips-label{
     font-family:var(--font-mono);
     font-weight:700;
@@ -2358,7 +2360,7 @@
     </div>
 
     <!-- TAB: SŁOWO KLUCZOWE -->
-    <div id="htabPanel-kluczowe" class="home-tab-panel" style="padding:24px;">
+    <div id="htabPanel-kluczowe" class="home-tab-panel" style="padding:24px 24px 0;">
       <input
         type="text"
         id="kwSearchInput"
@@ -2371,7 +2373,7 @@
 
     <!-- TAB: FILTRY -->
     <div id="htabPanel-filtry" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;background:none;border-top:1px solid var(--border-surface);">
+      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;background:none;padding-bottom:0;border-top:1px solid var(--border-surface);">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -2501,7 +2503,7 @@
 
     <!-- TAB: AUTO -->
     <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;background:none;border-top:1px solid var(--border-surface);">
+      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;background:none;padding-bottom:0;border-top:1px solid var(--border-surface);">
 
         <div class="row two-col">
           <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
