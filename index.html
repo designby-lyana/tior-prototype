@@ -2450,7 +2450,7 @@
           </div>
         </div>
 
-        <div class="row cta-slot" id="ctaSlotCollapsed">
+        <div class="row cta-slot" id="ctaSlotCollapsed" style="margin-bottom:8px;">
           <button class="cta" id="ctaExpanded" onclick="goToResults()">Pokaż opony</button>
         </div>
 
@@ -2516,24 +2516,6 @@
         </div>
 
         <div class="row">
-          <div class="field" id="euLabelFieldAuto" onclick="openEuDropdown(this)">
-            <div class="field-label-row">
-              <span class="field-label">
-                <span class="eu-hint-icons" style="display:inline-flex;gap:4px;color:var(--text-muted);">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 22h12M13 8h2a2 2 0 0 1 2 2v3a1 1 0 0 0 1 1h1V8l-3-3"/><line x1="7" y1="10" x2="9" y2="10"/></svg>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="19" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="16" y1="19" x2="16" y2="21"/></svg>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                </span>
-                <span class="eu-icons" style="display:none;"></span>
-                <span class="eu-default-text">EU LABEL</span><span class="eu-values-text" style="display:none;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:#0d0e13;"></span>
-              </span>
-              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="field" data-dd-key="carModel" onclick="openDropdown('carModel', this)">
             <div class="field-label-row">
               <span class="field-label">MODEL</span>
@@ -2561,6 +2543,10 @@
               <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
           </div>
+        </div>
+
+        <div class="row">
+          <button class="cta" id="ctaAuto" onclick="goToResults()">Pokaż opony</button>
         </div>
 
       </div>
@@ -4861,18 +4847,14 @@
     chip.addEventListener('click', () => chip.classList.toggle('is-selected'));
   });
 
-  // accordion: expand/collapse + move which CTA slot is visible
+  // accordion: expand/collapse (CTA button stays visible either way)
   const card = document.getElementById('filtersCard');
   const trigger = document.getElementById('accordionTrigger');
-  const ctaCollapsed = document.getElementById('ctaSlotCollapsed');
-  const ctaExpanded = document.getElementById('ctaSlotExpanded');
 
   trigger.addEventListener('click', () => {
     const expanded = !card.classList.contains('is-expanded');
     card.classList.toggle('is-expanded', expanded);
     trigger.setAttribute('aria-expanded', String(expanded));
-    ctaCollapsed.hidden = expanded;
-    ctaExpanded.hidden = !expanded;
   });
 
 
