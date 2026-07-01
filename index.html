@@ -2395,10 +2395,10 @@
         </div>
 
         <div class="row two-col">
-          <div class="field">
+          <div class="field" data-dd-key="typ" onclick="openDropdown('typ', this)">
             <div class="field-label-row"><span class="field-label">TYP</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
           </div>
-          <div class="field">
+          <div class="field" data-dd-key="sezon" onclick="openDropdown('sezon', this)">
             <div class="field-label-row"><span class="field-label">SEZON</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
           </div>
         </div>
@@ -2417,16 +2417,16 @@
         </div>
 
         <div class="row two-col">
-          <div class="field">
+          <div class="field" data-dd-key="segment" onclick="openDropdown('segment', this)">
             <div class="field-label-row"><span class="field-label">SEGMENT</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
           </div>
-          <div class="field">
+          <div class="field" data-dd-key="marka" onclick="openDropdown('marka', this)">
             <div class="field-label-row"><span class="field-label">MARKA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
           </div>
         </div>
 
         <div class="row two-col">
-          <div class="field">
+          <div class="field" data-dd-key="model" onclick="openDropdown('model', this)">
             <div class="field-label-row"><span class="field-label">MODEL</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
           </div>
           <div class="field" data-dd-key="ean" onclick="openDropdown('ean', this)">
@@ -2465,7 +2465,7 @@
           <div class="advanced-inner">
             <div class="advanced-inner-pad">
               <div class="two-col">
-                <div class="field">
+                <div class="field" data-dd-key="homologacja" onclick="openDropdown('homologacja', this)">
                   <div class="field-label-row"><span class="field-label">HOMOLOGACJA</span><svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
                 </div>
                 <div class="field" data-dd-key="dot" onclick="openDropdown('dot', this)">
@@ -5411,20 +5411,15 @@
   let activeKey    = null;
   const selections = {}; // key → selected label string
 
-  // Wire all .field divs
+  // Store original labels for reference (used by clearField).
+  // NOTE: click handlers are NOT attached here anymore — every dropdown
+  // field has its own explicit onclick="openDropdown('key', this)" in the
+  // HTML. Attaching a second listener here caused double-firing / stray
+  // side-menu clicks on some fields, so this stays wiring-free by design.
   document.querySelectorAll('.field').forEach(field => {
     const labelEl = field.querySelector('.field-label');
     if (!labelEl) return;
-    const labelText = labelEl.textContent.trim();
-    const key = LABEL_TO_KEY[labelText];
-    if (!key) return;
-    if (labelText === 'EU LABEL') return; // handled by custom EU overlay
-
-    field.dataset.ddKey = key;
-
-    // store original label for reference
     labelEl.dataset.originalLabel = labelEl.textContent.trim();
-    field.addEventListener('click', () => openDropdown(key, field));
   });
 
   function openDropdown(key, fieldEl) {
