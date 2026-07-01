@@ -2408,7 +2408,7 @@
             <div class="field-label-row">
               <span class="field-label" id="euLabelText">
                 <span class="eu-icons" id="euIconsSpan" style="display:none;"></span>
-                <span id="euDefaultText">EU LABEL</span><span id="euValuesText" style="display:none;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:#0d0e13;"></span>
+                <span class="eu-default-text" id="euDefaultText">EU LABEL</span><span class="eu-values-text" id="euValuesText" style="display:none;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:#0d0e13;"></span>
               </span>
               <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
               <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
@@ -2495,11 +2495,74 @@
     </div>
 
     <!-- TAB: AUTO -->
-    <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:24px;">
-      <div style="text-align:center;color:var(--text-muted);font-family:var(--font-body);font-size:16px;line-height:1.5;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--text-placeholder);margin-bottom:12px;"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg><br>
-        Wyszukiwanie według pojazdu<br>
-        <span style="color:var(--text-placeholder);font-size:14px;">Wkrótce dostępne</span>
+    <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0 0 80px;">
+      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;border-top:1px solid var(--border-surface);">
+
+        <div class="row two-col">
+          <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
+            <div class="field-label-row">
+              <span class="field-label">BRAND</span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+          <div class="field" data-dd-key="carYear" onclick="openDropdown('carYear', this)">
+            <div class="field-label-row">
+              <span class="field-label">YEAR</span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field" id="euLabelFieldAuto" onclick="openEuDropdown(this)">
+            <div class="field-label-row">
+              <span class="field-label">
+                <span class="eu-hint-icons" style="display:inline-flex;gap:4px;color:var(--text-muted);">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 22h12M13 8h2a2 2 0 0 1 2 2v3a1 1 0 0 0 1 1h1V8l-3-3"/><line x1="7" y1="10" x2="9" y2="10"/></svg>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="19" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="16" y1="19" x2="16" y2="21"/></svg>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                </span>
+                <span class="eu-icons" style="display:none;"></span>
+                <span class="eu-default-text">EU LABEL</span><span class="eu-values-text" style="display:none;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:#0d0e13;"></span>
+              </span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field" data-dd-key="carModel" onclick="openDropdown('carModel', this)">
+            <div class="field-label-row">
+              <span class="field-label">MODEL</span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field" data-dd-key="carGeneration" onclick="openDropdown('carGeneration', this)">
+            <div class="field-label-row">
+              <span class="field-label">GENERATION</span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field" data-dd-key="carEngine" onclick="openDropdown('carEngine', this)">
+            <div class="field-label-row">
+              <span class="field-label">ENGINE</span>
+              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <button class="field-clear" onclick="clearField(event,this)" aria-label="Wyczyść"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -5388,6 +5451,39 @@
     'indeks-predkosci': {
       label: 'INDEKS PRĘDKOŚCI', type: 'code', search: true,
       items: ['H (210)','T (190)','V (240)','W (270)','Y (300)','Z (>240)']
+    },
+    carBrand: {
+      label: 'BRAND', type: 'text', search: true,
+      items: [
+        'Audi','BMW','Citroën','Dacia','Fiat','Ford','Honda','Hyundai',
+        'Jeep','Kia','Mazda','Mercedes-Benz','Mitsubishi','Nissan','Opel',
+        'Peugeot','Renault','Seat','Škoda','Suzuki','Toyota','Volkswagen','Volvo'
+      ]
+    },
+    carYear: {
+      label: 'YEAR', type: 'code', search: false,
+      items: ['2026','2025','2024','2023','2022','2021','2020','2019','2018','2017','2016','2015','2014','2013','2012','2011','2010']
+    },
+    carModel: {
+      label: 'MODEL', type: 'text', search: true,
+      items: [
+        'A3','A4','A6','1 Series','3 Series','5 Series','X3','X5',
+        'C3','Corsa','Astra','Fiesta','Focus','Golf','Passat','Tiguan',
+        'Octavia','Superb','Fabia','Civic','CR-V','Tucson','i30',
+        'Clio','Megane','Duster','208','308','3008','Yaris','Corolla','RAV4'
+      ]
+    },
+    carGeneration: {
+      label: 'GENERATION', type: 'text', search: false,
+      items: ['I','II','III','IV','V','VI','VII','Facelift']
+    },
+    carEngine: {
+      label: 'ENGINE', type: 'code', search: true,
+      items: [
+        '1.0 TSI','1.2 PureTech','1.4 TDI','1.4 TSI','1.5 dCi','1.5 TSI',
+        '1.6 HDi','1.6 TDI','2.0 TDI','2.0 TFSI','2.0 TSI','1.8 T',
+        '2.2 CDTI','1.3 CDTI','1.0 EcoBoost','1.5 EcoBoost','2.0 CRDi'
+      ]
     }
   };
 
@@ -5563,6 +5659,14 @@
     event.stopPropagation();
     const field = btn.closest('.field');
     if (!field) return;
+    // EU LABEL fields have a nested span structure (icons/default/values) —
+    // clearing them via euClear() keeps that structure intact instead of
+    // collapsing it to plain text.
+    if (field.querySelector('.eu-default-text')) {
+      if (euActiveField !== field) euActiveField = field;
+      euClear();
+      return;
+    }
     const key = field.dataset.ddKey;
     if (key) delete selections[key];
     const labelEl = field.querySelector('.field-label');
@@ -5700,8 +5804,8 @@
       b.style.color='#323744'; b.classList.remove('eu-selected');
     });
     if(euActiveField){
-      var def=document.getElementById('euDefaultText'); if(def) def.style.display='inline';
-      var val=document.getElementById('euValuesText'); if(val){ val.textContent=''; val.style.display='none'; }
+      var def=euActiveField.querySelector('.eu-default-text'); if(def) def.style.display='inline';
+      var val=euActiveField.querySelector('.eu-values-text'); if(val){ val.textContent=''; val.style.display='none'; }
       euActiveField.classList.remove('has-value');
     }
     document.getElementById('eu-clearrow').style.display='none';
@@ -5725,8 +5829,8 @@
     if(euSel.opor)  parts.push(badge(fuelSvg,  euSel.opor,  (euC.opor[euSel.opor]  || '#888')));
     if(euSel.mokra) parts.push(badge(wetSvg,   euSel.mokra, (euC.mokra[euSel.mokra] || '#888')));
     if(euSel.halas) parts.push(badge(noiseSvg, euSel.halas, (euC.halas[euSel.halas] || '#888')));
-    var def = document.getElementById('euDefaultText');
-    var val = document.getElementById('euValuesText');
+    var def = euActiveField ? euActiveField.querySelector('.eu-default-text') : null;
+    var val = euActiveField ? euActiveField.querySelector('.eu-values-text') : null;
     if(parts.length){
       if(def) def.style.display='none';
       if(val){ val.innerHTML = parts.join('<span style="color:var(--text-muted);margin:0 2px;">·</span>'); val.style.display='inline-flex'; val.style.alignItems='center'; val.style.gap='4px'; }
@@ -5753,9 +5857,8 @@
     }
     // EU dropdown
     var euSh = document.getElementById('euSheet');
-    var euFl = document.getElementById('euLabelField');
     if(euSh && euSh.style.display==='block'){
-      if(!euSh.contains(e.target) && euFl && !euFl.contains(e.target)){
+      if(!euSh.contains(e.target) && !(euActiveField && euActiveField.contains(e.target))){
         closeEu();
       }
     }
