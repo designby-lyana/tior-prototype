@@ -2110,15 +2110,14 @@
 
   /* ===== HOME SEARCH TABS ===== */
   #homeSearchSection{
-    background:var(--bg-input);
+    background:none;
     margin-top:16px;
-    box-shadow:0 4px 16px rgba(0,0,0,.08);
   }
   .home-tabs-wrap{
     display:flex;
     align-items:stretch;
     border-bottom:none;
-    background:var(--bg-input);
+    background:none;
     padding:0 0 0 24px;
     gap:0;
     overflow-x:auto;
@@ -2156,7 +2155,7 @@
     border-bottom-color:var(--accent-primary);
   }
 
-  .home-tab-panel{ background:var(--bg-input); }
+  .home-tab-panel{ background:none; }
 
   /* Słowo kluczowe input */
   .home-kw-input{
@@ -2371,7 +2370,7 @@
 
     <!-- TAB: FILTRY -->
     <div id="htabPanel-filtry" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;border-top:1px solid var(--border-surface);">
+      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;background:none;border-top:1px solid var(--border-surface);">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -2496,7 +2495,7 @@
 
     <!-- TAB: AUTO -->
     <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;border-top:1px solid var(--border-surface);">
+      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;background:none;border-top:1px solid var(--border-surface);">
 
         <div class="row two-col">
           <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
