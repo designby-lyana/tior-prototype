@@ -672,6 +672,7 @@
     transition:background 100ms ease;
     overflow:hidden;
     scroll-snap-align:start;
+    scroll-snap-stop:always;
   }
   .dd-item:hover{ background:var(--bg-page); }
   .dd-item:last-child{ border-bottom:none; }
@@ -5539,7 +5540,7 @@
     var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
     var isTextOnly2 = !!(DD_DATA[key] && DD_DATA[key].textInput);
     var searchH = (DD_DATA[key] && DD_DATA[key].search || isTextOnly2) ? 52 : 0;
-    var ROW_H = 44;
+    var ROW_H = 40;
     var sheetH = (itemCount >= 5 && !isTextOnly2) ? (searchH + ROW_H * 5) : (isTextOnly2 ? searchH : 'auto');
 
     // Flip-up: use scrollable area, not just visible height
