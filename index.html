@@ -2360,20 +2360,24 @@
     </div>
 
     <!-- TAB: SŁOWO KLUCZOWE -->
-    <div id="htabPanel-kluczowe" class="home-tab-panel" style="padding:24px 24px 0;">
-      <input
-        type="text"
-        id="kwSearchInput"
-        class="home-kw-input"
-        placeholder="Rozmiar, marka, model lub kod EAN"
-        oninput="filterKwChips(this.value)"
-      >
-      <button class="cta" id="ctaCollapsed" onclick="goToResults()" style="margin-top:12px;">Pokaż opony</button>
+    <div id="htabPanel-kluczowe" class="home-tab-panel" style="padding:0;">
+      <div class="card" style="border-radius:0;box-shadow:none;border:none;margin-bottom:0;">
+        <input
+          type="text"
+          id="kwSearchInput"
+          class="home-kw-input"
+          placeholder="Rozmiar, marka, model lub kod EAN"
+          oninput="filterKwChips(this.value)"
+        >
+      </div>
+      <div style="margin:16px 24px 0;">
+        <button class="cta" id="ctaCollapsed" onclick="goToResults()">Pokaż opony</button>
+      </div>
     </div>
 
     <!-- TAB: FILTRY -->
-    <div id="htabPanel-filtry" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;background:none;padding-bottom:0;border-top:1px solid var(--border-surface);">
+    <div id="htabPanel-filtry" class="home-tab-panel" style="display:none;padding:0;">
+      <div class="card" id="filtersCard" style="border-radius:0;box-shadow:none;border:none;margin-bottom:0;">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -2457,10 +2461,6 @@
           </div>
         </div>
 
-        <div class="row cta-slot" id="ctaSlotCollapsed" style="margin-bottom:8px;">
-          <button class="cta" id="ctaExpanded" onclick="goToResults()">Pokaż opony</button>
-        </div>
-
         <div class="row">
           <button class="accordion-trigger" id="accordionTrigger" aria-expanded="false" aria-controls="advancedWrap">
             Wyszukiwanie zaawansowane
@@ -2499,11 +2499,15 @@
         </div>
 
       </div>
+
+      <div style="margin:16px 24px 0;">
+        <button class="cta" id="ctaExpanded" onclick="goToResults()">Pokaż opony</button>
+      </div>
     </div>
 
     <!-- TAB: AUTO -->
-    <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0 0 80px;">
-      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;background:none;padding-bottom:0;border-top:1px solid var(--border-surface);">
+    <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0;">
+      <div class="card" id="autoFiltersCard" style="border-radius:0;box-shadow:none;border:none;margin-bottom:0;">
 
         <div class="row two-col">
           <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
@@ -2552,10 +2556,10 @@
           </div>
         </div>
 
-        <div class="row">
-          <button class="cta" id="ctaAuto" onclick="goToResults()">Pokaż opony</button>
-        </div>
+      </div>
 
+      <div style="margin:16px 24px 0;">
+        <button class="cta" id="ctaAuto" onclick="goToResults()">Pokaż opony</button>
       </div>
     </div>
 
