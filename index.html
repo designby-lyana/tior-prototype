@@ -2375,11 +2375,7 @@
 
     <!-- TAB BAR -->
     <div class="home-tabs-wrap">
-      <button class="home-tab is-active" id="htabKluczowe" onclick="switchHomeTab('kluczowe')">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        Słowo kluczowe
-      </button>
-      <button class="home-tab" id="htabFiltry" onclick="switchHomeTab('filtry')">
+      <button class="home-tab is-active" id="htabFiltry" onclick="switchHomeTab('filtry')">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7,6h10l-5.01,6.3L7,6z M4.25,5.61C6.27,8.2,10,13,10,13v6c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v-6c0,0,3.72-4.8,5.74-7.39C20.25,4.95,19.78,4,18.95,4H5.04C4.21,4,3.74,4.95,4.25,5.61z"/></svg>
         Filtry
       </button>
@@ -2389,24 +2385,8 @@
       </button>
     </div>
 
-    <!-- TAB: SŁOWO KLUCZOWE -->
-    <div id="htabPanel-kluczowe" class="home-tab-panel" style="padding:0;">
-      <div class="card" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;">
-        <input
-          type="text"
-          id="kwSearchInput"
-          class="home-kw-input"
-          placeholder="Rozmiar, marka, model lub kod EAN"
-          oninput="filterKwChips(this.value)"
-        >
-      </div>
-      <div style="margin:16px 24px 0;">
-        <button class="cta" id="ctaCollapsed" onclick="goToResults()">Pokaż opony</button>
-      </div>
-    </div>
-
     <!-- TAB: FILTRY -->
-    <div id="htabPanel-filtry" class="home-tab-panel" style="display:none;padding:0;">
+    <div id="htabPanel-filtry" class="home-tab-panel" style="padding:0;">
       <div class="card" id="filtersCard" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;">
 
         <div class="rozmiar-block">
@@ -5636,9 +5616,10 @@
   function goToCart(){    setScreen('screenCart'); renderCartItems(); updateCartState(); applyCartGuestUI(); }
   function goToCheckout(){ setScreen('screenCheckout'); if(typeof renderCheckoutAddrList==='function') renderCheckoutAddrList(); }
 
-  document.getElementById('ctaCollapsed').addEventListener('click', goToResults);
-  document.getElementById('ctaExpanded').addEventListener('click', goToResults);
-  document.getElementById('logoResults').addEventListener('click', goHome);
+  var ctaExpandedEl = document.getElementById('ctaExpanded');
+  if (ctaExpandedEl) ctaExpandedEl.addEventListener('click', goToResults);
+  var logoResultsEl = document.getElementById('logoResults');
+  if (logoResultsEl) logoResultsEl.addEventListener('click', goHome);
 
   // quantity steppers on product rows
   document.querySelectorAll('.qty-stepper').forEach(stepper => {
@@ -8176,10 +8157,10 @@ function submitOrder() {
 
 
   // ===== HOME SEARCH TABS =====
-  var HOME_TABS = ['kluczowe','filtry','auto'];
+  var HOME_TABS = ['filtry','auto'];
   function switchHomeTab(tab) {
     HOME_TABS.forEach(function(t) {
-      var btn = document.getElementById('htab' + (t==='kluczowe'?'Kluczowe':t==='filtry'?'Filtry':'Auto'));
+      var btn = document.getElementById('htab' + (t==='filtry'?'Filtry':'Auto'));
       var panel = document.getElementById('htabPanel-' + t);
       if (btn) btn.classList.toggle('is-active', t === tab);
       if (panel) panel.style.display = t === tab ? '' : 'none';
@@ -8220,11 +8201,9 @@ function submitOrder() {
     }, { passive: true });
   })();
 
-  // ===== QUICK CHIPS: set value in kw field and switch to that tab =====
+  // ===== QUICK CHIPS: switch to Filtry tab (kw field removed together with Słowo kluczowe tab) =====
   function setKwAndSearch(val) {
-    switchHomeTab('kluczowe');
-    var inp = document.getElementById('kwSearchInput');
-    if (inp) { inp.value = val; inp.focus(); }
+    switchHomeTab('filtry');
   }
 
   // ===== CHIPS FADE: hide right fade when scrolled to end =====
