@@ -5667,7 +5667,18 @@
 
 
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses'];
+  function closeAllOverlays(){
+    document.querySelectorAll('.flt-backdrop.is-open, .flt-sheet.is-open, .dd-backdrop.is-open, .dd-sheet.is-open').forEach(function(el){ el.classList.remove('is-open'); });
+    if (typeof closeDropdown === 'function') closeDropdown();
+    if (typeof closeEu === 'function') closeEu();
+    var euSheetEl = document.getElementById('euSheet');
+    if (euSheetEl && euSheetEl.style.display !== 'none') { euSheetEl.style.display = 'none'; euSheetEl.style.pointerEvents = 'none'; }
+    var euBackdropEl = document.getElementById('euBackdrop');
+    if (euBackdropEl) euBackdropEl.style.display = 'none';
+  }
+
   function setScreen(id){
+    closeAllOverlays();
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
       if(el) el.classList.remove('is-active');
@@ -7139,7 +7150,7 @@
           '<div class="orl-items">' + itemsHtml + '</div>' +
           '<div class="orl-row-footer">' +
             '<div class="orl-gross">' +
-              '<span class="orl-gross-label">Wartość gross</span>' +
+              '<span class="orl-gross-label">Brutto</span>' +
               '<span class="orl-gross-value">' + o.totalLabel + '</span>' +
             '</div>' +
             '<div class="orl-actions">' +
