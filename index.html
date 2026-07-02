@@ -6863,11 +6863,12 @@
       var html = '';
       o.items.forEach(function(it, idx) {
         var isLast = idx === o.items.length - 1;
+        var imgHtml = it.image
+          ? '<img src="' + it.image + '" alt="opona" style="width:100%;height:100%;object-fit:contain;">'
+          : '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="24" cy="24" r="22" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="10" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="#9ca3af"/></svg>';
         html += '<div class="od-item"' + (isLast ? ' style="border-bottom:none;"' : '') + '>' +
           '<div class="od-item-top">' +
-            '<div class="od-item-img">' +
-              '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="24" cy="24" r="22" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="10" stroke="#d1d5db" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="#9ca3af"/></svg>' +
-            '</div>' +
+            '<div class="od-item-img">' + imgHtml + '</div>' +
             '<div class="od-item-info">' +
               '<div class="od-item-name">' + (it.model || it.brand || '—') + '</div>' +
               '<div class="od-item-size">' + (it.spec || '') + '</div>' +
@@ -7268,11 +7269,14 @@
     var unitPrice = priceEl ? parseFloat(priceEl.textContent.replace(/[^\d.,]/g,'').replace(',','.')) : 151.59;
     var total = (unitPrice * qty).toFixed(2);
 
-    // Gather season icon SVG from product-row .pr-image
+    // Gather season icon SVG and product image from product-row .pr-image
     var seasonSvg = '';
+    var productImage = '';
     if(card) {
-      var imgEl = card.querySelector('.pr-image svg');
-      if(imgEl) seasonSvg = imgEl.outerHTML;
+      var imgSvgEl = card.querySelector('.pr-image svg');
+      if(imgSvgEl) seasonSvg = imgSvgEl.outerHTML;
+      var imgPhotoEl = card.querySelector('.pr-image img');
+      if(imgPhotoEl) productImage = imgPhotoEl.getAttribute('src');
     }
 
     // Save to cartItems (merge if same model+spec)
@@ -7287,7 +7291,7 @@
     } else {
       cartItems.push({key: itemKey, model: model, spec: spec, brand: brand,
         unitPrice: unitPrice, qty: qty, total: (unitPrice * qty).toFixed(2),
-        seasonSvg: seasonSvg});
+        seasonSvg: seasonSvg, image: productImage});
     }
 
     cartCount += qty;
