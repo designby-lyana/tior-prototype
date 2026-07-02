@@ -150,7 +150,7 @@
     background:var(--bg-surface-light);
     border:none;
     border-radius:var(--radius-lg);
-    padding:var(--space-2xl);
+    padding:var(--space-xl) var(--space-md);
     display:flex;
     flex-direction:column;
     gap:16px;
@@ -298,9 +298,10 @@
   .advanced-wrap{
     display:grid;
     grid-template-rows:0fr;
-    transition:grid-template-rows 320ms ease;
+    margin-top:-16px;
+    transition:grid-template-rows 320ms ease, margin-top 320ms ease;
   }
-  .card.is-expanded .advanced-wrap{grid-template-rows:1fr;}
+  .card.is-expanded .advanced-wrap{grid-template-rows:1fr; margin-top:0;}
   .advanced-inner{
     min-height:0;
     overflow:hidden;
@@ -2136,8 +2137,8 @@
   /* ===== HOME SEARCH TABS ===== */
   #homeSearchSection{
     background:none;
-    margin-top:64px;
-    margin-bottom:64px;
+    margin-top:32px;
+    margin-bottom:32px;
   }
   .home-tabs-wrap{
     display:flex;
