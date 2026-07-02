@@ -2671,14 +2671,6 @@
 
       <div style="display:flex;flex-direction:column;gap:8px;">
 
-        <div class="results-search-wrap">
-          <div class="results-search-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
-            <input type="text" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field">
-          </div>
-          <button class="btn-outline-search results-find-btn">Pokaż opony</button>
-        </div>
-
         <div class="filter-bar">
           <div class="ean-toggle" id="eanToggle" style="cursor:pointer;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
             <span>EAN</span>
@@ -2696,6 +2688,14 @@
             </button>
           </div>
         </div><!-- /filter-bar -->
+
+        <div class="results-search-wrap">
+          <div class="results-search-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field">
+          </div>
+          <button class="btn-outline-search results-find-btn">Pokaż opony</button>
+        </div>
 
       </div><!-- /top-group -->
 
