@@ -604,6 +604,22 @@
   .field{ cursor:pointer; }
   .field.dd-open .field-chevron{ transform:rotate(180deg); }
   .field.dd-open .field-label{ color:var(--text-on-light); }
+  /* Overlay "виходить" з-під тригера безшовно: прибираємо межу й радіус на стику */
+  .field.dd-open{
+    border-bottom-color:transparent;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+    position:relative;
+    z-index:202;
+  }
+  .field.dd-open.dd-flip-up{
+    border-bottom-color:var(--border-default);
+    border-bottom-left-radius:var(--radius-sm);
+    border-bottom-right-radius:var(--radius-sm);
+    border-top-color:transparent;
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+  }
   .field-chevron{ transition:transform 220ms ease; }
   .field.has-value .field-label{ color:var(--accent-primary) !important; }
   .field.has-value .field-chevron{ display:none; }
@@ -6033,8 +6049,8 @@
         'Zmax'
       ]
     },
-    nosnosc: { label: 'NOŚNŐŚĆ', type: 'code', search: true, items: ["62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130"] },
-    predkosc: { label: 'PRĘDKOŚĆ', type: 'code', search: true, items: ["F", "G", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "H", "V", "W", "Y", "ZR"] },
+    nosnosc: { label: 'NOŚNŐŚĆ', type: 'code', search: false, items: ["62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130"] },
+    predkosc: { label: 'PRĘDKOŚĆ', type: 'code', search: false, items: ["F", "G", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "H", "V", "W", "Y", "ZR"] },
     model: {
       label: 'MODEL', type: 'text', search: true,
       items: [
@@ -6180,7 +6196,7 @@
       ]
     },
     dot: {
-      label: 'DOT', type: 'code', search: true,
+      label: 'DOT', type: 'code', search: false,
       items: ['≥ 2025','≥ 2024','≥ 2023','≥ 2022','< 2021']
     },
     'indeks-nosnosci': {
@@ -6262,9 +6278,15 @@
     const data = DD_DATA[key];
     if (!data) return;
 
+    // toggle-close: повторний клік на вже відкритий тригер згортає дропдаун
+    if (activeField === fieldEl && ddSheet.classList.contains('is-open')) {
+      closeDropdown();
+      return;
+    }
+
     // close previous if different field
     if (activeField && activeField !== fieldEl) {
-      activeField.classList.remove('dd-open');
+      activeField.classList.remove('dd-open', 'dd-flip-up');
     }
 
     activeField = fieldEl;
@@ -6293,13 +6315,14 @@
 
     var itemCount   = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
     var isTextOnly2 = !!(DD_DATA[key] && DD_DATA[key].textInput);
-    var searchH     = (DD_DATA[key] && DD_DATA[key].search || isTextOnly2) ? 52 : 0;
+    var hasSearch   = !!(DD_DATA[key] && DD_DATA[key].search) || isTextOnly2;
+    var searchH     = hasSearch ? 52 : 0;
     var ROW_H       = 40;
     var MAX_ROWS    = 6; // "5–7 видимих рядків" — беремо середнє, решта під скрол
 
-    // ── WIDTH: великі списки (Rozmiar/Marka/Model/EAN) розтягуються майже на всю картку фільтрів ──
-    var LARGE_KEYS = { rozmiar:1, marka:1, model:1, ean:1 };
-    var isLarge = !!LARGE_KEYS[key];
+    // ── WIDTH: дропдауни з пошуком (Rozmiar/Marka/Model/Homologacja/EAN...) розтягуються майже на всю картку,
+    //           дропдауни без пошуку (Typ/Sezon/Segment/DOT/Nośność/Prędkość) — по ширині поля ──
+    var isLarge = hasSearch;
     var sheetLeft  = leftInPhone;
     var sheetWidth = fieldRect.width;
     if (isLarge) {
@@ -6340,15 +6363,22 @@
       ddSheet.style.bottom = (phoneH - fieldTopInPhone) + 'px';
       ddSheet.style.top = 'auto';
       ddSheet.style.borderRadius = 'var(--radius-lg) var(--radius-lg) 0 0';
+      // overlay "виходить" з-під поля зверху — прибираємо межу знизу оверлея (стик з полем)
+      ddSheet.style.borderTop = '1px solid var(--border-default)';
+      ddSheet.style.borderBottom = 'none';
     } else {
       ddSheet.style.top    = fieldBottomInPhone + 'px';
       ddSheet.style.bottom = 'auto';
       ddSheet.style.borderRadius = '0 0 var(--radius-lg) var(--radius-lg)';
+      // overlay "виходить" з-під поля знизу — прибираємо межу зверху оверлея (стик з полем)
+      ddSheet.style.borderTop = 'none';
+      ddSheet.style.borderBottom = '1px solid var(--border-default)';
     }
     ddSheet.style.height = sheetH + 'px';
     ddSheet.style.maxHeight = '';
 
     fieldEl.classList.add('dd-open');
+    fieldEl.classList.toggle('dd-flip-up', flipUp);
     ddBackdrop.classList.toggle('is-scrim', isLarge);
     ddBackdrop.classList.add('is-open');
     ddSheet.classList.add('is-open');
@@ -6463,9 +6493,9 @@
   }
 
   function closeDropdown() {
-    if (activeField) activeField.classList.remove('dd-open');
+    if (activeField) activeField.classList.remove('dd-open', 'dd-flip-up');
     commitEanValue();
-    ddBackdrop.classList.remove('is-open');
+    ddBackdrop.classList.remove('is-open', 'is-scrim');
     ddSheet.classList.remove('is-open');
     activeField = null;
   }
@@ -6505,6 +6535,12 @@
   });
 
   function openEuDropdown(fieldEl) {
+    // toggle-close: повторний клік на вже відкритий тригер згортає дропдаун
+    var sheetCheck = document.getElementById('euSheet');
+    if (euActiveField === fieldEl && sheetCheck && sheetCheck.style.display === 'block') {
+      closeEu();
+      return;
+    }
     euActiveField = fieldEl;
     var sheet = document.getElementById('euSheet');
     var backdrop = document.getElementById('euBackdrop');
