@@ -2583,16 +2583,16 @@
       <div class="home-chips-label">SZYBKI WYBÓR</div>
       <div class="home-chips-wrap" id="chipsWrap1">
         <div class="home-chips-scroll" id="chipsScroll1">
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('205/55')">205/55</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('235/65')">235/65</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('104/102')">104/102</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('235/65 R16')">235/65 R16</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('195/65 R15')">195/65 R15</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('225/45 R17')">225/45 R17</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('255/55 R19')">255/55 R19</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('205/60 R16')">205/60 R16</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('245/40 R18')">245/40 R18</button>
-          <button class="home-chip home-chip-code" onclick="setKwAndSearch('175/65 R14')">175/65 R14</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('205/55')">205/55</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('235/65')">235/65</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('104/102')">104/102</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('235/65 R16')">235/65 R16</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('195/65 R15')">195/65 R15</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('225/45 R17')">225/45 R17</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('255/55 R19')">255/55 R19</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('205/60 R16')">205/60 R16</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('245/40 R18')">245/40 R18</button>
+          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('175/65 R14')">175/65 R14</button>
         </div>
       </div>
     </div>
@@ -2601,16 +2601,16 @@
       <div class="home-chips-label">POPULARNE PRODUKTY</div>
       <div class="home-chips-wrap" id="chipsWrap2">
         <div class="home-chips-scroll" id="chipsScroll2">
-          <button class="home-chip" onclick="setKwAndSearch('Pilot Sport 5')">Pilot Sport 5</button>
-          <button class="home-chip" onclick="setKwAndSearch('Continental Winter')">Continental Winter</button>
-          <button class="home-chip" onclick="setKwAndSearch('Solazo')">Solazo</button>
-          <button class="home-chip" onclick="setKwAndSearch('Michelin Primacy')">Michelin Primacy</button>
-          <button class="home-chip" onclick="setKwAndSearch('Goodyear Vector')">Goodyear Vector</button>
-          <button class="home-chip" onclick="setKwAndSearch('Bridgestone Turanza')">Bridgestone Turanza</button>
-          <button class="home-chip" onclick="setKwAndSearch('Nokian Tyres')">Nokian Tyres</button>
-          <button class="home-chip" onclick="setKwAndSearch('Hankook Ventus')">Hankook Ventus</button>
-          <button class="home-chip" onclick="setKwAndSearch('Pirelli P Zero')">Pirelli P Zero</button>
-          <button class="home-chip" onclick="setKwAndSearch('Dunlop Sport')">Dunlop Sport</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Pilot Sport 5</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Continental')">Continental Winter</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Sava')">Solazo</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Michelin Primacy</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Goodyear')">Goodyear Vector</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Bridgestone')">Bridgestone Turanza</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Nokian')">Nokian Tyres</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Hankook')">Hankook Ventus</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Pirelli')">Pirelli P Zero</button>
+          <button class="home-chip" onclick="setMarkaFromChip('Dunlop')">Dunlop Sport</button>
         </div>
       </div>
     </div>
@@ -8202,9 +8202,40 @@ function submitOrder() {
     }, { passive: true });
   })();
 
-  // ===== QUICK CHIPS: switch to Filtry tab (kw field removed together with Słowo kluczowe tab) =====
-  function setKwAndSearch(val) {
+  // ===== QUICK CHIPS: switch to Filtry tab + prefill a field (kw field removed together with Słowo kluczowe tab) =====
+  // Chips only prefill the value — user still has to press the CTA ("Pokaż opony") to search.
+  function fillChipField(key, fieldEl, val) {
+    if (!fieldEl) return;
+    selections[key] = val;
+    var data = DD_DATA[key];
+    var labelEl = fieldEl.querySelector('.field-label');
+    if (labelEl) {
+      labelEl.textContent = val;
+      labelEl.style.color = 'var(--text-default)';
+      labelEl.style.textTransform = 'none';
+      labelEl.style.letterSpacing = '0';
+      if (data && data.type === 'code') {
+        labelEl.style.fontFamily = 'var(--font-mono)';
+        labelEl.style.fontWeight = '400';
+        labelEl.style.fontSize = '14px';
+      } else {
+        labelEl.style.fontFamily = 'var(--font-body)';
+        labelEl.style.fontWeight = '400';
+        labelEl.style.fontSize = '16px';
+      }
+    }
+    fieldEl.classList.add('has-value');
+  }
+
+  function setRozmiarFromChip(val) {
     switchHomeTab('filtry');
+    fillChipField('rozmiar', document.getElementById('rozmiar1Field'), val);
+  }
+
+  function setMarkaFromChip(brand) {
+    switchHomeTab('filtry');
+    var markaField = document.querySelector('.field[data-dd-key="marka"]');
+    fillChipField('marka', markaField, brand);
   }
 
   // ===== CHIPS FADE: hide right fade when scrolled to end =====
