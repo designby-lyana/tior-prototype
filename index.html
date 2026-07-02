@@ -156,7 +156,7 @@
     gap:16px;
     box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
   }
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;column-gap:12px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
   .size-row{display:flex;align-items:center;gap:8px;}
   .size-row .field{flex:1;}
@@ -309,7 +309,7 @@
     transition:opacity 200ms ease 60ms;
   }
   .card.is-expanded .advanced-inner{opacity:1;}
-  .advanced-inner-pad{padding-top:var(--space-lg);display:flex;flex-direction:column;gap:var(--space-lg);}
+  .advanced-inner-pad{display:flex;flex-direction:column;gap:var(--space-lg);}
 
   .cta-slot[hidden]{display:none;}
 
@@ -2672,6 +2672,13 @@
 
       <div style="display:flex;flex-direction:column;gap:8px;">
 
+        <div class="results-search-wrap">
+          <div class="results-search-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+            <input type="text" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field">
+          </div>
+        </div>
+
         <div class="filter-bar">
           <div class="ean-toggle" id="eanToggle" style="cursor:pointer;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
             <span>EAN</span>
@@ -2690,13 +2697,7 @@
           </div>
         </div><!-- /filter-bar -->
 
-        <div class="results-search-wrap">
-          <div class="results-search-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
-            <input type="text" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field">
-          </div>
-          <button class="btn-outline-search results-find-btn">Pokaż opony</button>
-        </div>
+        <button class="btn-outline-search results-find-btn">Pokaż opony</button>
 
       </div><!-- /top-group -->
 
