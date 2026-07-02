@@ -2213,23 +2213,34 @@
   /* ===== HOME QUICK CHIPS ===== */
   #homeChipsSection{
     background:var(--bg-page);
-    padding-bottom:40px;
+    padding-bottom:32px;
     padding-top:0;
   }
   .home-chips-section{
     display:flex;
     flex-direction:column;
-    gap:4px;
-    padding:12px 0;
+    gap:16px;
+    padding:24px 0 0;
   }
-  .home-chips-section:first-child{ padding-top:0; }
-  .home-chips-label{
+  .home-chips-title{
     font-family:var(--font-mono);
     font-weight:700;
-    font-size:13px;
+    font-size:24px;
     letter-spacing:.7px;
     color:var(--accent-primary);
     text-transform:uppercase;
+    padding:0 24px;
+  }
+  .home-chips-group{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .home-chips-sublabel{
+    font-family:var(--font-body);
+    font-weight:400;
+    font-size:20px;
+    color:var(--text-muted);
     padding:0 24px;
   }
   /* Wrapper з fade-ефектом праворуч */
@@ -2576,43 +2587,48 @@
 
   </div><!-- /homeSearchSection -->
 
-  <!-- ======= QUICK CHIPS SECTIONS ======= -->
+  <!-- ======= QUICK CHIPS SECTION ======= -->
   <div id="homeChipsSection">
 
     <div class="home-chips-section">
-      <div class="home-chips-label">SZYBKI WYBÓR</div>
-      <div class="home-chips-wrap" id="chipsWrap1">
-        <div class="home-chips-scroll" id="chipsScroll1">
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2055516')">2055516</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2356517')">2356517</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2156016')">2156016</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2356516')">2356516</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('1956515')">1956515</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2254517')">2254517</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2555519')">2555519</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2056016')">2056016</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2454018')">2454018</button>
-          <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('1756514')">1756514</button>
-        </div>
-      </div>
-    </div>
+      <div class="home-chips-title">SZYBKI WYBÓR</div>
 
-    <div class="home-chips-section">
-      <div class="home-chips-label">POPULARNE PRODUKTY</div>
-      <div class="home-chips-wrap" id="chipsWrap2">
-        <div class="home-chips-scroll" id="chipsScroll2">
-          <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Pilot Sport 5</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Continental')">Continental Winter</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Sava')">Solazo</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Michelin Primacy</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Goodyear')">Goodyear Vector</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Bridgestone')">Bridgestone Turanza</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Nokian')">Nokian Tyres</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Hankook')">Hankook Ventus</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Pirelli')">Pirelli P Zero</button>
-          <button class="home-chip" onclick="setMarkaFromChip('Dunlop')">Dunlop Sport</button>
+      <div class="home-chips-group">
+        <div class="home-chips-sublabel">Rozmiar</div>
+        <div class="home-chips-wrap" id="chipsWrap1">
+          <div class="home-chips-scroll" id="chipsScroll1">
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2055516')">2055516</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2356517')">2356517</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2156016')">2156016</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2356516')">2356516</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('1956515')">1956515</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2254517')">2254517</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2555519')">2555519</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2056016')">2056016</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('2454018')">2454018</button>
+            <button class="home-chip home-chip-code" onclick="setRozmiarFromChip('1756514')">1756514</button>
+          </div>
         </div>
       </div>
+
+      <div class="home-chips-group">
+        <div class="home-chips-sublabel">Popularne produkty</div>
+        <div class="home-chips-wrap" id="chipsWrap2">
+          <div class="home-chips-scroll" id="chipsScroll2">
+            <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Pilot Sport 5</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Continental')">Continental Winter</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Sava')">Solazo</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Michelin')">Michelin Primacy</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Goodyear')">Goodyear Vector</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Bridgestone')">Bridgestone Turanza</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Nokian')">Nokian Tyres</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Hankook')">Hankook Ventus</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Pirelli')">Pirelli P Zero</button>
+            <button class="home-chip" onclick="setMarkaFromChip('Dunlop')">Dunlop Sport</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div><!-- /homeChipsSection -->
