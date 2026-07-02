@@ -624,8 +624,10 @@
     background:transparent;
     z-index:200;
     pointer-events:none;
+    transition:background 140ms ease;
   }
   .dd-backdrop.is-open{ display:block; pointer-events:auto; }
+  .dd-backdrop.is-scrim.is-open{ background:rgba(0,0,0,.07); }
   .dd-sheet{
     display:none;
     position:absolute;
@@ -634,7 +636,7 @@
     z-index:201;
     flex-direction:column;
     overflow:hidden;
-    box-shadow:0 6px 20px rgba(0,0,0,.14);
+    box-shadow:0 14px 32px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.09);
     border:1px solid var(--border-default);
     border-top:none;
     border-bottom:none;
@@ -6282,48 +6284,70 @@
     const phone = document.getElementById('phone');
     const phoneRect = phone ? phone.getBoundingClientRect() : {left:0, top:0};
     const fieldRect = fieldEl.getBoundingClientRect();
-    const topInPhone = fieldRect.bottom - phoneRect.top;
-    const leftInPhone = fieldRect.left - phoneRect.left;
+    // field's top/bottom edges, in phone-local coordinates (phone is the scroll container)
+    const fieldTopInPhone    = fieldRect.top    - phoneRect.top;
+    const fieldBottomInPhone = fieldRect.bottom - phoneRect.top;
+    const leftInPhone        = fieldRect.left   - phoneRect.left;
 
-    var itemCount = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
+    var itemCount   = (DD_DATA[key] && DD_DATA[key].items) ? DD_DATA[key].items.length : 0;
     var isTextOnly2 = !!(DD_DATA[key] && DD_DATA[key].textInput);
-    var searchH = (DD_DATA[key] && DD_DATA[key].search || isTextOnly2) ? 52 : 0;
-    var ROW_H = 40;
-    var sheetH = (itemCount >= 5 && !isTextOnly2) ? (searchH + ROW_H * 5) : (isTextOnly2 ? searchH : 'auto');
+    var searchH     = (DD_DATA[key] && DD_DATA[key].search || isTextOnly2) ? 52 : 0;
+    var ROW_H       = 40;
+    var MAX_ROWS    = 6; // "5–7 видимих рядків" — беремо середнє, решта під скрол
 
-    // Flip-up: use scrollable area, not just visible height
-    var phoneEl = phone;
-    var phoneH = phoneEl ? phoneEl.scrollHeight : 844;
-    var phoneVisible = phoneEl ? phoneEl.getBoundingClientRect().height : 844;
-    // spaceBelow in scrollable content
-    var spaceBelow = phoneH - topInPhone - (phoneEl ? phoneEl.scrollTop : 0) - 8;
-    // Also check visible area
-    var fieldBottomVisible = fieldRect.bottom;
-    var spaceVisibleBelow = window.innerHeight - fieldBottomVisible - 8;
-    var sheetHNum = typeof sheetH === 'number' ? sheetH : (itemCount > 0 ? itemCount * ROW_H + searchH : searchH + 60);
-    // Flip up if either: not enough scroll space below, or field is in lower 40% of phone
-    var fieldRelPos = topInPhone / phoneVisible;
-    var flipUp = (spaceBelow < sheetHNum) || (fieldRelPos > 0.55 && topInPhone > sheetHNum);
+    // ── WIDTH: великі списки (Rozmiar/Marka/Model/EAN) розтягуються майже на всю картку фільтрів ──
+    var LARGE_KEYS = { rozmiar:1, marka:1, model:1, ean:1 };
+    var isLarge = !!LARGE_KEYS[key];
+    var sheetLeft  = leftInPhone;
+    var sheetWidth = fieldRect.width;
+    if (isLarge) {
+      var cardEl = fieldEl.closest('.card');
+      if (cardEl) {
+        var cardRect = cardEl.getBoundingClientRect();
+        var cardPadX = 12; // var(--space-md), горизонтальний padding картки
+        sheetLeft  = (cardRect.left - phoneRect.left) + cardPadX;
+        sheetWidth = cardRect.width - cardPadX * 2;
+      }
+    }
 
-    ddSheet.style.left   = leftInPhone + 'px';
-    ddSheet.style.width  = fieldRect.width + 'px';
+    // ── HEIGHT: природна висота списку, обмежена MAX_ROWS видимими рядками ──
+    var naturalH = isTextOnly2 ? searchH : (itemCount > 0 ? (searchH + itemCount * ROW_H) : (searchH + 60));
+    var cappedH  = isTextOnly2 ? searchH : Math.min(naturalH, searchH + ROW_H * MAX_ROWS);
+
+    // ── DIRECTION: відкриваємо туди, де більше вільного місця; якщо не влазить повністю — скорочуємо висоту й даємо скрол ──
+    var phoneEl   = phone;
+    var phoneH    = phoneEl ? phoneEl.scrollHeight : 844;
+    var GAP       = 8;
+    var spaceBelow = phoneH - fieldBottomInPhone - GAP;
+    var spaceAbove = fieldTopInPhone - GAP;
+    var MIN_SHEET_H = isTextOnly2 ? searchH : (searchH + ROW_H * 2); // тримаємо хоча б ~2 рядки видимими
+
+    var flipUp = spaceAbove > spaceBelow;
+    var availableSpace = flipUp ? spaceAbove : spaceBelow;
+
+    var sheetH;
+    if (availableSpace >= cappedH) {
+      sheetH = cappedH;
+    } else {
+      sheetH = Math.max(MIN_SHEET_H, availableSpace);
+    }
+
+    ddSheet.style.left   = sheetLeft + 'px';
+    ddSheet.style.width  = sheetWidth + 'px';
     if(flipUp){
-      ddSheet.style.bottom = (phoneH - (fieldRect.top - phoneRect.top)) + 'px';
+      ddSheet.style.bottom = (phoneH - fieldTopInPhone) + 'px';
       ddSheet.style.top = 'auto';
       ddSheet.style.borderRadius = 'var(--radius-lg) var(--radius-lg) 0 0';
     } else {
-      ddSheet.style.top    = topInPhone + 'px';
+      ddSheet.style.top    = fieldBottomInPhone + 'px';
       ddSheet.style.bottom = 'auto';
       ddSheet.style.borderRadius = '0 0 var(--radius-lg) var(--radius-lg)';
     }
-    if(typeof sheetH === 'number'){
-      ddSheet.style.height = sheetH + 'px';
-    } else {
-      ddSheet.style.height = 'auto';
-    }
+    ddSheet.style.height = sheetH + 'px';
     ddSheet.style.maxHeight = '';
 
     fieldEl.classList.add('dd-open');
+    ddBackdrop.classList.toggle('is-scrim', isLarge);
     ddBackdrop.classList.add('is-open');
     ddSheet.classList.add('is-open');
 
