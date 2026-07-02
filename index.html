@@ -2706,11 +2706,7 @@
             <span>EAN</span>
             <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
           </div>
-          <div class="filter-bar-right" style="flex-direction:column;align-items:flex-end;gap:var(--space-xs);">
-            <button class="mini-trigger" onclick="toggleDostepnoscOverlay()">
-              Dostępność
-              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
+          <div class="filter-bar-right">
             <button class="mini-trigger" onclick="toggleMoreFilters()">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAtCAYAAADoSujCAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAbVJREFUeAHtmT9OAkEUxr8BCkuOwBHoTQyewCNoqWgBqLVjZ+GfLYjaEY/gCaSwsJMbuEfY2j+MwyrJZHZX2Jk3wxrmV5HJ5hsevLd5X746PNI95e3Nrc7Gy/M4ARE1eKI74HvsC68f73g7GJz1QIS3AhjD7vxznbEdEOGtAFc08g5nvVoTaMJEsIE4uuDxX88IoHl0wjsg0GX6QdqrwAgWTCH6d9fnkXp2eMyf5DfvwII83UwLqb1qCmWPL9LNzoAQj7BkKvAAB+TpsrwH93u8JXuuBZNLPpHcRnyin6stJP/liby5jxIU6eYO8X2UDksMdyTDSz4GAf/+NeqvAGW2XM2Ic2az1e3xNgKB6lCHBS72+7IYv4Vc7fdlMS7A1X5flvX1A2IJv2DjK3SK/ECmgN/eHgnYQaUzR84a5Kz58QOUOire/ACpjgKtHxC4kXOQ7jXy1x4Pr/i2kc6SFPkBBkM0g5JbgA/W2A+E/T4QqARWfsAWCj+xstcolZ9YWQFUfiLkAwsvIMoLvOYDOlR5gbd8QIfKM/v1AwpUu5KXfCBzKVFeULV8QMc4Lwj5gDHBT/zwDbgi81PjHRnLAAAAAElFTkSuQmCC" alt="" width="16" height="16" style="flex:none;opacity:.6;">
               Filtry
@@ -2759,7 +2755,7 @@
       </div><!-- /top-group -->
 
       <!-- applied filters — bottom of card -->
-      <div style="display:flex;flex-direction:column;gap:var(--space-sm);padding-top:var(--space-lg);margin-top:var(--space-md);border-top:1px solid var(--border-surface);">
+      <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
         <p class="results-status" id="resultsStatus">Wyświetlane są wszystkie opony. Dodaj parametry wyszukiwania.</p>
         <div class="applied-filters" id="appliedFilters" style="display:none;">
           <span class="results-count" id="resultsCount">4 wyników:</span>
