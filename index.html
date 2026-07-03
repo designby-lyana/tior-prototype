@@ -968,6 +968,9 @@
     box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
     overflow:hidden;
   }
+  .cart-guest-disabled, .cart-guest-disabled *{
+    color:var(--text-muted) !important;
+  }
   .cart-summary-header{
     background:#fafafa;
     border-bottom:1px solid #939496;
@@ -8554,19 +8557,21 @@ function submitOrder() {
     if(isGuest && !isEmpty){
       activate.style.display = 'flex';
       if(backLink) backLink.style.display = 'none';
-      if(itemsBlock){ itemsBlock.style.opacity = '.7'; itemsBlock.style.pointerEvents = 'none'; }
+      if(itemsBlock){ itemsBlock.style.opacity = '.7'; itemsBlock.style.pointerEvents = 'none'; itemsBlock.classList.add('cart-guest-disabled'); }
       if(summaryCard){
         summaryCard.style.opacity = '.7';
         summaryCard.style.pointerEvents = 'none';
+        summaryCard.classList.add('cart-guest-disabled');
         summaryCard.querySelectorAll('button').forEach(function(b){ b.disabled = true; });
       }
     } else {
       activate.style.display = 'none';
       if(backLink) backLink.style.display = '';
-      if(itemsBlock){ itemsBlock.style.opacity = ''; itemsBlock.style.pointerEvents = ''; }
+      if(itemsBlock){ itemsBlock.style.opacity = ''; itemsBlock.style.pointerEvents = ''; itemsBlock.classList.remove('cart-guest-disabled'); }
       if(summaryCard){
         summaryCard.style.opacity = '';
         summaryCard.style.pointerEvents = '';
+        summaryCard.classList.remove('cart-guest-disabled');
         summaryCard.querySelectorAll('button').forEach(function(b){ b.disabled = false; });
       }
     }
