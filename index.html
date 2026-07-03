@@ -5523,14 +5523,19 @@
     <span class="flt-title">Data</span>
     <button class="flt-clear" onclick="clearData()">Wyczyść</button>
   </div>
-  <div class="flt-section" style="display:flex;gap:var(--space-md);">
-    <div class="adres-field" style="flex:1;">
-      <div class="adres-label">Od</div>
-      <input type="date" class="adres-input" id="dateFrom">
-    </div>
-    <div class="adres-field" style="flex:1;">
-      <div class="adres-label">Do</div>
-      <input type="date" class="adres-input" id="dateTo">
+  <div class="flt-section">
+    <div class="flt-section-label">Zakres dat</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);">
+      <div class="flt-date-field">
+        <span class="flt-date-label">od</span>
+        <input type="date" class="flt-date-input" id="dateFrom">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div class="flt-date-field">
+        <span class="flt-date-label">do</span>
+        <input type="date" class="flt-date-input" id="dateTo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
     </div>
   </div>
   <button class="flt-apply" onclick="toggleDataOverlay()">Zastosuj</button>
@@ -5544,14 +5549,15 @@
     <span class="flt-title">Suma</span>
     <button class="flt-clear" onclick="clearSuma()">Wyczyść</button>
   </div>
-  <div class="flt-section" style="display:flex;gap:var(--space-md);">
-    <div class="adres-field" style="flex:1;">
-      <div class="adres-label">Min</div>
-      <input type="number" class="adres-input" id="sumaMin" placeholder="0">
-    </div>
-    <div class="adres-field" style="flex:1;">
-      <div class="adres-label">Max</div>
-      <input type="number" class="adres-input" id="sumaMax" placeholder="1000">
+  <div class="flt-section">
+    <div class="flt-section-label">Wartość zamówienia (PLN)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);">
+      <div class="flt-suma-field">
+        <input type="number" class="flt-suma-input" id="sumaMin" placeholder="min PLN" min="0">
+      </div>
+      <div class="flt-suma-field">
+        <input type="number" class="flt-suma-input" id="sumaMax" placeholder="maks PLN" min="0">
+      </div>
     </div>
   </div>
   <button class="flt-apply" onclick="toggleSumaOverlay()">Zastosuj</button>
@@ -7009,6 +7015,26 @@
       }
     }
   });
+
+  // Safety net: force-close any open .flt-sheet if a click somehow lands
+  // outside both the sheet AND its own backdrop (e.g. click "leaks" through
+  // to underlying page content like the logo). Runs in capture phase so it
+  // fires before any handler on the leaked-to element (e.g. goHome()).
+  document.addEventListener('click', function(e){
+    var openSheets = document.querySelectorAll('.flt-sheet.is-open');
+    if(!openSheets.length) return;
+    openSheets.forEach(function(sheet){
+      if(sheet.contains(e.target)) return; // click inside the sheet — ignore, let sheet handle it
+      var backdropId = sheet.id ? sheet.id.replace(/Sheet$/, 'Backdrop') : null;
+      var backdrop = backdropId ? document.getElementById(backdropId) : null;
+      if(backdrop && backdrop.contains(e.target)) return; // click on its own backdrop — existing onclick already closes it, don't double-handle
+      // click genuinely leaked past the sheet/backdrop — force close and stop it from reaching anything underneath
+      sheet.classList.remove('is-open');
+      if(backdrop) backdrop.classList.remove('is-open');
+      e.stopPropagation();
+      e.preventDefault();
+    });
+  }, true);
 
 
   // EAN toggle: show/hide EAN values on product cards
