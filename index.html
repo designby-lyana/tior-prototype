@@ -820,6 +820,7 @@
   .filter-bar{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); margin-top:var(--space-md); }
   .filter-bar-right{ display:flex; align-items:flex-end; flex-direction:column; gap:6px; }
   .filter-bar-right .mini-trigger{ color:var(--text-on-light); }
+  .filter-bar-right .mini-trigger svg:first-child{ color:var(--text-on-light); }
 
   .more-filters-btn{
     appearance:none; background:none; border:none; padding:0;
@@ -2272,7 +2273,7 @@
   .home-chips-group{
     display:flex;
     flex-direction:column;
-    gap:12px;
+    gap:0px;
   }
   .home-chips-sublabel{
     font-family:var(--font-body);
@@ -2745,7 +2746,7 @@
           </div>
           <div class="filter-bar-right">
             <button class="mini-trigger" onclick="toggleMoreFilters()">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex:none;"><path d="M7,6h10l-5.01,6.3L7,6z M4.25,5.61C6.27,8.2,10,13,10,13v6c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v-6c0,0,3.72-4.8,5.74-7.39C20.25,4.95,19.78,4,18.95,4H5.04C4.21,4,3.74,4.95,4.25,5.61z"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><line x1="3" y1="6" x2="21" y2="6"/><circle cx="15" cy="6" r="2.2" fill="currentColor" stroke="none"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><line x1="3" y1="18" x2="21" y2="18"/><circle cx="17" cy="18" r="2.2" fill="currentColor" stroke="none"/></svg>
               Filtry
               <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
@@ -2759,7 +2760,7 @@
             <!-- Filter chips: один суцільний потік, щоб дропдауни пакувались без зайвих порожніх місць -->
             <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;">
               <div class="rozmiar-cluster" style="display:flex;align-items:center;gap:2px;">
-                <button class="mini-trigger results-filter-chip" id="rozmiar1Btn" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar') : openDropdown('rozmiar',this)">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tooltip-wrap"><button class="rozmiar-add-btn" id="rozmiarAddBtnRes" onclick="toggleRozmiar2(this)" aria-label="Dodaj drugi rozmiar"><svg class="plus-default" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-hover" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10" stroke-linecap="round"/></svg></button><span class="chip-tip">Dodaj drugi rozmiar</span></span><button class="mini-trigger results-filter-chip" id="rozmiar2Btn" style="display:none;" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar2') : openDropdown('rozmiar2',this)">Rozmiar 2 <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tooltip-wrap"><button class="rozmiar-remove-btn" id="rozmiarRemoveBtnRes" style="display:none;" onclick="hideRozmiar2(this)" aria-label="Usuń drugi rozmiar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tip">Usuń drugi rozmiar</span></span>
+                <button class="mini-trigger results-filter-chip" id="rozmiar1Btn" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar') : openDropdown('rozmiar',this)">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tooltip-wrap"><button class="rozmiar-add-btn" id="rozmiarAddBtnRes" onclick="toggleRozmiar2(this)" aria-label="Dodaj drugi rozmiar"><svg class="plus-default" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-hover" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10" stroke-linecap="round"/></svg></button><span class="chip-tip">Dodaj drugi rozmiar</span></span><button class="mini-trigger results-filter-chip" id="rozmiar2Btn" style="display:none;" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'rozmiar2') : openDropdown('rozmiar2',this)">Rozmiar <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tooltip-wrap"><button class="rozmiar-remove-btn" id="rozmiarRemoveBtnRes" style="display:none;" onclick="hideRozmiar2(this)" aria-label="Usuń drugi rozmiar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button><span class="chip-tip">Usuń drugi rozmiar</span></span>
               </div>
               <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'typ') : openDropdown('typ',this)">Typ <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
               <button class="mini-trigger results-filter-chip" onclick="this.classList.contains('is-active') ? clearFilterKey(this,'sezon') : openDropdown('sezon',this)">Sezon <svg class="field-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg class="filter-x" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
@@ -5668,13 +5669,26 @@
 
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses'];
   function closeAllOverlays(){
-    document.querySelectorAll('.flt-backdrop.is-open, .flt-sheet.is-open, .dd-backdrop.is-open, .dd-sheet.is-open').forEach(function(el){ el.classList.remove('is-open'); });
+    // Всі бекдропи в проєкті (dd/flt/atc/addr/iban/daneFirmy/rachunki/adres/sideMenu тощо)
+    // мають id, що закінчується на "Backdrop" — примусово ховаємо їх усі, незалежно від того,
+    // яким механізмом вони керуються (classList.is-open чи inline style.display).
+    document.querySelectorAll('[id$="Backdrop"]').forEach(function(el){
+      el.classList.remove('is-open');
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('[id$="Sheet"]').forEach(function(el){
+      el.classList.remove('is-open');
+    });
     if (typeof closeDropdown === 'function') closeDropdown();
     if (typeof closeEu === 'function') closeEu();
     var euSheetEl = document.getElementById('euSheet');
-    if (euSheetEl && euSheetEl.style.display !== 'none') { euSheetEl.style.display = 'none'; euSheetEl.style.pointerEvents = 'none'; }
+    if (euSheetEl) { euSheetEl.style.display = 'none'; euSheetEl.style.pointerEvents = 'none'; }
     var euBackdropEl = document.getElementById('euBackdrop');
     if (euBackdropEl) euBackdropEl.style.display = 'none';
+    var sideMenuEl = document.getElementById('sideMenu');
+    if (sideMenuEl) sideMenuEl.style.right = '-100%';
+    var atcSheetEl = document.getElementById('atcSheet');
+    if (atcSheetEl) atcSheetEl.classList.remove('is-open');
   }
 
   function setScreen(id){
