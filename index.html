@@ -5703,6 +5703,15 @@
     if(target){ target.classList.add('is-active'); target.scrollTop = 0; }
     if(id==='screenAddresses'){ renderAddrList(); }
     if(id==='screenOrders'){ renderOrders(); }
+    if(id==='screenResults'){ collapseMoreFilters(); }
+  }
+  // Filtry на результатах завжди має відкриватись згорнутим, незалежно від того,
+  // чи користувач розгортав його раніше в цій сесії
+  function collapseMoreFilters(){
+    var wrap = document.getElementById('moreFiltersWrap');
+    var chev = document.getElementById('moreFiltersChevron');
+    if (wrap) wrap.classList.remove('is-open');
+    if (chev) chev.style.transform = 'rotate(0deg)';
   }
   function goToResults(){ setScreen('screenResults'); }
   function goHome(){      setScreen('screenHome'); }
