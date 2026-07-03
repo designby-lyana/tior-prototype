@@ -5420,32 +5420,66 @@
   </header>
 
   <div style="padding:32px 24px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;max-width:420px;margin:0 auto;">
-    <div style="display:flex;flex-direction:column;gap:4px;">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#323744;">Zaloguj się</div>
-      <div style="font-family:'Outfit',sans-serif;font-size:16px;line-height:20px;color:#6b7280;">Wprowadź dane, aby uzyskać dostęp do konta B2B.</div>
-    </div>
-    <div style="background:#fff;border-radius:8px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px;">
 
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">LOGIN</div>
-        <div id="loginUserWrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
-          <input id="loginUser" type="text" placeholder="np. jan.kowalski@firma.pl" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
-        </div>
+    <div id="loginFormView">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#323744;">Zaloguj się</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:16px;line-height:20px;color:#6b7280;">Wprowadź dane, aby uzyskać dostęp do konta B2B.</div>
       </div>
+      <div style="background:#fff;border-radius:8px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px;">
 
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">HASŁO</div>
-        <div id="loginPwdWrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
-          <input id="loginPwd" type="password" placeholder="" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
-          <button type="button" onclick="toggleField('loginPwd')" id="eye_loginPwd" style="background:none;border:none;outline:none;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l18 18" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M6.94 6.94A9 9 0 003 11c1.73 3.47 5.1 5.5 8 5.5a8.1 8.1 0 003.06-.61" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.53 9.53A3 3 0 0014 14" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M14.85 14.85C13.68 15.6 12.37 16 11 16c-3.87 0-7-3.13-7-5.5 0-1.2.6-2.4 1.58-3.42M11 6c3.87 0 7 3.13 7 5.5 0 .91-.32 1.84-.92 2.71" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">LOGIN</div>
+          <div id="loginUserWrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
+            <input id="loginUser" type="text" oninput="clearLoginErrors()" placeholder="np. jan.kowalski@firma.pl" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
+          </div>
+          <div id="loginUserError" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Nie znaleziono konta powiązanego z tym adresem e-mail.</div>
         </div>
+
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">HASŁO</div>
+            <button type="button" onclick="showForgotPassword()" style="background:none;border:none;padding:0;font-family:'Outfit',sans-serif;font-size:14px;color:#005f6e;cursor:pointer;">Zapomniałeś hasła?</button>
+          </div>
+          <div id="loginPwdWrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
+            <input id="loginPwd" type="password" oninput="clearLoginErrors()" placeholder="" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
+            <button type="button" onclick="toggleField('loginPwd')" id="eye_loginPwd" style="background:none;border:none;outline:none;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2l18 18" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M6.94 6.94A9 9 0 003 11c1.73 3.47 5.1 5.5 8 5.5a8.1 8.1 0 003.06-.61" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.53 9.53A3 3 0 0014 14" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round"/><path d="M14.85 14.85C13.68 15.6 12.37 16 11 16c-3.87 0-7-3.13-7-5.5 0-1.2.6-2.4 1.58-3.42M11 6c3.87 0 7 3.13 7 5.5 0 .91-.32 1.84-.92 2.71" stroke="#9ba3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div id="loginPwdError" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Nieprawidłowe hasło. Spróbuj ponownie.</div>
+        </div>
+
+        <div id="loginError" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;">Wypełnij oba pola, aby się zalogować.</div>
+
+        <button onclick="attemptLogin()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zaloguj się</button>
       </div>
-
-      <div id="loginError" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;">Wypełnij oba pola, aby się zalogować.</div>
-
-      <button onclick="attemptLogin()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zaloguj się</button>
+      <div style="text-align:center;font-family:'Outfit',sans-serif;font-size:14px;color:#6b7280;margin-top:16px;">Nie masz dostępu? Skontaktuj się z opiekunem klienta.</div>
     </div>
-    <div style="text-align:center;font-family:'Outfit',sans-serif;font-size:14px;color:#6b7280;">Nie masz dostępu? Skontaktuj się z opiekunem klienta.</div>
+
+    <div id="forgotPasswordView" style="display:none;">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">
+        <div onclick="backToLogin()" style="display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;">
+          <span style="font-size:18px;color:#323744;line-height:1;">«</span>
+          <span style="font-family:'Outfit',sans-serif;font-size:16px;line-height:18px;color:#323744;">Powrót do logowania</span>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#323744;">Zresetuj hasło</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:16px;line-height:20px;color:#6b7280;">Podaj adres e-mail powiązany z kontem — wyślemy link do resetu hasła.</div>
+      </div>
+      <div id="forgotFormBlock" style="background:#fff;border-radius:8px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#323744;text-transform:uppercase;">E-MAIL</div>
+          <div id="forgotEmailWrap" style="display:flex;align-items:center;gap:8px;border:1.5px solid #bec5c8;border-radius:6px;padding:10px 12px;transition:border-color 160ms;">
+            <input id="forgotEmail" type="text" oninput="clearForgotError()" placeholder="np. jan.kowalski@firma.pl" style="flex:1;border:none;outline:none;font-size:16px;color:#323744;font-family:'Outfit',sans-serif;background:transparent;padding:0;min-width:0;" />
+          </div>
+          <div id="forgotEmailError" style="display:none;font-family:'Outfit',sans-serif;font-size:14px;color:#dc2626;padding-top:2px;">Podaj adres e-mail, aby kontynuować.</div>
+        </div>
+        <button onclick="submitForgotPassword()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Wyślij link resetujący</button>
+      </div>
+      <div id="forgotSuccess" style="display:none;align-items:center;justify-content:center;gap:10px;padding-top:20px;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10l5 5 11-11" stroke="#1e6b3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#0d0e13;text-align:center;">Jeśli konto istnieje, wysłaliśmy link do resetu hasła.</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -8874,31 +8908,112 @@ function submitOrder() {
 
   function onProfileIconClick(){
     if(isGuest){
+      backToLogin();
+      var lu = document.getElementById('loginUser'); if(lu) lu.value='';
+      var lp = document.getElementById('loginPwd'); if(lp) lp.value='';
+      clearLoginErrors();
       setScreen('screenLogin');
       return;
     }
     setScreen('screenProfile');
   }
 
+  var DEMO_LOGIN = 'jan.kowalski@firma.pl';
+  var DEMO_PASSWORD = 'Test1234';
+
+  function clearLoginErrors(){
+    var err = document.getElementById('loginError');
+    var userErr = document.getElementById('loginUserError');
+    var pwdErr = document.getElementById('loginPwdError');
+    var userWrap = document.getElementById('loginUserWrap');
+    var pwdWrap = document.getElementById('loginPwdWrap');
+    if(err) err.style.display = 'none';
+    if(userErr) userErr.style.display = 'none';
+    if(pwdErr) pwdErr.style.display = 'none';
+    if(userWrap) userWrap.style.borderColor = '#bec5c8';
+    if(pwdWrap) pwdWrap.style.borderColor = '#bec5c8';
+  }
+
   function attemptLogin(){
     var user = document.getElementById('loginUser');
     var pwd = document.getElementById('loginPwd');
     var err = document.getElementById('loginError');
+    var userErr = document.getElementById('loginUserError');
+    var pwdErr = document.getElementById('loginPwdError');
     var userWrap = document.getElementById('loginUserWrap');
     var pwdWrap = document.getElementById('loginPwdWrap');
     var userVal = user ? user.value.trim() : '';
     var pwdVal = pwd ? pwd.value.trim() : '';
+
+    clearLoginErrors();
+
     if(!userVal || !pwdVal){
       if(err) err.style.display = 'block';
       if(userWrap) userWrap.style.borderColor = !userVal ? '#dc2626' : '#bec5c8';
       if(pwdWrap) pwdWrap.style.borderColor = !pwdVal ? '#dc2626' : '#bec5c8';
       return;
     }
-    if(err) err.style.display = 'none';
-    if(userWrap) userWrap.style.borderColor = '#bec5c8';
-    if(pwdWrap) pwdWrap.style.borderColor = '#bec5c8';
+
+    if(userVal.toLowerCase() !== DEMO_LOGIN){
+      if(userErr) userErr.style.display = 'block';
+      if(userWrap) userWrap.style.borderColor = '#dc2626';
+      return;
+    }
+
+    if(pwdVal !== DEMO_PASSWORD){
+      if(pwdErr) pwdErr.style.display = 'block';
+      if(pwdWrap) pwdWrap.style.borderColor = '#dc2626';
+      return;
+    }
+
     isGuest = false;
     goHome();
+  }
+
+  function showForgotPassword(){
+    var loginView = document.getElementById('loginFormView');
+    var forgotView = document.getElementById('forgotPasswordView');
+    var formBlock = document.getElementById('forgotFormBlock');
+    var success = document.getElementById('forgotSuccess');
+    if(loginView) loginView.style.display = 'none';
+    if(forgotView) forgotView.style.display = 'block';
+    if(formBlock) formBlock.style.display = 'flex';
+    if(success) success.style.display = 'none';
+    var emailField = document.getElementById('forgotEmail');
+    if(emailField) emailField.value = '';
+    clearForgotError();
+  }
+
+  function backToLogin(){
+    var loginView = document.getElementById('loginFormView');
+    var forgotView = document.getElementById('forgotPasswordView');
+    if(forgotView) forgotView.style.display = 'none';
+    if(loginView) loginView.style.display = 'block';
+  }
+
+  function clearForgotError(){
+    var errEl = document.getElementById('forgotEmailError');
+    var wrap = document.getElementById('forgotEmailWrap');
+    if(errEl) errEl.style.display = 'none';
+    if(wrap) wrap.style.borderColor = '#bec5c8';
+  }
+
+  function submitForgotPassword(){
+    var email = document.getElementById('forgotEmail');
+    var errEl = document.getElementById('forgotEmailError');
+    var wrap = document.getElementById('forgotEmailWrap');
+    var formBlock = document.getElementById('forgotFormBlock');
+    var success = document.getElementById('forgotSuccess');
+    var emailVal = email ? email.value.trim() : '';
+    if(!emailVal){
+      if(errEl) errEl.style.display = 'block';
+      if(wrap) wrap.style.borderColor = '#dc2626';
+      return;
+    }
+    if(errEl) errEl.style.display = 'none';
+    if(wrap) wrap.style.borderColor = '#bec5c8';
+    if(formBlock) formBlock.style.display = 'none';
+    if(success) success.style.display = 'flex';
   }
 
   function openLogoutConfirm(){
