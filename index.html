@@ -72,6 +72,17 @@
     box-shadow:0 24px 60px rgba(0,0,0,.35);
   }
 
+  /* ---------- GLOBAL PRELOADER ---------- */
+  #globalPreloader{
+    position:absolute; inset:0; z-index:9999;
+    background:var(--bg-page);
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity 320ms ease;
+  }
+  #globalPreloader.is-hidden{ opacity:0; pointer-events:none; }
+  #globalPreloader .preloader-frame{ width:96px; height:96px; color:var(--accent-primary); }
+  #globalPreloader svg{ width:100%; height:100%; overflow:visible; }
+
   /* ---------- HEADER ---------- */
   header{
     height:84px;
@@ -2348,6 +2359,109 @@
 <body><!-- cache-bust v3 -->
 
 <div class="phone" id="phone">
+<!-- GLOBAL PRELOADER -->
+<div id="globalPreloader">
+  <div class="preloader-frame">
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <g id="preloaderGroup">
+        <path id="preloaderPath" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" opacity="0.1"></path>
+      </g>
+    </svg>
+  </div>
+</div>
+<script>
+(function(){
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var config = {
+    particleCount: 60,
+    trailSpan: 0.28,
+    durationMs: 2600,
+    pulseDurationMs: 6800,
+    strokeWidth: 4.3,
+    searchTurns: 4,
+    searchBaseRadius: 8,
+    searchRadiusAmp: 8.5,
+    searchPulse: 2.4,
+    searchScale: 1,
+    point: function(progress, detailScale, config){
+      var t = progress * Math.PI * 2;
+      var angle = t * config.searchTurns;
+      var radius = config.searchBaseRadius + (1 - Math.cos(t)) * (config.searchRadiusAmp + detailScale * config.searchPulse);
+      return { x: 50 + Math.cos(angle) * radius * config.searchScale, y: 50 + Math.sin(angle) * radius * config.searchScale };
+    }
+  };
+  var group = document.getElementById('preloaderGroup');
+  var path = document.getElementById('preloaderPath');
+  if(!group || !path) return;
+  path.setAttribute('stroke-width', String(config.strokeWidth));
+  var particles = [];
+  for(var i=0;i<config.particleCount;i++){
+    var circle = document.createElementNS(SVG_NS, 'circle');
+    circle.setAttribute('fill', 'currentColor');
+    group.appendChild(circle);
+    particles.push(circle);
+  }
+  function normalizeProgress(p){ return ((p % 1) + 1) % 1; }
+  function getDetailScale(time){
+    var pulseProgress = (time % config.pulseDurationMs) / config.pulseDurationMs;
+    var pulseAngle = pulseProgress * Math.PI * 2;
+    return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
+  }
+  function buildPath(detailScale, steps){
+    steps = steps || 480;
+    var d = '';
+    for(var idx=0; idx<=steps; idx++){
+      var point = config.point(idx/steps, detailScale, config);
+      d += (idx===0 ? 'M ' : 'L ') + point.x.toFixed(2) + ' ' + point.y.toFixed(2) + ' ';
+    }
+    return d;
+  }
+  function getParticle(index, progress, detailScale){
+    var tailOffset = index / (config.particleCount - 1);
+    var point = config.point(normalizeProgress(progress - tailOffset * config.trailSpan), detailScale, config);
+    var fade = Math.pow(1 - tailOffset, 0.56);
+    return { x: point.x, y: point.y, radius: 0.9 + fade * 2.7, opacity: 0.04 + fade * 0.96 };
+  }
+  var startedAt = performance.now();
+  var rafId;
+  function render(now){
+    var time = now - startedAt;
+    var progress = (time % config.durationMs) / config.durationMs;
+    var detailScale = getDetailScale(time);
+    path.setAttribute('d', buildPath(detailScale));
+    particles.forEach(function(node, index){
+      var particle = getParticle(index, progress, detailScale);
+      node.setAttribute('cx', particle.x.toFixed(2));
+      node.setAttribute('cy', particle.y.toFixed(2));
+      node.setAttribute('r', particle.radius.toFixed(2));
+      node.setAttribute('opacity', particle.opacity.toFixed(3));
+    });
+    rafId = requestAnimationFrame(render);
+  }
+  rafId = requestAnimationFrame(render);
+
+  var MIN_DISPLAY_MS = 900;
+  var shownAt = performance.now();
+  function hidePreloader(){
+    var elapsed = performance.now() - shownAt;
+    var wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+    setTimeout(function(){
+      var el = document.getElementById('globalPreloader');
+      if(!el) return;
+      el.classList.add('is-hidden');
+      setTimeout(function(){
+        cancelAnimationFrame(rafId);
+        if(el.parentNode) el.parentNode.removeChild(el);
+      }, 360);
+    }, wait);
+  }
+  if(document.readyState === 'complete'){
+    hidePreloader();
+  } else {
+    window.addEventListener('load', hidePreloader);
+  }
+})();
+</script>
 <!-- SIDE MENU -->
 <div id="sideMenuBackdrop" onclick="closeSideMenu()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:1100;border-radius:18px;"></div>
 <div id="sideMenu" style="position:absolute;top:0;right:-100%;width:80%;max-width:280px;height:100%;background:#fff;z-index:1101;display:flex;flex-direction:column;transition:right 280ms cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.12);overflow-y:auto;">
