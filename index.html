@@ -7538,10 +7538,15 @@
     var empty = document.getElementById('cartEmptyState');
     var items = document.getElementById('cartItemsBlock');
     var sumCard = document.querySelector('.cart-summary-card');
+    var header = document.querySelector('.cart-header');
+    var guestActivate = document.getElementById('cartGuestActivate');
     var isEmpty = cartCount === 0;
     if (empty) empty.style.display = isEmpty ? 'flex' : 'none';
     if (items) items.style.display = isEmpty ? 'none' : 'block';
     if (sumCard) sumCard.style.display = isEmpty ? 'none' : 'block';
+    // При порожньому кошику — лише інфо-блок "Twój koszyk jest pusty", без заголовка/бредкрамбу і без банера активації (для обох: гостя і зареєстрованого)
+    if (header) header.style.display = isEmpty ? 'none' : 'flex';
+    if (isEmpty && guestActivate) guestActivate.style.display = 'none';
 
     // Update summary meta and total
     var metaEl = document.getElementById('cartSummaryMeta');
@@ -8533,16 +8538,25 @@ function submitOrder() {
     var itemsBlock = document.getElementById('cartItemsBlock');
     var summaryCard = document.querySelector('.cart-summary-card');
     if(!activate) return;
-    if(isGuest){
+    var isEmpty = (typeof cartCount !== 'undefined') && cartCount === 0;
+    if(isGuest && !isEmpty){
       activate.style.display = 'flex';
       if(backLink) backLink.style.display = 'none';
-      if(itemsBlock){ itemsBlock.style.opacity = '.85'; itemsBlock.style.pointerEvents = 'none'; }
-      if(summaryCard){ summaryCard.style.opacity = '.85'; summaryCard.style.pointerEvents = 'none'; }
+      if(itemsBlock){ itemsBlock.style.opacity = '.7'; itemsBlock.style.pointerEvents = 'none'; }
+      if(summaryCard){
+        summaryCard.style.opacity = '.7';
+        summaryCard.style.pointerEvents = 'none';
+        summaryCard.querySelectorAll('button').forEach(function(b){ b.disabled = true; });
+      }
     } else {
       activate.style.display = 'none';
       if(backLink) backLink.style.display = '';
       if(itemsBlock){ itemsBlock.style.opacity = ''; itemsBlock.style.pointerEvents = ''; }
-      if(summaryCard){ summaryCard.style.opacity = ''; summaryCard.style.pointerEvents = ''; }
+      if(summaryCard){
+        summaryCard.style.opacity = '';
+        summaryCard.style.pointerEvents = '';
+        summaryCard.querySelectorAll('button').forEach(function(b){ b.disabled = false; });
+      }
     }
   }
 
