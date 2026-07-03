@@ -5515,6 +5515,48 @@
   <button class="flt-apply" onclick="toggleInvStatusOverlay()">Zastosuj</button>
 </div>
 
+<!-- INV DATA OVERLAY -->
+<div class="flt-backdrop" id="dataBackdrop" onclick="toggleDataOverlay()"></div>
+<div class="flt-sheet" id="dataSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Data</span>
+    <button class="flt-clear" onclick="clearData()">Wyczyść</button>
+  </div>
+  <div class="flt-section" style="display:flex;gap:var(--space-md);">
+    <div class="adres-field" style="flex:1;">
+      <div class="adres-label">Od</div>
+      <input type="date" class="adres-input" id="dateFrom">
+    </div>
+    <div class="adres-field" style="flex:1;">
+      <div class="adres-label">Do</div>
+      <input type="date" class="adres-input" id="dateTo">
+    </div>
+  </div>
+  <button class="flt-apply" onclick="toggleDataOverlay()">Zastosuj</button>
+</div>
+
+<!-- INV SUMA OVERLAY -->
+<div class="flt-backdrop" id="sumaBackdrop" onclick="toggleSumaOverlay()"></div>
+<div class="flt-sheet" id="sumaSheet">
+  <div class="flt-handle"></div>
+  <div class="flt-header">
+    <span class="flt-title">Suma</span>
+    <button class="flt-clear" onclick="clearSuma()">Wyczyść</button>
+  </div>
+  <div class="flt-section" style="display:flex;gap:var(--space-md);">
+    <div class="adres-field" style="flex:1;">
+      <div class="adres-label">Min</div>
+      <input type="number" class="adres-input" id="sumaMin" placeholder="0">
+    </div>
+    <div class="adres-field" style="flex:1;">
+      <div class="adres-label">Max</div>
+      <input type="number" class="adres-input" id="sumaMax" placeholder="1000">
+    </div>
+  </div>
+  <button class="flt-apply" onclick="toggleSumaOverlay()">Zastosuj</button>
+</div>
+
 <!-- ADRES FORM OVERLAY -->
 <div class="flt-backdrop" id="adresBackdrop" onclick="toggleAdresForm()"></div>
 <div class="flt-sheet" id="adresSheet">
