@@ -8952,6 +8952,11 @@ function submitOrder() {
 
   var DEMO_LOGIN = 'jan.kowalski@firma.pl';
   var DEMO_PASSWORD = 'Test1234';
+  var EMAIL_FORMAT_MSG = 'Nieprawidłowy format adresu e-mail. Przykład: jan.kowalski@firma.pl';
+
+  function isValidEmail(str){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
+  }
 
   function clearLoginErrors(){
     var err = document.getElementById('loginError');
@@ -8986,8 +8991,14 @@ function submitOrder() {
       return;
     }
 
+    if(!isValidEmail(userVal)){
+      if(userErr){ userErr.textContent = EMAIL_FORMAT_MSG; userErr.style.display = 'block'; }
+      if(userWrap) userWrap.style.borderColor = '#dc2626';
+      return;
+    }
+
     if(userVal.toLowerCase() !== DEMO_LOGIN){
-      if(userErr) userErr.style.display = 'block';
+      if(userErr){ userErr.textContent = 'Nie znaleziono konta powiązanego z podanym adresem e-mail.'; userErr.style.display = 'block'; }
       if(userWrap) userWrap.style.borderColor = '#dc2626';
       return;
     }
@@ -9056,7 +9067,11 @@ function submitOrder() {
     var phoneVal = phone ? phone.value.trim() : '';
     var hasError = false;
     if(!emailVal){
-      if(emailErr) emailErr.style.display = 'block';
+      if(emailErr){ emailErr.textContent = 'Podaj adres e-mail.'; emailErr.style.display = 'block'; }
+      if(emailWrap) emailWrap.style.borderColor = '#dc2626';
+      hasError = true;
+    } else if(!isValidEmail(emailVal)){
+      if(emailErr){ emailErr.textContent = EMAIL_FORMAT_MSG; emailErr.style.display = 'block'; }
       if(emailWrap) emailWrap.style.borderColor = '#dc2626';
       hasError = true;
     }
@@ -9094,7 +9109,12 @@ function submitOrder() {
     var success = document.getElementById('forgotSuccess');
     var emailVal = email ? email.value.trim() : '';
     if(!emailVal){
-      if(errEl) errEl.style.display = 'block';
+      if(errEl){ errEl.textContent = 'Podaj adres e-mail.'; errEl.style.display = 'block'; }
+      if(wrap) wrap.style.borderColor = '#dc2626';
+      return;
+    }
+    if(!isValidEmail(emailVal)){
+      if(errEl){ errEl.textContent = EMAIL_FORMAT_MSG; errEl.style.display = 'block'; }
       if(wrap) wrap.style.borderColor = '#dc2626';
       return;
     }
