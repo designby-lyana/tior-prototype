@@ -799,9 +799,9 @@
   .results-search-input{
     position:relative;
     height:48px;
-    border:1px solid var(--border-default);
-    border-radius:var(--radius-lg);
-    background:var(--bg-input);
+    border:none;
+    border-bottom:1px solid var(--border-default);
+    background:transparent;
     display:flex; align-items:center;
     padding:0 var(--space-md) 0 42px;
   }
@@ -850,7 +850,6 @@
     color:var(--text-muted); cursor:pointer;
     border-radius:50%; transition:background 120ms ease;
     width:20px; height:20px; flex:none;
-    margin-left:-4px;
   }
   .rozmiar-remove-btn:hover{ background:rgba(0,0,0,.06); }
   .results-filter-chip{
@@ -2748,7 +2747,7 @@
             <button class="mini-trigger" onclick="toggleMoreFilters()">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><line x1="3" y1="6" x2="21" y2="6"/><circle cx="15" cy="6" r="2.2" fill="currentColor" stroke="none"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><line x1="3" y1="18" x2="21" y2="18"/><circle cx="17" cy="18" r="2.2" fill="currentColor" stroke="none"/></svg>
               Filtry
-              <svg class="field-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              <svg class="field-chevron" id="moreFiltersChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 220ms ease;"><path d="M6 9l6 6 6-6"/></svg>
             </button>
           </div>
         </div><!-- /filter-bar -->
@@ -6378,7 +6377,7 @@
 
     // ── WIDTH: дропдауни з пошуком (Rozmiar/Marka/Model/Homologacja/EAN...) розтягуються майже на всю картку,
     //           дропдауни без пошуку (Typ/Sezon/Segment/DOT/Nośność/Prędkość) — по ширині поля ──
-    var isLarge = hasSearch;
+    var isLarge = hasSearch || fieldEl.classList.contains('results-filter-chip');
     var sheetLeft  = leftInPhone;
     var sheetWidth = fieldRect.width;
     if (isLarge) {
