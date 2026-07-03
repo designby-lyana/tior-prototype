@@ -6377,16 +6377,29 @@
 
     // ── WIDTH: дропдауни з пошуком (Rozmiar/Marka/Model/Homologacja/EAN...) розтягуються майже на всю картку,
     //           дропдауни без пошуку (Typ/Sezon/Segment/DOT/Nośność/Prędkość) — по ширині поля ──
-    var isLarge = hasSearch || fieldEl.classList.contains('results-filter-chip');
+    var isResultsChip = fieldEl.classList.contains('results-filter-chip');
+    var isLarge = hasSearch || isResultsChip;
     var sheetLeft  = leftInPhone;
     var sheetWidth = fieldRect.width;
+    // На головній: Rozmiar/Marka — завжди по ширині тригера (навіть маючи пошук);
+    // Model/EAN/Homologacja — ширина картки мінус 80px, вирівняно по краю тригера (не картки)
+    var HOME_COMPACT_KEYS = ['rozmiar','rozmiar2','marka'];
+    var HOME_NARROW_KEYS  = ['model','ean','homologacja'];
+    if (!isResultsChip && HOME_COMPACT_KEYS.indexOf(key) !== -1) {
+      isLarge = false;
+    }
     if (isLarge) {
       var cardEl = fieldEl.closest('.card, .results-filters-card');
       if (cardEl) {
         var cardRect = cardEl.getBoundingClientRect();
         var cardPadX = parseFloat(getComputedStyle(cardEl).paddingLeft) || 12; // читаємо реальний padding картки
-        sheetLeft  = (cardRect.left - phoneRect.left) + cardPadX;
-        sheetWidth = cardRect.width - cardPadX * 2;
+        if (!isResultsChip && HOME_NARROW_KEYS.indexOf(key) !== -1) {
+          sheetLeft  = leftInPhone; // по краю тригера, не картки
+          sheetWidth = (cardRect.width - cardPadX * 2) - 80;
+        } else {
+          sheetLeft  = (cardRect.left - phoneRect.left) + cardPadX;
+          sheetWidth = cardRect.width - cardPadX * 2;
+        }
       }
     }
 
