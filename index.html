@@ -4951,7 +4951,7 @@
 
     <div style="display:flex;flex-direction:column;gap:4px;">
       <div class="od-breadcrumb" onclick="setScreen('screenProfile')" style="cursor:pointer;">‹‹ Powrót do danych konta</div>
-      <h1 class="od-title">Wszystkie zamówienia</h1>
+      <h1 class="od-title" id="ordersPageTitle">Wszystkie zamówienia</h1>
     </div>
 
     <!-- filters card -->
@@ -7642,6 +7642,7 @@
     var emptyText = document.getElementById('ordersEmptyText');
     var emptyActions = document.getElementById('ordersEmptyActions');
     var filtersCard = document.getElementById('ordersFiltersCard');
+    var pageTitle = document.getElementById('ordersPageTitle');
 
     // Гість (wylogowany / nieaktywowany) nie ma jeszcze zamówień —
     // nie pokazujemy mu cudzej historii zamówień z ORDERS_DATA.
@@ -7649,10 +7650,12 @@
     var data = isGuestUser ? [] : ORDERS_DATA.slice();
 
     if (isGuestUser) {
-      // Дла гостя: лише заголовок + empty state + "Zaloguj się", без картки пошуку/фільтрів
+      // Дла гостя: без заголовка сторінки і без картки пошуку/фільтрів — лише empty state
       if (filtersCard) filtersCard.style.display = 'none';
+      if (pageTitle) pageTitle.style.display = 'none';
     } else {
       if (filtersCard) filtersCard.style.display = '';
+      if (pageTitle) pageTitle.style.display = '';
     }
 
     if (data.length === 0) {
