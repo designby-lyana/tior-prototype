@@ -2870,7 +2870,7 @@
         <div class="results-search-wrap">
           <div class="results-search-input">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
-            <input type="text" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field">
+            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub kod EAN" class="results-search-field" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
           </div>
         </div>
 
@@ -2923,7 +2923,7 @@
         </div>
       </div>
 
-      <button class="btn-outline-search results-find-btn">Pokaż opony</button>
+      <button class="btn-outline-search results-find-btn" onclick="runResultsSearch()">Pokaż opony</button>
 
       </div><!-- /top-group -->
 
@@ -2937,6 +2937,20 @@
         <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
       </div>
 
+    </div>
+
+    <!-- Empty results state (0 wyników) -->
+    <div id="resultsEmptyState" style="display:none;flex-direction:column;align-items:center;padding:60px 24px 40px;text-align:center;gap:24px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#e8eef0;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;color:#323744;margin-bottom:12px;">Brak wyników</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;color:#6b7280;">Nie znaleziono opon spełniających podane kryteria. Spróbuj zmienić parametry wyszukiwania.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+        <button onclick="clearResultsSearch()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Wyczyść wyszukiwanie</button>
+      </div>
     </div>
 
         
@@ -7342,6 +7356,52 @@
     document.querySelectorAll('.flt-chip').forEach(function(c){
       c.classList.remove('is-selected');
     });
+  }
+
+  // ===== RESULTS SEARCH / EMPTY STATE =====
+  // Проста (не повна) перевірка: якщо введений текст не збігається з жодною
+  // видимою карткою (розмір або модель) — показуємо "Brak wyników".
+  // Реальна фільтрація по дропдаунах — окрема задача (беклог).
+  function runResultsSearch(){
+    var input = document.getElementById('resultsSearchField');
+    var query = input ? input.value.trim().toLowerCase() : '';
+    var cards = document.querySelectorAll('#screenResults .product-row');
+    var emptyState = document.getElementById('resultsEmptyState');
+    var status = document.getElementById('resultsStatus');
+    var applied = document.getElementById('appliedFilters');
+
+    if (!query) {
+      // Порожній пошук — показуємо всі картки як є
+      cards.forEach(function(c){ c.style.display = ''; });
+      if (emptyState) emptyState.style.display = 'none';
+      if (status) { status.style.display = ''; status.textContent = 'Wyświetlane są wszystkie opony. Dodaj parametry wyszukiwania.'; }
+      return;
+    }
+
+    var found = false;
+    cards.forEach(function(c){
+      var spec = c.querySelector('.pr-spec');
+      var model = c.querySelector('.pr-model');
+      var text = ((spec ? spec.textContent : '') + ' ' + (model ? model.textContent : '')).toLowerCase();
+      if (text.indexOf(query) !== -1) found = true;
+    });
+
+    if (found) {
+      cards.forEach(function(c){ c.style.display = ''; });
+      if (emptyState) emptyState.style.display = 'none';
+      if (status) { status.style.display = ''; }
+    } else {
+      cards.forEach(function(c){ c.style.display = 'none'; });
+      if (emptyState) emptyState.style.display = 'flex';
+      if (status) status.style.display = 'none';
+      if (applied) applied.style.display = 'none';
+    }
+  }
+
+  function clearResultsSearch(){
+    var input = document.getElementById('resultsSearchField');
+    if (input) input.value = '';
+    runResultsSearch();
   }
 
   function applyFilters(){
