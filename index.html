@@ -4979,6 +4979,20 @@
     <!-- Order cards -->
     <div id="ordersListContainer" style="display:flex;flex-direction:column;gap:var(--space-sm);"><!-- rendered by JS --></div><!-- /order cards -->
 
+    <!-- Empty orders state -->
+    <div id="ordersEmptyState" style="display:none;flex-direction:column;align-items:center;padding:60px 24px 40px;text-align:center;gap:24px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#e8eef0;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </div>
+      <div>
+        <div id="ordersEmptyTitle" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;color:#323744;margin-bottom:12px;">Brak zamówień</div>
+        <div id="ordersEmptyText" style="font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;color:#6b7280;">Nie masz jeszcze żadnych zamówień.</div>
+      </div>
+      <div id="ordersEmptyActions" style="display:flex;flex-direction:column;gap:12px;width:100%;">
+        <button onclick="setScreen('screenResults')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Szukaj opon</button>
+      </div>
+    </div>
+
   </div><!-- /inv-content -->
 </div>
 
@@ -7623,7 +7637,35 @@
   function renderOrders() {
     var container = document.getElementById('ordersListContainer');
     if (!container) return;
-    var data = ORDERS_DATA.slice();
+    var emptyState = document.getElementById('ordersEmptyState');
+    var emptyTitle = document.getElementById('ordersEmptyTitle');
+    var emptyText = document.getElementById('ordersEmptyText');
+    var emptyActions = document.getElementById('ordersEmptyActions');
+
+    // Гість (wylogowany / nieaktywowany) nie ma jeszcze zamówień —
+    // nie pokazujemy mu cudzej historii zamówień z ORDERS_DATA.
+    var isGuestUser = (typeof isGuest !== 'undefined') && isGuest;
+    var data = isGuestUser ? [] : ORDERS_DATA.slice();
+
+    if (data.length === 0) {
+      container.innerHTML = '';
+      container.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'flex';
+      if (isGuestUser) {
+        if (emptyTitle) emptyTitle.textContent = 'Zaloguj się, aby zobaczyć zamówienia';
+        if (emptyText) emptyText.textContent = 'Historia zamówień jest dostępna po zalogowaniu się na konto firmowe.';
+        if (emptyActions) emptyActions.innerHTML = '<button onclick="setScreen(\'screenLogin\')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:\'Outfit\',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zaloguj się</button>';
+      } else {
+        if (emptyTitle) emptyTitle.textContent = 'Brak zamówień';
+        if (emptyText) emptyText.textContent = 'Nie masz jeszcze żadnych zamówień.';
+        if (emptyActions) emptyActions.innerHTML = '<button onclick="setScreen(\'screenResults\')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:\'Outfit\',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Szukaj opon</button>';
+      }
+      return;
+    }
+
+    container.style.display = 'flex';
+    if (emptyState) emptyState.style.display = 'none';
+
     if (_ordersSortField === 'date') {
       data.sort(function(a,b){ return _ordersSortAsc ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date); });
     } else if (_ordersSortField === 'suma') {
