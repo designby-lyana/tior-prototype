@@ -4955,7 +4955,7 @@
     </div>
 
     <!-- filters card -->
-    <div class="checkout-card" style="padding:var(--space-lg);gap:var(--space-sm);">
+    <div class="checkout-card" id="ordersFiltersCard" style="padding:var(--space-lg);gap:var(--space-sm);">
       <div class="orl-search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
         <span>Nr zamówienia lub lokalizacja</span>
@@ -7641,11 +7641,19 @@
     var emptyTitle = document.getElementById('ordersEmptyTitle');
     var emptyText = document.getElementById('ordersEmptyText');
     var emptyActions = document.getElementById('ordersEmptyActions');
+    var filtersCard = document.getElementById('ordersFiltersCard');
 
     // Гість (wylogowany / nieaktywowany) nie ma jeszcze zamówień —
     // nie pokazujemy mu cudzej historii zamówień z ORDERS_DATA.
     var isGuestUser = (typeof isGuest !== 'undefined') && isGuest;
     var data = isGuestUser ? [] : ORDERS_DATA.slice();
+
+    if (isGuestUser) {
+      // Дла гостя: лише заголовок + empty state + "Zaloguj się", без картки пошуку/фільтрів
+      if (filtersCard) filtersCard.style.display = 'none';
+    } else {
+      if (filtersCard) filtersCard.style.display = '';
+    }
 
     if (data.length === 0) {
       container.innerHTML = '';
