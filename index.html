@@ -6181,9 +6181,15 @@
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses','screenLogin','screenError'];
   function closeAllOverlays(){
     // Всі бекдропи в проєкті (dd/flt/atc/addr/iban/daneFirmy/rachunki/adres/sideMenu тощо)
-    // мають id, що закінчується на "Backdrop" — примусово ховаємо їх усі, незалежно від того,
-    // яким механізмом вони керуються (classList.is-open чи inline style.display).
-    document.querySelectorAll('[id$="Backdrop"]').forEach(function(el){
+    // мають id, що закінчується на "Backdrop". Частина з них (flt-backdrop/dd-backdrop/atc-backdrop)
+    // керується виключно класом is-open — для них НЕ можна ставити inline style.display,
+    // бо inline-стиль має вищий пріоритет за CSS-клас і назавжди заблокує майбутнє відкриття
+    // (клас is-open потім не зможе повернути display:block). Решта бекдропів керуються напряму
+    // inline style.display — для них залишаємо стару поведінку.
+    document.querySelectorAll('.flt-backdrop.is-open, .dd-backdrop.is-open, .atc-backdrop.is-open').forEach(function(el){
+      el.classList.remove('is-open');
+    });
+    document.querySelectorAll('[id$="Backdrop"]:not(.flt-backdrop):not(.dd-backdrop):not(.atc-backdrop)').forEach(function(el){
       el.classList.remove('is-open');
       el.style.display = 'none';
     });
