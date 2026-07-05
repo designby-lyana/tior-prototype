@@ -567,11 +567,6 @@
   .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
-  .pr-gross-group{ display:flex; flex-direction:column; align-items:flex-end; gap:0; }
-  .pr-netto-group{ display:flex; flex-direction:column; align-items:flex-end; gap:0; margin-top:4px; }
-  .pr-price-caption{ font-family:var(--font-body); font-weight:400; font-size:13px; }
-  .pr-price-caption.is-gross{ color:var(--text-default); }
-  .pr-price-caption.is-netto{ color:var(--text-muted); }
   .pr-availability{ margin-top: var(--space-3xl); }
   .pr-stock{ display:flex; align-items:center; gap:6px; font-size:18px; color:var(--text-default); justify-content:flex-end; }
   .stock-dot{ width:10px; height:10px; border-radius:50%; background:#16a34a; flex:none; }
@@ -2985,14 +2980,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross-group">
-<div class="pr-gross">€48.99</div>
-<div class="pr-price-caption is-gross">brutto</div>
-</div>
-<div class="pr-netto-group">
-<div class="pr-netto">€39.83</div>
-<div class="pr-price-caption is-netto">netto</div>
-</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€48.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€39.83</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>18 szt.</div>
@@ -3054,14 +3043,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross-group">
-<div class="pr-gross">€52.50</div>
-<div class="pr-price-caption is-gross">brutto</div>
-</div>
-<div class="pr-netto-group">
-<div class="pr-netto">€42.68</div>
-<div class="pr-price-caption is-netto">netto</div>
-</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€52.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€42.68</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock is-out"><span class="stock-dot is-out"></span>0</div>
@@ -3181,8 +3164,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€59.90</div>
-<div class="pr-netto">€48.70</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€59.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€48.70</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>31 szt.</div>
@@ -3244,8 +3227,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€63.40</div>
-<div class="pr-netto">€51.54</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€63.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€51.54</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -3370,8 +3353,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€71.20</div>
-<div class="pr-netto">€57.89</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€71.20</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€57.89</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>27 szt.</div>
@@ -3433,8 +3416,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€74.99</div>
-<div class="pr-netto">€60.97</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€74.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€60.97</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -3496,8 +3479,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€78.50</div>
-<div class="pr-netto">€63.82</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€78.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€63.82</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>42 szt.</div>
@@ -3559,8 +3542,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€82.30</div>
-<div class="pr-netto">€66.91</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€82.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€66.91</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>22 szt.</div>
@@ -3622,8 +3605,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€86.90</div>
-<div class="pr-netto">€70.65</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€86.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€70.65</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>22 szt.</div>
@@ -3685,8 +3668,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€91.40</div>
-<div class="pr-netto">€74.31</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€91.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€74.31</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>64 szt.</div>
@@ -3748,8 +3731,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€95.80</div>
-<div class="pr-netto">€77.89</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€95.80</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€77.89</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>53 szt.</div>
@@ -3811,8 +3794,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€99.99</div>
-<div class="pr-netto">€81.29</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€99.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€81.29</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>18 szt.</div>
@@ -3874,8 +3857,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€104.50</div>
-<div class="pr-netto">€84.96</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€104.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€84.96</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>112 szt.</div>
@@ -3937,8 +3920,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€112.30</div>
-<div class="pr-netto">€91.30</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€112.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€91.30</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>14 szt.</div>
@@ -4000,8 +3983,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€118.90</div>
-<div class="pr-netto">€96.67</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€118.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€96.67</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>91 szt.</div>
@@ -4063,8 +4046,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€127.40</div>
-<div class="pr-netto">€103.58</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€127.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€103.58</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -4126,8 +4109,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€138.60</div>
-<div class="pr-netto">€112.68</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€138.60</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€112.68</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>38 szt.</div>
@@ -4189,8 +4172,8 @@
         </div>
         <div class="pr-price-col">
           <div class="pr-price">
-            <div class="pr-gross">€152.90</div>
-<div class="pr-netto">€124.31</div>
+            <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€152.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
+<span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€124.31</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>42 szt.</div>
