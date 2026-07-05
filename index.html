@@ -2571,70 +2571,6 @@
   <button onclick="switchLang('PL')" style="width:100%;max-width:320px;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Wróć do wersji polskiej</button>
 </div>
 
-<!-- SIDE MENU -->
-<div id="sideMenuBackdrop" onclick="closeSideMenu()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:1100;border-radius:18px;"></div>
-<div id="sideMenu" style="position:absolute;top:0;right:-100%;width:80%;max-width:280px;height:100%;background:#fff;z-index:1101;display:flex;flex-direction:column;transition:right 280ms cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.12);overflow-y:auto;">
-
-  <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border-default);">
-    <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--text-default);letter-spacing:.5px;">MENU</span>
-    <button onclick="closeSideMenu()" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-
-  <!-- Navigation -->
-  <nav style="padding:8px 0;flex:1;">
-    <button onclick="goHome();closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
-      Szukaj opon
-    </button>
-    <button onclick="setScreen('screenOrders');closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-      Moje zamówienia
-    </button>
-    <button onclick="setScreen('screenInvoices');closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-      Faktury
-    </button>
-    <button onclick="onProfileIconClick();closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
-      Moje konto
-    </button>
-    <button onclick="goToCart();closeSideMenu()" class="side-nav-item">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h2l1.6 10.2a1.6 1.6 0 001.6 1.3h7.6a1.6 1.6 0 001.6-1.3L20 8H6.4"/><circle cx="9.5" cy="20" r="1"/><circle cx="16.5" cy="20" r="1"/></svg>
-      Koszyk
-    </button>
-  </nav>
-
-  <!-- Language switcher -->
-  <div style="padding:16px 20px;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);">
-    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Język</div>
-    <div style="display:flex;gap:8px;">
-      <button id="langPL" onclick="switchLang('PL')" style="flex:1;height:36px;border:1.5px solid var(--accent-primary);border-radius:6px;background:var(--accent-primary);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">PL</button>
-      <button id="langEN" onclick="switchLang('EN')" style="flex:1;height:36px;border:1.5px solid var(--border-default);border-radius:6px;background:none;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;cursor:pointer;">EN</button>
-    </div>
-  </div>
-
-  <!-- Contacts -->
-  <div style="padding:16px 20px 32px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Kontakt</div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .39 1.97.76 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.37 1.9.63 2.9.76A2 2 0 0122 14.92z"/></svg>
-      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">+48 782 50 50 02</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .39 1.97.76 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.37 1.9.63 2.9.76A2 2 0 0122 14.92z"/></svg>
-      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">+48 693 814 331</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      <span style="font-family:'Outfit',sans-serif;font-size:15px;color:var(--text-default);">kontakt@tior.pl</span>
-    </div>
-  </div>
-
-</div>
-
 <div class="screen is-active" id="screenHome">
 
   <header>
@@ -2644,9 +2580,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -2947,9 +2880,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -4381,9 +4311,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -4543,9 +4470,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -4640,9 +4564,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -4746,9 +4667,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -4854,9 +4772,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -5099,9 +5014,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -5163,9 +5075,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -5358,9 +5267,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -5442,9 +5348,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -5567,9 +5470,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -5604,9 +5504,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -5719,9 +5616,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
 
@@ -5787,9 +5681,6 @@
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
       </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </span>
     </div>
   </header>
   <div class="addr-content">
@@ -5819,9 +5710,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadge"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -5890,9 +5778,6 @@
       <span class="icon-btn" onclick="onProfileIconClick()" style="cursor:pointer;" title="Profil"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z"/></svg></span>
       <span class="icon-btn cart-icon-wrap" onclick="goToCart()" style="cursor:pointer;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg><span class="cart-badge" id="cartBadgeError"></span>
-      </span>
-      <span class="icon-btn" onclick="openSideMenu()" style="cursor:pointer;" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </span>
     </div>
   </header>
@@ -6412,7 +6297,7 @@
   document.addEventListener('DOMContentLoaded', function(){ updateSortTriggerLabel(); applySort(); });
 
   function closeAllOverlays(){
-    // Всі бекдропи в проєкті (dd/flt/atc/addr/iban/daneFirmy/rachunki/adres/sideMenu тощо)
+    // Всі бекдропи в проєкті (dd/flt/atc/addr/iban/daneFirmy/rachunki/adres тощо)
     // мають id, що закінчується на "Backdrop". Частина з них (flt-backdrop/dd-backdrop/atc-backdrop)
     // керується виключно класом is-open — для них НЕ можна ставити inline style.display,
     // бо inline-стиль має вищий пріоритет за CSS-клас і назавжди заблокує майбутнє відкриття
@@ -6434,8 +6319,6 @@
     if (euSheetEl) { euSheetEl.style.display = 'none'; euSheetEl.style.pointerEvents = 'none'; }
     var euBackdropEl = document.getElementById('euBackdrop');
     if (euBackdropEl) euBackdropEl.style.display = 'none';
-    var sideMenuEl = document.getElementById('sideMenu');
-    if (sideMenuEl) sideMenuEl.style.right = '-100%';
     var atcSheetEl = document.getElementById('atcSheet');
     if (atcSheetEl) atcSheetEl.classList.remove('is-open');
     if (typeof closeSortPanel === 'function') closeSortPanel();
@@ -9319,20 +9202,6 @@ function submitOrder() {
     if (typeof renderAddrList === 'function') renderAddrList();
   }
 
-  function openSideMenu(){
-    var menu = document.getElementById('sideMenu');
-    var backdrop = document.getElementById('sideMenuBackdrop');
-    if(!menu) return;
-    backdrop.style.display = 'block';
-    requestAnimationFrame(function(){ menu.style.right = '0'; });
-  }
-  function closeSideMenu(){
-    var menu = document.getElementById('sideMenu');
-    var backdrop = document.getElementById('sideMenuBackdrop');
-    if(!menu) return;
-    menu.style.right = '-100%';
-    setTimeout(function(){ backdrop.style.display = 'none'; }, 280);
-  }
   var currentLang = 'PL';
   function switchLang(lang){
     currentLang = lang;
