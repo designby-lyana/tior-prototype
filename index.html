@@ -784,6 +784,8 @@
 
   /* ── SORT PANEL (screenResults, тригер тепер у filter-bar як mini-trigger) ── */
   #sortTrigger.is-open .field-chevron{ transform:rotate(180deg); }
+  #sortTrigger.is-active{ color:var(--accent-primary); }
+  #sortTrigger.is-active svg:first-child{ color:var(--accent-primary); }
   .sort-backdrop{ display:none; }
   .sort-panel{
     display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:230px;
@@ -2878,7 +2880,7 @@
             <div class="sort-trigger-wrap">
               <button class="mini-trigger" id="sortTrigger" onclick="toggleSortPanel()">
                 <svg viewBox="0 -960 960 960" fill="currentColor"><path d="M120-240v-80h240v80H120Zm0-200v-80h480v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                Sortuj
+                <span id="sortTriggerLabel">Sortuj</span>
                 <svg class="field-chevron" id="sortChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 220ms ease;"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="sort-backdrop" id="sortBackdrop" onclick="closeSortPanel()"></div>
@@ -6266,10 +6268,10 @@
 
   function updateSortTriggerLabel(){
     var labelEl = document.getElementById('sortTriggerLabel');
-    var dirIcon = document.getElementById('sortDirIcon');
+    var trigger = document.getElementById('sortTrigger');
     var f = SORT_FIELDS[currentSortKey];
     if(labelEl) labelEl.textContent = f.label;
-    if(dirIcon) dirIcon.innerHTML = '<path d="' + sortArrowPath(currentSortDir) + '"/>';
+    if(trigger) trigger.classList.add('is-active');
   }
 
   function selectSort(key){
