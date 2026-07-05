@@ -3094,7 +3094,7 @@
       </div>
 
       <div class="pr-purchase">
-        <a href="tel:+48782505002" class="pr-notify">Zapytaj o dostępność</a>
+        <button class="pr-notify" onclick="findAlternatives(this)">Znajdź alternatywy</button>
       </div>
     </div>
 
@@ -4254,7 +4254,7 @@
       </div>
 
       <div class="pr-purchase">
-        <a href="tel:+48782505002" class="pr-notify">Zapytaj o dostępność</a>
+        <button class="pr-notify" onclick="findAlternatives(this)">Znajdź alternatywy</button>
       </div>
     </div>
 
@@ -7639,6 +7639,22 @@
   // Проста (не повна) перевірка: якщо введений текст не збігається з жодною
   // видимою карткою (розмір або модель) — показуємо "Brak wyników".
   // Реальна фільтрація по дропдаунах — окрема задача (беклог).
+  // CTA "Znajdź alternatywy" на картках з нульовою наявністю —
+  // веде на сторінку результатів з уже активованим пошуком за тим самим розміром
+  function findAlternatives(btn){
+    var card = btn.closest('.product-row');
+    var specEl = card ? card.querySelector('.pr-spec') : null;
+    var specText = specEl ? specEl.textContent.trim() : '';
+    // "195/65 R15  91H" → лишаємо тільки розмір (без індексу навантаження/швидкості)
+    var sizeMatch = specText.match(/^\s*\d+\/\d+\s*R\d+/i);
+    var sizeQuery = sizeMatch ? sizeMatch[0].replace(/\s+/g, ' ').trim() : specText;
+
+    setScreen('screenResults');
+    var input = document.getElementById('resultsSearchField');
+    if (input) input.value = sizeQuery;
+    runResultsSearch();
+  }
+
   function runResultsSearch(){
     var input = document.getElementById('resultsSearchField');
     var query = input ? input.value.trim().toLowerCase() : '';
