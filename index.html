@@ -580,6 +580,9 @@
   .pr-stock.is-out{ color:var(--text-muted); font-weight:400; }
   .pr-delivery.is-out{ color:var(--text-muted); }
   .pr-notify{ flex:1; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:1.5px solid var(--border-default); border-radius:8px; font-family:'Outfit',sans-serif; font-weight:500; font-size:16px; color:#005f6e; text-decoration:none; cursor:pointer; }
+  /* Картка з нульовою наявністю: приглушуємо весь контент до 80%, окрім CTA "Znajdź alternatywy" */
+  .product-row.is-out-card .pr-top,
+  .product-row.is-out-card .pr-second{ opacity:.8; }
 
   .pr-second{
     background:#ffffff;
@@ -3037,7 +3040,7 @@
     </div>
 
 
-    <div class="product-row">
+    <div class="product-row is-out-card">
       <div class="pr-top" style="align-items:center;">
         <div class="pr-info" style="align-items:flex-end; gap:var(--space-xs);">
           <div style="display:flex; flex-direction:column; gap:var(--space-sm);">
@@ -4201,7 +4204,7 @@
 
 
 
-<div class="product-row">
+<div class="product-row is-out-card">
       <div class="pr-top" style="align-items:center;">
         <div class="pr-info" style="align-items:flex-end; gap:var(--space-xs);">
           <div style="display:flex; flex-direction:column; gap:var(--space-sm);">
