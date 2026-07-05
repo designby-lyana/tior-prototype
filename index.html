@@ -627,6 +627,17 @@
   .qty-btn:active{ background: var(--accent-pressed); color:#fff; }
   .qty-btn:focus-visible{ outline:2px solid var(--text-default); outline-offset:1px; }
   .qty-value{ flex:1; text-align:center; font-family:var(--font-body); font-size:18px; font-weight:400; line-height:18px; color:var(--text-on-light); background:var(--bg-input); height:100%; display:flex; align-items:center; justify-content:center; }
+  .qty-limit-note{
+    display:none; font-family:var(--font-body); font-size:13px; line-height:16px;
+    color:#9a6200; white-space:nowrap;
+  }
+  .qty-limit-note.is-visible{ display:block; }
+  .qty-stepper.is-limit-flash{ animation: qtyLimitFlash 450ms ease; }
+  @keyframes qtyLimitFlash{
+    0%   { box-shadow:0 0 0 0 rgba(220,38,38,.5); border-color:var(--bg-chip); }
+    35%  { box-shadow:0 0 0 3px rgba(220,38,38,.35); border-color:#dc2626; }
+    100% { box-shadow:0 0 0 0 rgba(220,38,38,0); border-color:var(--bg-chip); }
+  }
   .cta.cta-sm{ height:40px; font-size:20px; }
   .pr-add{ flex:1; }
 
@@ -774,6 +785,41 @@
     padding:16px var(--space-lg);
     text-align:center; color:var(--text-muted); font-size:15px;
   }
+
+  /* ── SORT BAR (screenResults) ────────────────── */
+  .sort-bar{ position:relative; display:flex; justify-content:flex-end; margin:var(--space-md) 0; }
+  .sort-trigger{
+    appearance:none; display:flex; align-items:center; gap:6px;
+    height:36px; padding:0 var(--space-md);
+    border:1px solid var(--border-default); border-radius:var(--radius-lg);
+    background:#fff; cursor:pointer;
+    font-family:var(--font-body); font-size:15px; color:var(--text-muted);
+  }
+  .sort-trigger:hover{ border-color:var(--text-muted); }
+  .sort-trigger.is-open{ border-color:var(--accent-primary); }
+  .sort-trigger-label{ font-weight:500; color:var(--text-default); }
+  .sort-dir-icon{ width:14px; height:14px; flex:none; color:var(--accent-primary); }
+  .sort-chevron{ width:14px; height:14px; flex:none; color:var(--text-muted); transition:transform 200ms ease; }
+  .sort-trigger.is-open .sort-chevron{ transform:rotate(180deg); }
+  .sort-backdrop{ display:none; }
+  .sort-panel{
+    display:none; position:absolute; top:calc(100% + 6px); right:0; min-width:230px;
+    background:#fff; border:1px solid var(--border-default); border-radius:var(--radius-lg);
+    box-shadow:0 14px 32px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.09);
+    z-index:120; overflow:hidden;
+  }
+  .sort-panel.is-open{ display:block; }
+  .sort-item{
+    display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm);
+    height:40px; padding:0 var(--space-md);
+    font-family:var(--font-body); font-size:16px; color:var(--text-on-light);
+    cursor:pointer; border-bottom:1px solid var(--border-surface);
+    transition:background 100ms ease;
+  }
+  .sort-item:last-child{ border-bottom:none; }
+  .sort-item:hover{ background:var(--bg-page); }
+  .sort-item.is-active{ color:var(--accent-primary); font-weight:500; }
+  .sort-item-arrow{ width:14px; height:14px; flex:none; color:var(--accent-primary); }
 
   .card-header{
     display:flex; align-items:center; justify-content:space-between;
@@ -2999,7 +3045,18 @@
       </div>
     </div>
 
-        
+    <div class="sort-bar">
+      <button class="sort-trigger" id="sortTrigger" onclick="toggleSortPanel()">
+        <span>Sortuj:</span>
+        <span class="sort-trigger-label" id="sortTriggerLabel">Dostępność</span>
+        <svg class="sort-dir-icon" id="sortDirIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        <svg class="sort-chevron" id="sortChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="sort-backdrop" id="sortBackdrop" onclick="closeSortPanel()"></div>
+      <div class="sort-panel" id="sortPanel"></div>
+    </div>
+
+    <div class="results-list" id="resultsList">
     <div class="product-row">
       <div class="pr-top" style="align-items:center;">
         <div class="pr-info" style="align-items:flex-end; gap:var(--space-xs);">
@@ -4288,7 +4345,7 @@
       </div>
     </div>
 
-
+    </div><!-- /resultsList -->
 
   </div>
   <footer class="site-footer">
@@ -6229,6 +6286,128 @@
 
 
   var ALL_SCREENS = ['screenHome','screenResults','screenCart','screenCheckout','screenCheckout2','screenCheckout3','screenOrderDetail','screenOrders','screenInvoices','screenProfile','screenFirma','screenSuccess','screenPassword','screenChangePassword','screenAddresses','screenLogin','screenError'];
+  // ===== SORT BAR (screenResults) =====
+  var SORT_FIELDS = {
+    dostepnosc: { label: 'Dostępność', numeric: true, defaultDir: 'desc', extract: function(card){
+        var t = card.querySelector('.pr-stock');
+        if(!t) return 0;
+        var m = t.textContent.match(/\d+/);
+        return m ? parseInt(m[0], 10) : 0;
+    }},
+    cena: { label: 'Cena', numeric: true, defaultDir: 'asc', extract: function(card){
+        var t = card.querySelector('.pr-gross');
+        if(!t) return 0;
+        var m = t.textContent.replace(',', '.').match(/[\d.]+/);
+        return m ? parseFloat(m[0]) : 0;
+    }},
+    dostawa: { label: 'Czas dostawy', numeric: true, defaultDir: 'asc', extract: function(card){
+        var t = card.querySelector('.pr-delivery');
+        if(!t) return Infinity;
+        var m = t.textContent.match(/\d+/);
+        return m ? parseInt(m[0], 10) : Infinity; // "Niedostępny" — завжди в кінці при зростанні
+    }},
+    marka: { label: 'Marka', numeric: false, defaultDir: 'asc', extract: function(card){
+        var t = card.querySelector('.pr-brand');
+        return t ? t.textContent.trim() : '';
+    }},
+    segment: { label: 'Segment', numeric: false, defaultDir: 'asc', extract: function(card){
+        var t = card.querySelector('.pr-segment-row span');
+        return t ? t.textContent.trim() : '';
+    }},
+    dot: { label: 'DOT', numeric: true, defaultDir: 'asc', extract: function(card){
+        // DOT (тиждень/рік виробництва) на картці окремо не показаний — використовуємо
+        // рік із pr-segment-row як найближчий доступний проксі-показник.
+        var spans = card.querySelectorAll('.pr-segment-row span');
+        var t = spans[1];
+        var m = t ? t.textContent.match(/\d+/) : null;
+        return m ? parseInt(m[0], 10) : 0;
+    }},
+    nazwa: { label: 'Nazwa', numeric: false, defaultDir: 'asc', extract: function(card){
+        var t = card.querySelector('.pr-model');
+        return t ? t.textContent.trim() : '';
+    }}
+  };
+  var SORT_ORDER = ['dostepnosc', 'cena', 'dostawa', 'marka', 'segment', 'dot', 'nazwa'];
+  var currentSortKey = 'dostepnosc';
+  var currentSortDir = 'desc';
+
+  function sortArrowPath(dir){
+    return dir === 'asc' ? 'M12 19V5M5 12l7-7 7 7' : 'M12 5v14M19 12l-7 7-7-7';
+  }
+
+  function renderSortPanel(){
+    var panel = document.getElementById('sortPanel');
+    if(!panel) return;
+    var html = '';
+    SORT_ORDER.forEach(function(key){
+      var f = SORT_FIELDS[key];
+      var isActive = key === currentSortKey;
+      var arrowSvg = isActive
+        ? '<svg class="sort-item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="' + sortArrowPath(currentSortDir) + '"/></svg>'
+        : '';
+      html += '<div class="sort-item' + (isActive ? ' is-active' : '') + '" onclick="selectSort(\'' + key + '\')">' +
+                '<span>' + f.label + '</span>' + arrowSvg +
+              '</div>';
+    });
+    panel.innerHTML = html;
+  }
+
+  function toggleSortPanel(){
+    var panel = document.getElementById('sortPanel');
+    var trigger = document.getElementById('sortTrigger');
+    if(!panel || !trigger) return;
+    if(panel.classList.contains('is-open')){ closeSortPanel(); return; }
+    closeAllOverlays();
+    renderSortPanel();
+    panel.classList.add('is-open');
+    trigger.classList.add('is-open');
+  }
+
+  function closeSortPanel(){
+    var panel = document.getElementById('sortPanel');
+    var trigger = document.getElementById('sortTrigger');
+    if(panel) panel.classList.remove('is-open');
+    if(trigger) trigger.classList.remove('is-open');
+  }
+
+  function updateSortTriggerLabel(){
+    var labelEl = document.getElementById('sortTriggerLabel');
+    var dirIcon = document.getElementById('sortDirIcon');
+    var f = SORT_FIELDS[currentSortKey];
+    if(labelEl) labelEl.textContent = f.label;
+    if(dirIcon) dirIcon.innerHTML = '<path d="' + sortArrowPath(currentSortDir) + '"/>';
+  }
+
+  function selectSort(key){
+    var f = SORT_FIELDS[key];
+    if(!f) return;
+    if(key === currentSortKey){
+      currentSortDir = (currentSortDir === 'asc') ? 'desc' : 'asc';
+    } else {
+      currentSortKey = key;
+      currentSortDir = f.defaultDir;
+    }
+    updateSortTriggerLabel();
+    applySort();
+    closeSortPanel();
+  }
+
+  function applySort(){
+    var list = document.getElementById('resultsList');
+    if(!list) return;
+    var f = SORT_FIELDS[currentSortKey];
+    var mult = currentSortDir === 'asc' ? 1 : -1;
+    var cards = Array.prototype.slice.call(list.querySelectorAll('.product-row'));
+    var withVals = cards.map(function(card){ return { card: card, val: f.extract(card) }; });
+    withVals.sort(function(a, b){
+      if (f.numeric) return (a.val - b.val) * mult;
+      return String(a.val).localeCompare(String(b.val), 'pl') * mult;
+    });
+    withVals.forEach(function(item){ list.appendChild(item.card); });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ applySort(); });
+
   function closeAllOverlays(){
     // Всі бекдропи в проєкті (dd/flt/atc/addr/iban/daneFirmy/rachunki/adres/sideMenu тощо)
     // мають id, що закінчується на "Backdrop". Частина з них (flt-backdrop/dd-backdrop/atc-backdrop)
@@ -6256,6 +6435,7 @@
     if (sideMenuEl) sideMenuEl.style.right = '-100%';
     var atcSheetEl = document.getElementById('atcSheet');
     if (atcSheetEl) atcSheetEl.classList.remove('is-open');
+    if (typeof closeSortPanel === 'function') closeSortPanel();
   }
 
   function setScreen(id){
@@ -6290,14 +6470,59 @@
   var logoResultsEl = document.getElementById('logoResults');
   if (logoResultsEl) logoResultsEl.addEventListener('click', goHome);
 
-  // quantity steppers on product rows
+  // quantity steppers on product rows (з урахуванням ліміту наявності pr-stock)
   document.querySelectorAll('.qty-stepper').forEach(stepper => {
     const valueEl = stepper.querySelector('.qty-value');
+    const purchaseEl = stepper.closest('.pr-purchase');
+    const card = stepper.closest('.product-row');
+    const stockEl = card ? card.querySelector('.pr-stock') : null;
+
+    var maxQty = null;
+    if (stockEl) {
+      var stockMatch = stockEl.textContent.match(/\d+/);
+      if (stockMatch) maxQty = parseInt(stockMatch[0], 10);
+    }
+
+    var noteEl = null;
+    if (maxQty != null && purchaseEl) {
+      var col = document.createElement('div');
+      col.style.display = 'flex';
+      col.style.flexDirection = 'column';
+      col.style.gap = '4px';
+      purchaseEl.insertBefore(col, stepper);
+      col.appendChild(stepper);
+      noteEl = document.createElement('div');
+      noteEl.className = 'qty-limit-note';
+      noteEl.textContent = 'Dostępne: ' + maxQty + ' szt.';
+      col.appendChild(noteEl);
+    }
+
+    function updateLimitNote(){
+      if (!noteEl || maxQty == null) return;
+      var val = parseInt(valueEl.textContent, 10);
+      noteEl.classList.toggle('is-visible', val >= maxQty);
+    }
+
+    function flashLimit(){
+      stepper.classList.remove('is-limit-flash');
+      void stepper.offsetWidth; // reflow — перезапускає анімацію при повторному кліку
+      stepper.classList.add('is-limit-flash');
+      setTimeout(function(){ stepper.classList.remove('is-limit-flash'); }, 450);
+    }
+
     stepper.querySelector('.qty-minus').addEventListener('click', () => {
       valueEl.textContent = Math.max(1, parseInt(valueEl.textContent, 10) - 1);
+      updateLimitNote();
     });
     stepper.querySelector('.qty-plus').addEventListener('click', () => {
-      valueEl.textContent = parseInt(valueEl.textContent, 10) + 1;
+      var current = parseInt(valueEl.textContent, 10);
+      if (maxQty != null && current >= maxQty) {
+        flashLimit();
+        updateLimitNote();
+        return;
+      }
+      valueEl.textContent = current + 1;
+      updateLimitNote();
     });
   });
 
