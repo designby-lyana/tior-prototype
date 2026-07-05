@@ -5059,11 +5059,11 @@
     <!-- breadcrumb + title -->
     <div style="display:flex;flex-direction:column;gap:4px;">
       <div class="od-breadcrumb" onclick="setScreen('screenProfile')" style="cursor:pointer;">‹‹ Powrót do danych konta</div>
-      <h1 class="od-title">Faktury</h1>
+      <h1 class="od-title" id="invoicesPageTitle">Faktury</h1>
     </div>
 
     <!-- filters card -->
-    <div class="checkout-card" style="padding:var(--space-lg);gap:var(--space-sm);">
+    <div class="checkout-card" id="invoicesFiltersCard" style="padding:var(--space-lg);gap:var(--space-sm);">
 
       <div class="orl-search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>
@@ -5088,7 +5088,7 @@
     </div><!-- /filters -->
 
     <!-- invoice list -->
-    <div class="inv-list">
+    <div class="inv-list" id="invoicesListContainer">
 
       <!-- row 1: Nieopłacone -->
       <div class="inv-row">
@@ -5195,6 +5195,21 @@
       </div>
 
     </div><!-- /inv-list -->
+
+    <!-- Empty invoices state -->
+    <div id="invoicesEmptyState" style="display:none;flex-direction:column;align-items:center;padding:32px 24px 40px;text-align:center;gap:24px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#e8eef0;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+      </div>
+      <div>
+        <div id="invoicesEmptyTitle" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;color:#323744;margin-bottom:12px;">Brak faktur</div>
+        <div id="invoicesEmptyText" style="font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;color:#6b7280;">Nie masz jeszcze żadnych faktur.</div>
+      </div>
+      <div id="invoicesEmptyActions" style="display:flex;flex-direction:column;gap:12px;width:100%;">
+        <button onclick="setScreen('screenResults')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Szukaj opon</button>
+      </div>
+    </div>
+
   </div><!-- /inv-content -->
   <footer class="site-footer">
     <div class="footer-brand"><img src="data:image/png;base64,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" alt="OponyToMy" style="height:22px;width:auto;display:block;opacity:.9;"></div>
@@ -6156,6 +6171,7 @@
     if(target){ target.classList.add('is-active'); target.scrollTop = 0; }
     if(id==='screenAddresses'){ renderAddrList(); }
     if(id==='screenOrders'){ renderOrders(); }
+    if(id==='screenInvoices'){ renderInvoices(); }
     if(id==='screenResults'){ collapseMoreFilters(); }
   }
   // Filtry на результатах завжди має відкриватись згорнутим, незалежно від того,
@@ -7681,6 +7697,38 @@
     agricultural: 'data:image/png;base64,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',
     industrial: 'data:image/png;base64,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'
   };
+
+  // Faktury: список статичний (4 рядки в HTML), реальних даних по користувачу немає.
+  // Той самий guest-патерн, що й для renderOrders: гість (isGuest) не бачить чужих
+  // рахунків — замість цього empty state з CTA "Zaloguj się".
+  function renderInvoices() {
+    var container = document.getElementById('invoicesListContainer');
+    if (!container) return;
+    var emptyState = document.getElementById('invoicesEmptyState');
+    var emptyTitle = document.getElementById('invoicesEmptyTitle');
+    var emptyText = document.getElementById('invoicesEmptyText');
+    var emptyActions = document.getElementById('invoicesEmptyActions');
+    var filtersCard = document.getElementById('invoicesFiltersCard');
+    var pageTitle = document.getElementById('invoicesPageTitle');
+
+    var isGuestUser = (typeof isGuest !== 'undefined') && isGuest;
+
+    if (isGuestUser) {
+      // Для гостя: без заголовка сторінки і без картки пошуку/фільтрів — лише empty state
+      if (filtersCard) filtersCard.style.display = 'none';
+      if (pageTitle) pageTitle.style.display = 'none';
+      container.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'flex';
+      if (emptyTitle) emptyTitle.textContent = 'Zaloguj się, aby zobaczyć faktury';
+      if (emptyText) emptyText.textContent = 'Historia faktur jest dostępna po zalogowaniu się na konto firmowe.';
+      if (emptyActions) emptyActions.innerHTML = '<button onclick="setScreen(\'screenLogin\')" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:\'Outfit\',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Zaloguj się</button>';
+    } else {
+      if (filtersCard) filtersCard.style.display = '';
+      if (pageTitle) pageTitle.style.display = '';
+      container.style.display = '';
+      if (emptyState) emptyState.style.display = 'none';
+    }
+  }
 
   function renderOrders() {
     var container = document.getElementById('ordersListContainer');
