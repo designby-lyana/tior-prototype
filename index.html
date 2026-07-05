@@ -2405,75 +2405,104 @@
       return { x: 50 + Math.cos(angle) * radius * config.searchScale, y: 50 + Math.sin(angle) * radius * config.searchScale };
     }
   };
-  var group = document.getElementById('preloaderGroup');
-  var path = document.getElementById('preloaderPath');
-  if(!group || !path) return;
-  path.setAttribute('stroke-width', String(config.strokeWidth));
-  var particles = [];
-  for(var i=0;i<config.particleCount;i++){
-    var circle = document.createElementNS(SVG_NS, 'circle');
-    circle.setAttribute('fill', 'currentColor');
-    group.appendChild(circle);
-    particles.push(circle);
+
+  var rafId = null;
+
+  function ensureMarkup(){
+    var el = document.getElementById('globalPreloader');
+    if (el) return el;
+    el = document.createElement('div');
+    el.id = 'globalPreloader';
+    el.innerHTML = '<div class="preloader-frame"><svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><g id="preloaderGroup"><path id="preloaderPath" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" opacity="0.1"></path></g></svg></div>';
+    document.body.appendChild(el);
+    return el;
   }
-  function normalizeProgress(p){ return ((p % 1) + 1) % 1; }
-  function getDetailScale(time){
-    var pulseProgress = (time % config.pulseDurationMs) / config.pulseDurationMs;
-    var pulseAngle = pulseProgress * Math.PI * 2;
-    return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
-  }
-  function buildPath(detailScale, steps){
-    steps = steps || 480;
-    var d = '';
-    for(var idx=0; idx<=steps; idx++){
-      var point = config.point(idx/steps, detailScale, config);
-      d += (idx===0 ? 'M ' : 'L ') + point.x.toFixed(2) + ' ' + point.y.toFixed(2) + ' ';
+
+  function startAnimation(){
+    var group = document.getElementById('preloaderGroup');
+    var path = document.getElementById('preloaderPath');
+    if(!group || !path) return;
+    path.setAttribute('stroke-width', String(config.strokeWidth));
+    group.querySelectorAll('circle').forEach(function(c){ c.remove(); });
+    var particles = [];
+    for(var i=0;i<config.particleCount;i++){
+      var circle = document.createElementNS(SVG_NS, 'circle');
+      circle.setAttribute('fill', 'currentColor');
+      group.appendChild(circle);
+      particles.push(circle);
     }
-    return d;
-  }
-  function getParticle(index, progress, detailScale){
-    var tailOffset = index / (config.particleCount - 1);
-    var point = config.point(normalizeProgress(progress - tailOffset * config.trailSpan), detailScale, config);
-    var fade = Math.pow(1 - tailOffset, 0.56);
-    return { x: point.x, y: point.y, radius: 0.9 + fade * 2.7, opacity: 0.04 + fade * 0.96 };
-  }
-  var startedAt = performance.now();
-  var rafId;
-  function render(now){
-    var time = now - startedAt;
-    var progress = (time % config.durationMs) / config.durationMs;
-    var detailScale = getDetailScale(time);
-    path.setAttribute('d', buildPath(detailScale));
-    particles.forEach(function(node, index){
-      var particle = getParticle(index, progress, detailScale);
-      node.setAttribute('cx', particle.x.toFixed(2));
-      node.setAttribute('cy', particle.y.toFixed(2));
-      node.setAttribute('r', particle.radius.toFixed(2));
-      node.setAttribute('opacity', particle.opacity.toFixed(3));
-    });
+    function normalizeProgress(p){ return ((p % 1) + 1) % 1; }
+    function getDetailScale(time){
+      var pulseProgress = (time % config.pulseDurationMs) / config.pulseDurationMs;
+      var pulseAngle = pulseProgress * Math.PI * 2;
+      return 0.52 + ((Math.sin(pulseAngle + 0.55) + 1) / 2) * 0.48;
+    }
+    function buildPath(detailScale, steps){
+      steps = steps || 480;
+      var d = '';
+      for(var idx=0; idx<=steps; idx++){
+        var point = config.point(idx/steps, detailScale, config);
+        d += (idx===0 ? 'M ' : 'L ') + point.x.toFixed(2) + ' ' + point.y.toFixed(2) + ' ';
+      }
+      return d;
+    }
+    function getParticle(index, progress, detailScale){
+      var tailOffset = index / (config.particleCount - 1);
+      var point = config.point(normalizeProgress(progress - tailOffset * config.trailSpan), detailScale, config);
+      var fade = Math.pow(1 - tailOffset, 0.56);
+      return { x: point.x, y: point.y, radius: 0.9 + fade * 2.7, opacity: 0.04 + fade * 0.96 };
+    }
+    var startedAt = performance.now();
+    function render(now){
+      var time = now - startedAt;
+      var progress = (time % config.durationMs) / config.durationMs;
+      var detailScale = getDetailScale(time);
+      path.setAttribute('d', buildPath(detailScale));
+      particles.forEach(function(node, index){
+        var particle = getParticle(index, progress, detailScale);
+        node.setAttribute('cx', particle.x.toFixed(2));
+        node.setAttribute('cy', particle.y.toFixed(2));
+        node.setAttribute('r', particle.radius.toFixed(2));
+        node.setAttribute('opacity', particle.opacity.toFixed(3));
+      });
+      rafId = requestAnimationFrame(render);
+    }
     rafId = requestAnimationFrame(render);
   }
-  rafId = requestAnimationFrame(render);
 
-  var MIN_DISPLAY_MS = 900;
-  var shownAt = performance.now();
-  function hidePreloader(){
-    var elapsed = performance.now() - shownAt;
-    var wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+  var shownAt = 0;
+
+  // Показати преloader (для повторного використання при screen-переходах, напр. logout)
+  window.showAppPreloader = function(){
+    var el = ensureMarkup();
+    el.classList.remove('is-hidden');
+    shownAt = performance.now();
+    startAnimation();
+  };
+
+  // Сховати преloader. switchCallback (якщо є) виконується ПІД преloader-ом,
+  // перед фейдом, щоб новий екран уже був готовий до моменту, коли преloader зникне.
+  window.hideAppPreloader = function(minDisplayMs, switchCallback){
+    var wait = Math.max(0, (minDisplayMs || 600) - (performance.now() - shownAt));
     setTimeout(function(){
-      var el = document.getElementById('globalPreloader');
-      if(!el) return;
-      el.classList.add('is-hidden');
-      setTimeout(function(){
-        cancelAnimationFrame(rafId);
-        if(el.parentNode) el.parentNode.removeChild(el);
-      }, 360);
+      if (typeof switchCallback === 'function') switchCallback();
+      requestAnimationFrame(function(){
+        var el = document.getElementById('globalPreloader');
+        if(!el) return;
+        el.classList.add('is-hidden');
+        setTimeout(function(){
+          if (rafId) cancelAnimationFrame(rafId);
+        }, 360);
+      });
     }, wait);
-  }
+  };
+
+  // Початкове відображення при завантаженні сторінки — як і раніше
+  window.showAppPreloader();
   if(document.readyState === 'complete'){
-    hidePreloader();
+    window.hideAppPreloader(900);
   } else {
-    window.addEventListener('load', hidePreloader);
+    window.addEventListener('load', function(){ window.hideAppPreloader(900); });
   }
 })();
 </script>
@@ -9241,7 +9270,12 @@ function submitOrder() {
   function confirmLogout(){
     isGuest = true;
     closeLogoutConfirm();
-    goHome();
+    if (typeof window.showAppPreloader === 'function' && typeof window.hideAppPreloader === 'function') {
+      window.showAppPreloader();
+      window.hideAppPreloader(600, function(){ goHome(); });
+    } else {
+      goHome();
+    }
   }
 
   function showGuestToast(){
