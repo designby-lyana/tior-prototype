@@ -627,14 +627,10 @@
   .qty-limit-note{
     display:none; font-family:var(--font-body); font-size:13px; line-height:16px;
     color:var(--text-muted); white-space:nowrap;
+    transition:color 140ms ease;
   }
   .qty-limit-note.is-visible{ display:block; }
-  .qty-stepper.is-limit-flash{ animation: qtyLimitFlash 450ms ease; }
-  @keyframes qtyLimitFlash{
-    0%   { box-shadow:0 0 0 0 rgba(220,38,38,.5); border-color:var(--bg-chip); }
-    35%  { box-shadow:0 0 0 3px rgba(220,38,38,.35); border-color:#dc2626; }
-    100% { box-shadow:0 0 0 0 rgba(220,38,38,0); border-color:var(--bg-chip); }
-  }
+  .qty-limit-note.is-flash{ color:var(--accent-primary); }
   .cta.cta-sm{ height:40px; font-size:20px; }
   .pr-add{ flex:1; }
 
@@ -6371,14 +6367,23 @@
     function updateLimitNote(){
       if (!noteEl || maxQty == null) return;
       var val = parseInt(valueEl.textContent, 10);
-      noteEl.classList.toggle('is-visible', val >= maxQty);
+      var atMax = val >= maxQty;
+      noteEl.classList.toggle('is-visible', atMax);
+      if (!atMax) {
+        noteEl.classList.remove('is-flash');
+        if (flashTimeout) { clearTimeout(flashTimeout); flashTimeout = null; }
+      }
     }
 
+    var flashTimeout = null;
     function flashLimit(){
-      stepper.classList.remove('is-limit-flash');
-      void stepper.offsetWidth; // reflow — перезапускає анімацію при повторному кліку
-      stepper.classList.add('is-limit-flash');
-      setTimeout(function(){ stepper.classList.remove('is-limit-flash'); }, 450);
+      if (!noteEl) return;
+      noteEl.classList.add('is-flash');
+      if (flashTimeout) clearTimeout(flashTimeout);
+      flashTimeout = setTimeout(function(){
+        noteEl.classList.remove('is-flash');
+        flashTimeout = null;
+      }, 3000);
     }
 
     stepper.querySelector('.qty-minus').addEventListener('click', () => {
