@@ -73,23 +73,6 @@
     box-shadow:0 24px 60px rgba(0,0,0,.35);
   }
 
-  /* На реальних мобільних екранах прибираємо декоративну рамку — контент займає весь viewport, як звичайна веб-сторінка */
-  @media (max-width:480px){
-    body{
-      padding:0;
-      background:var(--bg-page);
-      min-height:100vh;
-      min-height:100dvh;
-    }
-    .phone{
-      width:100%;
-      height:100vh;
-      height:100dvh;
-      border-radius:0;
-      box-shadow:none;
-    }
-  }
-
   /* ---------- GLOBAL PRELOADER ---------- */
   #globalPreloader{
     position:absolute; inset:0; z-index:9999;
@@ -2587,7 +2570,7 @@
 
     <!-- TAB: FILTRY -->
     <div id="htabPanel-filtry" class="home-tab-panel" style="padding:0;">
-      <div class="card" id="filtersCard" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;">
+      <div class="card" id="filtersCard" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;padding:16px;gap:12px;">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -8421,6 +8404,9 @@
   let activeField  = null;
   let activeKey    = null;
   const selections = {}; // key → selected label string
+  let sheetWidthPx      = 0;
+  let sheetLeftOffsetPx = 0;
+  let sheetFlipUp       = false;
 
   // Store original labels for reference (used by clearField).
   // NOTE: click handlers are NOT attached here anymore — every dropdown
@@ -8487,10 +8473,13 @@
     var sheetWidth = fieldRect.width;
     // На головній: Rozmiar/Marka — завжди по ширині тригера (навіть маючи пошук);
     // Model/EAN/Homologacja — ширина картки мінус 80px, вирівняно по краю тригера (не картки)
-    var HOME_COMPACT_KEYS = ['rozmiar','rozmiar2','marka'];
-    var HOME_NARROW_KEYS  = ['model','ean','homologacja'];
+    var HOME_COMPACT_KEYS = ['rozmiar','rozmiar2'];
+    var HOME_NARROW_KEYS  = ['typ','marka','model','ean','homologacja'];
     if (!isResultsChip && HOME_COMPACT_KEYS.indexOf(key) !== -1) {
       isLarge = false;
+    }
+    if (!isResultsChip && HOME_NARROW_KEYS.indexOf(key) !== -1) {
+      isLarge = true;
     }
     if (isLarge) {
       var cardEl = fieldEl.closest('.card, .results-filters-card');
@@ -8500,6 +8489,9 @@
         if (!isResultsChip && HOME_NARROW_KEYS.indexOf(key) !== -1) {
           sheetLeft  = leftInPhone; // по краю тригера, не картки
           sheetWidth = (cardRect.width - cardPadX * 2) - 80;
+          // не даємо оверлею вилізти за праву межу картки (Marka/Ean у правій колонці)
+          var maxLeft = (cardRect.right - phoneRect.left) - cardPadX - sheetWidth;
+          if (sheetLeft > maxLeft) sheetLeft = maxLeft;
         } else {
           sheetLeft  = (cardRect.left - phoneRect.left) + cardPadX;
           sheetWidth = cardRect.width - cardPadX * 2;
@@ -8531,6 +8523,9 @@
 
     ddSheet.style.left   = sheetLeft + 'px';
     ddSheet.style.width  = sheetWidth + 'px';
+    sheetWidthPx      = sheetWidth;
+    sheetLeftOffsetPx = sheetLeft - leftInPhone;
+    sheetFlipUp       = flipUp;
     if(flipUp){
       ddSheet.style.bottom = (phoneH - fieldTopInPhone) + 'px';
       ddSheet.style.top = 'auto';
@@ -8554,6 +8549,9 @@
     ddBackdrop.classList.toggle('is-scrim', isLarge && !fieldEl.classList.contains('results-filter-chip'));
     ddBackdrop.classList.add('is-open');
     ddSheet.classList.add('is-open');
+
+    window.addEventListener('scroll', syncSheetPos, true);
+    window.addEventListener('resize', syncSheetPos);
 
     if (data.search) setTimeout(() => ddSearchInput.focus(), 60);
   }
@@ -8699,17 +8697,30 @@
     ddBackdrop.classList.remove('is-open', 'is-scrim');
     ddSheet.classList.remove('is-open');
     activeField = null;
+    window.removeEventListener('scroll', syncSheetPos, true);
+    window.removeEventListener('resize', syncSheetPos);
   }
 
   // reposition sheet on any scroll (keeps it anchored to the trigger)
   function syncSheetPos() {
     if (!activeField || !ddSheet.classList.contains('is-open')) return;
+    const phone = document.getElementById('phone');
+    const phoneRect = phone ? phone.getBoundingClientRect() : {left:0, top:0};
     const r = activeField.getBoundingClientRect();
     // close if field scrolled out of view
     if (r.bottom < 0 || r.top > window.innerHeight) { closeDropdown(); return; }
-    ddSheet.style.top  = r.bottom + 'px';
-    ddSheet.style.left = r.left + 'px';
-    ddSheet.style.width = r.width + 'px';
+    const fieldTopInPhone    = r.top    - phoneRect.top;
+    const fieldBottomInPhone = r.bottom - phoneRect.top;
+    const leftInPhone        = r.left   - phoneRect.left;
+    ddSheet.style.left  = (leftInPhone + sheetLeftOffsetPx) + 'px';
+    ddSheet.style.width = sheetWidthPx + 'px';
+    if (sheetFlipUp) {
+      ddSheet.style.bottom = ((phone ? phone.scrollHeight : 844) - fieldTopInPhone) + 'px';
+      ddSheet.style.top = 'auto';
+    } else {
+      ddSheet.style.top    = fieldBottomInPhone + 'px';
+      ddSheet.style.bottom = 'auto';
+    }
   }
   // scroll close removed
 
