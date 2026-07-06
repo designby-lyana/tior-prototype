@@ -41,6 +41,8 @@
     --font-mono:'JetBrains Mono', monospace;
     --font-body:'Outfit', sans-serif;
   }
+  html{ scrollbar-width:none; }
+  html::-webkit-scrollbar{ display:none; }
   *{box-sizing:border-box;}
   body{
     margin:0;
@@ -51,7 +53,9 @@
     align-items:center;
     padding:40px 16px 64px;
     min-height:100vh;
+    scrollbar-width:none;
   }
+  body::-webkit-scrollbar{ display:none; }
   .meta-caption{
     color:#e7e7e7;
     font-size:13px;
@@ -2025,7 +2029,7 @@
   }
   .atc-backdrop.is-open{ display:block; pointer-events:auto; }
   .atc-drawer{
-    position:absolute; top:50%; right:var(--space-lg); left:var(--space-lg); bottom:auto;
+    position:absolute; top:50%; right:0; left:var(--space-lg); bottom:auto;
     width:auto;
     max-height:90%;
     overflow-y:auto;
@@ -7920,8 +7924,8 @@
   // Винесено у функцію: cloneNode() при пагінації не копіює addEventListener,
   // тому нові картки з appendResultsCards теж мають пройти через wireQtyStepper.
   function wireQtyStepper(stepper){
-    if (stepper.dataset.qtyWired) return; // не навішуємо двічі
-    stepper.dataset.qtyWired = '1';
+    // (без guard: cloneNode копіює data-атрибути, тож прапорець "wired" копіювався
+    // разом з карткою і блокував навішування обробників на нові картки пагінації)
     const valueEl = stepper.querySelector('.qty-value');
     const purchaseEl = stepper.closest('.pr-purchase');
     const card = stepper.closest('.product-row');
