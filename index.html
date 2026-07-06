@@ -2022,21 +2022,21 @@
   }
   .atc-backdrop.is-open{ display:block; pointer-events:auto; }
   .atc-drawer{
-    position:absolute; top:0; right:0; bottom:auto;
-    width:88%;
+    position:absolute; top:50%; right:var(--space-lg); left:var(--space-lg); bottom:auto;
+    width:auto;
     max-height:90%;
     overflow-y:auto;
     background:var(--bg-surface-light);
     z-index:501;
     display:flex; flex-direction:column;
     padding:var(--space-xl);
-    transform:translateX(100%);
+    transform:translate(100%, -50%);
     transition:transform 300ms ease;
     pointer-events:none;
-    border-radius:0 0 var(--radius-lg) var(--radius-lg);
+    border-radius:var(--radius-lg) 0 0 var(--radius-lg);
     box-shadow:-4px 0 24px rgba(0,0,0,.12);
   }
-  .atc-drawer.is-open{ transform:translateX(0); pointer-events:auto; }
+  .atc-drawer.is-open{ transform:translate(0, -50%); pointer-events:auto; }
   .atc-header{
     display:flex; align-items:center; gap:var(--space-md);
     margin-bottom:var(--space-xl);
