@@ -330,9 +330,11 @@
 
   /* ---------- MULTI-SCREEN SWITCHING ---------- */
 
-  .screen{ display:none; height:100%; overflow-y:auto; }
+  .screen{ display:none; height:100%; overflow-y:auto; scrollbar-width:none; }
+  .screen::-webkit-scrollbar{ display:none; }
   .screen.is-active{ display:block; }
-    #screenSuccess.is-active{ display:flex !important; flex-direction:column; height:100%; overflow-y:auto; }
+    #screenSuccess.is-active{ display:flex !important; flex-direction:column; height:100%; overflow-y:auto; scrollbar-width:none; }
+    #screenSuccess.is-active::-webkit-scrollbar{ display:none; }
   .logo{ cursor:default; }
   #logoResults{ cursor:pointer; }
 
@@ -528,8 +530,9 @@
   #resultsScrollSentinel{ height:1px; }
 
   /* ---------- RESULTS: BOTTOM STICKY BAR (Filtry + Do góry) ---------- */
+  /* TODO(backlog): сховано на прохання Ляни, повернемось до цього пізніше */
   .results-bottom-bar{
-    display:none;
+    display:none !important;
     position:fixed;
     bottom:0; left:50%;
     transform:translateX(-50%);
