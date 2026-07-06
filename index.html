@@ -7836,6 +7836,7 @@
     for (var i = 0; i < n; i++){
       var node = buildResultsCard(resultsShownCount);
       if (sentinel) list.insertBefore(node, sentinel); else list.appendChild(node);
+      node.querySelectorAll('.qty-stepper').forEach(wireQtyStepper);
       resultsShownCount++;
     }
   }
@@ -7916,7 +7917,11 @@
   if (logoResultsEl) logoResultsEl.addEventListener('click', goHome);
 
   // quantity steppers on product rows (з урахуванням ліміту наявності pr-stock)
-  document.querySelectorAll('.qty-stepper').forEach(stepper => {
+  // Винесено у функцію: cloneNode() при пагінації не копіює addEventListener,
+  // тому нові картки з appendResultsCards теж мають пройти через wireQtyStepper.
+  function wireQtyStepper(stepper){
+    if (stepper.dataset.qtyWired) return; // не навішуємо двічі
+    stepper.dataset.qtyWired = '1';
     const valueEl = stepper.querySelector('.qty-value');
     const purchaseEl = stepper.closest('.pr-purchase');
     const card = stepper.closest('.product-row');
@@ -7978,7 +7983,8 @@
       valueEl.textContent = current + 1;
       updateLimitNote();
     });
-  });
+  }
+  document.querySelectorAll('.qty-stepper').forEach(wireQtyStepper);
 
   // ── DROPDOWN DATA ────────────────────────────────────────────────────────
   const DD_DATA = {
@@ -9929,21 +9935,8 @@
       if(segEl && atcSegEl) atcSegEl.textContent = segEl.textContent.trim();
     }
 
-    // Position drawer relative to the Dodaj button
-    var sheet = document.getElementById('atcSheet');
-    if(btn) {
-      var phone = document.getElementById('phone');
-      var btnRect = btn.getBoundingClientRect();
-      var phoneRect = phone.getBoundingClientRect();
-      var relTop = btnRect.top - phoneRect.top + phone.querySelector('.is-active').scrollTop;
-      var phoneH = phoneRect.height;
-      var sheetH = Math.min(phoneH * 0.9, 520);
-      var top = relTop - sheetH + btnRect.height + 16;
-      top = Math.max(0, Math.min(top, phoneH - sheetH));
-      sheet.style.top = top + 'px';
-    } else {
-      sheet.style.top = '0px';
-    }
+    // Центрування по вертикалі тепер повністю на CSS (.atc-drawer{top:50%} + translateY(-50%)),
+    // JS більше не виставляє inline top відносно кнопки "Dodaj".
     document.getElementById('atcBackdrop').classList.add('is-open');
     document.getElementById('atcSheet').classList.add('is-open');
   }
