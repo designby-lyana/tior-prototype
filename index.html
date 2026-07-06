@@ -8897,27 +8897,23 @@
     var fuelSvg  = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 22h12M13 8h2a2 2 0 0 1 2 2v3a1 1 0 0 0 1 1h1V8l-3-3"/><line x1="7" y1="10" x2="9" y2="10"/></svg>';
     var wetSvg   = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="19" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="16" y1="19" x2="16" y2="21"/></svg>';
     var noiseSvg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
-    var euC = {
-      opor:  {A:'#2d7d2d',B:'#6aaa00',C:'#b5cc00',D:'#e8a000',E:'#e85e00'},
-      mokra: {A:'#1a7ec8',B:'#3da3e0',C:'#7ec8f5',D:'#b8dff5',E:'#90c0e0'},
-      halas: {A:'#2d7d2d',B:'#6aaa00',C:'#b5cc00'}
-    };
-    function badge(svg, letter, color){
-      return '<span style="display:inline-flex;align-items:center;gap:2px;background:' + color +
-        ';border-radius:4px;padding:2px 5px 2px 3px;color:#fff;font-family:var(--font-mono);font-weight:700;font-size:11px;line-height:1;">' +
-        svg + '<span>' + letter + '</span></span>';
+    function badge(svg, letter){
+      return '<span style="display:inline-flex;align-items:center;gap:4px;">' +
+        '<span style="display:inline-flex;align-items:center;color:var(--text-muted);">' + svg + '</span>' +
+        '<span style="display:inline-flex;align-items:center;background:var(--text-on-light);border-radius:4px;padding:2px 6px;color:#fff;font-family:var(--font-mono);font-weight:700;font-size:11px;line-height:1;">' + letter + '</span>' +
+        '</span>';
     }
     var parts = [];
-    if(euSel.opor)  parts.push(badge(fuelSvg,  euSel.opor,  (euC.opor[euSel.opor]  || '#888')));
-    if(euSel.mokra) parts.push(badge(wetSvg,   euSel.mokra, (euC.mokra[euSel.mokra] || '#888')));
-    if(euSel.halas) parts.push(badge(noiseSvg, euSel.halas, (euC.halas[euSel.halas] || '#888')));
+    if(euSel.opor)  parts.push(badge(fuelSvg,  euSel.opor));
+    if(euSel.mokra) parts.push(badge(wetSvg,   euSel.mokra));
+    if(euSel.halas) parts.push(badge(noiseSvg, euSel.halas));
     var def = euActiveField ? euActiveField.querySelector('.eu-default-text') : null;
     var val = euActiveField ? euActiveField.querySelector('.eu-values-text') : null;
     var hint = euActiveField ? euActiveField.querySelector('.eu-hint-icons') : null;
     if(parts.length){
       if(def) def.style.display='none';
       if(hint) hint.style.display='none';
-      if(val){ val.innerHTML = parts.join('<span style="color:var(--text-muted);margin:0 2px;">·</span>'); val.style.display='inline-flex'; val.style.alignItems='center'; val.style.gap='4px'; }
+      if(val){ val.innerHTML = parts.join(''); val.style.display='inline-flex'; val.style.alignItems='center'; val.style.gap='4px'; }
       if(euActiveField) euActiveField.classList.add('has-value');
       document.getElementById('eu-clearrow').style.display='block';
     } else {
