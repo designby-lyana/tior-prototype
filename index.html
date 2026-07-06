@@ -2853,6 +2853,7 @@
   </header>
 
   <div class="results-content">
+    <div class="od-breadcrumb" onclick="goBackFromResults()" style="cursor:pointer;margin-bottom:8px;">‹‹ Powrót</div>
     <h1 class="results-title">Wyniki wyszukiwania</h1>
 
     <div class="results-filters-card">
@@ -7546,7 +7547,14 @@
     if (typeof closeSortPanel === 'function') closeSortPanel();
   }
 
+  var resultsBackTarget = 'screenHome';
   function setScreen(id){
+    if(id === 'screenResults'){
+      var current = document.querySelector('.screen.is-active');
+      if(current && current.id && current.id !== 'screenResults'){
+        resultsBackTarget = current.id;
+      }
+    }
     closeAllOverlays();
     ALL_SCREENS.forEach(function(s){
       var el = document.getElementById(s);
@@ -7559,6 +7567,7 @@
     if(id==='screenInvoices'){ renderInvoices(); }
     if(id==='screenResults'){ collapseMoreFilters(); }
   }
+  function goBackFromResults(){ setScreen(resultsBackTarget || 'screenHome'); }
   // Filtry на результатах завжди має відкриватись згорнутим, незалежно від того,
   // чи користувач розгортав його раніше в цій сесії
   function collapseMoreFilters(){
