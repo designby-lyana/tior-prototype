@@ -5805,7 +5805,7 @@
       <a class="cart-back" id="cartBackLink" onclick="goToResults()">‹‹ Powrót do wyników wyszukiwania</a>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <h1 class="cart-title">Twój koszyk</h1>
-        <a class="cart-clear-all" id="cartClearAllBtn" onclick="openCartClearConfirm()" style="display:none;">Wyczyść wszystko</a>
+        <a class="cart-clear-all" id="cartClearAllBtn" onclick="openCartClearConfirm()" style="display:none;">Wyczyść koszyk</a>
       </div>
     </div>
 
@@ -11603,10 +11603,10 @@ function submitOrder() {
 <!-- CART CLEAR CONFIRM -->
 <div id="cartClearConfirmBackdrop" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9998;display:none;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;gap:16px;">
-    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Wyczyścić koszyk?</div>
-    <div style="display:flex;gap:12px;">
-      <button onclick="closeCartClearConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
-      <button onclick="clearCart()" style="flex:1;height:44px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyczyść wszystko</button>
+    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Usunąć wszystkie produkty?</div>
+    <div style="display:flex;justify-content:flex-end;gap:12px;">
+      <button onclick="closeCartClearConfirm()" style="height:44px;padding:0 20px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
+      <button onclick="clearCart()" style="height:44px;padding:0 20px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyczyść koszyk</button>
     </div>
   </div>
 </div>
