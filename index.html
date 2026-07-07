@@ -631,6 +631,11 @@
   .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
+  .pr-price-lock{ display:none; flex-direction:column; align-items:flex-end; gap:6px; }
+  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:14px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:nowrap; }
+  .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:14px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; }
+  #screenResults.guest-mode .pr-price{ display:none; }
+  #screenResults.guest-mode .pr-price-lock{ display:flex; }
   .pr-availability{ margin-top: var(--space-3xl); }
   .pr-stock{ display:flex; align-items:center; gap:6px; font-size:18px; color:var(--text-default); justify-content:flex-end; }
   .stock-dot{ width:10px; height:10px; border-radius:50%; background:#16a34a; flex:none; }
@@ -1081,6 +1086,11 @@
     white-space:nowrap;
   }
   .cart-right{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+  .cart-item-price-lock{
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--font-body); font-size:14px; color:var(--text-muted);
+    background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:nowrap;
+  }
 
   /* summary card — Figma: Order Summary/short version */
   .cart-summary-card{
@@ -3053,6 +3063,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€48.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€39.83</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>18 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -3115,6 +3129,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€52.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€42.68</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock is-out"><span class="stock-dot is-out"></span>0</div>
@@ -3237,6 +3255,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€59.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€48.70</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>31 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -3299,6 +3321,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€63.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€51.54</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -3426,6 +3452,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€71.20</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€57.89</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>27 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -3488,6 +3518,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€74.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€60.97</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -3552,6 +3586,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€78.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€63.82</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>42 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -3614,6 +3652,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€82.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€66.91</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>22 szt.</div>
@@ -3678,6 +3720,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€86.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€70.65</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>22 szt.</div>
 <div class="pr-delivery">3 dni</div>
@@ -3740,6 +3786,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€91.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€74.31</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>64 szt.</div>
@@ -3804,6 +3854,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€95.80</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€77.89</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>53 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -3866,6 +3920,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€99.99</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€81.29</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>18 szt.</div>
@@ -3930,6 +3988,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€104.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€84.96</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>112 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -3992,6 +4054,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€112.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€91.30</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>14 szt.</div>
@@ -4056,6 +4122,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€118.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€96.67</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>91 szt.</div>
 <div class="pr-delivery">3 dni</div>
@@ -4118,6 +4188,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€127.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€103.58</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>78 szt.</div>
@@ -4182,6 +4256,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€138.60</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€112.68</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>38 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -4244,6 +4322,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€152.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
 <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€124.31</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>42 szt.</div>
@@ -4308,6 +4390,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€39.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€32.44</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>45 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -4368,6 +4454,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€54.20</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€44.07</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>22 szt.</div>
@@ -4430,6 +4520,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€45.60</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€37.07</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>8 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -4490,6 +4584,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€62.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€50.65</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>33 szt.</div>
@@ -4552,6 +4650,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€68.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€56.02</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>17 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -4612,6 +4714,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€71.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€58.05</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>52 szt.</div>
@@ -4675,6 +4781,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€84.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€68.70</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>29 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -4735,6 +4845,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€98.20</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€79.84</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>14 szt.</div>
@@ -4798,6 +4912,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€104.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€85.28</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>38 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -4859,6 +4977,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€78.60</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€63.90</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>6 szt.</div>
 <div class="pr-delivery">3 dni</div>
@@ -4919,6 +5041,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€91.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€74.23</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>24 szt.</div>
@@ -4982,6 +5108,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€142.80</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€116.10</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>41 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -5042,6 +5172,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€118.40</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€96.26</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>19 szt.</div>
@@ -5105,6 +5239,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€136.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€111.30</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>27 szt.</div>
 <div class="pr-delivery">1 dzień</div>
@@ -5167,6 +5305,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€159.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€130.00</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>11 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -5227,6 +5369,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€167.50</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€136.18</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>35 szt.</div>
@@ -5290,6 +5436,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€189.90</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€154.39</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>9 szt.</div>
 <div class="pr-delivery">3 dni</div>
@@ -5352,6 +5502,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€204.30</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€166.10</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>16 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -5413,6 +5567,10 @@
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€96.70</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€78.62</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
           </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
+          </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>31 szt.</div>
 <div class="pr-delivery">2 dni</div>
@@ -5473,6 +5631,10 @@
           <div class="pr-price">
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-gross">€104.20</div><span class="chip-tip" style="top:auto;bottom:calc(100% + 6px);left:auto;right:0;">Cena brutto (z VAT)</span></span>
             <span class="chip-tooltip-wrap" style="display:flex;justify-content:flex-end;"><div class="pr-netto">€84.72</div><span class="chip-tip" style="bottom:auto;top:calc(100% + 6px);left:auto;right:0;">Cena netto (bez VAT)</span></span>
+          </div>
+                    <div class="pr-price-lock">
+            <span class="lock-label">🔒 Cena po zalogowaniu</span>
+            <button class="lock-login" onclick="setScreen('screenLogin')">Zaloguj się →</button>
           </div>
           <div class="pr-availability">
             <div class="pr-stock"><span class="stock-dot"></span>13 szt.</div>
@@ -7549,7 +7711,7 @@
     <!-- row 2: qty · price/szt → total -->
     <div style="display:flex;align-items:baseline;gap:8px;">
       <span style="font-family:var(--font-body);font-size:16px;color:var(--text-default);" id="atcQty">4 szt.</span>
-      <span style="color:var(--text-muted);">·</span>
+      <span style="color:var(--text-muted);" id="atcDot">·</span>
       <span style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);" id="atcUnitPrice">151.59 zł / szt.</span>
       <span style="flex:1;"></span>
       <span style="font-family:var(--font-body);font-weight:700;font-size:18px;color:var(--text-default);" id="atcTotal">151.59 zł</span>
@@ -7792,6 +7954,7 @@
       collapseMoreFilters();
       initResultsPagination();
       resetResultsPagination();
+      updateResultsGuestMode();
     }
     var rbb = document.getElementById('resultsBottomBar');
     if(rbb) rbb.classList.toggle('is-active', id === 'screenResults');
@@ -7920,6 +8083,11 @@
       eanOn = true;
       if (typeof updateEanDisplay === 'function') updateEanDisplay();
     }
+  }
+  function updateResultsGuestMode(){
+    var scr = document.getElementById('screenResults');
+    if(!scr) return;
+    scr.classList.toggle('guest-mode', (typeof isGuest !== 'undefined') && isGuest);
   }
   function goHome(){      setScreen('screenHome'); }
   function goToError(){   setScreen('screenError'); }
@@ -9930,9 +10098,18 @@
     var atcSizeEl = document.getElementById('atcSize');
     var atcBrandEl = document.getElementById('atcBrand');
     var atcSegEl = document.getElementById('atcSegment');
+    var atcDotEl = document.getElementById('atcDot');
+    var atcGuestNow = (typeof isGuest !== 'undefined') && isGuest;
     if(atcQtyEl) atcQtyEl.textContent = qty + ' szt.';
-    if(atcTotalEl) atcTotalEl.textContent = total + ' zł';
-    if(atcUnitEl) atcUnitEl.textContent = unitPrice.toFixed(2) + ' zł / szt.';
+    if(atcGuestNow){
+      if(atcDotEl) atcDotEl.style.display = 'none';
+      if(atcUnitEl) atcUnitEl.textContent = '🔒 Cena po zalogowaniu';
+      if(atcTotalEl) atcTotalEl.style.display = 'none';
+    } else {
+      if(atcDotEl) atcDotEl.style.display = '';
+      if(atcTotalEl){ atcTotalEl.style.display = ''; atcTotalEl.textContent = total + ' zł'; }
+      if(atcUnitEl) atcUnitEl.textContent = unitPrice.toFixed(2) + ' zł / szt.';
+    }
     // fill model/brand from card
     if(card) {
       var modelEl = card.querySelector('.tire-model') || card.querySelector('.pr-model');
@@ -9976,8 +10153,10 @@
         +     '<button class="qty-btn" onclick="cartChangeQty(' + idx + ',1)" aria-label="Zwiększ">+</button>'
         +   '</div>'
         +   '<div class="cart-right">'
-        +     '<div class="cart-item-unit">€' + parseFloat(item.unitPrice).toFixed(2) + ' / szt.</div>'
-        +     '<div class="cart-item-total">€' + parseFloat(item.total).toFixed(2) + '</div>'
+        +     ((typeof isGuest !== 'undefined') && isGuest
+                ? '<div class="cart-item-price-lock">🔒 Cena po zalogowaniu</div>'
+                : '<div class="cart-item-unit">€' + parseFloat(item.unitPrice).toFixed(2) + ' / szt.</div>'
+                  + '<div class="cart-item-total">€' + parseFloat(item.total).toFixed(2) + '</div>')
         +   '</div>'
         + '</div>'
         + '</div>';
@@ -10007,7 +10186,7 @@
     var el = document.querySelector('.cart-summary-value');
     if(el) el.textContent = itemCount + ' szt.';
     var totalEl = document.querySelector('.cart-summary-total-value');
-    if(totalEl) totalEl.textContent = '€' + total.toFixed(2);
+    if(totalEl) totalEl.textContent = ((typeof isGuest !== 'undefined') && isGuest) ? '🔒 Cena po zalogowaniu' : '€' + total.toFixed(2);
   }
 
   function updateCartBadge() {
@@ -10041,8 +10220,12 @@
       metaEl.textContent = uniqueProducts + ' produktów · ' + totalQty + ' szt.';
     }
     if (totalEl) {
-      var totalVal = cartItems.reduce(function(s,i){ return s + parseFloat(i.total); }, 0);
-      totalEl.textContent = totalVal.toFixed(2).replace('.', ',') + ' zł';
+      if((typeof isGuest !== 'undefined') && isGuest){
+        totalEl.textContent = '🔒 Cena po zalogowaniu';
+      } else {
+        var totalVal = cartItems.reduce(function(s,i){ return s + parseFloat(i.total); }, 0);
+        totalEl.textContent = totalVal.toFixed(2).replace('.', ',') + ' zł';
+      }
     }
   }
   // Call on setScreen to screenCart
