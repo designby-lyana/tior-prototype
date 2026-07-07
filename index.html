@@ -877,14 +877,15 @@
   .sort-locked-header{
     display:flex; align-items:center; gap:6px;
     height:36px; padding:0 var(--space-md);
-    font-family:var(--font-body); font-size:13px; color:var(--text-muted);
-    background:var(--bg-page); border-bottom:1px solid var(--border-surface);
+    font-family:var(--font-body); font-size:13px; font-weight:700; color:var(--text-muted);
+    background:var(--bg-subtle); border-bottom:1px solid var(--border-surface);
   }
-  .sort-item.is-disabled{ cursor:default; color:var(--text-muted); background:var(--bg-page); }
-  .sort-item.is-disabled:hover{ background:var(--bg-page); }
+  .sort-item.is-disabled{ cursor:default; color:var(--text-muted); background:var(--bg-subtle); }
+  .sort-item.is-disabled:hover{ background:var(--bg-subtle); }
   .sort-item.is-disabled .sort-item-arrow{ display:none; }
+  .sort-login-cta-wrap{ background:var(--bg-subtle); padding:var(--space-sm) 12px; }
   .sort-login-cta{
-    display:block; width:calc(100% - 24px); margin:var(--space-sm) 12px;
+    display:block; width:100%; margin:0;
     height:40px; border:none; border-radius:var(--radius-sm);
     background:#005f6e; color:#fffaf2;
     font-family:var(--font-body); font-weight:500; font-size:15px; cursor:pointer;
@@ -7864,7 +7865,7 @@
         var f = SORT_FIELDS[key];
         html += '<div class="sort-item is-disabled"><span>' + f.label + '</span></div>';
       });
-      html += '<button class="sort-login-cta" onclick="setScreen(\'screenLogin\')">Zaloguj się</button>';
+      html += '<div class="sort-login-cta-wrap"><button class="sort-login-cta" onclick="setScreen(\'screenLogin\')">Zaloguj się</button></div>';
     } else {
       SORT_ORDER.forEach(function(key){ html += renderSortItem(key); });
     }
