@@ -592,7 +592,7 @@
     border:1px solid var(--border-default);
     border-radius: var(--radius-lg);
     padding: var(--space-md) var(--space-sm);
-    display:flex; justify-content:space-between; gap: var(--space-sm);
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap: var(--space-sm) 0;
     align-items:center;
   }
   .pr-info{ display:flex; gap: var(--space-xs); align-items:flex-end; }
@@ -605,10 +605,7 @@
     overflow:hidden;
     flex-shrink:0;
   }
-  .pr-image img{ width:100%; height:100%; object-fit:contain; display:block; }
-  .pr-image svg{ width:80px; height:80px; }
-  
-  .pr-image img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .pr-image img{ width:100%; height:100%; object-fit:contain; object-position:left center; display:block; }
   .pr-image svg{ width:80px; height:80px; }
   .pr-info-text{ display:flex; flex-direction:column; gap: var(--space-sm); }
   .pr-spec{ font-size:18px; color: var(--text-default); }
@@ -620,20 +617,22 @@
     color: var(--text-on-light);
     font-family: var(--font-body);
     font-size:14px;
-    padding:8px 10px;
+    line-height:18px;
+    padding:4px 10px;
     border-radius: var(--radius-sm);
     cursor:default;
+    box-sizing:border-box;
   }
   .pr-icons{ display:flex; align-items:center; gap: var(--space-sm); color: var(--text-muted); }
   .pr-vehicle-icon{ width:28px; height:28px; object-fit:contain; flex:none; }
   .pr-icons svg{ width:28px; height:28px; }
 
-  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:104px; }
+  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:140px; margin-left:auto; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
   .pr-price-lock{ display:none; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
-  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:4px; font-family:var(--font-body); font-size:12.5px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 8px; white-space:normal; text-align:right; line-height:1.2; width:100%; box-sizing:border-box; }
-  .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:13px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:nowrap; }
+  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:16px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:normal; text-align:right; line-height:1.25; width:100%; box-sizing:border-box; }
+  .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:16px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:normal; text-align:right; }
   #screenResults.guest-mode .pr-price{ display:none; }
   #screenResults.guest-mode .pr-price-lock{ display:flex; }
   #screenResults.guest-mode .pr-availability{ display:none; }
@@ -965,7 +964,7 @@
   .results-search-field::placeholder{ color:var(--text-placeholder); }
   .results-find-btn{ height:48px; font-size:16px; }
 
-  .filter-bar{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); }
+  .filter-bar{ display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
   .filter-bar .mini-trigger{ height:44px; }
   .filter-bar-left{ display:flex; align-items:center; gap:var(--space-lg); }
   .sort-trigger-wrap{ position:relative; }
@@ -5805,7 +5804,7 @@
       <a class="cart-back" id="cartBackLink" onclick="goToResults()">‹‹ Powrót do wyników wyszukiwania</a>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <h1 class="cart-title">Twój koszyk</h1>
-        <a class="cart-clear-all" id="cartClearAllBtn" onclick="openCartClearConfirm()" style="display:none;">Wyczyść wszystko</a>
+        <a class="cart-clear-all" id="cartClearAllBtn" onclick="openCartClearConfirm()" style="display:none;">Wyczyść koszyk</a>
       </div>
     </div>
 
@@ -11605,10 +11604,10 @@ function submitOrder() {
 <!-- CART CLEAR CONFIRM -->
 <div id="cartClearConfirmBackdrop" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9998;display:none;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;gap:16px;">
-    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Wyczyścić koszyk?</div>
-    <div style="display:flex;gap:12px;">
-      <button onclick="closeCartClearConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
-      <button onclick="clearCart()" style="flex:1;height:44px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyczyść wszystko</button>
+    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Usunąć wszystkie produkty?</div>
+    <div style="display:flex;justify-content:flex-end;gap:12px;">
+      <button onclick="closeCartClearConfirm()" style="height:44px;padding:0 20px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
+      <button onclick="clearCart()" style="height:44px;padding:0 20px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyczyść koszyk</button>
     </div>
   </div>
 </div>
