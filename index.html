@@ -9079,7 +9079,6 @@
       var hint=euActiveField.querySelector('.eu-hint-icons'); if(hint) hint.style.display='inline-flex';
       euActiveField.classList.remove('has-value');
     }
-    document.getElementById('eu-clearrow').style.display='none';
   }
 
   function euUpdateLabel(){
@@ -9104,13 +9103,11 @@
       if(hint) hint.style.display='none';
       if(val){ val.innerHTML = parts.join(''); val.style.display='inline-flex'; val.style.alignItems='center'; val.style.gap='4px'; }
       if(euActiveField) euActiveField.classList.add('has-value');
-      document.getElementById('eu-clearrow').style.display='block';
     } else {
       if(def) def.style.display='';
       if(hint) hint.style.display='inline-flex';
       if(val){ val.innerHTML=''; val.style.display='none'; }
       if(euActiveField) euActiveField.classList.remove('has-value');
-      document.getElementById('eu-clearrow').style.display='none';
     }
   }
 
@@ -11217,16 +11214,13 @@ function submitOrder() {
         <button class="eu-gb" onclick="euPick(this,'mokra','E','#b2ebfe','#323744')">E</button>
       </div>
     </div>
-    <div style="margin-bottom:8px;">
+    <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280;text-transform:uppercase;margin-bottom:6px;">Hałas</div>
       <div style="display:flex;gap:5px;" id="eu-halas" style="display:flex;gap:4px;width:100%;">
         <button class="eu-gb" onclick="euPick(this,'halas','A','#6b7280','#fafafa')">A</button>
         <button class="eu-gb" onclick="euPick(this,'halas','B','#6b7280','#fafafa')">B</button>
         <button class="eu-gb" onclick="euPick(this,'halas','C','#6b7280','#fafafa')">C</button>
       </div>
-    </div>
-    <div id="eu-clearrow" style="display:none;padding:8px 0 0;border-top:1px solid #eaeaea;text-align:right;">
-      <button onclick="euClear()" style="font-size:11px;font-weight:700;color:var(--accent-primary);background:none;border:none;cursor:pointer;font-family:inherit;">Wyczyść</button>
     </div>
   </div>
 </div>
