@@ -2995,6 +2995,10 @@
             <div class="sort-backdrop" id="sortBackdrop" onclick="closeSortPanel()"></div>
             <div class="sort-panel" id="sortPanel"></div>
           </div>
+          <div class="ean-toggle" id="eanToggle" style="cursor:pointer;margin-left:auto;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
+            <span>EAN</span>
+            <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
+          </div>
         </div><!-- /filter-bar -->
 
         <!-- EXPANDED FILTERS -->
@@ -3060,11 +3064,6 @@
       <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
         <button onclick="clearResultsSearch()" style="width:100%;height:48px;background:#005f6e;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:500;font-size:18px;color:#fffaf2;cursor:pointer;">Wyczyść wyszukiwanie</button>
       </div>
-    </div>
-
-    <div class="ean-toggle" id="eanToggle" style="cursor:pointer;margin:0 0 var(--space-md);" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
-      <span>EAN</span>
-      <span class="toggle" id="eanKnob" style="background:var(--text-muted);"><span class="toggle-knob" style="right:auto;left:1px;"></span></span>
     </div>
 
     <div class="results-list" id="resultsList">
