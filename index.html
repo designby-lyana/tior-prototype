@@ -592,7 +592,7 @@
     border:1px solid var(--border-default);
     border-radius: var(--radius-lg);
     padding: var(--space-md) var(--space-sm);
-    display:flex; flex-wrap:wrap; justify-content:space-between; gap: var(--space-sm) 0;
+    display:flex; justify-content:space-between; gap: var(--space-sm);
     align-items:center;
   }
   .pr-info{ display:flex; gap: var(--space-xs); align-items:flex-end; }
@@ -605,7 +605,10 @@
     overflow:hidden;
     flex-shrink:0;
   }
-  .pr-image img{ width:100%; height:100%; object-fit:contain; object-position:left center; display:block; }
+  .pr-image img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .pr-image svg{ width:80px; height:80px; }
+  
+  .pr-image img{ width:100%; height:100%; object-fit:contain; display:block; }
   .pr-image svg{ width:80px; height:80px; }
   .pr-info-text{ display:flex; flex-direction:column; gap: var(--space-sm); }
   .pr-spec{ font-size:18px; color: var(--text-default); }
@@ -617,22 +620,20 @@
     color: var(--text-on-light);
     font-family: var(--font-body);
     font-size:14px;
-    line-height:18px;
-    padding:4px 10px;
+    padding:8px 10px;
     border-radius: var(--radius-sm);
     cursor:default;
-    box-sizing:border-box;
   }
   .pr-icons{ display:flex; align-items:center; gap: var(--space-sm); color: var(--text-muted); }
   .pr-vehicle-icon{ width:28px; height:28px; object-fit:contain; flex:none; }
   .pr-icons svg{ width:28px; height:28px; }
 
-  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:140px; margin-left:auto; }
+  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:104px; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
   .pr-price-lock{ display:none; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
-  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:16px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:normal; text-align:right; line-height:1.25; width:100%; box-sizing:border-box; }
-  .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:16px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:normal; text-align:right; }
+  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:4px; font-family:var(--font-body); font-size:12.5px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 8px; white-space:normal; text-align:right; line-height:1.2; width:100%; box-sizing:border-box; }
+  .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:13px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:nowrap; }
   #screenResults.guest-mode .pr-price{ display:none; }
   #screenResults.guest-mode .pr-price-lock{ display:flex; }
   #screenResults.guest-mode .pr-availability{ display:none; }
@@ -10751,12 +10752,12 @@ function submitOrder() {
 
   // ── ADDRESSES ──────────────────────────────────────────
   var addrData = [
-    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true},
+    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',contactPerson:'Piotr Nowak',phone:'+48 601 234 567',isDefault:true},
     {id:'a2',name:'Warszawa – Magazyn Wola',company:'AutoParts Sp. z o.o.',street:'ul. Jana Kazimierza 12',city:'01-248 Warszawa',country:'Polska',isDefault:false},
     {id:'a3',name:'Poznań – Głogowska',company:'AutoParts Sp. z o.o.',street:'ul. Głogowska 120',city:'60-263 Poznań',country:'Polska',isDefault:false}
   ];
   var checkoutAddrData = [
-    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',isDefault:true}
+    {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',contactPerson:'Piotr Nowak',phone:'+48 601 234 567',isDefault:true}
   ];
   var addrEditId = null;
 
@@ -10865,12 +10866,16 @@ function submitOrder() {
       var tOn='<svg onclick="deleteAddr(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px;flex:none;stroke:var(--text-muted);transition:stroke 140ms;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" onmouseover="this.style.stroke=\'var(--text-default)\'" onmouseout="this.style.stroke=\'var(--text-muted)\'"><path d="'+_t+'"/></svg>';
       var trashHtml=isSingle?'':a.isDefault?tOff:tOn;
       var topRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'+chip+'<div class="firma-account-icons">'+editSvg+trashHtml+'</div></div>';
+      var contactLine = (a.contactPerson || a.phone)
+        ? '<div class="addr-detail">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>'
+        : '';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
         topRow +
         '<div class="addr-name">' + a.name + '</div>' +
         '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
+        contactLine +
         '</div></div>'
       );
     }
@@ -10901,7 +10906,7 @@ function submitOrder() {
   function openAddrSheet() {
     addrEditId = null;
     document.getElementById('addrSheetTitle').textContent = 'Nowy adres';
-    ['addrInputName','addrInputCompany','addrInputStreet','addrInputZip','addrInputCity'].forEach(function(f){
+    ['addrInputName','addrInputCompany','addrInputContact','addrInputPhone','addrInputStreet','addrInputZip','addrInputCity'].forEach(function(f){
       var el = document.getElementById(f); if(el) el.value = '';
     });
     var c = document.getElementById('addrInputCountry'); if(c) c.value = 'Polska';
@@ -10925,6 +10930,8 @@ function submitOrder() {
     document.getElementById('addrSheetTitle').textContent = 'Edytuj adres';
     document.getElementById('addrInputName').value = a.name;
     document.getElementById('addrInputCompany').value = a.company;
+    document.getElementById('addrInputContact').value = a.contactPerson || '';
+    document.getElementById('addrInputPhone').value = a.phone || '';
     document.getElementById('addrInputStreet').value = a.street;
     var parts = a.city.split(' ');
     document.getElementById('addrInputZip').value = parts[0] || '';
@@ -10942,6 +10949,8 @@ function submitOrder() {
   function saveAddr() {
     var name = document.getElementById('addrInputName').value.trim() || 'Nowy adres';
     var company = document.getElementById('addrInputCompany').value.trim() || 'AutoParts Sp. z o.o.';
+    var contactPerson = document.getElementById('addrInputContact').value.trim() || '';
+    var phone = document.getElementById('addrInputPhone').value.trim() || '';
     var street = document.getElementById('addrInputStreet').value.trim() || '';
     var zip = document.getElementById('addrInputZip').value.trim() || '';
     var city = document.getElementById('addrInputCity').value.trim() || '';
@@ -10951,14 +10960,15 @@ function submitOrder() {
       for(var i=0;i<addrData.length;i++){
         if(addrData[i].id===addrEditId){
           addrData[i].name=name; addrData[i].company=company;
+          addrData[i].contactPerson=contactPerson; addrData[i].phone=phone;
           addrData[i].street=street; addrData[i].city=fullCity; addrData[i].country=country;
           break;
         }
       }
     } else {
       var nid='a'+Date.now();
-      addrData.push({id:nid,name:name,company:company,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
-      if(typeof checkoutAddrData!=='undefined') checkoutAddrData.push({id:nid,name:name,company:company,street:street,city:fullCity,country:country,isDefault:false});
+      addrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
+      if(typeof checkoutAddrData!=='undefined') checkoutAddrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault:false});
     }
     closeAddrSheet();
     renderAddrList();
@@ -11086,7 +11096,7 @@ function submitOrder() {
         '<div style="display:flex;align-items:center;gap:10px;">',
         '<span class="radio" style="flex-shrink:0;"><span class="radio-dot"></span></span>',
         '<div class="address-name" style="margin:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="' + lp + '"/><circle cx="12" cy="9" r="2.5"/></svg> ' + a.name + '</div></div>',
-        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country + '</div>',
+        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country + (a.contactPerson || a.phone ? '<br>' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') : '') + '</div>',
         '</div>'
       ].join("");
       rows.push(row);
@@ -11513,6 +11523,10 @@ function submitOrder() {
   <div style="display:flex;flex-direction:column;gap:var(--space-md);">
     <div class="adres-field"><div class="adres-label">NAZWA PUNKTU</div><input type="text" class="adres-input" id="addrInputName" placeholder="np. Magazyn Warszawa"></div>
     <div class="adres-field"><div class="adres-label">FIRMA</div><input type="text" class="adres-input" id="addrInputCompany" placeholder="Nazwa firmy"></div>
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:var(--space-sm);">
+      <div class="adres-field"><div class="adres-label">OSOBA KONTAKTOWA</div><input type="text" class="adres-input" id="addrInputContact" placeholder="np. Jan Kowalski"></div>
+      <div class="adres-field"><div class="adres-label">NUMER TELEFONU</div><input type="tel" class="adres-input" id="addrInputPhone" placeholder="+48 000 000 000"></div>
+    </div>
     <div class="adres-field"><div class="adres-label">ULICA I NUMER</div><input type="text" class="adres-input" id="addrInputStreet" placeholder="ul. Przykładowa 1"></div>
     <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-sm);">
       <div class="adres-field"><div class="adres-label">KOD POCZTOWY</div><input type="text" class="adres-input" id="addrInputZip" placeholder="00-000"></div>
