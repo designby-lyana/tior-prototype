@@ -1032,6 +1032,8 @@
     margin:0;
   }
   .cart-header{ display:flex; flex-direction:column; gap:6px; }
+  .cart-clear-all{ font-family:var(--font-body); font-size:14px; color:var(--text-muted); text-decoration:underline; cursor:pointer; flex:none; }
+  .cart-clear-all:hover{ color:var(--text-default); }
 
   /* guest: activate ordering block — no card container, aligns with page padding */
   .cart-guest-activate{
@@ -5800,7 +5802,10 @@
     <!-- Block 1: nav + title -->
     <div class="cart-header">
       <a class="cart-back" id="cartBackLink" onclick="goToResults()">‹‹ Powrót do wyników wyszukiwania</a>
-      <h1 class="cart-title">Twój koszyk</h1>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <h1 class="cart-title">Twój koszyk</h1>
+        <a class="cart-clear-all" id="cartClearAllBtn" onclick="clearCart()" style="display:none;">Wyczyść wszystko</a>
+      </div>
     </div>
 
     <!-- Empty cart state -->
@@ -10191,6 +10196,7 @@
         +     '<p class="cart-item-name">' + (item.model || 'Opona') + '</p>'
         +     '<div class="cart-item-size">' + item.spec + (item.brand ? ' · ' + item.brand : '') + '</div>'
         +   '</div>'
+        +   '<svg onclick="removeCartItem(' + idx + ')" style="cursor:pointer;width:18px;height:18px;flex:none;stroke:var(--text-muted);transition:stroke 140ms;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" onmouseover="this.style.stroke=\'var(--text-default)\'" onmouseout="this.style.stroke=\'var(--text-muted)\'"><path d="M3 6h18M5 6l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>'
         + '</div>'
         + '<div class="cart-item-bottom">'
         +   '<div class="qty-stepper" style="width:100px;height:28px;">'
@@ -10226,6 +10232,23 @@
     updateCartState();
   }
 
+  function removeCartItem(idx){
+    if(!cartItems[idx]) return;
+    cartItems.splice(idx, 1);
+    cartCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
+    updateCartBadge();
+    renderCartItems();
+    updateCartState();
+  }
+
+  function clearCart(){
+    cartItems.length = 0;
+    cartCount = 0;
+    updateCartBadge();
+    renderCartItems();
+    updateCartState();
+  }
+
   function renderCartSummary(){
     var total = cartItems.reduce(function(s,i){return s+parseFloat(i.total);},0);
     var itemCount = cartItems.reduce(function(s,i){return s+i.qty;},0);
@@ -10249,6 +10272,7 @@
     var sumCard = document.querySelector('.cart-summary-card');
     var header = document.querySelector('.cart-header');
     var guestActivate = document.getElementById('cartGuestActivate');
+    var clearAllBtn = document.getElementById('cartClearAllBtn');
     var isEmpty = cartCount === 0;
     if (empty) empty.style.display = isEmpty ? 'flex' : 'none';
     if (items) items.style.display = isEmpty ? 'none' : 'block';
@@ -10256,6 +10280,7 @@
     // При порожньому кошику — лише інфо-блок "Twój koszyk jest pusty", без заголовка/бредкрамбу і без банера активації (для обох: гостя і зареєстрованого)
     if (header) header.style.display = isEmpty ? 'none' : 'flex';
     if (isEmpty && guestActivate) guestActivate.style.display = 'none';
+    if (clearAllBtn) clearAllBtn.style.display = (cartItems.length > 1) ? 'inline' : 'none';
 
     // Update summary meta and total
     var metaEl = document.getElementById('cartSummaryMeta');
