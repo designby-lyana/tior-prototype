@@ -8654,32 +8654,23 @@
     var ROW_H       = 40;
     var MAX_ROWS    = 6; // "5–7 видимих рядків" — беремо середнє, решта під скрол
 
-    // ── WIDTH: дропдауни з пошуком (Rozmiar/Marka/Model/Homologacja/EAN...) розтягуються майже на всю картку,
-    //           дропдауни без пошуку (Typ/Sezon/Segment/DOT/Nośność/Prędkość) — по ширині поля ──
+    // ── WIDTH: правило від учора — усі дропдауни на головній (Filtry + Auto) відкриваються
+    //           за єдиною широкою логікою (ширина картки − 80px, прив'язка до зовнішнього краю
+    //           свого тригера); лише results-filter-chip (сторінка результатів) лишається окремо.
     var isResultsChip = fieldEl.classList.contains('results-filter-chip');
-    var isLarge = hasSearch || isResultsChip;
+    var isLarge = true;
     var sheetLeft  = leftInPhone;
     var sheetWidth = fieldRect.width;
-    // На головній: Rozmiar/Marka — завжди по ширині тригера (навіть маючи пошук);
-    // Model/EAN/Homologacja — ширина картки мінус 80px, для правої колонки — рівняння по правому краю тригера
-    var HOME_COMPACT_KEYS = ['rozmiar','rozmiar2','typ','marka'];
-    var HOME_NARROW_KEYS  = ['model','ean','homologacja'];
-    if (!isResultsChip && HOME_COMPACT_KEYS.indexOf(key) !== -1) {
-      isLarge = false;
-    }
-    if (!isResultsChip && HOME_NARROW_KEYS.indexOf(key) !== -1) {
-      isLarge = true;
-    }
     if (isLarge) {
       var cardEl = fieldEl.closest('.card, .results-filters-card');
       if (cardEl) {
         var cardRect = cardEl.getBoundingClientRect();
         var cardPadX = parseFloat(getComputedStyle(cardEl).paddingLeft) || 12; // читаємо реальний padding картки
-        if (!isResultsChip && HOME_NARROW_KEYS.indexOf(key) !== -1) {
+        if (!isResultsChip) {
           sheetWidth = (cardRect.width - cardPadX * 2) - 80;
           var isRightCol = (fieldRect.left - cardRect.left) > (cardRect.width / 2);
           if (isRightCol) {
-            // права колонка (напр. Ean) — рівняємо оверлей по правому краю тригера, щоб не вилазив за картку
+            // права колонка — рівняємо оверлей по правому краю тригера, щоб не вилазив за картку
             var rightInPhone = fieldRect.right - phoneRect.left;
             sheetLeft = rightInPhone - sheetWidth;
           } else {
