@@ -10867,14 +10867,14 @@ function submitOrder() {
       var trashHtml=isSingle?'':a.isDefault?tOff:tOn;
       var topRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'+chip+'<div class="firma-account-icons">'+editSvg+trashHtml+'</div></div>';
       var contactLine = (a.contactPerson || a.phone)
-        ? '<div class="addr-detail">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>'
+        ? '<div class="addr-detail" style="margin-top:8px;">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>'
         : '';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
         topRow +
         '<div class="addr-name">' + a.name + '</div>' +
-        '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
+        '<div class="addr-detail">' + a.company + '<br>' + a.street + ',<br>' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
         contactLine +
         '</div></div>'
       );
@@ -11096,7 +11096,7 @@ function submitOrder() {
         '<div style="display:flex;align-items:center;gap:10px;">',
         '<span class="radio" style="flex-shrink:0;"><span class="radio-dot"></span></span>',
         '<div class="address-name" style="margin:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="' + lp + '"/><circle cx="12" cy="9" r="2.5"/></svg> ' + a.name + '</div></div>',
-        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country + (a.contactPerson || a.phone ? '<br>' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') : '') + '</div>',
+        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + ',<br>' + a.city + ', ' + a.country + (a.contactPerson || a.phone ? '<div style="margin-top:8px;">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>' : '') + '</div>',
         '</div>'
       ].join("");
       rows.push(row);
