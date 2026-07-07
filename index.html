@@ -7912,7 +7912,14 @@
     countEl.style.display = n > 0 ? 'flex' : 'none';
   }
 
-  function goToResults(){ setScreen('screenResults'); }
+  function goToResults(){
+    setScreen('screenResults');
+    // Якщо на головній обрано/введено фільтр EAN — одразу вмикаємо показ EAN на картках
+    if (selections['ean']) {
+      eanOn = true;
+      if (typeof updateEanDisplay === 'function') updateEanDisplay();
+    }
+  }
   function goHome(){      setScreen('screenHome'); }
   function goToError(){   setScreen('screenError'); }
   function goToCart(){    setScreen('screenCart'); renderCartItems(); updateCartState(); applyCartGuestUI(); }
