@@ -9272,15 +9272,18 @@
     btn.style.color = '#323744';
     btn.classList.add('eu-selected');
     euSel[cat] = val;
+    var euAllPicked = euSel.opor && euSel.mokra && euSel.halas;
 
     if (euActiveField && euActiveField.classList.contains('results-filter-chip')) {
       var catLabel = cat === 'opor' ? 'Opór' : cat === 'mokra' ? 'Mokra' : 'Hałas';
       addOrUpdateEuPill(cat, catLabel + ' ' + val);
       euActiveField.classList.add('is-active');
+      if (euAllPicked) closeEu();
       return;
     }
 
     euUpdateLabel();
+    if (euAllPicked) closeEu();
   }
 
   // Adds/updates a single EU-category pill (data-key="eu"), replacing any previous pill for the same category
