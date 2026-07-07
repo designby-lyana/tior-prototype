@@ -7924,8 +7924,6 @@
   // Винесено у функцію: cloneNode() при пагінації не копіює addEventListener,
   // тому нові картки з appendResultsCards теж мають пройти через wireQtyStepper.
   function wireQtyStepper(stepper){
-    // (без guard: cloneNode копіює data-атрибути, тож прапорець "wired" копіювався
-    // разом з карткою і блокував навішування обробників на нові картки пагінації)
     const valueEl = stepper.querySelector('.qty-value');
     const purchaseEl = stepper.closest('.pr-purchase');
     const card = stepper.closest('.product-row');
@@ -7938,8 +7936,15 @@
     }
 
     var noteEl = null;
-    if (maxQty != null && purchaseEl) {
+    // Клон із пулу вже може мати цю обгортку (col + note) від першого підключення —
+    // тоді просто перевикористовуємо її замість повторного insertBefore (інакше падає,
+    // бо stepper вже не прямий child purchaseEl).
+    var existingCol = stepper.parentElement;
+    if (existingCol && existingCol.classList.contains('qty-note-wrap')) {
+      noteEl = existingCol.querySelector('.qty-limit-note');
+    } else if (maxQty != null && purchaseEl) {
       var col = document.createElement('div');
+      col.className = 'qty-note-wrap';
       col.style.display = 'flex';
       col.style.flexDirection = 'column';
       col.style.gap = '4px';
@@ -7973,6 +7978,8 @@
       }, 3000);
     }
 
+    // clone() не копіює addEventListener, тож слухачі навішуються заново щоразу —
+    // це очікувано і безпечно (сама розмітка/обгортка вище вже ідемпотентна).
     stepper.querySelector('.qty-minus').addEventListener('click', () => {
       valueEl.textContent = Math.max(1, parseInt(valueEl.textContent, 10) - 1);
       updateLimitNote();
