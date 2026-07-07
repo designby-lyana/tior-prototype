@@ -592,7 +592,7 @@
     border:1px solid var(--border-default);
     border-radius: var(--radius-lg);
     padding: var(--space-md) var(--space-sm);
-    display:flex; justify-content:space-between; gap: var(--space-sm);
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap: var(--space-sm) 0;
     align-items:center;
   }
   .pr-info{ display:flex; gap: var(--space-xs); align-items:flex-end; }
@@ -628,11 +628,11 @@
   .pr-vehicle-icon{ width:28px; height:28px; object-fit:contain; flex:none; }
   .pr-icons svg{ width:28px; height:28px; }
 
-  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:120px; }
+  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:100%; margin-left:auto; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
   .pr-price-lock{ display:none; flex-direction:column; align-items:flex-end; gap:6px; max-width:100%; }
-  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:4px; font-family:var(--font-body); font-size:13px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 8px; white-space:normal; text-align:right; line-height:1.25; max-width:110px; }
+  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:14px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:nowrap; text-align:right; line-height:1.25; }
   .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:14px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:nowrap; }
   #screenResults.guest-mode .pr-price{ display:none; }
   #screenResults.guest-mode .pr-price-lock{ display:flex; }
