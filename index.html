@@ -2295,7 +2295,7 @@
   .addr-radio-dot{ width:10px; height:10px; border-radius:50%; background:var(--accent-primary); display:none; }
   .addr-card.selected .addr-radio-dot{ display:block; }
   .addr-body{ flex:1; min-width:0; }
-  .addr-name{ font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--text-default); display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .addr-name{ font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--text-default); display:flex; align-items:center; gap:8px; margin-bottom:2px; }
   .addr-detail{ font-family:var(--font-body); font-size:16px; color:var(--text-muted); }
   .addr-badge-default{ display:inline-flex; align-items:center; padding:2px 8px; border-radius:var(--radius-pill); border:1px solid #1e6b3c; font-family:var(--font-body); font-size:12px; color:#1e6b3c; background:rgba(30,107,60,.08); white-space:nowrap; }
   .addr-actions{ display:flex; align-items:center; gap:4px; flex-shrink:0; }
@@ -5805,7 +5805,7 @@
       <a class="cart-back" id="cartBackLink" onclick="goToResults()">‹‹ Powrót do wyników wyszukiwania</a>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <h1 class="cart-title">Twój koszyk</h1>
-        <a class="cart-clear-all" id="cartClearAllBtn" onclick="clearCart()" style="display:none;">Wyczyść wszystko</a>
+        <a class="cart-clear-all" id="cartClearAllBtn" onclick="openCartClearConfirm()" style="display:none;">Wyczyść wszystko</a>
       </div>
     </div>
 
@@ -10260,7 +10260,16 @@
     updateCartState();
   }
 
+  function openCartClearConfirm(){
+    var bd = document.getElementById('cartClearConfirmBackdrop');
+    if(bd) bd.style.display = 'flex';
+  }
+  function closeCartClearConfirm(){
+    var bd = document.getElementById('cartClearConfirmBackdrop');
+    if(bd) bd.style.display = 'none';
+  }
   function clearCart(){
+    closeCartClearConfirm();
     cartItems.length = 0;
     cartCount = 0;
     updateCartBadge();
@@ -10866,14 +10875,14 @@ function submitOrder() {
       var trashHtml=isSingle?'':a.isDefault?tOff:tOn;
       var topRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'+chip+'<div class="firma-account-icons">'+editSvg+trashHtml+'</div></div>';
       var contactLine = (a.contactPerson || a.phone)
-        ? '<div class="addr-detail" style="margin-top:12px;">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>'
+        ? '<div class="addr-detail">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>'
         : '';
       parts.push(
         '<div class="addr-card' + sel + '" id="addrCard_' + a.id + '" data-aid="' + a.id + '">' +
         '<div class="addr-body" style="flex:1;min-width:0;">' +
         topRow +
         '<div class="addr-name">' + a.name + '</div>' +
-        '<div class="addr-detail">' + a.company + '<br>' + a.street + ',<br>' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
+        '<div class="addr-detail">' + a.company + ' \u00b7 ' + a.street + ', ' + a.city + ', ' + (a.country || 'Polska') + '</div>' +
         contactLine +
         '</div></div>'
       );
@@ -11095,7 +11104,7 @@ function submitOrder() {
         '<div style="display:flex;align-items:center;gap:10px;">',
         '<span class="radio" style="flex-shrink:0;"><span class="radio-dot"></span></span>',
         '<div class="address-name" style="margin:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="' + lp + '"/><circle cx="12" cy="9" r="2.5"/></svg> ' + a.name + '</div></div>',
-        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + ',<br>' + a.city + ', ' + a.country + (a.contactPerson || a.phone ? '<div style="margin-top:12px;">' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') + '</div>' : '') + '</div>',
+        '<div class="address-text" style="padding-left:24px;">' + a.company + '<br>' + a.street + '<br>' + a.city + ', ' + a.country + (a.contactPerson || a.phone ? '<br>' + (a.contactPerson || '—') + (a.phone ? ' · ' + a.phone : '') : '') + '</div>',
         '</div>'
       ].join("");
       rows.push(row);
@@ -11587,6 +11596,17 @@ function submitOrder() {
     <div style="display:flex;gap:12px;">
       <button onclick="closeLogoutConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
       <button onclick="confirmLogout()" style="flex:1;height:44px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyloguj się</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART CLEAR CONFIRM -->
+<div id="cartClearConfirmBackdrop" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9998;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:320px;width:calc(100% - 48px);font-family:'Outfit',sans-serif;display:flex;flex-direction:column;gap:16px;">
+    <div style="font-size:16px;font-weight:600;color:var(--text-default);line-height:1.4;">Wyczyścić koszyk?</div>
+    <div style="display:flex;gap:12px;">
+      <button onclick="closeCartClearConfirm()" style="flex:1;height:44px;background:none;border:1px solid var(--border-default);border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text-default);cursor:pointer;">Anuluj</button>
+      <button onclick="clearCart()" style="flex:1;height:44px;background:var(--accent-primary);border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:16px;color:#fff;cursor:pointer;font-weight:500;">Wyczyść wszystko</button>
     </div>
   </div>
 </div>
