@@ -3053,11 +3053,10 @@
 
       <!-- applied filters — bottom of card -->
       <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+        <span class="results-count" id="resultsCount" style="display:none;">4 produkty</span>
         <div class="applied-filters" id="appliedFilters" style="display:none;">
-          <span class="results-count" id="resultsCount">4 wyników:</span>
-
+          <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
         </div>
-        <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
       </div>
 
     </div>
@@ -9108,7 +9107,8 @@
       pill.id = id;
       pill.setAttribute('data-key', key);
       pill.innerHTML = val + ' <button class="pill-remove" aria-label="Usuń" onclick="removePill(\'' + id + '\')">×</button>';
-      filtersEl.appendChild(pill);
+      var clearBtn1 = document.getElementById('clearAllBtn');
+      if(clearBtn1 && clearBtn1.parentNode === filtersEl) filtersEl.insertBefore(pill, clearBtn1); else filtersEl.appendChild(pill);
     }
     if (typeof updateFilterState === 'function') updateFilterState();
   }
@@ -9329,7 +9329,8 @@
     pill.setAttribute('data-key', 'eu');
     pill.setAttribute('data-eu-cat', cat);
     pill.innerHTML = text + ' <button class="pill-remove" aria-label="Usuń" onclick="removePill(\'' + id + '\')">×</button>';
-    filtersEl.appendChild(pill);
+    var clearBtn2 = document.getElementById('clearAllBtn');
+    if(clearBtn2 && clearBtn2.parentNode === filtersEl) filtersEl.insertBefore(pill, clearBtn2); else filtersEl.appendChild(pill);
     if (typeof updateFilterState === 'function') updateFilterState();
   }
 
@@ -10145,13 +10146,15 @@
       if(status) status.style.display = '';
       if(filters) filters.style.display = 'none';
       if(clearBtn) clearBtn.style.display = 'none';
+      if(count) count.style.display = 'none';
       // remove all active states
       document.querySelectorAll('.results-filter-chip.is-active').forEach(function(b){ b.classList.remove('is-active'); });
     } else {
       if(status) status.style.display = 'none';
       if(filters) filters.style.display = '';
       if(clearBtn) clearBtn.style.display = '';
-      if(count) count.textContent = remaining + (remaining === 1 ? ' wynik:' : remaining < 5 ? ' wyniki:' : ' wyników:');
+      if(count) count.style.display = '';
+      if(count) count.textContent = remaining + (remaining === 1 ? ' produkt' : remaining % 10 >= 2 && remaining % 10 <= 4 && (remaining % 100 < 10 || remaining % 100 >= 20) ? ' produkty' : ' produktów');
     }
     if (typeof updateResultsBottomBarBadge === 'function') updateResultsBottomBarBadge();
     // зміна фільтрів — повертаємо список результатів на початок
@@ -10533,7 +10536,8 @@
           pill.id = id;
           pill.setAttribute('data-key', _rfKey || '');
           pill.innerHTML = val + ' <button class="pill-remove" aria-label="Usuń" onclick="removePill(\''+id+'\')">×</button>';
-          filtersEl.appendChild(pill);
+          var clearBtn3 = document.getElementById('clearAllBtn');
+          if(clearBtn3 && clearBtn3.parentNode === filtersEl) filtersEl.insertBefore(pill, clearBtn3); else filtersEl.appendChild(pill);
         }
       });
       updateFilterState();
