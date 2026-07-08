@@ -10960,6 +10960,11 @@ function submitOrder() {
     selectAddr(id);
   }
 
+  var _addrSheetFromCheckoutEmpty = false;
+  function openAddrSheetFromCheckoutEmpty(){
+    _addrSheetFromCheckoutEmpty = true;
+    openAddrSheet();
+  }
   function openAddrSheet() {
     addrEditId = null;
     document.getElementById('addrSheetTitle').textContent = 'Nowy adres';
@@ -11024,12 +11029,36 @@ function submitOrder() {
       }
     } else {
       var nid='a'+Date.now();
-      addrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault:addrData.length===0});
-      if(typeof checkoutAddrData!=='undefined') checkoutAddrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault:false});
+      var isFirstEver = (_addrSheetFromCheckoutEmpty === true);
+      if(isFirstEver){
+        addrData.forEach(function(a){ a.isDefault = false; });
+      }
+      addrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault: isFirstEver ? true : (addrData.length===0)});
+      if(typeof checkoutAddrData!=='undefined'){
+        if(isFirstEver) checkoutAddrData.forEach(function(a){ a.isDefault = false; });
+        checkoutAddrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault: isFirstEver});
+      }
     }
     closeAddrSheet();
     renderAddrList();
     if (typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
+    if (_addrSheetFromCheckoutEmpty) {
+      _addrSheetFromCheckoutEmpty = false;
+      setTimeout(function(){
+        showAddrAddedBanner();
+      }, 700);
+    }
+  }
+
+  function showAddrAddedBanner(){
+    var b = document.getElementById('addrAddedBanner');
+    if(!b) return;
+    b.style.opacity = '1';
+    b.style.pointerEvents = 'auto';
+    setTimeout(function(){
+      b.style.opacity = '0';
+      b.style.pointerEvents = 'none';
+    }, 4000);
   }
 
 
@@ -11123,8 +11152,8 @@ function submitOrder() {
     var items = (typeof checkoutAddrData !== 'undefined') ? checkoutAddrData : [];
     if (items.length === 0) {
       wrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;padding:32px 16px;text-align:center;gap:16px;">'
-        + '<div style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);">Nie masz jeszcze adresu dostawy.</div>'
-        + '<button onclick="openAddrSheet()" style="height:44px;padding:0 24px;background:#005f6e;border:none;border-radius:8px;font-family:var(--font-body);font-weight:500;font-size:16px;color:#fffaf2;cursor:pointer;">+ Dodaj adres dostawy</button>'
+        + '<div style="font-family:var(--font-body);font-size:16px;color:var(--text-muted);">Nie masz jeszcze zapisanych adresów.</div>'
+        + '<button onclick="openAddrSheetFromCheckoutEmpty()" style="height:44px;padding:0 24px;background:#005f6e;border:none;border-radius:8px;font-family:var(--font-body);font-weight:500;font-size:16px;color:#fffaf2;cursor:pointer;">+ Dodaj adres</button>'
         + '</div>';
       return;
     }
@@ -11607,6 +11636,12 @@ function submitOrder() {
 </div>
 
 
+
+<!-- ADDRESS ADDED BANNER (top) -->
+<div id="addrAddedBanner" style="position:fixed;top:0;left:0;right:0;background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
+  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" style="flex:none;"><path d="M2 10l5 5 11-11" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Adres dodano. Więcej adresów dostawy możesz dodać w profilu.</span>
+</div>
 
 <!-- PWD SUCCESS SNACKBAR -->
 <div id="pwdSnackbar" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e6b3c;color:#fff;font-family:\'Outfit\',sans-serif;font-size:15px;padding:12px 20px;border-radius:8px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;min-width:260px;max-width:340px;opacity:0;pointer-events:none;transition:opacity 220ms ease;">
