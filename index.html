@@ -11287,8 +11287,12 @@ function submitOrder() {
         + '</div>';
       var h1 = document.getElementById('checkoutStep1Hint');
       if(h1) h1.style.display = 'none';
+      var nextBtn0 = document.getElementById('checkoutStep1Next');
+      if(nextBtn0) nextBtn0.style.display = 'none';
       return;
     }
+    var nextBtn1 = document.getElementById('checkoutStep1Next');
+    if(nextBtn1) nextBtn1.style.display = '';
     if(actionsRow) actionsRow.style.display = '';
     if (!_checkoutSelectedId) {
       for(var i=0;i<items.length;i++){if(items[i].isDefault){_checkoutSelectedId=items[i].id;break;}}
