@@ -10457,13 +10457,27 @@
       container.classList.add('is-double');
       var spacer = document.getElementById('rozmiarGridSpacer');
       if(spacer) spacer.style.display = 'none';
+      // Фізично виносимо rozmiar2Btn з кластера в грід як окрему клітинку —
+      // display:contents на .rozmiar-cluster ненадійний у деяких версіях Safari/iOS.
+      // Запам'ятовуємо, з якого кластера він родом, бо після переміщення
+      // closest('.rozmiar-cluster') із самого поля вже не спрацює.
+      if(field2){
+        if(container.id) field2.setAttribute('data-home-cluster', container.id);
+        if(container.parentNode) container.parentNode.insertBefore(field2, container.nextSibling);
+      }
     }
   }
 
   function hideRozmiar2(btn){
-    var container = btn.closest('.size-row, .rozmiar-cluster');
+    // btn — це маленька іконка "×" (може бути всередині #rozmiar2Btn, який
+    // на цей момент вже фізично винесений з .rozmiar-cluster в грід, тож
+    // btn.closest('.rozmiar-cluster') тут не спрацює — шукаємо через
+    // data-home-cluster, який ми проставили в toggleRozmiar2).
+    var field2FromBtn = btn.closest('#rozmiar2Btn, #rozmiar2Field');
+    var homeClusterId = field2FromBtn ? field2FromBtn.getAttribute('data-home-cluster') : null;
+    var container = (homeClusterId && document.getElementById(homeClusterId)) || btn.closest('.size-row, .rozmiar-cluster');
     if(!container) return;
-    var field2 = container.querySelector('#rozmiar2Field, #rozmiar2Btn');
+    var field2 = field2FromBtn || container.querySelector('#rozmiar2Field, #rozmiar2Btn') || document.getElementById('rozmiar2Field') || document.getElementById('rozmiar2Btn');
     var addBtn = container.querySelector('.rozmiar-add-btn');
     if(field2){
       if(field2.tagName === 'DIV'){
@@ -10478,12 +10492,14 @@
     }
     if(addBtn){ addBtn.style.display = ''; addBtn.style.visibility = ''; }
     if(addBtn && addBtn.parentNode && addBtn.parentNode.classList.contains('chip-tooltip-wrap')) addBtn.parentNode.style.display = '';
-    btn.style.display = 'none';
+    if(field2) field2.style.display = 'none';
     if(container.classList.contains('size-row')) container.classList.remove('has-two');
     if(container.classList.contains('rozmiar-cluster')){
       container.classList.remove('is-double');
       var spacer = document.getElementById('rozmiarGridSpacer');
       if(spacer) spacer.style.display = '';
+      // повертаємо rozmiar2Btn назад усередину кластера
+      if(field2 && field2.parentNode !== container) container.appendChild(field2);
     }
     // remove rozmiar2 pills/selections
     delete selections['rozmiar2'];
