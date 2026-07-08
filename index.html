@@ -5986,7 +5986,7 @@
 
     <!-- delivery method card -->
     <div class="checkout-card">
-      <div class="section-title">
+      <div class="section-title" onclick="toggleCheckoutAddrDemo()" style="cursor:pointer;" title="Клік — перемкнути демо: є/немає збережених адрес">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h11v8H2z"/><path d="M13 11h4l4 3v1h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>
         SPOSÓB DOSTAWY
       </div>
@@ -10895,6 +10895,19 @@ function submitOrder() {
   var checkoutAddrData = [
     {id:'a1',name:'Kraków – Serwis 1',company:'AutoParts Sp. z o.o.',street:'ul. Zakopiańska 58',city:'30-418 Kraków',country:'Polska',contactPerson:'Piotr Nowak',phone:'+48 601 234 567',isDefault:true}
   ];
+  var _checkoutAddrDataBackup = null;
+  // Dev-тригер (клік на заголовок "SPOSÓB DOSTAWY"): перемикає демо між
+  // "є збережені адреси" і "немає жодної адреси" — без консолі.
+  function toggleCheckoutAddrDemo(){
+    if(checkoutAddrData.length > 0){
+      _checkoutAddrDataBackup = checkoutAddrData.slice();
+      checkoutAddrData.length = 0;
+    } else if(_checkoutAddrDataBackup){
+      checkoutAddrData.length = 0;
+      _checkoutAddrDataBackup.forEach(function(a){ checkoutAddrData.push(a); });
+    }
+    if(typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
+  }
   var addrEditId = null;
 
   // ── Address delete logic ─────────────────────────────────────────
