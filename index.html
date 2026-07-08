@@ -628,6 +628,8 @@
   .pr-icons{ display:flex; align-items:center; gap: var(--space-sm); color: var(--text-muted); }
   .pr-vehicle-icon{ width:28px; height:28px; object-fit:contain; flex:none; }
   .pr-icons svg{ width:28px; height:28px; }
+  .pr-icons svg.season-icon-summer,
+  .pr-icons svg.season-icon-winter{ transform:scale(.72); }
 
   .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:96px; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
@@ -7793,7 +7795,20 @@
 
   // chips: hover handled in CSS, click toggles persistent "selected" state
   document.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => chip.classList.toggle('is-selected'));
+    chip.addEventListener('click', () => {
+      var willBeSelected = !chip.classList.contains('is-selected');
+      chip.classList.toggle('is-selected', willBeSelected);
+      if (chip.closest('#screenResults')) {
+        var label = chip.getAttribute('data-name') || chip.textContent.trim();
+        var key = 'chip_' + label.replace(/\s+/g,'_').toLowerCase();
+        if (willBeSelected) {
+          if (typeof addResultsFilterPill === 'function') addResultsFilterPill(key, label);
+        } else {
+          document.querySelectorAll('#appliedFilters .filter-pill[data-key="'+key+'"]').forEach(function(p){ p.remove(); });
+          if (typeof updateFilterState === 'function') updateFilterState();
+        }
+      }
+    });
   });
 
   // accordion: expand/collapse (CTA button stays visible either way)
@@ -8166,6 +8181,45 @@
       eanOn = true;
       if (typeof updateEanDisplay === 'function') updateEanDisplay();
     }
+    carrySelectionsToResults();
+  }
+
+  // Переносить параметри, обрані на головній (дропдауни, EU label, quick-filter чіпи),
+  // у вигляді чіпів у панель "обрані фільтри" на сторінці результатів.
+  function carrySelectionsToResults(){
+    var keyLabels = {
+      rozmiar:'Rozmiar', rozmiar2:'Rozmiar', typ:'Typ', sezon:'Sezon', marka:'Marka',
+      segment:'Segment', ean:'EAN', homologacja:'Homologacja', nosnosc:'Nośność',
+      predkosc:'Prędkość', dot:'DOT'
+    };
+    Object.keys(selections).forEach(function(key){
+      var val = selections[key];
+      if(!val) return;
+      if(typeof addResultsFilterPill === 'function') addResultsFilterPill(key, val);
+      document.querySelectorAll('#screenResults .results-filter-chip').forEach(function(btn){
+        var oc = btn.getAttribute('onclick') || '';
+        if(oc.indexOf("'"+key+"'") !== -1) btn.classList.add('is-active');
+      });
+    });
+    if(typeof euSel !== 'undefined'){
+      var euLabels = {opor:'Opór', mokra:'Mokra', halas:'Hałas'};
+      Object.keys(euSel).forEach(function(cat){
+        if(euSel[cat] && typeof addOrUpdateEuPill === 'function'){
+          addOrUpdateEuPill(cat, euLabels[cat] + ' ' + euSel[cat]);
+        }
+      });
+    }
+    document.querySelectorAll('#screenHome .chip.is-selected').forEach(function(homeChip){
+      var name = homeChip.getAttribute('data-name');
+      if(!name) return;
+      var resultsChip = document.querySelector('#screenResults .chip[data-name="'+name+'"]');
+      if(resultsChip){
+        resultsChip.classList.add('is-selected');
+        var key = 'chip_' + name.replace(/\s+/g,'_').toLowerCase();
+        if(typeof addResultsFilterPill === 'function') addResultsFilterPill(key, name);
+      }
+    });
+    if(typeof updateFilterState === 'function') updateFilterState();
   }
   function updateResultsGuestMode(){
     var scr = document.getElementById('screenResults');
@@ -10124,6 +10178,12 @@
           var oc = btn.getAttribute('onclick') || '';
           if(oc.indexOf("'"+key+"'") !== -1) btn.classList.remove('is-active');
         });
+        if(key.indexOf('chip_') === 0){
+          document.querySelectorAll('#screenResults .chip.is-selected').forEach(function(chipEl){
+            var chipKey = 'chip_' + (chipEl.getAttribute('data-name')||'').replace(/\s+/g,'_').toLowerCase();
+            if(chipKey === key) chipEl.classList.remove('is-selected');
+          });
+        }
       }
     }
     updateFilterState();
@@ -10143,12 +10203,16 @@
       if(count) count.style.display = 'none';
       // remove all active states
       document.querySelectorAll('.results-filter-chip.is-active').forEach(function(b){ b.classList.remove('is-active'); });
+      document.querySelectorAll('#screenResults .chip.is-selected').forEach(function(b){ b.classList.remove('is-selected'); });
     } else {
       if(status) status.style.display = 'none';
       if(filters) filters.style.display = '';
       if(clearBtn) clearBtn.style.display = '';
       if(count) count.style.display = '';
-      if(count) count.textContent = remaining + (remaining === 1 ? ' produkt' : remaining % 10 >= 2 && remaining % 10 <= 4 && (remaining % 100 < 10 || remaining % 100 >= 20) ? ' produkty' : ' produktów');
+      var allCards = document.querySelectorAll('#resultsList .product-row');
+      var productCount = 0;
+      allCards.forEach(function(c){ if(c.style.display !== 'none') productCount++; });
+      if(count) count.textContent = productCount + (productCount === 1 ? ' produkt' : productCount % 10 >= 2 && productCount % 10 <= 4 && (productCount % 100 < 10 || productCount % 100 >= 20) ? ' produkty' : ' produktów');
       if(clearBtn) clearBtn.textContent = remaining === 1 ? 'Wyczyść filtr' : 'Wyczyść filtry';
     }
     if (typeof updateResultsBottomBarBadge === 'function') updateResultsBottomBarBadge();
