@@ -520,7 +520,7 @@
   }
   .clear-all{
     appearance:none; background:none; border:none; padding:0;
-    align-self:flex-start;
+    align-self:center;
     font-family: var(--font-body); font-size:14px; color: var(--accent-primary);
     cursor:pointer;
   }
@@ -628,14 +628,12 @@
   .pr-icons{ display:flex; align-items:center; gap: var(--space-sm); color: var(--text-muted); }
   .pr-vehicle-icon{ width:28px; height:28px; object-fit:contain; flex:none; }
   .pr-icons svg{ width:28px; height:28px; }
-  .pr-icons svg.season-icon-summer,
-  .pr-icons svg.season-icon-winter{ width:34px; height:34px; }
 
-  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:118px; }
+  .pr-price-col{ display:flex; flex-direction:column; align-items:flex-end; gap: 0; text-align:right; flex:none; min-width:0; max-width:96px; }
   .pr-gross{ font-family:var(--font-body); font-weight:500; font-size:20px; color:var(--text-default); }
   .pr-netto{ font-size:18px; color:var(--text-muted); }
   .pr-price-lock{ display:none; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
-  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:16px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 10px; white-space:normal; text-align:right; line-height:1.25; width:100%; box-sizing:border-box; }
+  .pr-price-lock .lock-label{ display:flex; align-items:center; gap:4px; font-family:var(--font-body); font-size:16px; color:var(--text-muted); background:var(--bg-chip); border-radius:6px; padding:6px 8px; white-space:normal; text-align:right; line-height:1.25; width:100%; box-sizing:border-box; }
   .pr-price-lock .lock-login{ font-family:var(--font-body); font-size:16px; font-weight:600; color:#005f6e; background:none; border:none; padding:0; cursor:pointer; white-space:normal; text-align:right; }
   #screenResults.guest-mode .pr-price{ display:none; }
   #screenResults.guest-mode .pr-price-lock{ display:flex; }
@@ -858,9 +856,6 @@
   #sortTrigger.is-active svg:first-child{ color:var(--accent-primary); }
   .sort-dir-icon{ width:14px; height:14px; flex:none; color:var(--accent-primary); display:none; }
   #sortTrigger.is-active .sort-dir-icon{ display:block; }
-  .sort-backdrop{ display:none; }
-  .sort-scrim-backdrop{ display:none; position:absolute; inset:0; background:rgba(0,0,0,.07); z-index:5; }
-  .sort-scrim-backdrop.is-open{ display:block; }
   .sort-panel{
     display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:230px;
     background:#fff; border:1px solid var(--border-default); border-radius:var(--radius-lg);
@@ -1036,7 +1031,8 @@
   .more-filters-wrap.is-open{ grid-template-rows:1fr; }
   .more-filters-inner{ min-height:0; overflow:hidden; }
   .more-filters-wrap.is-open .more-filters-inner{ overflow:visible; }
-  .more-filters-pad{ padding-top:var(--space-md); display:flex; flex-direction:column; gap:var(--space-sm); }
+  .more-filters-pad{ padding-top:var(--space-md); display:flex; flex-direction:column; gap:var(--space-sm); transition:filter 200ms ease; }
+  .more-filters-pad.is-dimmed{ filter:brightness(.85); pointer-events:none; }
 
 
   /* ── CART SCREEN ─────────────────────────────────── */
@@ -3001,7 +2997,6 @@
               <svg class="sort-dir-icon" id="sortDirIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
               <svg class="field-chevron" id="sortChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 220ms ease;"><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            <div class="sort-backdrop" id="sortBackdrop" onclick="closeSortPanel()"></div>
             <div class="sort-panel" id="sortPanel"></div>
           </div>
           <div class="ean-toggle" id="eanToggle" style="cursor:pointer;margin-left:auto;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
@@ -3012,9 +3007,8 @@
 
         <!-- EXPANDED FILTERS -->
         <div class="more-filters-wrap" id="moreFiltersWrap">
-          <div class="sort-scrim-backdrop" id="sortScrimBackdrop" onclick="closeSortPanel()"></div>
           <div class="more-filters-inner" id="moreFiltersInner">
-            <div class="more-filters-pad">
+            <div class="more-filters-pad" id="moreFiltersPad">
             <!-- Filter chips: один суцільний потік, щоб дропдауни пакувались без зайвих порожніх місць -->
             <div class="filters-dropdown-grid">
               <div class="rozmiar-cluster" id="rozmiarClusterRes" style="display:flex;align-items:center;gap:2px;width:100%;">
@@ -3055,7 +3049,7 @@
       <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
         <span class="results-count" id="resultsCount" style="display:none;">4 produkty</span>
         <div class="applied-filters" id="appliedFilters" style="display:none;">
-          <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść wszystko</button>
+          <button class="clear-all" id="clearAllBtn" onclick="clearAllFilters()" style="display:none;">Wyczyść filtr</button>
         </div>
       </div>
 
@@ -7913,9 +7907,9 @@
     panel.classList.add('is-open');
     trigger.classList.add('is-open');
     var moreWrap = document.getElementById('moreFiltersWrap');
-    var scrim = document.getElementById('sortScrimBackdrop');
-    if(moreWrap && moreWrap.classList.contains('is-open') && scrim){
-      scrim.classList.add('is-open');
+    var pad = document.getElementById('moreFiltersPad');
+    if(moreWrap && moreWrap.classList.contains('is-open') && pad){
+      pad.classList.add('is-dimmed');
     }
   }
 
@@ -7924,8 +7918,8 @@
     var trigger = document.getElementById('sortTrigger');
     if(panel) panel.classList.remove('is-open');
     if(trigger) trigger.classList.remove('is-open');
-    var scrim = document.getElementById('sortScrimBackdrop');
-    if(scrim) scrim.classList.remove('is-open');
+    var pad = document.getElementById('moreFiltersPad');
+    if(pad) pad.classList.remove('is-dimmed');
   }
 
   function updateSortTriggerLabel(){
@@ -10155,6 +10149,7 @@
       if(clearBtn) clearBtn.style.display = '';
       if(count) count.style.display = '';
       if(count) count.textContent = remaining + (remaining === 1 ? ' produkt' : remaining % 10 >= 2 && remaining % 10 <= 4 && (remaining % 100 < 10 || remaining % 100 >= 20) ? ' produkty' : ' produktów');
+      if(clearBtn) clearBtn.textContent = remaining === 1 ? 'Wyczyść filtr' : 'Wyczyść filtry';
     }
     if (typeof updateResultsBottomBarBadge === 'function') updateResultsBottomBarBadge();
     // зміна фільтрів — повертаємо список результатів на початок
@@ -10390,6 +10385,7 @@
     if(field2) field2.style.display = '';
     if(removeBtn) removeBtn.style.display = '';
     btn.style.display = 'none'; btn.style.visibility = 'hidden';
+    if(btn.parentNode && btn.parentNode.classList.contains('chip-tooltip-wrap')) btn.parentNode.style.display = 'none';
     if(container.classList.contains('size-row')) container.classList.add('has-two');
     if(container.classList.contains('rozmiar-cluster')){
       container.classList.add('is-double');
@@ -10415,6 +10411,7 @@
       }
     }
     if(addBtn){ addBtn.style.display = ''; addBtn.style.visibility = ''; }
+    if(addBtn && addBtn.parentNode && addBtn.parentNode.classList.contains('chip-tooltip-wrap')) addBtn.parentNode.style.display = '';
     btn.style.display = 'none';
     if(container.classList.contains('size-row')) container.classList.remove('has-two');
     if(container.classList.contains('rozmiar-cluster')){
