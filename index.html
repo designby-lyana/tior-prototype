@@ -405,7 +405,9 @@
     display:flex; align-items:center; gap:6px;
     font-family:var(--font-body); font-size:16px; color: var(--text-on-light);
     cursor:default; padding:0; white-space:nowrap;
+    outline:none;
   }
+  .mini-trigger:focus, .mini-trigger:focus-visible{ outline:none; }
   .mini-trigger.results-filter-chip.is-active{
     color: var(--accent-primary);
   }
@@ -855,6 +857,8 @@
   .sort-dir-icon{ width:14px; height:14px; flex:none; color:var(--accent-primary); display:none; }
   #sortTrigger.is-active .sort-dir-icon{ display:block; }
   .sort-backdrop{ display:none; }
+  .sort-scrim-backdrop{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.07); z-index:110; }
+  .sort-scrim-backdrop.is-open{ display:block; }
   .sort-panel{
     display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:230px;
     background:#fff; border:1px solid var(--border-default); border-radius:var(--radius-lg);
@@ -2993,6 +2997,7 @@
               <svg class="field-chevron" id="sortChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 220ms ease;"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="sort-backdrop" id="sortBackdrop" onclick="closeSortPanel()"></div>
+            <div class="sort-scrim-backdrop" id="sortScrimBackdrop" onclick="closeSortPanel()"></div>
             <div class="sort-panel" id="sortPanel"></div>
           </div>
           <div class="ean-toggle" id="eanToggle" style="cursor:pointer;margin-left:auto;" onclick="eanOn=!eanOn;updateEanDisplay();event.stopPropagation();">
@@ -7903,6 +7908,11 @@
     renderSortPanel();
     panel.classList.add('is-open');
     trigger.classList.add('is-open');
+    var moreWrap = document.getElementById('moreFiltersWrap');
+    var scrim = document.getElementById('sortScrimBackdrop');
+    if(moreWrap && moreWrap.classList.contains('is-open') && scrim){
+      scrim.classList.add('is-open');
+    }
   }
 
   function closeSortPanel(){
@@ -7910,6 +7920,8 @@
     var trigger = document.getElementById('sortTrigger');
     if(panel) panel.classList.remove('is-open');
     if(trigger) trigger.classList.remove('is-open');
+    var scrim = document.getElementById('sortScrimBackdrop');
+    if(scrim) scrim.classList.remove('is-open');
   }
 
   function updateSortTriggerLabel(){
@@ -10531,6 +10543,7 @@
   }
 
   function toggleMoreFilters(){
+    closeSortPanel();
     var wrap = document.getElementById('moreFiltersWrap');
     var chev = document.getElementById('moreFiltersChevron');
     var isOpen = wrap.classList.toggle('is-open');
