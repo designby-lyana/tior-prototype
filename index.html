@@ -290,6 +290,13 @@
   }
   .cta:hover{box-shadow:0 6px 16px rgba(0,95,110,.3);filter:brightness(1.04);}
   .cta:active{background:var(--accent-pressed);transform:scale(.985);box-shadow:none;}
+  /* м'який одноразовий pulse — сигнал "значення обрано, тепер натисни CTA", затверджено 2026-07-09 */
+  @keyframes ctaPulseGlow{
+    0%{ box-shadow:0 0 0 0 rgba(0,95,110,.35); }
+    60%{ box-shadow:0 0 0 10px rgba(0,95,110,0); }
+    100%{ box-shadow:0 0 0 0 rgba(0,95,110,0); }
+  }
+  .cta.pulse-once{ animation:ctaPulseGlow 900ms ease-out 1; }
   .cta:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
 
   /* ---------- ACCORDION ---------- */
@@ -334,6 +341,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .advanced-wrap, .advanced-inner, .accordion-trigger svg, .chip, .cta{transition:none !important;}
+    .cta.pulse-once{animation:none !important;}
   }
 
   /* ---------- MULTI-SCREEN SWITCHING ---------- */
@@ -11513,6 +11521,20 @@ function submitOrder() {
       c.classList.remove('is-selected');
     });
     if (chipEl) chipEl.classList.add('is-selected');
+    pulseCta();
+  }
+
+  function pulseCta() {
+    var cta = document.getElementById('ctaExpanded');
+    if (!cta) return;
+    cta.classList.remove('pulse-once');
+    // reflow, щоб анімація перезапустилась навіть при повторному кліку
+    void cta.offsetWidth;
+    cta.classList.add('pulse-once');
+    cta.addEventListener('animationend', function handler(){
+      cta.classList.remove('pulse-once');
+      cta.removeEventListener('animationend', handler);
+    });
   }
 
   function setRozmiarFromChip(val, chipEl) {
