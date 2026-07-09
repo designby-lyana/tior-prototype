@@ -601,7 +601,7 @@
   }
   .pr-info{ display:flex; gap: var(--space-xs); align-items:flex-end; }
   .pr-image{
-    flex:none; width:auto; height:104px; max-width:90px;
+    flex:none; width:auto; height:88px; max-width:90px;
     background: transparent;
     border-radius: var(--radius-sm);
     display:flex; align-items:center; justify-content:center;
@@ -610,7 +610,7 @@
     flex-shrink:0;
   }
   .pr-image img{ width:auto; height:100%; max-width:100%; object-fit:contain; object-position:left center; display:block; }
-  .pr-image svg{ width:auto; height:104px; }
+  .pr-image svg{ width:auto; height:88px; }
   .pr-info-text{ display:flex; flex-direction:column; gap: var(--space-sm); }
   .pr-spec{ font-size:18px; color: var(--text-default); }
   .pr-model{ font-size:18px; color: var(--text-muted); margin-top:-6px; }
@@ -2477,7 +2477,7 @@
     color:var(--text-muted);
     padding:0 24px;
   }
-  /* Wrapper з fade-ефектом праворуч */
+  /* Wrapper з fade-ефектом праворуч + chevron-хінт "є ще контент" */
   .home-chips-wrap{
     position:relative;
   }
@@ -2485,13 +2485,24 @@
     content:'';
     position:absolute;
     top:0; right:0; bottom:0;
-    width:48px;
-    background:linear-gradient(to right, transparent, var(--bg-page));
+    width:64px;
+    background:
+      linear-gradient(to right, transparent, var(--bg-page) 55%, var(--bg-page) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
     pointer-events:none;
     transition:opacity 200ms ease;
+    animation:chipsHint 1.8s ease-in-out infinite;
   }
   .home-chips-wrap.at-end::after{
     opacity:0;
+    animation:none;
+  }
+  @keyframes chipsHint{
+    0%, 100%{ opacity:1; }
+    50%{ opacity:.55; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .home-chips-wrap::after{ animation:none; }
   }
   .home-chips-scroll{
     display:flex;
