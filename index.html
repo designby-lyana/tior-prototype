@@ -28,7 +28,7 @@
     --border-surface:#e5e7eb;
     --bg-page:#d2d8db;
     --border-module:rgba(107,114,128,.4);
-    --radius-sm:6px;
+    --radius-sm:8px;
     --radius-lg:8px;
     --radius-pill:100px;
     --space-xs:4px;
@@ -2402,7 +2402,7 @@
     display:flex;
     align-items:stretch;
     justify-content:center;
-    border-bottom:none;
+    border-bottom:1px solid var(--border-default);
     background:none;
     padding:0;
     gap:0;
@@ -2735,7 +2735,7 @@
 
     <!-- TAB: FILTRY -->
     <div id="htabPanel-filtry" class="home-tab-panel" style="padding:0;">
-      <div class="card" id="filtersCard" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;padding:16px;gap:12px;">
+      <div class="card" id="filtersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:6px;margin-bottom:0;padding:16px;gap:12px;">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -2866,7 +2866,7 @@
 
     <!-- TAB: AUTO -->
     <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0;">
-      <div class="card" id="autoFiltersCard" style="border-radius:4px;box-shadow:none;border:none;margin-bottom:0;">
+      <div class="card" id="autoFiltersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:6px;margin-bottom:0;">
 
         <div class="row two-col">
           <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
