@@ -251,17 +251,20 @@
     border:1px solid #bec5c8;
     color:#323744;
   }
-  /* selected */
+  /* selected — B+ (ring + легкий accent tint), затверджено 2026-07-09 */
   .chip.is-selected{
-    background:rgba(107,114,128,0.4);
-    border:1px solid #005f6e;
-    color:#0d0e13;
+    background:rgba(0,95,110,.08);
+    box-shadow:0 0 0 1.5px var(--accent-primary);
+    border-color:var(--accent-primary);
+    color:var(--accent-primary);
+    font-weight:500;
   }
   /* hover selected */
   .chip.is-selected:hover{
-    background:rgba(107,114,128,0.4);
-    border:1.5px solid #024b57;
-    color:#0d0e13;
+    background:rgba(0,95,110,.08);
+    box-shadow:0 0 0 1.5px var(--accent-pressed);
+    border-color:var(--accent-pressed);
+    color:var(--accent-pressed);
   }
   .chip:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
 
@@ -1807,7 +1810,10 @@
     background:var(--chip-bg); border-color:var(--chip-border); color:var(--chip-text);
   }
   .flt-chip.is-selected{
-    box-shadow:0 0 0 2px var(--accent-primary);
+    /* ring уніфіковано з Home (B+, 1.5px) — фон/колір НЕ чіпаємо: */
+    /* flt-chip використовується і для кольорових статус-чіпів (Nieopłacone/Opłacone/...), */
+    /* де фон/текст несуть семантику кольору і не мають перезаписуватись при selected */
+    box-shadow:0 0 0 1.5px var(--accent-primary);
     border-color:var(--accent-primary);
   }
 
