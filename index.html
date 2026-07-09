@@ -201,6 +201,7 @@
     padding:12px var(--space-md);
     cursor:pointer;
     min-width:0;
+    transition:border-color 140ms ease;
   }
   .field-label-row{
     display:flex;
@@ -251,18 +252,16 @@
     border:1px solid #bec5c8;
     color:#323744;
   }
-  /* selected — B+ (ring + легкий accent tint), затверджено 2026-07-09 */
+  /* selected — без tint, тонкий accent-бордер, затверджено 2026-07-09 (правка після B+) */
   .chip.is-selected{
-    background:rgba(0,95,110,.08);
-    box-shadow:0 0 0 1.5px var(--accent-primary);
+    background:var(--bg-chip);
     border-color:var(--accent-primary);
     color:var(--accent-primary);
     font-weight:500;
   }
   /* hover selected */
   .chip.is-selected:hover{
-    background:rgba(0,95,110,.08);
-    box-shadow:0 0 0 1.5px var(--accent-pressed);
+    background:var(--bg-chip);
     border-color:var(--accent-pressed);
     color:var(--accent-pressed);
   }
@@ -735,6 +734,7 @@
   .field-chevron{ transition:transform 220ms ease; }
   .field.has-value .field-label{ color:var(--accent-primary) !important; }
   .field.has-value .field-chevron{ display:none; }
+  .field.has-value{ border-color:rgba(0,95,110,.32); } /* делікатна індикація filled, без tint фону, затверджено 2026-07-09 */
 
   /* ── RESULTS FILTER CHIP: та сама поведінка тригера, що й у .field ── */
   .results-filter-chip.dd-open .field-chevron{ transform:rotate(180deg); }
@@ -1826,10 +1826,9 @@
     background:var(--chip-bg); border-color:var(--chip-border); color:var(--chip-text);
   }
   .flt-chip.is-selected{
-    /* ring уніфіковано з Home (B+, 1.5px) — фон/колір НЕ чіпаємо: */
-    /* flt-chip використовується і для кольорових статус-чіпів (Nieopłacone/Opłacone/...), */
+    /* тонкий accent-бордер, без ring/tint — уніфіковано з Home; */
+    /* фон/колір НЕ чіпаємо: flt-chip використовується і для кольорових статус-чіпів (Nieopłacone/Opłacone/...), */
     /* де фон/текст несуть семантику кольору і не мають перезаписуватись при selected */
-    box-shadow:0 0 0 1.5px var(--accent-primary);
     border-color:var(--accent-primary);
   }
 
