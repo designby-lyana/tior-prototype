@@ -297,14 +297,14 @@
   }
   .cta.pulse-once{ animation:ctaPulseGlow 900ms ease-out 1; }
   .cta:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
-  /* secondary CTA — той самий радіус/висота системного .cta (12px/48-56px), другорядна заливка */
+  /* secondary CTA — той самий радіус/висота системного .cta (12px/48-56px), без заливки (ghost) */
   .cta.cta-secondary{
-    background:#fff;
+    background:transparent;
     color:var(--accent-pressed);
     border:1.5px solid var(--accent-primary);
   }
-  .cta.cta-secondary:hover{ background:#f0f9fa; box-shadow:none; filter:none; }
-  .cta.cta-secondary:active{ background:#e3f2f4; color:var(--accent-pressed); transform:scale(.985); box-shadow:none; }
+  .cta.cta-secondary:hover{ background:rgba(0,95,110,.06); box-shadow:none; filter:none; }
+  .cta.cta-secondary:active{ background:rgba(0,95,110,.12); color:var(--accent-pressed); transform:scale(.985); box-shadow:none; }
 
   /* ---------- ACCORDION ---------- */
   .accordion-trigger{
@@ -966,7 +966,7 @@
   .btn-outline-search:hover{ background:#f0f9fa; }
   .btn-outline-search:active{ transform:scale(.985); }
 
-  .results-search-wrap{ display:flex; flex-direction:column; gap:var(--space-sm); }
+  .results-search-wrap{ flex:none; }
   .results-search-input{
     position:relative;
     display:flex;
@@ -981,11 +981,18 @@
     cursor:pointer;
     transition:width 280ms cubic-bezier(.4,0,.2,1), padding 280ms cubic-bezier(.4,0,.2,1), box-shadow 160ms ease;
   }
+  /* Expanded: overlays the whole filter-bar row (Filtry/Sortowanie/EAN) instead of pushing layout */
   .results-search-input.is-expanded{
-    width:100%;
+    position:absolute;
+    top:50%; left:0; right:0;
+    transform:translateY(-50%);
+    width:auto;
+    height:44px;
     padding:0 14px;
     cursor:text;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+    z-index:60;
   }
   .results-search-input .search-icon{
     flex:none;
@@ -1028,7 +1035,7 @@
   .results-search-input.is-expanded.has-text .results-search-clear{ display:flex; }
 
 
-  .filter-bar{ display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
+  .filter-bar{ position:relative; display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
   .filter-bar .mini-trigger{ height:44px; }
   .filter-bar-left{ display:flex; align-items:center; gap:var(--space-lg); }
   .sort-trigger-wrap{ position:relative; }
@@ -3117,17 +3124,16 @@
 
       <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
 
-        <div class="results-search-wrap">
-          <div class="results-search-input" id="resultsSearchWrap" onclick="expandResultsSearch()">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.3-4.3"></path></svg>
-            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" onfocus="expandResultsSearch()" onblur="collapseResultsSearchIfEmpty()" oninput="document.getElementById('resultsSearchWrap').classList.toggle('has-text', this.value.length>0)" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
-            <button type="button" class="results-search-clear" aria-label="Wyczyść" onmousedown="event.preventDefault();" onclick="event.stopPropagation(); clearResultsSearch();">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-            </button>
-          </div>
-        </div>
-
         <div class="filter-bar">
+          <div class="results-search-wrap">
+            <div class="results-search-input" id="resultsSearchWrap" onclick="expandResultsSearch()">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.3-4.3"></path></svg>
+              <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" onfocus="expandResultsSearch()" onblur="handleResultsSearchBlur()" oninput="document.getElementById('resultsSearchWrap').classList.toggle('has-text', this.value.length>0)" onkeydown="if(event.key==='Enter'){event.preventDefault();submitResultsSearch();}">
+              <button type="button" class="results-search-clear" aria-label="Wyczyść" onmousedown="event.preventDefault();" onclick="event.stopPropagation(); clearResultsSearch();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+              </button>
+            </div>
+          </div>
           <div class="filter-bar-left">
             <button class="mini-trigger" onclick="toggleMoreFilters()">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><line x1="3" y1="6" x2="21" y2="6"></line><circle cx="15" cy="6" r="2.2" fill="currentColor" stroke="none"></circle><line x1="3" y1="12" x2="21" y2="12"></line><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"></circle><line x1="3" y1="18" x2="21" y2="18"></line><circle cx="17" cy="18" r="2.2" fill="currentColor" stroke="none"></circle></svg>
@@ -11332,19 +11338,53 @@
     var f = document.getElementById('resultsSearchField');
     if (f && document.activeElement !== f) { setTimeout(function(){ f.focus(); }, 0); }
   }
-  function collapseResultsSearchIfEmpty(){
+  // Commit on blur: no text -> just collapse back to the icon; has text -> same as pressing Enter
+  function handleResultsSearchBlur(){
+    var f = document.getElementById('resultsSearchField');
+    if (f && f.value.trim()) { submitResultsSearch(); }
+    else { var wrap = document.getElementById('resultsSearchWrap'); if (wrap) wrap.classList.remove('is-expanded'); }
+  }
+  // Enter (or blur with text): run the filter, drop the term into a removable chip next to the other applied filters, collapse back to the icon
+  function submitResultsSearch(){
     var f = document.getElementById('resultsSearchField');
     var wrap = document.getElementById('resultsSearchWrap');
-    if (f && wrap && !f.value) { wrap.classList.remove('is-expanded'); }
+    var query = f ? f.value.trim() : '';
+    runResultsSearch();
+    if (query) { addResultsSearchPill(query); }
+    if (f) { f.value = ''; }
+    if (wrap) { wrap.classList.remove('has-text'); wrap.classList.remove('is-expanded'); }
+  }
+  function addResultsSearchPill(query){
+    var filtersEl = document.getElementById('appliedFilters');
+    if (!filtersEl) return;
+    filtersEl.querySelectorAll('.filter-pill[data-key="search"]').forEach(function(p){ p.remove(); });
+    var id = 'pill_search_' + Date.now();
+    var pill = document.createElement('span');
+    pill.className = 'filter-pill';
+    pill.id = id;
+    pill.setAttribute('data-key', 'search');
+    pill.innerHTML = query + ' <button class="pill-remove" aria-label="Usuń" onclick="removeResultsSearchPill(\'' + id + '\')">×</button>';
+    var clearBtn1 = document.getElementById('clearAllBtn');
+    if (clearBtn1 && clearBtn1.parentNode === filtersEl) filtersEl.insertBefore(pill, clearBtn1); else filtersEl.appendChild(pill);
+    if (typeof updateFilterState === 'function') updateFilterState();
+  }
+  function removeResultsSearchPill(id){
+    var pill = document.getElementById(id);
+    if (pill) pill.remove();
+    var f = document.getElementById('resultsSearchField');
+    if (f) f.value = '';
+    if (typeof runResultsSearch === 'function') runResultsSearch();
+    if (typeof updateFilterState === 'function') updateFilterState();
   }
   function clearResultsSearch(){
     var f = document.getElementById('resultsSearchField');
     var wrap = document.getElementById('resultsSearchWrap');
-    if (!f || !wrap) return;
-    f.value = '';
-    wrap.classList.remove('has-text');
-    f.focus();
+    if (f) { f.value = ''; f.focus(); }
+    if (wrap) { wrap.classList.remove('has-text'); }
+    var filtersEl = document.getElementById('appliedFilters');
+    if (filtersEl) filtersEl.querySelectorAll('.filter-pill[data-key="search"]').forEach(function(p){ p.remove(); });
     if (typeof runResultsSearch === 'function') runResultsSearch();
+    if (typeof updateFilterState === 'function') updateFilterState();
   }
   function runResultsSearch(){
     var input = document.getElementById('resultsSearchField');
@@ -11382,11 +11422,6 @@
     }
   }
 
-  function clearResultsSearch(){
-    var input = document.getElementById('resultsSearchField');
-    if (input) input.value = '';
-    runResultsSearch();
-  }
 
   function applyFilters(){
     toggleFilterOverlay();
@@ -11899,6 +11934,9 @@
 
   function clearAllFilters(){
     document.querySelectorAll('#appliedFilters .filter-pill').forEach(function(p){ p.remove(); });
+    var sf = document.getElementById('resultsSearchField');
+    if (sf && sf.value) { sf.value = ''; }
+    if (typeof runResultsSearch === 'function') runResultsSearch();
     updateFilterState();
   }
 
