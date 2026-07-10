@@ -297,6 +297,14 @@
   }
   .cta.pulse-once{ animation:ctaPulseGlow 900ms ease-out 1; }
   .cta:focus-visible{outline:2px solid var(--text-default);outline-offset:2px;}
+  /* secondary CTA — той самий радіус/висота системного .cta (12px/48-56px), другорядна заливка */
+  .cta.cta-secondary{
+    background:#fff;
+    color:var(--accent-pressed);
+    border:1.5px solid var(--accent-primary);
+  }
+  .cta.cta-secondary:hover{ background:#f0f9fa; box-shadow:none; filter:none; }
+  .cta.cta-secondary:active{ background:#e3f2f4; color:var(--accent-pressed); transform:scale(.985); box-shadow:none; }
 
   /* ---------- ACCORDION ---------- */
   .accordion-trigger{
@@ -363,15 +371,14 @@
     margin:0 0 var(--space-lg);
   }
   .results-filters-card{
-    background: var(--bg-surface-light);
+    background: transparent;
     border:none;
-    border-radius: var(--radius-lg);
-    padding: var(--space-xl) var(--space-md);
+    border-radius: 0;
+    padding: 0 0 var(--space-lg) 0;
     display:flex;
     flex-direction:column;
     gap: var(--space-sm);
-    margin-bottom: var(--space-lg);
-    box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
+    margin-bottom: 0;
   }
   .search-input{
     position:relative;
@@ -3108,7 +3115,7 @@
 
     <div class="results-filters-card">
 
-      <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
 
         <div class="results-search-wrap">
           <div class="results-search-input" id="resultsSearchWrap" onclick="expandResultsSearch()">
@@ -3179,7 +3186,7 @@
         </div>
       </div>
 
-      <button class="cta results-find-btn" onclick="runResultsSearch()">Pokaż opony</button>
+      <button class="cta cta-secondary results-find-btn" style="margin-top:var(--space-xs);" onclick="runResultsSearch()">Pokaż opony</button>
 
       </div><!-- /top-group -->
 
