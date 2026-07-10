@@ -10260,6 +10260,7 @@
     document.getElementById('dispFirmaOsoba').innerHTML   = osoba + '<br>' + tel + '<br>' + email;
 
     toggleDaneFirmyForm();
+    showTopBanner('Dane firmy zostały zaktualizowane.');
   }
 
   function clearAllFilters(){
@@ -10971,16 +10972,11 @@ function submitOrder() {
         changePwdBtn.style.cursor = 'not-allowed';
       }
 
-      // show toast, then redirect to screenProfile after 400ms
-      var sb = document.getElementById('pwdSnackbar');
-      if(sb){ sb.style.opacity='1'; sb.style.pointerEvents='auto'; }
+      // show top banner, then redirect to screenProfile after 400ms
+      showTopBanner('Hasło zostało zmienione.');
 
       setTimeout(function(){
         setScreen('screenProfile');
-        // hide toast after 3s from redirect
-        setTimeout(function(){
-          if(sb){ sb.style.opacity='0'; sb.style.pointerEvents='none'; }
-        }, 3000);
       }, 400);
     }, 900);
   }
@@ -11230,22 +11226,24 @@ function submitOrder() {
         if(isFirstEver) checkoutAddrData.forEach(function(a){ a.isDefault = false; });
         checkoutAddrData.push({id:nid,name:name,company:company,contactPerson:contactPerson,phone:phone,street:street,city:fullCity,country:country,isDefault: isFirstEver});
       }
-    }
-    closeAddrSheet();
-    renderAddrList();
-    if (typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
-    if (_addrSheetFromCheckoutEmpty) {
       _addrSheetFromCheckoutEmpty = false;
       setTimeout(function(){
         showAddrAddedBanner();
       }, 700);
     }
+    closeAddrSheet();
+    renderAddrList();
+    if (typeof renderCheckoutAddrList === 'function') renderCheckoutAddrList();
   }
 
   var _addrBannerTimer = null;
-  function showAddrAddedBanner(){
+  function showTopBanner(title, subtitle){
     var b = document.getElementById('addrAddedBanner');
     if(!b) return;
+    var t = document.getElementById('topBannerTitle');
+    var s = document.getElementById('topBannerSubtitle');
+    if(t) t.textContent = title || '';
+    if(s){ s.textContent = subtitle || ''; s.style.display = subtitle ? '' : 'none'; }
     clearTimeout(_addrBannerTimer);
     b.style.opacity = '1';
     b.style.transform = 'translateY(0)';
@@ -11253,6 +11251,9 @@ function submitOrder() {
     _addrBannerTimer = setTimeout(function(){
       hideAddrAddedBanner();
     }, 4000);
+  }
+  function showAddrAddedBanner(){
+    showTopBanner('Adres dodano.', 'Więcej adresów dostawy możesz dodać w profilu.');
   }
 
   function hideAddrAddedBanner(){
@@ -11925,11 +11926,11 @@ function submitOrder() {
 
 
 <!-- ADDRESS ADDED BANNER (top, flush under header) -->
-<div id="addrAddedBanner" onclick="hideAddrAddedBanner()" style="position:fixed;top:84px;left:0;right:0;background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;padding:14px 20px;display:flex;align-items:flex-start;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity 220ms ease,transform 220ms ease;cursor:pointer;">
+<div id="addrAddedBanner" onclick="hideAddrAddedBanner()" style="position:fixed;top:72px;left:0;right:0;background:#1e6b3c;color:#fff;font-family:'Outfit',sans-serif;padding:16px 24px;display:flex;align-items:flex-start;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity 220ms ease,transform 220ms ease;cursor:pointer;">
   <svg width="16" height="16" viewBox="0 0 20 20" fill="none" style="flex:none;margin-top:3px;"><path d="M2 10l5 5 11-11" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <span style="display:flex;flex-direction:column;gap:2px;line-height:1.35;">
-    <span style="font-weight:700;font-size:15px;">Adres dodano.</span>
-    <span style="font-weight:400;font-size:14px;color:rgba(255,255,255,.92);">Więcej adresów dostawy możesz dodać w profilu.</span>
+    <span id="topBannerTitle" style="font-weight:700;font-size:15px;">Adres dodano.</span>
+    <span id="topBannerSubtitle" style="font-weight:400;font-size:14px;color:rgba(255,255,255,.92);">Więcej adresów dostawy możesz dodać w profilu.</span>
   </span>
 </div>
 
