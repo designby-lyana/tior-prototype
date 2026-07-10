@@ -11052,10 +11052,12 @@ function submitOrder() {
         bar.style.width = '0%';
       }); });
     }
-    sb.classList.add('visible');
+    sb.style.opacity = '1';
+    sb.style.pointerEvents = 'auto';
     if(_snackTimer) clearTimeout(_snackTimer);
     _snackTimer = setTimeout(function(){
-      sb.classList.remove('visible');
+      sb.style.opacity = '0';
+      sb.style.pointerEvents = 'none';
       _pendingDeleteId = null; _pendingDeleteData = null;
     }, duration);
   }
@@ -11067,7 +11069,7 @@ function submitOrder() {
     _pendingDeleteId = null; _pendingDeleteData = null;
     renderAddrList();
     var sb = document.getElementById('addrSnackbar');
-    if(sb) sb.classList.remove('visible');
+    if(sb){ sb.style.opacity = '0'; sb.style.pointerEvents = 'none'; }
   }
 
   function closeAddrConfirm(){
