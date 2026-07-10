@@ -363,14 +363,15 @@
     margin:0 0 var(--space-lg);
   }
   .results-filters-card{
-    background: transparent;
+    background: var(--bg-surface-light);
     border:none;
-    border-radius: 0;
-    padding: 0 0 var(--space-lg) 0;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-md);
     display:flex;
     flex-direction:column;
     gap: var(--space-sm);
-    margin-bottom: 0;
+    margin-bottom: var(--space-lg);
+    box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
   }
   .search-input{
     position:relative;
@@ -1018,7 +1019,7 @@
   .results-search-clear svg{ width:12px; height:12px; }
   .results-search-clear:hover{ background:rgba(107,114,128,.22); color:var(--text-on-light); }
   .results-search-input.is-expanded.has-text .results-search-clear{ display:flex; }
-  .results-find-btn{ height:48px; font-size:16px; }
+
 
   .filter-bar{ display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
   .filter-bar .mini-trigger{ height:44px; }
@@ -3178,7 +3179,7 @@
         </div>
       </div>
 
-      <button class="btn-outline-search results-find-btn" onclick="runResultsSearch()">Pokaż opony</button>
+      <button class="cta results-find-btn" onclick="runResultsSearch()">Pokaż opony</button>
 
       </div><!-- /top-group -->
 
