@@ -2485,8 +2485,8 @@
   .home-chips-section{
     display:flex;
     flex-direction:column;
-    gap:16px;
-    padding:24px 0 0;
+    gap:0;
+    padding:0;
   }
   .home-chips-title{
     font-family:var(--font-mono);
@@ -2502,6 +2502,10 @@
     display:flex;
     flex-direction:column;
     gap:0px;
+    margin-top:12px;
+  }
+  .home-chips-title + .home-chips-group{
+    margin-top:16px;
   }
   .home-chips-sublabel{
     font-family:var(--font-body);
