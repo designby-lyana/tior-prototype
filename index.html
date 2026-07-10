@@ -961,16 +961,22 @@
   .results-search-wrap{ display:flex; flex-direction:column; gap:var(--space-sm); }
   .results-search-input{
     position:relative;
-    height:48px;
-    border:none;
-    border-bottom:1px solid var(--border-default);
-    background:transparent;
+    height:46px;
+    border:1.5px solid transparent;
+    border-radius:var(--radius-pill);
+    background:var(--bg-subtle);
     display:flex; align-items:center;
-    padding:0 var(--space-md) 0 42px;
+    padding:0 40px 0 42px;
+    transition:background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
   }
-  .results-search-input svg{
-    position:absolute; left:14px; width:18px; height:18px;
-    color:var(--text-muted); flex:none;
+  .results-search-input:focus-within{
+    background:#ffffff;
+    border-color:rgba(0,95,110,.3);
+    box-shadow:0 2px 10px rgba(0,0,0,.07);
+  }
+  .results-search-input .search-icon{
+    position:absolute; left:16px; width:18px; height:18px;
+    color:var(--text-muted); flex:none; pointer-events:none;
   }
   .results-search-field{
     border:none; outline:none; width:100%;
@@ -978,6 +984,19 @@
     color:var(--text-default); background:transparent;
   }
   .results-search-field::placeholder{ color:var(--text-placeholder); }
+  .results-search-clear{
+    display:none;
+    position:absolute; right:10px;
+    align-items:center; justify-content:center;
+    width:22px; height:22px; border-radius:50%;
+    background:rgba(107,114,128,.14);
+    border:none; padding:0; cursor:pointer;
+    color:var(--text-muted); flex:none;
+    transition:background-color 140ms ease, color 140ms ease;
+  }
+  .results-search-clear svg{ width:12px; height:12px; }
+  .results-search-clear:hover{ background:rgba(107,114,128,.22); color:var(--text-on-light); }
+  .results-search-input.has-text .results-search-clear{ display:flex; }
   .results-find-btn{ height:48px; font-size:16px; }
 
   .filter-bar{ display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
@@ -3070,9 +3089,12 @@
       <div style="display:flex;flex-direction:column;gap:8px;">
 
         <div class="results-search-wrap">
-          <div class="results-search-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.3-4.3"></path></svg>
-            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
+          <div class="results-search-input" id="resultsSearchWrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.3-4.3"></path></svg>
+            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" oninput="document.getElementById('resultsSearchWrap').classList.toggle('has-text', this.value.length>0)" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
+            <button type="button" class="results-search-clear" aria-label="Wyczyść" onclick="var f=document.getElementById('resultsSearchField'); f.value=''; document.getElementById('resultsSearchWrap').classList.remove('has-text'); f.focus(); if(typeof runResultsSearch==='function'){runResultsSearch();}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+            </button>
           </div>
         </div>
 
@@ -3210,7 +3232,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3277,7 +3299,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3338,7 +3360,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3405,7 +3427,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3472,7 +3494,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3538,7 +3560,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3605,7 +3627,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3672,7 +3694,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3739,7 +3761,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3806,7 +3828,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3873,7 +3895,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -3940,7 +3962,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4007,7 +4029,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4074,7 +4096,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4208,7 +4230,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4275,7 +4297,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4342,7 +4364,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4409,7 +4431,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4476,7 +4498,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">A</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4543,7 +4565,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4608,7 +4630,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4673,7 +4695,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4738,7 +4760,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4803,7 +4825,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4868,7 +4890,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4934,7 +4956,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">A</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -4999,7 +5021,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5065,7 +5087,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5130,7 +5152,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5195,7 +5217,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5261,7 +5283,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">A</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5326,7 +5348,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5392,7 +5414,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">A</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5458,7 +5480,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5523,7 +5545,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">72dB</span>
+            <span class="eu-badge"><span class="letter">72dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5589,7 +5611,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5655,7 +5677,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">A</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5720,7 +5742,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">72dB</span>
+            <span class="eu-badge"><span class="letter">72dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5785,7 +5807,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5851,7 +5873,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5913,7 +5935,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -5975,7 +5997,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">E</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6037,7 +6059,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6099,7 +6121,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6161,7 +6183,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6223,7 +6245,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6285,7 +6307,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6347,7 +6369,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6409,7 +6431,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6471,7 +6493,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6533,7 +6555,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6595,7 +6617,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6657,7 +6679,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6719,7 +6741,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6781,7 +6803,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6843,7 +6865,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">72dB</span>
+            <span class="eu-badge"><span class="letter">72dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6905,7 +6927,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -6967,7 +6989,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">70dB</span>
+            <span class="eu-badge"><span class="letter">70dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7029,7 +7051,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7091,7 +7113,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7153,7 +7175,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">D</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">72dB</span>
+            <span class="eu-badge"><span class="letter">72dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7215,7 +7237,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">E</span></span>
             <span class="eu-badge"><span class="letter">D</span></span>
-            <span class="eu-badge">72dB</span>
+            <span class="eu-badge"><span class="letter">72dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7277,7 +7299,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">C</span></span>
             <span class="eu-badge"><span class="letter">C</span></span>
-            <span class="eu-badge">71dB</span>
+            <span class="eu-badge"><span class="letter">71dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7339,7 +7361,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">B</span></span>
-            <span class="eu-badge">69dB</span>
+            <span class="eu-badge"><span class="letter">69dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
@@ -7401,7 +7423,7 @@
           <div class="pr-eu-labels">
             <span class="eu-badge"><span class="letter">B</span></span>
             <span class="eu-badge"><span class="letter">A</span></span>
-            <span class="eu-badge">68dB</span>
+            <span class="eu-badge"><span class="letter">68dB</span></span>
           </div>
         </div>
         <div class="pr-segment-row">
