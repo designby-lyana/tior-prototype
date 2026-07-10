@@ -961,42 +961,64 @@
   .results-search-wrap{ display:flex; flex-direction:column; gap:var(--space-sm); }
   .results-search-input{
     position:relative;
-    height:46px;
-    border:1.5px solid transparent;
-    border-radius:var(--radius-pill);
-    background:var(--bg-subtle);
-    display:flex; align-items:center;
-    padding:0 40px 0 42px;
-    transition:background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    display:flex;
+    align-items:center;
+    height:40px;
+    width:40px;
+    max-width:100%;
+    border-radius:100px;
+    background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.06), 0 4px 20px rgba(0,0,0,.08);
+    padding:0;
+    overflow:hidden;
+    cursor:pointer;
+    transition:width 280ms cubic-bezier(.4,0,.2,1), padding 280ms cubic-bezier(.4,0,.2,1), box-shadow 160ms ease;
   }
-  .results-search-input:focus-within{
-    background:#ffffff;
-    border-color:rgba(0,95,110,.3);
-    box-shadow:0 2px 10px rgba(0,0,0,.07);
+  .results-search-input.is-expanded{
+    width:100%;
+    padding:0 14px;
+    cursor:text;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
   }
   .results-search-input .search-icon{
-    position:absolute; left:16px; width:18px; height:18px;
-    color:var(--text-muted); flex:none; pointer-events:none;
+    flex:none;
+    width:22px; height:22px;
+    margin-left:9px;
+    color:var(--text-muted);
+    transition:margin-left 280ms cubic-bezier(.4,0,.2,1), color 160ms ease;
+    pointer-events:none;
+  }
+  .results-search-input.is-expanded .search-icon{
+    margin-left:0;
   }
   .results-search-field{
-    border:none; outline:none; width:100%;
+    border:none; outline:none;
+    width:0;
+    opacity:0;
+    margin-left:0;
     font-family:var(--font-body); font-size:16px;
     color:var(--text-default); background:transparent;
+    transition:opacity 200ms ease, width 280ms cubic-bezier(.4,0,.2,1), margin-left 280ms cubic-bezier(.4,0,.2,1);
+  }
+  .results-search-input.is-expanded .results-search-field{
+    width:100%;
+    opacity:1;
+    margin-left:6px;
   }
   .results-search-field::placeholder{ color:var(--text-placeholder); }
   .results-search-clear{
     display:none;
-    position:absolute; right:10px;
     align-items:center; justify-content:center;
     width:22px; height:22px; border-radius:50%;
     background:rgba(107,114,128,.14);
     border:none; padding:0; cursor:pointer;
     color:var(--text-muted); flex:none;
+    margin-left:6px;
     transition:background-color 140ms ease, color 140ms ease;
   }
   .results-search-clear svg{ width:12px; height:12px; }
   .results-search-clear:hover{ background:rgba(107,114,128,.22); color:var(--text-on-light); }
-  .results-search-input.has-text .results-search-clear{ display:flex; }
+  .results-search-input.is-expanded.has-text .results-search-clear{ display:flex; }
   .results-find-btn{ height:48px; font-size:16px; }
 
   .filter-bar{ display:flex; align-items:center; justify-content:flex-start; gap:var(--space-lg); }
@@ -3089,10 +3111,10 @@
       <div style="display:flex;flex-direction:column;gap:8px;">
 
         <div class="results-search-wrap">
-          <div class="results-search-input" id="resultsSearchWrap">
+          <div class="results-search-input" id="resultsSearchWrap" onclick="expandResultsSearch()">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.3-4.3"></path></svg>
-            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" oninput="document.getElementById('resultsSearchWrap').classList.toggle('has-text', this.value.length>0)" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
-            <button type="button" class="results-search-clear" aria-label="Wyczyść" onclick="var f=document.getElementById('resultsSearchField'); f.value=''; document.getElementById('resultsSearchWrap').classList.remove('has-text'); f.focus(); if(typeof runResultsSearch==='function'){runResultsSearch();}">
+            <input type="text" id="resultsSearchField" placeholder="Rozmiar, marka, model lub EAN" class="results-search-field" onfocus="expandResultsSearch()" onblur="collapseResultsSearchIfEmpty()" oninput="document.getElementById('resultsSearchWrap').classList.toggle('has-text', this.value.length>0)" onkeydown="if(event.key==='Enter'){event.preventDefault();runResultsSearch();}">
+            <button type="button" class="results-search-clear" aria-label="Wyczyść" onmousedown="event.preventDefault();" onclick="event.stopPropagation(); clearResultsSearch();">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
             </button>
           </div>
@@ -11294,6 +11316,29 @@
     runResultsSearch();
   }
 
+  function expandResultsSearch(){
+    var wrap = document.getElementById('resultsSearchWrap');
+    if (!wrap) return;
+    if (!wrap.classList.contains('is-expanded')) {
+      wrap.classList.add('is-expanded');
+    }
+    var f = document.getElementById('resultsSearchField');
+    if (f && document.activeElement !== f) { setTimeout(function(){ f.focus(); }, 0); }
+  }
+  function collapseResultsSearchIfEmpty(){
+    var f = document.getElementById('resultsSearchField');
+    var wrap = document.getElementById('resultsSearchWrap');
+    if (f && wrap && !f.value) { wrap.classList.remove('is-expanded'); }
+  }
+  function clearResultsSearch(){
+    var f = document.getElementById('resultsSearchField');
+    var wrap = document.getElementById('resultsSearchWrap');
+    if (!f || !wrap) return;
+    f.value = '';
+    wrap.classList.remove('has-text');
+    f.focus();
+    if (typeof runResultsSearch === 'function') runResultsSearch();
+  }
   function runResultsSearch(){
     var input = document.getElementById('resultsSearchField');
     var query = input ? input.value.trim().toLowerCase() : '';
