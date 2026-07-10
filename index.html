@@ -2425,12 +2425,12 @@
     appearance:none;
     background:none;
     border:none;
-    margin-bottom:0;
-    padding:14px 20px 8px;
+    border-bottom:2px solid transparent;
+    margin-bottom:-1.5px;
+    padding:4px 14px;
     display:flex;
     align-items:center;
-    gap:8px;
-    position:relative;
+    gap:4px;
     font-family:var(--font-body);
     font-weight:400;
     font-size:18px;
@@ -2449,17 +2449,9 @@
   }
   .home-tab.is-active{
     color:var(--accent-primary);
-  }
-  .home-tab.is-active::after{
-    content:'';
-    position:absolute;
-    left:50%;
-    bottom:0;
-    transform:translateX(-50%);
-    width:28px;
-    height:2px;
-    background:var(--accent-primary);
-    border-radius:1px;
+    font-weight:600;
+    border-bottom-color:var(--accent-primary);
+    padding:4px;
   }
 
   .home-tab-panel{ background:none; }
@@ -2783,7 +2775,7 @@
 
     <!-- TAB: FILTRY -->
     <div id="htabPanel-filtry" class="home-tab-panel" style="padding:0;">
-      <div class="card" id="filtersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:6px;margin-bottom:0;padding:16px;gap:12px;">
+      <div class="card" id="filtersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:8px;margin-bottom:0;padding:16px;gap:12px;">
 
         <div class="rozmiar-block">
           <div class="size-row" id="sizeRow">
@@ -2907,14 +2899,14 @@
 
       </div>
 
-      <div style="margin:16px 24px 0;">
+      <div style="margin:8px 24px 0;">
         <button class="cta" id="ctaExpanded" onclick="goToResults()">Pokaż opony</button>
       </div>
     </div>
 
     <!-- TAB: AUTO -->
     <div id="htabPanel-auto" class="home-tab-panel" style="display:none;padding:0;">
-      <div class="card" id="autoFiltersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:6px;margin-bottom:0;">
+      <div class="card" id="autoFiltersCard" style="border-radius:10px;box-shadow:none;border:none;margin-top:8px;margin-bottom:0;">
 
         <div class="row two-col">
           <div class="field" data-dd-key="carBrand" onclick="openDropdown('carBrand', this)">
@@ -2965,7 +2957,7 @@
 
       </div>
 
-      <div style="margin:16px 24px 0;">
+      <div style="margin:8px 24px 0;">
         <button class="cta" id="ctaAuto" onclick="goToResults()">Pokaż opony</button>
       </div>
     </div>
