@@ -2694,9 +2694,11 @@
      .bp-tablet/.bp-desktop на <body>/.phone), а не через ширину вікна. ---- */
   .phone-resize-handle{
     display:none;
-    position:absolute;
-    top:50%; right:6px;
-    transform:translateY(-50%);
+    position:fixed;
+    top:20px;
+    /* left обчислюється в JS відносно правого краю .phone — щоб ручка
+       не "тікала" вниз, коли .phone стає дуже високим на tablet/desktop
+       (де контент росте по висоті, а не скролиться всередині .screen) */
     width:22px; height:56px;
     background:#fff;
     border:1px solid var(--border-module);
@@ -13785,6 +13787,17 @@ function submitOrder() {
   var resultsEl = document.getElementById('screenResults');
   if(!phone || !handle || !resultsEl) return;
 
+  // Ручка — position:fixed (не absolute всередині .phone), бо на tablet/desktop
+  // .phone стає дуже високим (контент росте по висоті, .screen більше не
+  // скролиться сам, скролиться вся сторінка) — absolute+top:50% "тікав" разом
+  // з висотою .phone далеко за межі видимого вьюпорта. fixed завжди лишається
+  // біля верху вікна; left рахуємо тут від правого краю .phone.
+  function positionHandle(){
+    if(!resultsEl.classList.contains('is-active')) return;
+    var r = phone.getBoundingClientRect();
+    handle.style.left = Math.round(r.right - handle.offsetWidth - 6) + 'px';
+  }
+
   function applyBreakpoint(width){
     var isTablet = width >= 670;
     var isDesktop = width >= 1040;
@@ -13817,20 +13830,28 @@ function submitOrder() {
     w = Math.max(390, Math.min(1280, w));
     phone.style.width = w + 'px';
     applyBreakpoint(w);
+    positionHandle();
   });
 
   function endDrag(){ dragging = false; }
   handle.addEventListener('pointerup', endDrag);
   handle.addEventListener('pointercancel', endDrag);
 
+  window.addEventListener('resize', positionHandle);
+
   // Залишаючи screenResults — завжди повертаємось до мобайл-мокапу,
   // незалежно від того, наскільки широко тестер розтягнув рамку раніше.
+  // Заходячи на screenResults — одразу виставляємо позицію ручки.
   var mo = new MutationObserver(function(){
-    if(!resultsEl.classList.contains('is-active')){
+    if(resultsEl.classList.contains('is-active')){
+      positionHandle();
+    } else {
       resetToMobile();
     }
   });
   mo.observe(resultsEl, {attributes:true, attributeFilter:['class']});
+
+  positionHandle();
 })();
 </script>
 </body></html>
