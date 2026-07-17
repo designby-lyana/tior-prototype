@@ -26,6 +26,7 @@
     --bg-surface-light:#fafafa;
     --border-surface:#e5e7eb;
     --bg-page:#d2d8db;
+    --bg-page-wide:#f0ece6;
     --border-module:rgba(107,114,128,.4);
     --radius-sm:8px;
     --radius-lg:8px;
@@ -2685,60 +2686,84 @@
   /* base (mobile-first): нові desktop/tablet-only елементи header прихована за замовчуванням */
   .header-help-link{ display:none; }
 
-  @media (min-width:670px){
-    body:has(#screenResults.is-active){
-      background:#f0ece6;
-      padding:0;
-      align-items:stretch;
-    }
-    .phone:has(#screenResults.is-active){
-      width:100%;
-      max-width:720px;
-      height:auto;
-      min-height:100vh;
-      border-radius:0;
-      box-shadow:none;
-      background:#f0ece6;
-      overflow:visible;
-    }
-    #screenResults.is-active{
-      height:auto;
-      overflow-y:visible;
-    }
+  /* ---- Resize handle: перетягни праву межу .phone, щоб побачити tablet/desktop ----
+     Свідомо НЕ @media на реальну ширину вікна браузера: звичайне вікно тестування
+     вже саме по собі ширше за 670px, тому раніше Results автоматично "стрибав" на
+     десктоп, хоча решта екранів завжди лишається мобайл-мокапом. Тепер перемикання
+     відбувається лише через явний drag хендла (бренчпоінти рахує JS, класи
+     .bp-tablet/.bp-desktop на <body>/.phone), а не через ширину вікна. ---- */
+  .phone-resize-handle{
+    display:none;
+    position:absolute;
+    top:50%; right:-14px;
+    transform:translateY(-50%);
+    width:28px; height:56px;
+    background:#fff;
+    border:1px solid var(--border-module);
+    border-radius:6px;
+    align-items:center;
+    justify-content:center;
+    cursor:ew-resize;
+    z-index:500;
+    color:var(--text-muted);
+    font-size:14px;
+    letter-spacing:2px;
+    user-select:none;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  .phone:has(#screenResults.is-active) .phone-resize-handle{ display:flex; }
 
-    /* ---- Header: Tior / Header / Desktop (Figma 5381-12242) — спільний для tablet+desktop ---- */
-    #screenResults > header{
-      height:auto;
-      min-height:64px;
-      padding:16px 32px;
-      border-bottom:1px solid var(--border-module);
-    }
-    #screenResults > header .header-help-link{
-      display:inline-block;
-      font-family:var(--font-mono);
-      font-weight:700;
-      font-size:12px;
-      line-height:15px;
-      letter-spacing:-0.5px;
-      color:var(--text-default);
-      text-decoration:underline;
-      text-underline-offset:2px;
-      text-transform:uppercase;
-      white-space:nowrap;
-      cursor:pointer;
-    }
-    #screenResults > header .header-actions{ gap:24px; }
+  body.bp-tablet{
+    background:var(--bg-page-wide);
+    padding:0;
+    align-items:stretch;
   }
-  @media (min-width:1040px){
-    .phone:has(#screenResults.is-active){ max-width:1280px; }
-    #screenResults > header{ padding:16px 80px; }
+  .phone.bp-tablet{
+    max-width:720px;
+    height:auto;
+    min-height:100vh;
+    border-radius:0;
+    box-shadow:none;
+    background:var(--bg-page-wide);
+    overflow:visible;
   }
+  body.bp-tablet #screenResults.is-active{
+    height:auto;
+    overflow-y:visible;
+  }
+
+  /* ---- Header: Tior / Header / Desktop (Figma 5381-12242) — спільний для tablet+desktop ---- */
+  body.bp-tablet #screenResults > header{
+    height:auto;
+    min-height:64px;
+    padding:16px 32px;
+    border-bottom:1px solid var(--border-module);
+  }
+  body.bp-tablet #screenResults > header .header-help-link{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:12px;
+    line-height:15px;
+    letter-spacing:-0.5px;
+    color:var(--text-default);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    text-transform:uppercase;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+  body.bp-tablet #screenResults > header .header-actions{ gap:24px; }
+
+  .phone.bp-desktop{ max-width:1280px; }
+  body.bp-desktop #screenResults > header{ padding:16px 80px; }
 
 </style>
 </head>
 <body><!-- cache-bust v3 -->
 
 <div class="phone" id="phone">
+  <div class="phone-resize-handle" id="phoneResizeHandle" title="Перетягни: tablet 670px+, desktop 1040px+">⋮</div>
 <!-- GLOBAL PRELOADER -->
 <div id="globalPreloader">
   <div class="preloader-frame">
@@ -13746,4 +13771,59 @@ function submitOrder() {
 
 
 
+<script>
+(function(){
+  var phone = document.getElementById('phone');
+  var handle = document.getElementById('phoneResizeHandle');
+  var resultsEl = document.getElementById('screenResults');
+  if(!phone || !handle || !resultsEl) return;
+
+  function applyBreakpoint(width){
+    var isTablet = width >= 670;
+    var isDesktop = width >= 1040;
+    document.body.classList.toggle('bp-tablet', isTablet);
+    document.body.classList.toggle('bp-desktop', isDesktop);
+    phone.classList.toggle('bp-tablet', isTablet);
+    phone.classList.toggle('bp-desktop', isDesktop);
+  }
+
+  function resetToMobile(){
+    phone.style.width = '';
+    document.body.classList.remove('bp-tablet','bp-desktop');
+    phone.classList.remove('bp-tablet','bp-desktop');
+  }
+
+  var dragging = false, startX = 0, startWidth = 0;
+
+  handle.addEventListener('pointerdown', function(e){
+    if(!resultsEl.classList.contains('is-active')) return;
+    dragging = true;
+    startX = e.clientX;
+    startWidth = phone.getBoundingClientRect().width;
+    handle.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+
+  handle.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    var w = startWidth + (e.clientX - startX);
+    w = Math.max(390, Math.min(1280, w));
+    phone.style.width = w + 'px';
+    applyBreakpoint(w);
+  });
+
+  function endDrag(){ dragging = false; }
+  handle.addEventListener('pointerup', endDrag);
+  handle.addEventListener('pointercancel', endDrag);
+
+  // Залишаючи screenResults — завжди повертаємось до мобайл-мокапу,
+  // незалежно від того, наскільки широко тестер розтягнув рамку раніше.
+  var mo = new MutationObserver(function(){
+    if(!resultsEl.classList.contains('is-active')){
+      resetToMobile();
+    }
+  });
+  mo.observe(resultsEl, {attributes:true, attributeFilter:['class']});
+})();
+</script>
 </body></html>
