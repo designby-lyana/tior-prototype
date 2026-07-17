@@ -179,7 +179,7 @@
   .size-row.has-two .chip-tooltip-wrap{display:none !important;}
   .size-row.has-two .field{width:auto;flex:none;}
   .add-size{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     background:none;
     border:none;
     padding:0;
@@ -230,7 +230,7 @@
   .chips-row{display:flex;flex-wrap:wrap;gap:var(--space-sm);}
   /* Chip — стейти з Figma 5329:11743 */
   .chip{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     border:1px solid #bec5c8;
     background:var(--bg-chip);
     color:var(--text-on-light);
@@ -270,7 +270,7 @@
 
   /* ---------- CTA BUTTON ---------- */
   .cta{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     width:100%;
     height:48px; /* затверджено 2026-07-09: гібрид — системна висота 48px, шрифт лишається 18px */
     border:none;
@@ -309,7 +309,7 @@
 
   /* ---------- ACCORDION ---------- */
   .accordion-trigger{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     background:none;
     border:none;
     width:100%;
@@ -397,7 +397,7 @@
   }
   .search-input svg{ position:absolute; left:10px; width:18px; height:18px; color: var(--text-muted); }
   .btn-outline{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     width:100%;
     height:36px;
     border:1px solid var(--accent-primary);
@@ -420,7 +420,7 @@
   .toggle-knob{ position:absolute; top:1px; right:1px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid rgba(0,0,0,.1); box-sizing:border-box; }
   .v-divider{ width:1px; height:20px; background: var(--border-default); flex:none; }
   .mini-trigger{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:6px;
     font-family:var(--font-body); font-size:16px; color: var(--text-on-light);
     cursor:default; padding:0; white-space:nowrap;
@@ -441,7 +441,7 @@
   .mini-trigger .field-chevron{ color:var(--text-muted); }
 
   .applied-filters{ display:flex; align-items:center; gap: var(--space-sm) var(--space-sm); flex-wrap:wrap; row-gap:var(--space-sm); }
-  .eu-gb{appearance:none;border:1.5px solid #eaeaea;border-radius:4px;background:#eaeaea;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;padding:6px 0;cursor:pointer;flex:1;min-width:0;transition:border-color 120ms,background 120ms;}
+  .eu-gb{-webkit-appearance:none;appearance:none;border:1.5px solid #eaeaea;border-radius:4px;background:#eaeaea;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;padding:6px 0;cursor:pointer;flex:1;min-width:0;transition:border-color 120ms,background 120ms;}
   .eu-gb.eu-selected{background:transparent !important;}
   .side-nav-item{
     display:flex; align-items:center; gap:12px;
@@ -536,11 +536,11 @@
     white-space:nowrap;
   }
   .pill-remove{
-    appearance:none; background:none; border:none; color:inherit;
+    -webkit-appearance:none;appearance:none; background:none; border:none; color:inherit;
     font-size:14px; line-height:1; cursor:default; padding:0;
   }
   .clear-all{
-    appearance:none; background:none; border:none; padding:0;
+    -webkit-appearance:none;appearance:none; background:none; border:none; padding:0;
     align-self:center;
     font-family: var(--font-body); font-size:14px; color: var(--accent-primary);
     cursor:pointer;
@@ -705,7 +705,7 @@
     box-sizing:border-box;
   }
   .qty-btn{
-    appearance:none; border:none;
+    -webkit-appearance:none;appearance:none; border:none;
     background:var(--bg-chip);
     width:22px; height:100%;
     flex:none;
@@ -951,7 +951,7 @@
   }
 
   .btn-outline-search{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     width:100%;
     height:36px;
     border:1.5px solid var(--accent-primary);
@@ -1052,7 +1052,7 @@
   }
 
   .more-filters-btn{
-    appearance:none; background:none; border:none; padding:0;
+    -webkit-appearance:none;appearance:none; background:none; border:none; padding:0;
     font-family:var(--font-body); font-size:14px; color:var(--accent-primary);
     display:flex; align-items:center; gap:4px; cursor:pointer;
   }
@@ -1060,7 +1060,7 @@
   #moreFiltersChevron{ transition:transform 280ms ease; }
 
   .rozmiar-add-btn{
-    appearance:none; background:none; border:none; padding:0;
+    -webkit-appearance:none;appearance:none; background:none; border:none; padding:0;
     display:inline-flex; align-items:center; justify-content:center;
     color:var(--text-on-light); cursor:pointer;
     border-radius:50%;
@@ -1082,7 +1082,7 @@
   .rozmiar-add-btn:hover .plus-default{ display:none; }
   .rozmiar-add-btn:hover .plus-hover{ display:block; }
   .rozmiar-remove-btn{
-    appearance:none; background:none; border:none; padding:3px;
+    -webkit-appearance:none;appearance:none; background:none; border:none; padding:3px;
     display:inline-flex; align-items:center; justify-content:center;
     color:var(--text-muted); cursor:pointer;
     border-radius:50%; transition:background 120ms ease;
@@ -1293,7 +1293,7 @@
   }
   .cart-actions{ display:flex; flex-direction:column; gap:var(--space-sm); }
   .btn-cart-primary{
-    appearance:none; border:none; width:100%; height:48px;
+    -webkit-appearance:none;appearance:none; border:none; width:100%; height:48px;
     background:var(--accent-primary); color:var(--text-inverted);
     font-family:var(--font-body); font-weight:500; font-size:18px;
     border-radius:var(--radius-lg); cursor:pointer;
@@ -1302,7 +1302,7 @@
   .btn-cart-primary:hover{ filter:brightness(1.06); }
   .btn-cart-primary:active{ transform:scale(.985); background:var(--accent-pressed); }
   .btn-cart-secondary{
-    appearance:none; width:100%; height:48px;
+    -webkit-appearance:none;appearance:none; width:100%; height:48px;
     background:transparent; border:1.5px solid var(--accent-primary);
     color:var(--accent-pressed); font-family:var(--font-body);
     font-weight:500; font-size:18px;
@@ -1464,7 +1464,7 @@
     display:flex; gap:var(--space-sm); margin-top:4px;
   }
   .btn-addr-add{
-    appearance:none; flex:1; height:34px;
+    -webkit-appearance:none;appearance:none; flex:1; height:34px;
     border:1px solid var(--border-default);
     border-radius:var(--radius-lg);
     background:transparent;
@@ -1475,7 +1475,7 @@
   }
   .btn-addr-add:hover{ border-color:var(--accent-primary); }
   .btn-addr-sel{
-    appearance:none; flex:1; height:34px;
+    -webkit-appearance:none;appearance:none; flex:1; height:34px;
     border:1px solid var(--border-default);
     border-radius:var(--radius-lg);
     background:transparent;
@@ -1488,7 +1488,7 @@
 
   /* next step button */
   .btn-checkout-next{
-    appearance:none; width:100%; height:48px;
+    -webkit-appearance:none;appearance:none; width:100%; height:48px;
     border:none; border-radius:var(--radius-lg);
     background:var(--accent-primary); color:#fff;
     font-family:var(--font-body); font-weight:500; font-size:18px;
@@ -1675,7 +1675,7 @@
   .sum-checkbox{
     width:16px; height:16px; min-width:16px; min-height:16px; border:1.5px solid var(--border-module);
     border-radius:2px; flex:none; margin-top:2px;
-    cursor:pointer; appearance:none;
+    cursor:pointer; -webkit-appearance:none;appearance:none;
     display:flex; align-items:center; justify-content:center;
     transition:background 140ms ease, border-color 140ms ease;
   }
@@ -1691,7 +1691,7 @@
   }
 
   .btn-confirm{
-    appearance:none; width:100%; height:48px;
+    -webkit-appearance:none;appearance:none; width:100%; height:48px;
     border:none; border-radius:var(--radius-lg);
     background:var(--accent-primary); color:#fff;
     font-family:var(--font-body); font-weight:500; font-size:18px;
@@ -1762,7 +1762,7 @@
   .orl-search svg{ position:absolute; left:12px; width:18px; height:18px; color:var(--text-muted); flex:none; }
 
   .orl-filter-btn{
-    appearance:none; flex:1; height:44px;
+    -webkit-appearance:none;appearance:none; flex:1; height:44px;
     border:1px solid var(--border-default);
     border-radius:var(--radius-lg);
     background:var(--bg-input);
@@ -1828,7 +1828,7 @@
 
   .orl-actions{ display:flex; align-items:center; gap:0; }
   .orl-action-btn{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     width:44px; height:44px;
     display:flex; align-items:center; justify-content:center;
     color:var(--text-muted); cursor:pointer;
@@ -1872,7 +1872,7 @@
     color:var(--text-default); text-transform:uppercase; letter-spacing:.3px;
   }
   .flt-clear{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     font-family:var(--font-body); font-size:14px; color:var(--text-muted);
     cursor:pointer; padding:0;
   }
@@ -1886,7 +1886,7 @@
   .flt-chips{ display:flex; flex-wrap:wrap; gap:var(--space-sm); }
 
   .flt-chip{
-    appearance:none; cursor:pointer;
+    -webkit-appearance:none;appearance:none; cursor:pointer;
     font-family:var(--font-body); font-size:16px; font-weight:400; line-height:18px;
     padding:4px var(--space-md);
     border-radius:var(--radius-sm);
@@ -1907,7 +1907,7 @@
   }
 
   .flt-apply{
-    appearance:none; width:100%; height:48px;
+    -webkit-appearance:none;appearance:none; width:100%; height:48px;
     border:none; border-radius:var(--radius-lg);
     background:var(--accent-primary); color:var(--text-inverted);
     font-family:var(--font-body); font-weight:500; font-size:18px;
@@ -1951,7 +1951,7 @@
   }
   .flt-suma-input::placeholder{ color:var(--text-muted); }
   .flt-suma-input::-webkit-inner-spin-button,
-  .flt-suma-input::-webkit-outer-spin-button{ -webkit-appearance:none; }
+  .flt-suma-input::-webkit-outer-spin-button{ -webkit--webkit-appearance:none;appearance:none; }
 
   /* ── INVOICES ─────────────────────────────── */
   .inv-content{ padding:var(--space-2xl) var(--space-lg) var(--space-xl); display:flex; flex-direction:column; gap:var(--space-lg); }
@@ -2046,7 +2046,7 @@
 
   .prf-nav{ display:flex; flex-direction:column; gap:0; }
   .prf-nav-item{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:var(--space-md);
     padding:var(--space-md) 0;
     font-family:var(--font-body); font-size:16px; color:var(--text-on-light);
@@ -2071,7 +2071,7 @@
   }
 
   .prf-logout{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:var(--space-sm);
     font-family:var(--font-body); font-size:16px; color:var(--text-muted);
     cursor:pointer; padding:0;
@@ -2100,7 +2100,7 @@
     color:var(--text-default);
   }
   .firma-edit-btn{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:5px;
     font-family:var(--font-body); font-size:14px; color:var(--text-muted);
     cursor:pointer; padding:0;
@@ -2143,7 +2143,7 @@
     color:var(--text-default); letter-spacing:.3px;
   }
   .firma-add-btn{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:var(--space-sm);
     height:48px; padding:var(--space-sm) var(--space-lg);
     border-radius:var(--radius-lg);
@@ -2159,7 +2159,7 @@
 
   /* ── DOSTĘPNOŚĆ CHIPS = same as home .chip ── */
   .dost-chip{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     border:1px solid #bec5c8;
     background:var(--bg-chip);
     color:var(--text-on-light);
@@ -2219,7 +2219,7 @@
     font-size:18px; color:var(--text-default);
   }
   .atc-close{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     font-size:20px; color:var(--text-muted); cursor:pointer; padding:4px;
   }
   .atc-item{
@@ -2246,7 +2246,7 @@
     letter-spacing:.5px; text-transform:uppercase; color:var(--text-muted);
   }
   .adres-input{
-    appearance:none; width:100%;
+    -webkit-appearance:none;appearance:none; width:100%;
     border:1px solid var(--border-default);
     border-radius:var(--radius-sm);
     background:var(--bg-input);
@@ -2378,7 +2378,7 @@
     padding-top:var(--space-md);
   }
   .dok-btn{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; gap:var(--space-sm);
     font-family:var(--font-body); font-size:16px;
     color:var(--text-on-light); cursor:pointer;
@@ -2392,7 +2392,7 @@
     background:var(--border-default); flex:none;
   }
   .dok-add-btn{
-    appearance:none; background:none; border:none;
+    -webkit-appearance:none;appearance:none; background:none; border:none;
     display:flex; align-items:center; justify-content:center; gap:var(--space-sm);
     font-family:var(--font-body); font-size:16px; font-weight:400;
     color:var(--accent-primary); cursor:pointer;
@@ -2431,11 +2431,11 @@
   .addr-detail{ font-family:var(--font-body); font-size:16px; color:var(--text-muted); }
   .addr-badge-default{ display:inline-flex; align-items:center; padding:2px 8px; border-radius:var(--radius-pill); border:1px solid #1e6b3c; font-family:var(--font-body); font-size:12px; color:#1e6b3c; background:rgba(30,107,60,.08); white-space:nowrap; }
   .addr-actions{ display:flex; align-items:center; gap:4px; flex-shrink:0; }
-  .addr-edit-btn{ appearance:none; background:none; border:none; font-family:var(--font-body); font-size:14px; color:var(--text-muted); cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px; }
+  .addr-edit-btn{ -webkit-appearance:none;appearance:none; background:none; border:none; font-family:var(--font-body); font-size:14px; color:var(--text-muted); cursor:pointer; display:flex; align-items:center; gap:4px; padding:4px; }
   .addr-edit-btn:hover{ color:var(--text-default); }
-  .addr-add-btn{ appearance:none; background:none; border:1.5px dashed var(--border-surface); border-radius:var(--radius-lg); padding:var(--space-lg); width:100%; display:flex; align-items:center; justify-content:center; gap:var(--space-sm); font-family:var(--font-body); font-weight:500; font-size:16px; color:var(--accent-primary); cursor:pointer; transition:border-color 150ms,background 150ms; }
+  .addr-add-btn{ -webkit-appearance:none;appearance:none; background:none; border:1.5px dashed var(--border-surface); border-radius:var(--radius-lg); padding:var(--space-lg); width:100%; display:flex; align-items:center; justify-content:center; gap:var(--space-sm); font-family:var(--font-body); font-weight:500; font-size:16px; color:var(--accent-primary); cursor:pointer; transition:border-color 150ms,background 150ms; }
   .addr-add-btn:hover{ border-color:var(--accent-primary); background:rgba(0,95,110,.04); }
-  .addr-set-default-btn{ appearance:none; background:none; border:none; font-family:var(--font-body); font-size:13px; color:var(--text-muted); cursor:pointer; padding:0; text-decoration:underline; }
+  .addr-set-default-btn{ -webkit-appearance:none;appearance:none; background:none; border:none; font-family:var(--font-body); font-size:13px; color:var(--text-muted); cursor:pointer; padding:0; text-decoration:underline; }
   /* addr bottom sheet */
   .addr-backdrop.is-open{ display:block; pointer-events:auto; }
   .addr-sheet.is-open{ transform:translateY(0); pointer-events:auto; }
@@ -2487,7 +2487,7 @@
   }
   .home-tabs-wrap::-webkit-scrollbar{ display:none; }
   .home-tab{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     background:none;
     border:none;
     border-bottom:2px solid transparent;
@@ -2619,7 +2619,7 @@
   }
   .home-chips-scroll::-webkit-scrollbar{ display:none; }
   .home-chip{
-    appearance:none;
+    -webkit-appearance:none;appearance:none;
     flex:none;
     background:var(--bg-subtle);
     border:0.3px solid var(--border-default);
@@ -2737,6 +2737,7 @@
     height:auto;
     min-height:64px;
     padding:16px 32px;
+    background:var(--bg-page-wide);
     border-bottom:1px solid var(--border-module);
   }
   body.bp-tablet #screenResults > header .header-help-link{
@@ -9545,7 +9546,7 @@
       </div>
       <span style="font-family:var(--font-body);font-weight:600;font-size:18px;color:var(--text-default);">Dodano do koszyka</span>
     </div>
-    <button onclick="closeAtcOverlay()" style="appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
+    <button onclick="closeAtcOverlay()" style="-webkit-appearance:none;appearance:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
     </button>
   </div>
@@ -13664,7 +13665,7 @@ function submitOrder() {
   <div style="width:40px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 8px;"></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
     <span id="addrSheetTitle" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--text-default);">Nowy adres</span>
-    <button onclick="closeAddrSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">✕</button>
+    <button onclick="closeAddrSheet()" style="-webkit-appearance:none;appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">✕</button>
   </div>
   <div style="display:flex;flex-direction:column;gap:var(--space-md);">
     <div class="adres-field"><div class="adres-label">NAZWA PUNKTU</div><input type="text" class="adres-input" id="addrInputName" placeholder="np. Magazyn Warszawa"></div>
@@ -13690,7 +13691,7 @@ function submitOrder() {
   <div style="width:40px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 8px;"></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
     <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--text-default);">Wybierz adres</span>
-    <button onclick="closeAddrPickSheet()" style="appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">✕</button>
+    <button onclick="closeAddrPickSheet()" style="-webkit-appearance:none;appearance:none;background:none;border:none;font-size:20px;color:#6b7280;cursor:pointer;padding:4px;">✕</button>
   </div>
   <div id="addrPickList" style="display:flex;flex-direction:column;gap:12px;"></div>
 </div>
