@@ -2682,6 +2682,11 @@
      .phone і новий header застосовані умовно (:has), інші екрани поки що
      лишаються у телефонній рамці на будь-якій ширині — розширимо пізніше.
      ====================================================================== */
+  /* base (mobile-first): нові desktop/tablet-only елементи header прихована за замовчуванням */
+  .header-help-link,
+  .lang-switch-wide,
+  .account-label{ display:none; }
+
   @media (min-width:670px){
     body:has(#screenResults.is-active){
       background:#f0ece6;
