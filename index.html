@@ -2759,6 +2759,12 @@
   .phone.bp-desktop{ max-width:1280px; }
   body.bp-desktop #screenResults > header{ padding:16px 80px; }
 
+  /* ---- Dropdown-оверлеї (Filtry "більше фільтрів" грід, Sortowanie панель) —
+     лишаємо компактне мобайл-сайзинг замість розтягування на всю ширину ---- */
+  body.bp-tablet .filters-dropdown-grid{
+    grid-template-columns: repeat(3, max-content);
+  }
+
 </style>
 </head>
 <body><!-- cache-bust v3 -->
