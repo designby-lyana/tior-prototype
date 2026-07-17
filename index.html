@@ -2718,7 +2718,9 @@
   body.bp-tablet{
     background:var(--bg-page-wide);
     padding:0;
-    align-items:stretch;
+    /* align-items лишається center (з базового body) — .phone має власну
+       фіксовану/dragged ширину, stretch зривав горизонтальне центрування
+       і притискав рамку до лівого краю на tablet/desktop */
   }
   .phone.bp-tablet{
     max-width:720px;
